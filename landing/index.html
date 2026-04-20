@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuveli — AI Calorie Coach</title>
+<meta name="description" content="Fotoğrafla takip, yargısız destek. Nuveli, yediklerini anlayan ve seni motive eden AI kalori koçundur.">
+<meta property="og:title" content="Nuveli — AI Calorie Coach">
+<meta property="og:description" content="Fotoğrafla takip, yargısız destek.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nuveli.com.tr">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&display=swap">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+:root {
+  --bg: #0b0a0f;
+  --bg-2: #12111a;
+  --surface: #1a1823;
+  --text: #f5f1e9;
+  --text-dim: #9a95a5;
+  --text-mute: #555062;
+  --accent: #d4ff58;
+  --accent-warm: #ff9b6b;
+  --primary: #7c5cfc;
+  --grain: rgba(255,255,255,0.02);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ───────────── NAV ───────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 0;
+  backdrop-filter: blur(20px);
+  background: rgba(11, 10, 15, 0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.cta-small {
+  background: var(--accent);
+  color: var(--bg) !important;
+  padding: 10px 18px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ───────────── HERO ───────────── */
+.hero {
+  padding: 180px 0 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid rgba(212,255,88,0.25);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 40px;
+  background: rgba(212,255,88,0.05);
+}
+
+.hero-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(56px, 9vw, 128px);
+  line-height: 0.95;
+  letter-spacing: -3px;
+  margin-bottom: 32px;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.hero-sub {
+  font-size: clamp(18px, 2vw, 22px);
+  color: var(--text-dim);
+  max-width: 580px;
+  margin-bottom: 48px;
+  line-height: 1.5;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  padding: 18px 32px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(245,241,233,0.15);
+}
+
+.btn-secondary {
+  color: var(--text);
+  padding: 18px 32px;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: border-color 0.2s, background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.03);
+}
+
+/* Hero illustration */
+.hero-visual {
+  position: absolute;
+  top: 50%;
+  right: -100px;
+  transform: translateY(-50%);
+  width: 500px;
+  height: 500px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hero-visual svg {
+  width: 100%;
+  height: 100%;
+  animation: rotate 40s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ───────────── MARQUEE ───────────── */
+.marquee {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 24px 0;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 60px;
+  white-space: nowrap;
+  animation: scroll 40s linear infinite;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--text-dim);
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track span {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.marquee-track span::after {
+  content: '✦';
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ───────────── FEATURES ───────────── */
+.features {
+  padding: 140px 0;
+}
+
+.section-label {
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 80px;
+  max-width: 800px;
+}
+
+h2 em {
+  font-style: italic;
+  color: var(--accent-warm);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212,255,88,0.2);
+}
+
+.feature-card.wide { grid-column: span 8; min-height: 360px; }
+.feature-card.small { grid-column: span 4; min-height: 360px; }
+.feature-card.half { grid-column: span 6; min-height: 280px; }
+
+.feature-num {
+  font-family: 'Fraunces', serif;
+  font-size: 14px;
+  color: var(--text-mute);
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.feature-card p {
+  color: var(--text-dim);
+  font-size: 15px;
+  max-width: 400px;
+}
+
+.feature-visual {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ───────────── MANIFESTO ───────────── */
+.manifesto {
+  padding: 160px 0;
+  background: var(--bg-2);
+  position: relative;
+}
+
+.manifesto-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  max-width: 900px;
+}
+
+.manifesto-text em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.manifesto-sig {
+  margin-top: 40px;
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ───────────── FOOTER ───────────── */
+footer {
+  padding: 80px 0 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 60px;
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 15px;
+  display: block;
+  padding: 6px 0;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover { color: var(--text); }
+
+.footer-about {
+  color: var(--text-dim);
+  font-size: 14px;
+  max-width: 340px;
+  line-height: 1.6;
+  margin-top: 16px;
+}
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-mute);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.disclaimer {
+  background: rgba(255,155,107,0.05);
+  border-left: 2px solid var(--accent-warm);
+  padding: 16px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 700px;
+  margin-top: 32px;
+  line-height: 1.5;
+}
+
+/* ───────────── MOBILE ───────────── */
+@media (max-width: 900px) {
+  .container { padding: 0 24px; }
+  .hero { padding: 140px 0 80px; }
+  .hero-visual { display: none; }
+  .nav-links { display: none; }
+  .nav-links.mobile-visible { display: flex; flex-direction: column; gap: 20px; position: absolute; top: 100%; right: 0; background: var(--bg-2); padding: 24px; border-radius: 12px; }
+  .feature-card.wide, .feature-card.small, .feature-card.half { grid-column: span 12; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-col:first-child { grid-column: span 2; }
+  h1 { letter-spacing: -1.5px; }
+  .features, .manifesto { padding: 80px 0; }
+  h2 { margin-bottom: 48px; }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">
+      <span class="logo-dot"></span>
+      nuveli
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Özellikler</a></li>
+      <li><a href="#manifesto">Yaklaşım</a></li>
+      <li><a href="#support">Destek</a></li>
+      <li><a href="/app/" class="cta-small">Nuveli Pro</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-label">yakında app store & google play</div>
+    <h1>
+      Fotoğrafla takip,<br>
+      <em>yargısız destek.</em>
+    </h1>
+    <p class="hero-sub">
+      Nuveli yediklerini anlayan, seni suçlamadan motive eden AI kalori koçundur. Kalori
+      takibi artık basit, sürdürülebilir ve samimi.
+    </p>
+    <div class="hero-ctas">
+      <a href="#download" class="btn-primary">
+        Erken erişim için haber ver
+        <span>→</span>
+      </a>
+      <a href="#features" class="btn-secondary">Nasıl çalışır</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#d4ff58" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#d4ff58" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="250" cy="250" r="240" fill="url(#g1)"/>
+      <circle cx="250" cy="250" r="180" fill="none" stroke="#d4ff58" stroke-width="0.5" stroke-dasharray="2 6" opacity="0.4"/>
+      <circle cx="250" cy="250" r="120" fill="none" stroke="#d4ff58" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="250" cy="250" r="60" fill="none" stroke="#d4ff58" stroke-width="0.5" opacity="0.2"/>
+    </svg>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>fotoğrafla tara</span>
+    <span>yaklaşık kalori tahmini</span>
+    <span>AI koç desteği</span>
+    <span>su ve kilo takibi</span>
+    <span>haftalık içgörüler</span>
+    <span>yargısız yaklaşım</span>
+    <span>fotoğrafla tara</span>
+    <span>yaklaşık kalori tahmini</span>
+    <span>AI koç desteği</span>
+    <span>su ve kilo takibi</span>
+    <span>haftalık içgörüler</span>
+    <span>yargısız yaklaşım</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-label reveal">✦ Özellikler</div>
+    <h2 class="reveal">Kalori takibi<br><em>insan gibi hissettirmeli.</em></h2>
+
+    <div class="feature-grid">
+      <div class="feature-card wide reveal">
+        <div class="feature-num">01 / Fotoğrafla tara</div>
+        <h3>Yemeği çek, saniyeler içinde<br>yaklaşık tahmin gelsin.</h3>
+        <p>AI, fotoğrafındaki öğeleri tanır ve yaklaşık kalori + makro tahmini sunar. Emin olmadığında bunu söyler; düzeltmen kolaydır.</p>
+        <svg class="feature-visual" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="40" width="160" height="120" rx="12" fill="none" stroke="#d4ff58" stroke-width="1" opacity="0.3"/>
+          <circle cx="100" cy="100" r="30" fill="none" stroke="#d4ff58" stroke-width="1" opacity="0.5"/>
+          <circle cx="100" cy="100" r="16" fill="#d4ff58" opacity="0.2"/>
+        </svg>
+      </div>
+
+      <div class="feature-card small reveal">
+        <div class="feature-num">02 / Koç</div>
+        <h3>Seni<br>dinleyen<br>bir arkadaş.</h3>
+        <p>Kötü günlerde suçlamaz. İyi günlerde kutlar. Her zaman kısa, her zaman samimi.</p>
+      </div>
+
+      <div class="feature-card half reveal">
+        <div class="feature-num">03 / Günlük döngü</div>
+        <h3>Su, kilo, <em>ruh hali.</em></h3>
+        <p>Hızlı ekle, düşük sürtünme. Mikro adımlar alışkanlığa dönüşür.</p>
+      </div>
+
+      <div class="feature-card half reveal">
+        <div class="feature-num">04 / İçgörü</div>
+        <h3>Haftalık örüntüler.</h3>
+        <p>Sayılardan öte, ne olduğunu anlamana yardım eden kısa notlar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <div class="section-label reveal">✦ Yaklaşım</div>
+    <p class="manifesto-text reveal">
+      Nuveli bir <em>wellness uygulamasıdır.</em> Tıbbi teşhis, tedavi veya klinik
+      diyet planı sunmaz. Seni yargılamaz, kısıtlamayı kutsamaz. Sürdürülebilir
+      küçük adımlara inanır. <em>Her gün sıfırlanabilir.</em>
+    </p>
+    <div class="manifesto-sig reveal">— Nuveli ekibi</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="support">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom: 16px;">
+          <span class="logo-dot"></span>
+          nuveli
+        </div>
+        <p class="footer-about">
+          AI Calorie Coach. Fotoğrafla yemek takibi ve yargısız davranış desteği.
+          18 yaş ve üzeri için.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Ürün</h4>
+        <ul>
+          <li><a href="#features">Özellikler</a></li>
+          <li><a href="#download">Uygulama</a></li>
+          <li><a href="#manifesto">Yaklaşım</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Destek</h4>
+        <ul>
+          <li><a href="mailto:support@nuveli.com.tr">E-posta</a></li>
+          <li><a href="/sss.html">SSS</a></li>
+          <li><a href="/iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Yasal</h4>
+        <ul>
+          <li><a href="/gizlilik.html">Gizlilik</a></li>
+          <li><a href="/sartlar.html">Şartlar</a></li>
+          <li><a href="/kvkk.html">KVKK</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Önemli:</strong> Nuveli tıbbi teşhis, tedavi veya klinik diyet planı sunmaz.
+      Özel sağlık durumunuz için lütfen doktorunuza danışın. Zor bir dönemden geçiyorsanız
+      ALO 182 Psikolojik Destek Hattı'nı (7/24) arayabilirsiniz.
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 Nuveli · Tüm hakları saklıdır.</div>
+      <div>support@nuveli.com.tr</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

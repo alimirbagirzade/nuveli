@@ -1,0 +1,51 @@
+---
+description: FastAPI backend standartları — tüm .py dosyaları
+globs: ["backend/**/*.py"]
+alwaysApply: true
+---
+
+# Backend Kuralları
+
+## Mimari
+- Router katmanı ince olacak: sadece HTTP parse ve servis çağrısı.
+- İş mantığı service layer'da: `backend/app/services/`
+- DB erişimi: `backend/app/db/client.py` üzerinden.
+- Tüm request/response modelleri Pydantic schema: `backend/app/schemas/`
+
+## Auth
+- Her endpoint `Depends(get_current_user)` kullanır (health hariç).
+- User ID her zaman token'dan çözülür. Request body'den alınmaz.
+- Service katmanına `user_id: str` geçilir.
+
+## Response Formatı
+Tüm başarılı yanıtlar:
+```json
+{ "data": {}, "error": null }
+```
+Tüm hata yanıtları:
+```json
+{ "data": null, "error": { "code": "ERROR_CODE", "message": "..." } }
+```
+`common.py` içindeki `ApiResponse` modeli kullanılır.
+
+## Hata Yönetimi
+- Service katmanı custom exception fırlatır.
+- Router `try/except` ile yakalar ve standart HTTP hata döndürür.
+- Beklenmedik hatalar `logger.error()` ile loglanır.
+- Stack trace kullanıcıya dönmez.
+
+## Supabase
+- Service role key sadece backend'de, `.env` içinde.
+- Client-facing tablolarda RLS aktif olduğu varsayılır.
+- Query'ler her zaman `user_id` filtresi ile yapılır.
+
+## Kod Kalitesi
+- Her servis fonksiyonu için docstring.
+- Magic string yok; sabitler `core/constants.py` içinde.
+- `async/await` tutarlı kullanımı.
+- Test edilebilirlik için bağımlılık injection tercih edilir.
+
+## Yasaklı
+- Route içinde doğrudan Supabase sorgusu.
+- Hard-coded API key veya secret.
+- `print()` kullanımı (structlog/logging kullan).

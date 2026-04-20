@@ -1,0 +1,67 @@
+# ───── Environment ─────
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# ───── Python ─────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# ───── Flutter ─────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+.flutter/
+.fvm/
+pubspec.lock
+*.iml
+*.g.dart
+*.freezed.dart
+ios/Pods/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/.symlinks/
+android/.gradle/
+android/gradle/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/key.properties
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+
+# ───── macOS / IDE ─────
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ───── Logs ─────
+*.log
+logs/
+
+# ───── Deployment ─────
+deploy/*.zip
+deploy/secrets/
+
+# ───── Web app (landing/app) ─────
+landing/app/node_modules/
+landing/app/dist/
+landing/app/.env

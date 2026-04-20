@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abonelik · Nuveli</title>
+<meta name="description" content="Nuveli Pro web aboneliği. Fotoğrafla takip, yargısız destek.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #0b0a0f;
+    --bg-2: #12111a;
+    --surface: #1a1823;
+    --surface-hi: #25232f;
+    --text: #f5f1e9;
+    --text-dim: #9a95a5;
+    --text-mute: #555062;
+    --accent: #d4ff58;
+    --accent-warm: #ff9b6b;
+    --primary: #7c5cfc;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+  header.top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 48px; border-bottom: 1px solid var(--border);
+  }
+  .brand {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text); text-decoration: none;
+  }
+  .brand .dot {
+    width: 8px; height: 8px; background: var(--accent);
+    border-radius: 50%; box-shadow: 0 0 12px var(--accent);
+  }
+  .user-chip {
+    font-size: 13px; color: var(--text-dim);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .user-chip button {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim); padding: 6px 12px;
+    border-radius: 100px; font: inherit; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .user-chip button:hover { color: var(--text); border-color: var(--text-dim); }
+
+  section { padding: 48px 0; }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(36px, 6vw, 64px); line-height: 1.05;
+    letter-spacing: -1.5px; margin-bottom: 16px;
+  }
+  h1 em { font-style: italic; color: var(--accent); font-weight: 600; }
+
+  .lead {
+    font-size: 17px; color: var(--text-dim); max-width: 520px;
+    margin-bottom: 40px;
+  }
+
+  /* States */
+  .state { display: none; }
+  .state.active { display: block; }
+
+  /* Sign-in form */
+  .signin-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px; max-width: 460px;
+  }
+  .signin-card h3 {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .signin-card p { color: var(--text-dim); font-size: 14px; margin-bottom: 20px; }
+  input[type="email"] {
+    width: 100%; padding: 14px 16px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font: inherit;
+    margin-bottom: 12px;
+  }
+  input[type="email"]:focus { outline: none; border-color: var(--primary); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 24px; border-radius: 100px; border: 0; cursor: pointer;
+    font: inherit; font-weight: 500; font-size: 15px;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .btn:disabled { opacity: 0.5; cursor: wait; }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary:hover:not(:disabled) { background: #e3ff80; }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover:not(:disabled) { border-color: var(--text-dim); }
+
+  .success-msg, .error-msg {
+    padding: 14px 18px; border-radius: 12px; font-size: 14px;
+    margin-top: 16px; display: none;
+  }
+  .success-msg.visible, .error-msg.visible { display: block; }
+  .success-msg {
+    background: rgba(212,255,88,0.08); color: var(--accent);
+    border-left: 3px solid var(--accent);
+  }
+  .error-msg {
+    background: rgba(255,155,107,0.08); color: var(--accent-warm);
+    border-left: 3px solid var(--accent-warm);
+  }
+
+  /* Pro state */
+  .pro-banner {
+    background: linear-gradient(135deg, rgba(212,255,88,0.1), rgba(124,92,252,0.08));
+    border: 1px solid rgba(212,255,88,0.25);
+    border-radius: 20px; padding: 28px; margin-bottom: 32px;
+  }
+  .pro-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent); color: var(--bg);
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  /* Plans */
+  .plans {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 32px;
+  }
+  .plan {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 24px;
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .plan:hover { border-color: rgba(212,255,88,0.3); transform: translateY(-2px); }
+  .plan.featured { border-color: var(--accent); }
+  .plan-tag {
+    font-size: 11px; font-weight: 500; letter-spacing: 1.5px;
+    color: var(--text-mute); text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .plan.featured .plan-tag { color: var(--accent); }
+  .plan-price {
+    font-family: 'Fraunces', serif; font-size: 36px; font-weight: 600;
+    letter-spacing: -1px; margin-bottom: 4px;
+  }
+  .plan-period { color: var(--text-dim); font-size: 14px; margin-bottom: 20px; }
+  .plan-features {
+    list-style: none; margin-bottom: 24px; flex-grow: 1;
+  }
+  .plan-features li {
+    padding: 6px 0; color: var(--text-dim); font-size: 14px;
+    display: flex; gap: 8px;
+  }
+  .plan-features li::before {
+    content: '✓'; color: var(--accent); flex-shrink: 0;
+  }
+
+  /* Paywall container */
+  #paywall-container {
+    margin: 32px 0; min-height: 200px;
+  }
+  #paywall-container:empty { display: none; }
+
+  /* Customer center */
+  .cc-grid {
+    display: grid; gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .cc-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px;
+  }
+  .cc-item h4 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--text-mute); margin-bottom: 8px; font-weight: 500;
+  }
+  .cc-item .value {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500;
+  }
+
+  .loading {
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid var(--text-mute); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer {
+    margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border);
+    color: var(--text-mute); font-size: 13px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="top">
+  <a href="/" class="brand">
+    <span class="dot"></span>
+    nuveli
+  </a>
+  <div class="user-chip" id="user-chip" style="display:none;">
+    <span id="user-email"></span>
+    <button id="signout-btn">Çıkış</button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STATE: LOADING -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="state-loading" class="state active">
+  <div style="padding: 80px 0; text-align: center;">
+    <div class="loading"></div>
+    <p style="margin-top: 16px; color: var(--text-dim);">Yükleniyor...</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STATE: SIGN IN -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="state-signin" class="state">
+  <h1>Nuveli Pro'ya<br><em>web'den eriş.</em></h1>
+  <p class="lead">
+    Uygulamana giriş yaptığın aynı e-posta ile devam et. Abonelik mobil + web'de birlikte çalışır.
+  </p>
+
+  <div class="signin-card">
+    <h3>E-posta ile giriş</h3>
+    <p>Sana bir giriş linki göndereceğiz. Parola yok.</p>
+    <input type="email" id="email-input" placeholder="ornek@nuveli.com.tr" autocomplete="email">
+    <button class="btn btn-primary" id="send-link-btn" style="width: 100%;">
+      Giriş Linki Gönder
+    </button>
+    <div class="success-msg" id="signin-success"></div>
+    <div class="error-msg" id="signin-error"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STATE: PRO ACTIVE (Customer Center) -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="state-pro" class="state">
+  <div class="pro-banner">
+    <div class="pro-badge">✓ PRO AKTİF</div>
+    <h1 style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 8px;">
+      Hepsi senin.
+    </h1>
+    <p style="color: var(--text-dim); font-size: 16px;">
+      Aboneliğin aktif. Mobil uygulamaya aynı e-posta ile giriş yap,
+      tüm premium özellikler orada da çalışıyor olacak.
+    </p>
+  </div>
+
+  <h3 style="font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 20px;">
+    Abonelik detayları
+  </h3>
+  <div class="cc-grid" id="customer-center-grid">
+    <!-- Doldurulacak -->
+  </div>
+
+  <div style="margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap;">
+    <button class="btn btn-ghost" id="refresh-btn">Yenile</button>
+    <a href="mailto:support@nuveli.com.tr" class="btn btn-ghost">Destek</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STATE: NO PRO — Paywall + Plans -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="state-purchase" class="state">
+  <h1>Nuveli Pro'ya<br><em>geç.</em></h1>
+  <p class="lead">
+    Sınırsız öğün analizi, gelişmiş koç, haftalık içgörüler. Bir paket seç, güvenli ödemeyle devam et.
+  </p>
+
+  <!-- RC hosted paywall buraya render olur -->
+  <div id="paywall-container"></div>
+
+  <!-- Alternatif: manual plan selector -->
+  <div id="manual-plans" style="display: none;">
+    <div class="plans" id="plans-list">
+      <!-- Runtime'da doldurulacak -->
+    </div>
+    <div class="error-msg" id="purchase-error" style="margin-top: 20px;"></div>
+  </div>
+
+  <div style="margin-top: 32px;">
+    <button class="btn btn-ghost" id="show-paywall-btn">Paketleri Göster</button>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Nuveli · <a href="/gizlilik.html">Gizlilik</a> · <a href="/sartlar.html">Şartlar</a></div>
+  <div><a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a></div>
+</footer>
+
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

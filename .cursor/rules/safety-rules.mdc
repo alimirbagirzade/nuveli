@@ -1,0 +1,41 @@
+---
+description: Güvenlik ve wellness sınırı — HER ZAMAN geçerli, override edilemez
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Güvenlik Kuralları (Override Edilemez)
+
+## Kriz Metni
+Aşağıdaki metin değiştirilemez, kişiselleştirilemez, AI ile üretilemez.
+Backend'de hardcoded tutulur:
+
+```
+Seninle ilgili endişeleniyorum. Şu an zor bir yer olabilir.
+Yardım almak için:
+• ALO 182 — Psikolojik Destek Hattı (7/24)
+Buradayım, ama profesyonel destek çok daha fazlasını yapabilir.
+```
+
+## Risk Tarama
+Backend tüm koç yanıtlarını ve user inputları şu gruplara göre tarar:
+
+**Grup A (Crisis):** "kendime zarar", "intihar", "ölmek istiyorum"  
+→ AI yanıt üretme. Sadece kriz metnini dön.
+
+**Grup B (Yeme Bozukluğu):** "kusuyorum", "purge", "laksatif", "hiç yemiyorum"  
+→ Koç tonu değişir. Profesyonel destek öner.
+
+**Grup C (Aşırı Kısıtlama):** "500 kalori", "800 kalori", "hiç yemeden"  
+→ Kabul etme. Genel wellness yanıtı ver.
+
+## Yaş Kapısı
+- 18 yaş checkbox kaldırılamaz veya pre-checked bırakılamaz.
+- Yaş doğrulaması bypass edilemez.
+
+## Medikal Yasak
+- Hiçbir kod tıbbi teşhis, tedavi veya ilaç içeriği üretemez.
+- "Doktor onaylı", "klinik olarak kanıtlanmış" gibi claim'ler yasak.
+
+## Code Review Şartı
+Safety kuralı ihlali tespit edilirse PR merge edilmez.

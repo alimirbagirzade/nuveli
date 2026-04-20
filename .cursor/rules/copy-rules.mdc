@@ -1,0 +1,45 @@
+---
+description: UI metin/kopya standartları — tüm string içeren dosyalar
+globs: ["**/*.dart", "**/*.py", "**/*.md"]
+alwaysApply: true
+---
+
+# Kopya & Metin Kuralları
+
+## Ton
+- Sıcak, destekleyici, yargısız.
+- Arkadaşça ama bilgili.
+- Hiçbir zaman korkutucu, baskıcı veya medikal.
+
+## Yasaklı Kalıplar
+- "Fazla yedin" → "Bugün biraz fazla gitti"
+- "Kendine dikkat etmiyorsun" → YOK
+- "Bu kadar yememen lazımdı" → YOK
+- "Hızlı kilo ver" → YOK
+- "Garanti" → YOK
+- "Doktor onaylı" → YOK
+- Beden şekline negatif atıf → YOK
+
+## Boş Durum Metinleri
+Her boş durum şunu içerir:
+1. Davetkar kısa metin (max 2 cümle)
+2. Harekete geçiren CTA (zorlamayan)
+
+## Limit Mesajları
+Kullanıcı limit aşınca:
+- Suçlamayan, anlayışlı ton
+- Hemen trial/premium teklifi
+- Manuel fallback seçeneği her zaman
+
+## Koç Mesaj Uzunluğu
+- Yazılı koç: max 3 cümle
+- TTS koç: max 2 cümle (kısa ve öz)
+- Uzun açıklama yok, lisans yok
+
+## Klinik Terimler → Günlük Dil
+| Klinik | Günlük |
+|--------|--------|
+| BMR | Günlük temel ihtiyaç |
+| Calorie deficit | Kalori farkı |
+| Macronutrients | Protein, karbonhidrat, yağ |
+| BMI | Vücut kitle endeksi |

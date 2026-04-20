@@ -1,0 +1,29 @@
+---
+description: Nuveli ürün sınırları — her kod değişikliğinde geçerli
+globs: ["**/*.dart", "**/*.py", "**/*.md"]
+alwaysApply: true
+---
+
+# Nuveli Ürün Kuralları
+
+## Kapsam
+- Bu proje Nuveli wellness uygulamasıdır.
+- MVP kapsamı: `docs/product/mvp-scope.md` dosyasında tanımlıdır.
+- **V2/V3 özellik EKLEME.** Scope dışı her özellik reddedilir.
+
+## Wellness Sınırı (KESİN)
+- Tıbbi teşhis, tedavi veya klinik diyet planı içeren kod yazma.
+- Doktor / diyetisyen yerine geçen yönlendirme üretme.
+- 800 kcal altı kalori hedefi öneren mantık yazma.
+- Telafi davranışı (purging, aşırı egzersiz) ima eden içerik üretme.
+
+## Premium Model
+- Feature gating her zaman backend'den gelir (`/premium/features`).
+- Client tarafında local feature unlock yazma.
+- Free kullanıcıyı değersiz hissettiren UI/copy üretme.
+
+## Her Görev Sonunda
+Şunu yaz:
+1. Değişen/oluşturulan dosyalar
+2. Eksik kalanlar
+3. Test adımları
