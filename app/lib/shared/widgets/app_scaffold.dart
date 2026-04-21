@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+
+import 'package:nuveli/core/theme/app_colors.dart';
 
 /// Nuveli standart scaffold wrapper.
 /// Tüm ekranlar bu widget'ı kullanır.
@@ -32,9 +33,7 @@ class AppScaffold extends StatelessWidget {
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       body: SafeArea(
-        child: padding != null
-            ? Padding(padding: padding!, child: body)
-            : body,
+        child: padding != null ? Padding(padding: padding!, child: body) : body,
       ),
     );
   }
