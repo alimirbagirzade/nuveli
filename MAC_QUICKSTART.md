@@ -56,7 +56,7 @@ cp .env.example .env
 # .env dosyasını aç ve Supabase/OpenAI key'lerini doldur
 
 # Backend'i başlat
-python app/main.py
+python run.py
 ```
 
 Backend `http://localhost:8000` üzerinde çalışacak.
@@ -174,7 +174,7 @@ Backend + frontend çalışıyorsa:
 - Detaylı kurulum: `/docs/SETUP.md`
 - Backend API: http://localhost:8000/docs
 - Flutter hot reload: `r` tuşu (değişiklikler anında uygulanır)
-- Backend restart: `Ctrl+C` sonra tekrar `python app/main.py`
+- Backend restart: `Ctrl+C` sonra tekrar `python run.py`
 
 ## 🆘 Yardım
 

@@ -253,7 +253,7 @@ if [ $FAIL -eq 0 ]; then
     echo ""
     echo "Şimdi yapabileceklerin:"
     echo "  1. Backend'i başlat:"
-    echo "     cd backend && source venv/bin/activate && python app/main.py"
+    echo "     cd backend && source venv/bin/activate && python run.py"
     echo ""
     echo "  2. Frontend'i çalıştır:"
     echo "     cd app && flutter run"

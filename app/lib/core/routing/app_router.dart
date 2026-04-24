@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../features/auth/screens/forgot_password_screen.dart';
@@ -28,8 +27,6 @@ import '../../features/settings/screens/notification_prefs_screen.dart';
 import '../../features/settings/screens/privacy_safety_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/settings/screens/support_screen.dart';
-
-part 'app_router.g.dart';
 
 /// Tüm route isimleri burada tanımlıdır.
 class AppRoute {
@@ -80,8 +77,8 @@ class AppRoute {
   static const deleteAccount = '/settings/delete-account';
 }
 
-@riverpod
-GoRouter appRouter(AppRouterRef ref) {
+/// GoRouter provider — code generation'a gerek kalmadan çalışır.
+final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: AppRoute.splash,
     debugLogDiagnostics: true,
@@ -264,5 +261,5 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
     ),
   );
-}
+});
 
