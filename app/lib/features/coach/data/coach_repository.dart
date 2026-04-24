@@ -69,6 +69,7 @@ class CoachRepository {
   CoachRepository(this._dio);
   final Dio _dio;
 
+  /// Tek seferlik yanıt — thread'e yazmaz. Ses istemek için kullanılır.
   Future<CoachResponse> respond(String message, {bool wantAudio = false}) async {
     try {
       final resp = await _dio.post('/coach/respond', data: {
@@ -81,11 +82,35 @@ class CoachRepository {
     }
   }
 
+  /// Thread'de konuşma — user + coach mesajı kalıcı olarak kaydedilir.
+  /// Thread'i döner (kullanıcı + koç mesajı eklenmiş halde).
+  Future<({CoachMessage userMsg, CoachMessage coachMsg, String riskMode})>
+      postThreadMessage(String message) async {
+    try {
+      final resp = await _dio.post('/coach/thread/message', data: {
+        'message': message,
+      });
+      final data = resp.data['data'] as Map<String, dynamic>;
+      return (
+        userMsg: CoachMessage.fromJson(
+            data['user_message'] as Map<String, dynamic>),
+        coachMsg: CoachMessage.fromJson(
+            data['coach_message'] as Map<String, dynamic>),
+        riskMode: data['risk_mode'] as String? ?? 'normal',
+      );
+    } on DioException catch (e) {
+      throw AppError.fromDio(e);
+    }
+  }
+
   Future<List<CoachMessage>> getThread() async {
     try {
       final resp = await _dio.get('/coach/thread');
-      final list = resp.data['data'] as List;
-      return list.map((e) => CoachMessage.fromJson(e as Map<String, dynamic>)).toList();
+      final data = resp.data['data'] as Map<String, dynamic>;
+      final list = data['messages'] as List;
+      return list
+          .map((e) => CoachMessage.fromJson(e as Map<String, dynamic>))
+          .toList();
     } on DioException catch (e) {
       throw AppError.fromDio(e);
     }
@@ -105,6 +130,10 @@ class CoachChatNotifier extends StateNotifier<AsyncValue<List<CoachMessage>>> {
   }
   final CoachRepository _repo;
 
+  /// Son risk modu (crisis/distress UI için).
+  String _lastRiskMode = 'normal';
+  String get lastRiskMode => _lastRiskMode;
+
   Future<void> _load() async {
     try {
       final messages = await _repo.getThread();
@@ -114,8 +143,9 @@ class CoachChatNotifier extends StateNotifier<AsyncValue<List<CoachMessage>>> {
     }
   }
 
-  Future<CoachResponse?> sendMessage(String text, {bool wantAudio = false}) async {
-    // Optimistic: önce kullanıcı mesajını göster
+  /// Kullanıcı mesajı gönder, koç yanıtını bekle. Her iki mesaj da persist edilir.
+  /// Optimistic UI: önce user mesajını göster, sonra gerçek verilerle replace et.
+  Future<void> sendMessage(String text) async {
     final currentList = state.value ?? [];
     final optimisticUser = CoachMessage(
       id: 'optimistic-${DateTime.now().millisecondsSinceEpoch}',
@@ -127,12 +157,19 @@ class CoachChatNotifier extends StateNotifier<AsyncValue<List<CoachMessage>>> {
     state = AsyncValue.data([...currentList, optimisticUser]);
 
     try {
-      final resp = await _repo.respond(text, wantAudio: wantAudio);
-      // Thread'i yenile — server-side ID'lerle
-      await _load();
-      return resp;
+      final result = await _repo.postThreadMessage(text);
+      _lastRiskMode = result.riskMode;
+
+      // Optimistic'i at, gerçek ikisini ekle
+      final withoutOptimistic = currentList;
+      state = AsyncValue.data([
+        ...withoutOptimistic,
+        result.userMsg,
+        result.coachMsg,
+      ]);
     } catch (e) {
-      await _load(); // rollback
+      // Rollback — optimistic'i kaldır
+      state = AsyncValue.data(currentList);
       rethrow;
     }
   }

@@ -34,7 +34,7 @@ class AppTheme {
         titleTextStyle: AppTextStyles.headingMedium,
         iconTheme: IconThemeData(color: AppColors.textPrimary),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -50,8 +50,7 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceElevated,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -68,8 +67,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.error),
         ),
-        hintStyle:
-            AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
+        hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
         labelStyle: AppTextStyles.labelLarge,
       ),
       textTheme: const TextTheme(

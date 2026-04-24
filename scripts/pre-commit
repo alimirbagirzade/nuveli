@@ -1,0 +1,90 @@
+#!/bin/bash
+# Nuveli pre-commit hook
+# Kurulum: scripts/install-hooks.sh çalıştır
+#
+# Commit öncesi hızlı doğrulama:
+# - Dart kodu değişmişse flutter analyze
+# - Python kodu değişmişse pytest (hızlı testler)
+# - .env dosyalarının commit'e girmediğinden emin ol
+
+set -e
+
+# Renkler
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo "🔍 Pre-commit doğrulama başlıyor..."
+
+# ----------------------------------------------------------------------------
+# 1. .env dosyası commit'e girmeye çalışıyor mu? (KRİTİK)
+# ----------------------------------------------------------------------------
+LEAKED_ENV=$(git diff --cached --name-only --diff-filter=AM | grep -E "^(app|backend)/\.env($|\.[^e])" || true)
+if [ -n "$LEAKED_ENV" ]; then
+  echo -e "${RED}❌ DUR! .env dosyası commit'e girmek üzere:${NC}"
+  echo "$LEAKED_ENV"
+  echo ""
+  echo "Bu dosya secret içerir. Unstage et:"
+  echo "  git reset HEAD $LEAKED_ENV"
+  exit 1
+fi
+
+# ----------------------------------------------------------------------------
+# 2. google-services.json / GoogleService-Info.plist commit'e girmeye çalışıyor mu?
+# ----------------------------------------------------------------------------
+LEAKED_FIREBASE=$(git diff --cached --name-only --diff-filter=AM | grep -E "google-services\.json|GoogleService-Info\.plist" || true)
+if [ -n "$LEAKED_FIREBASE" ]; then
+  echo -e "${RED}❌ DUR! Firebase config dosyası commit'e girmek üzere:${NC}"
+  echo "$LEAKED_FIREBASE"
+  echo "Bunlar .gitignore'da olmalı."
+  exit 1
+fi
+
+# ----------------------------------------------------------------------------
+# 3. Dart değişikliği varsa flutter analyze
+# ----------------------------------------------------------------------------
+DART_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "^app/.*\.dart$" || true)
+if [ -n "$DART_FILES" ]; then
+  echo "🎯 Flutter analyze çalıştırılıyor..."
+  cd app
+  if ! flutter analyze --no-pub --no-fatal-infos 2>&1; then
+    echo -e "${RED}❌ flutter analyze başarısız. Hataları düzelt ve tekrar commit et.${NC}"
+    exit 1
+  fi
+  cd ..
+  echo -e "${GREEN}✅ Flutter analyze geçti${NC}"
+fi
+
+# ----------------------------------------------------------------------------
+# 4. Python değişikliği varsa pytest (kritik testler için unit-only mode)
+# ----------------------------------------------------------------------------
+PY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "^backend/.*\.py$" || true)
+if [ -n "$PY_FILES" ]; then
+  echo "🐍 Backend testleri çalıştırılıyor..."
+  cd backend
+  if [ -d "venv" ]; then
+    source venv/bin/activate
+  fi
+
+  # Yalnızca hızlı unit testler — integration testleri bu aşamada skip
+  if ! pytest tests/ -q --tb=line 2>&1; then
+    echo -e "${RED}❌ Pytest başarısız. Testleri düzelt.${NC}"
+    exit 1
+  fi
+  cd ..
+  echo -e "${GREEN}✅ Backend testleri geçti${NC}"
+fi
+
+# ----------------------------------------------------------------------------
+# 5. Safety protocol dosyaları silinmiş mi? (KRİTİK — uyarı)
+# ----------------------------------------------------------------------------
+PROTOCOL_DELETED=$(git diff --cached --name-only --diff-filter=D | grep "docs/protocols/" || true)
+if [ -n "$PROTOCOL_DELETED" ]; then
+  echo -e "${YELLOW}⚠️  UYARI: Protokol dosyaları siliniyor:${NC}"
+  echo "$PROTOCOL_DELETED"
+  echo "Bu dosyalar safety/AI sınırlarını tanımlar. Emin misin? (Devam etmek için Enter)"
+  read -r
+fi
+
+echo -e "${GREEN}✅ Tüm kontroller geçti. Commit ediliyor...${NC}"

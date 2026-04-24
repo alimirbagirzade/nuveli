@@ -1,15 +1,16 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 
+import '../../../core/monitoring/analytics_service.dart';
+import '../../../core/monitoring/crash_reporter.dart';
 import '../../../core/network/app_error.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/meal_image_capture.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../data/meal_repository.dart';
@@ -21,29 +22,32 @@ class MealCaptureScreen extends ConsumerStatefulWidget {
 }
 
 class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
-  final _picker = ImagePicker();
   final _descCtrl = TextEditingController();
   String? _imagePath;
   bool _analyzing = false;
 
   Future<void> _pickFromCamera() async {
-    final x = await _picker.pickImage(source: ImageSource.camera, imageQuality: 80);
-    if (x != null) setState(() => _imagePath = x.path);
+    AnalyticsService.mealCaptureStarted(source: 'camera');
+    final path = await MealImageCapture.fromCamera();
+    if (path != null) {
+      setState(() => _imagePath = path);
+      // Breadcrumb: file size log'u (crash olursa büyük dosya şüphesi için)
+      final sizeKb = await MealImageCapture.fileSizeKb(path);
+      CrashReporter.log('meal_image_captured: ${sizeKb}KB (camera)');
+    }
   }
 
   Future<void> _pickFromGallery() async {
-    final x = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
-    if (x != null) setState(() => _imagePath = x.path);
-  }
-
-  Future<String?> _readAsBase64(String path) async {
-    try {
-      final bytes = await File(path).readAsBytes();
-      return base64Encode(bytes);
-    } catch (_) {
-      return null;
+    AnalyticsService.mealCaptureStarted(source: 'gallery');
+    final path = await MealImageCapture.fromGallery();
+    if (path != null) {
+      setState(() => _imagePath = path);
+      final sizeKb = await MealImageCapture.fileSizeKb(path);
+      CrashReporter.log('meal_image_captured: ${sizeKb}KB (gallery)');
     }
   }
+
+  Future<String?> _readAsBase64(String path) => MealImageCapture.toBase64(path);
 
   Future<void> _analyze() async {
     if (_imagePath == null && _descCtrl.text.trim().isEmpty) return;
@@ -60,17 +64,70 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
             description: _descCtrl.text.trim().isEmpty ? null : _descCtrl.text.trim(),
           );
 
+      // Analytics: AI sonucu confidence ile track et
+      AnalyticsService.mealAnalyzed(confidence: result.confidence);
+
       if (!mounted) return;
       context.pushReplacement(
         AppRoute.mealResult,
         extra: result,
       );
-    } catch (e) {
+    } catch (e, stack) {
       if (!mounted) return;
+      // Günlük analiz limiti aşılmış → paywall'u göster, premium'a yönlendir
+      if (e is LimitExceededError) {
+        await _showLimitDialog(e.userMessage);
+        return;
+      }
+      // Beklenmeyen hatalar Crashlytics'e — network/expected error'lar değil
+      if (e is! AppError) {
+        CrashReporter.report(
+          e,
+          stack,
+          feature: 'meal',
+          action: 'analyze',
+          context: {'has_description': _descCtrl.text.isNotEmpty},
+        );
+      }
       final msg = e is AppError ? e.userMessage : 'Analiz yapılamadı.';
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     } finally {
       if (mounted) setState(() => _analyzing = false);
+    }
+  }
+
+  /// Free tier günlük limiti aşılınca paywall modali göster.
+  Future<void> _showLimitDialog(String reason) async {
+    // Analytics: limit dolmasını track et
+    AnalyticsService.limitReached(feature: 'meal_analysis');
+
+    final goToPaywall = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        icon: const Icon(Icons.lock_outline,
+            size: 48, color: AppColors.primary),
+        title: const Text('Günlük limit doldu'),
+        content: Text(
+          '$reason\n\nPremium ile sınırsız fotoğraf analizi yapabilirsin.',
+          textAlign: TextAlign.center,
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Sonra'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Premium\'a bak'),
+          ),
+        ],
+      ),
+    );
+
+    if (goToPaywall == true && mounted) {
+      AnalyticsService.paywallShown(source: 'meal_limit');
+      context.push(AppRoute.paywall);
     }
   }
 

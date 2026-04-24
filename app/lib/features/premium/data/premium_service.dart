@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/services.dart';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -88,8 +86,7 @@ class RevenueCatService {
 
     try {
       final purchaseInfo = await Purchases.purchasePackage(package);
-      final hasPremium =
-          purchaseInfo.entitlements.active.containsKey('premium');
+      final hasPremium = purchaseInfo.entitlements.active.containsKey('premium');
       return PurchaseResult.success(hasPremium: hasPremium);
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);

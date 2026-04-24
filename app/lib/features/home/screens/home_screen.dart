@@ -9,6 +9,8 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/error_state_view.dart';
 import '../../../shared/widgets/loading_view.dart';
+import '../../premium/data/premium_service.dart';
+import '../../premium/utils/trial_gift_trigger.dart';
 import '../data/home_repository.dart';
 import '../widgets/coach_card.dart';
 import '../widgets/craving_prompt_card.dart';
@@ -16,12 +18,34 @@ import '../widgets/daily_summary_card.dart';
 import '../widgets/mini_progress_chart.dart';
 import '../widgets/mini_task_card.dart';
 import '../widgets/quick_actions_grid.dart';
+import '../widgets/today_meals_list.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Premium durumu yüklendikten sonra (free ise + bu cihazda ilk kez)
+    // trial hediye modali gösterilir. Bir kez SharedPreferences flag'i ile
+    // tekrar çıkmasın garantilenir.
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Premium status future'ını bekle, sonra modal
+      await ref.read(premiumStatusProvider.future).catchError((_) {
+        return PremiumStatus.free();
+      });
+      if (!mounted) return;
+      TrialGiftTrigger.maybeShow(context, ref);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final homeAsync = ref.watch(homePayloadProvider);
 
     return AppScaffold(
@@ -69,6 +93,8 @@ class HomeScreen extends ConsumerWidget {
               const CravingPromptCard(),
               const SizedBox(height: 16),
               const MiniProgressChart(),
+              const SizedBox(height: 16),
+              const TodayMealsList(),
               const SizedBox(height: 16),
               const MiniTaskCard(),
               const SizedBox(height: 24),

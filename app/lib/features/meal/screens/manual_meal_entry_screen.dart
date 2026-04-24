@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/network/app_error.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../features/home/data/home_repository.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../data/meal_repository.dart';
+import '../providers/meal_providers.dart';
 
 class ManualMealEntryScreen extends ConsumerStatefulWidget {
   const ManualMealEntryScreen({super.key});
@@ -55,6 +57,9 @@ class _ManualMealEntryScreenState extends ConsumerState<ManualMealEntryScreen> {
         'meal_type': _mealType,
       });
       if (!mounted) return;
+      // Home + history ekranlarının cache'ini yenile
+      ref.invalidate(todayMealsProvider);
+      ref.invalidate(homePayloadProvider);
       _snack('Öğün eklendi.');
       Navigator.pop(context, true);
     } catch (e) {

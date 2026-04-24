@@ -76,3 +76,22 @@ async def get_profile(user_id: str = Depends(get_current_user)):
         from fastapi import HTTPException
         raise HTTPException(404, detail={"code": "NOT_FOUND", "message": "Profil bulunamadı."})
     return ApiResponse.ok(profile)
+
+
+@router.get("/notification-preferences")
+async def get_notification_preferences(user_id: str = Depends(get_current_user)):
+    """Kullanıcının bildirim tercihlerini döner. Yoksa default."""
+    svc = ProfileService()
+    prefs = await svc.get_notification_preferences(user_id)
+    return ApiResponse.ok(prefs)
+
+
+@router.delete("")
+async def delete_account(user_id: str = Depends(get_current_user)):
+    """
+    Kullanıcı hesabını ve tüm verileri kalıcı olarak siler.
+    GDPR/KVKK right-to-be-forgotten.
+    """
+    svc = ProfileService()
+    await svc.delete_account(user_id)
+    return ApiResponse.ok({"deleted": True})

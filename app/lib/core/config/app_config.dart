@@ -6,17 +6,17 @@ class AppConfig {
   // Supabase
   static const supabaseUrl = String.fromEnvironment(
     'SUPABASE_URL',
-    defaultValue: 'https://asicgcnpahdnitzalcva.supabase.co',
+    defaultValue: 'https://your-project.supabase.co',
   );
   static const supabaseAnonKey = String.fromEnvironment(
     'SUPABASE_ANON_KEY',
-    defaultValue: 'sb_publishable_C6QzkNZwI_67VW4q91K8pw_0Db8_Bgu',
+    defaultValue: 'your-anon-key',
   );
 
   // Backend API
   static const apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://nuveli-test.onrender.com',
+    defaultValue: 'http://localhost:8000',
   );
 
   // RevenueCat

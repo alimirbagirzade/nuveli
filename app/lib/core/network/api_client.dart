@@ -4,11 +4,20 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/app_config.dart';
 
 /// Nuveli API client. Tüm network istekleri bu provider'dan alınır.
+///
+/// Timeout stratejisi:
+/// - connectTimeout 15s: bağlantı kurma (TCP + TLS handshake)
+/// - receiveTimeout 60s: response bekleme (OpenAI Vision 45s'e kadar sürebilir)
+/// - sendTimeout 30s: body upload (büyük meal fotoğrafı için)
+///
+/// Tek seferlik ağır çağrılar için `dio.options.receiveTimeout` per-request
+/// override edilebilir (örn. meal_repository.analyze).
 final apiClientProvider = Provider<Dio>((ref) {
   final dio = Dio(BaseOptions(
     baseUrl: AppConfig.apiBaseUrl,
     connectTimeout: const Duration(seconds: 15),
-    receiveTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 60),
+    sendTimeout: const Duration(seconds: 30),
     headers: {'Content-Type': 'application/json'},
   ));
 
@@ -21,7 +30,32 @@ final apiClientProvider = Provider<Dio>((ref) {
       return handler.next(options);
     },
     onError: (e, handler) {
-      // Logger burada
+      // GET request'ler için idempotent retry (1 kez).
+      // POST/PUT/DELETE retry edilmez — side effect risk'i.
+      final isRetriable =
+          e.requestOptions.method == 'GET' &&
+              (e.type == DioExceptionType.connectionTimeout ||
+                  e.type == DioExceptionType.connectionError) &&
+              e.requestOptions.extra['retry_attempted'] != true;
+
+      if (isRetriable) {
+        e.requestOptions.extra['retry_attempted'] = true;
+        // 500ms bekle + tekrar dene
+        Future.delayed(const Duration(milliseconds: 500), () async {
+          try {
+            final resp = await dio.fetch(e.requestOptions);
+            handler.resolve(resp);
+          } catch (retryErr) {
+            handler.reject(retryErr is DioException
+                ? retryErr
+                : DioException(
+                    requestOptions: e.requestOptions,
+                    error: retryErr,
+                  ));
+          }
+        });
+        return;
+      }
       return handler.next(e);
     },
   ));

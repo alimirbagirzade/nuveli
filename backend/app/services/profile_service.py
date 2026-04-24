@@ -46,6 +46,66 @@ class ProfileService:
         result = self.db.table("notification_preferences").upsert(payload).execute()
         return result.data[0] if result.data else {}
 
+    async def get_notification_preferences(self, user_id: str) -> dict:
+        """Kullanıcının bildirim tercihlerini çek. Yoksa default döner."""
+        result = self.db.table("notification_preferences") \
+            .select("*").eq("user_id", user_id).execute()
+        if result.data:
+            return result.data[0]
+        # Default: tüm bildirimler açık, sessiz saatler 22-08
+        return {
+            "meal_reminders": True,
+            "coach_nudges": True,
+            "weekly_summary": True,
+            "quiet_start": "22:00",
+            "quiet_end": "08:00",
+        }
+
+    async def delete_account(self, user_id: str) -> None:
+        """
+        Kullanıcının tüm verilerini siler (GDPR/KVKK compliance).
+
+        Siler: meals, meal_analyses, coach_threads, notification_prefs,
+        coach_prefs, premium_status_cache, profile, auth user.
+
+        NOT: Bu işlem geri alınamaz ve async transaction değil — her tablo için
+        ayrı DELETE çalışır. Gerçek production'da event-driven + retry gerekir.
+        """
+        logger.info("delete_account_started", user_id=user_id)
+
+        # Sıra önemli: FK constraint'ler için önce child tablolar
+        tables_to_clean = [
+            "meals",
+            "meal_analyses",
+            "coach_threads",
+            "coach_preferences",
+            "notification_preferences",
+            "premium_status_cache",
+            "safety_incidents",  # Varsa
+        ]
+
+        for table in tables_to_clean:
+            try:
+                self.db.table(table).delete().eq("user_id", user_id).execute()
+            except Exception as e:
+                # Tablo yoksa veya başka bir hata — devam et, tam silmek kritik
+                logger.warning("delete_table_failed", table=table, error=str(e))
+
+        # Profile tablosunda user_id değil id kolonu var
+        try:
+            self.db.table("profiles").delete().eq("id", user_id).execute()
+        except Exception as e:
+            logger.warning("delete_profile_failed", error=str(e))
+
+        # Auth user'ı sil (Supabase admin API)
+        try:
+            self.db.auth.admin.delete_user(user_id)
+        except Exception as e:
+            logger.error("delete_auth_user_failed", user_id=user_id, error=str(e))
+            raise
+
+        logger.info("delete_account_completed", user_id=user_id)
+
     async def complete_onboarding(self, user_id: str) -> None:
         self.db.table("profiles").update({"onboarding_completed": True}).eq("id", user_id).execute()
         # Premium cache başlat

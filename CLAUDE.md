@@ -45,29 +45,38 @@ OpenAI TTS       → Koç sesli yanıtı (kısa)
 app/lib/
 ├── core/
 │   ├── config/
-│   ├── routing/
+│   ├── monitoring/       # CrashReporter (Crashlytics wrapper)
+│   ├── network/          # ApiClient (Dio), AppError
+│   ├── providers/        # Supabase, RevenueCat, Firebase init
+│   ├── routing/          # GoRouter + page transitions
 │   └── theme/
 ├── features/
-│   ├── onboarding/
-│   ├── meal/
+│   ├── auth/             # login, signup, splash, forgot password
+│   ├── onboarding/       # age gate, acceptance, goal, profile, coach persona
 │   ├── home/
-│   ├── coach/
-│   ├── premium/
-│   └── settings/
-└── shared/
-    └── widgets/
+│   ├── meal/             # capture, manual entry, AI analysis result
+│   ├── coach/            # chat, audio playback, crisis banner
+│   ├── premium/          # paywall, trial gift modal
+│   └── settings/         # notification prefs, delete account
+└── shared/widgets/       # PrimaryButton, AppScaffold, Skeleton, EmptyStateView
 ```
 
 ## Klasör Yapısı — Backend
 
 ```
 backend/app/
-├── api/
-│   └── routes/
-├── core/
-├── db/
-├── schemas/
-└── services/
+├── api/routes/           # auth, meals, coach, premium, profile, home, app
+├── core/                 # config, security (JWT), dependencies, logging
+├── db/                   # Supabase client
+├── schemas/              # Pydantic request/response
+└── services/             # Business logic (profile, meal, coach, premium, safety)
+```
+
+## Test Dosyaları
+
+```
+app/test/                 # 98 Dart test
+backend/tests/            # 29 Python test
 ```
 
 ---

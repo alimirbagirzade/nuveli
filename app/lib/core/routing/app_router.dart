@@ -4,12 +4,21 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../features/auth/screens/forgot_password_screen.dart';
+import '../../features/auth/screens/login_screen.dart';
+import '../../features/auth/screens/signup_screen.dart';
+import '../../features/auth/screens/splash_screen.dart';
 import '../../features/coach/screens/coach_chat_screen.dart';
 import '../../features/home/screens/home_screen.dart';
+import '../../features/meal/data/meal_models.dart';
 import '../../features/meal/screens/manual_meal_entry_screen.dart';
 import '../../features/meal/screens/meal_analysis_result_screen.dart';
 import '../../features/meal/screens/meal_capture_screen.dart';
+import '../../features/onboarding/screens/acceptance_screens.dart';
+import '../../features/onboarding/screens/onboarding_screens.dart';
+import '../../features/onboarding/screens/welcome_age_gate_screen.dart';
 import '../../features/premium/screens/paywall_screen.dart';
+import 'page_transitions.dart';
 import '../../features/progress/screens/empty_day_screen.dart';
 import '../../features/progress/screens/monthly_insight_screen.dart';
 import '../../features/progress/screens/weekly_summary_screen.dart';
@@ -29,6 +38,8 @@ class AppRoute {
   // Splash & Auth
   static const splash = '/';
   static const login = '/login';
+  static const signUp = '/signup';
+  static const forgotPassword = '/forgot-password';
 
   // Acceptance
   static const acceptanceAgeGate = '/acceptance/age-gate';
@@ -84,6 +95,8 @@ GoRouter appRouter(AppRouterRef ref) {
       // Auth gerektirmeyen ekranlar
       const publicPaths = [
         AppRoute.login,
+        AppRoute.signUp,
+        AppRoute.forgotPassword,
         AppRoute.acceptanceAgeGate,
         AppRoute.acceptanceWellnessScope,
         AppRoute.acceptanceAiEstimates,
@@ -100,11 +113,67 @@ GoRouter appRouter(AppRouterRef ref) {
     routes: [
       GoRoute(
         path: AppRoute.splash,
-        builder: (context, state) => const _SplashPlaceholder(),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: AppRoute.login,
-        builder: (context, state) => const _PlaceholderScreen(title: 'Giriş'),
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.signUp,
+        builder: (context, state) => const SignUpScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.forgotPassword,
+        builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+
+      // Acceptance (5 ekran)
+      GoRoute(
+        path: AppRoute.acceptanceAgeGate,
+        builder: (context, state) => const WelcomeAgeGateScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.acceptanceWellnessScope,
+        builder: (context, state) => const WellnessScopeScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.acceptanceAiEstimates,
+        builder: (context, state) => const AiEstimatesScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.acceptanceSpecialCases,
+        builder: (context, state) => const SpecialCasesScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.acceptanceTerms,
+        builder: (context, state) => const TermsPrivacyScreen(),
+      ),
+
+      // Onboarding (6 ekran)
+      GoRoute(
+        path: AppRoute.onboardingGoal,
+        builder: (context, state) => const GoalSelectionScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingProfileOne,
+        builder: (context, state) => const ProfileStepOneScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingProfileTwo,
+        builder: (context, state) => const ProfileStepTwoScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingCoach,
+        builder: (context, state) => const CoachSelectionScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingNotification,
+        builder: (context, state) => const NotificationOptInScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingResult,
+        builder: (context, state) => const OnboardingResultScreen(),
       ),
 
       // Home & main
@@ -113,24 +182,33 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) => const HomeScreen(),
       ),
 
-      // Meal
+      // Meal — modal hissi için slide-up
       GoRoute(
         path: AppRoute.mealCapture,
-        builder: (context, state) => const MealCaptureScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideUp(const MealCaptureScreen()),
       ),
       GoRoute(
         path: AppRoute.mealManual,
-        builder: (context, state) => const ManualMealEntryScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideUp(const ManualMealEntryScreen()),
       ),
       GoRoute(
         path: AppRoute.mealResult,
-        builder: (context, state) => const MealAnalysisResultScreen(),
+        pageBuilder: (context, state) {
+          final analysis = state.extra as MealAnalysisResult?;
+          final screen = analysis == null
+              ? const MealCaptureScreen()
+              : MealAnalysisResultScreen(analysis: analysis);
+          return AppPageTransitions.fade(screen);
+        },
       ),
 
       // Coach
       GoRoute(
         path: AppRoute.coach,
-        builder: (context, state) => const CoachChatScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const CoachChatScreen()),
       ),
 
       // Progress
@@ -150,7 +228,8 @@ GoRouter appRouter(AppRouterRef ref) {
       // Premium
       GoRoute(
         path: AppRoute.paywall,
-        builder: (context, state) => const PaywallScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideUp(const PaywallScreen()),
       ),
 
       // Settings
@@ -187,32 +266,3 @@ GoRouter appRouter(AppRouterRef ref) {
   );
 }
 
-// Geçici splash — Prompt 2.x'te gerçek ekranla değiştirilecek
-class _SplashPlaceholder extends StatelessWidget {
-  const _SplashPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'nuveli',
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
-
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen({required this.title});
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(child: Text('$title ekranı geliştiriliyor...')),
-    );
-  }
-}
