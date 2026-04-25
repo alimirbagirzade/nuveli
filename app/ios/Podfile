@@ -42,8 +42,10 @@ post_install do |installer|
     target.build_configurations.each do |config|
       # Tüm pod'lar için minimum iOS 13.0 — Firebase ve diğerleri 12+ gerektiriyor
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      # Excluded archs simulator için (Apple Silicon Mac'lerde gerekli)
-      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64' if config.build_settings['SDKROOT'] == 'iphoneos'
+
+      # Apple Silicon (M1/M2/M3) Mac'lerde iOS simulator arm64 native çalışır.
+      # EXCLUDED_ARCHS koymak yerine sistemin default'una bırakıyoruz.
+      # Eski Intel Mac'lerde bile Xcode 14+ otomatik handle ediyor.
     end
   end
 end
