@@ -29,6 +29,13 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
+  use_modular_headers!
+
+  # Firebase requires modular headers to avoid 'non-modular header' errors
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
@@ -42,6 +49,9 @@ post_install do |installer|
     target.build_configurations.each do |config|
       # Tüm pod'lar için minimum iOS 15.0 — firebase_analytics 12.x bunu gerektiriyor
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+
+      # Firebase non-modular header fix (safety net beyond use_modular_headers!)
+      config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
 
       # Apple Silicon (M1/M2/M3) Mac'lerde iOS simulator arm64 native çalışır.
       # EXCLUDED_ARCHS koymak yerine sistemin default'una bırakıyoruz.
