@@ -31,6 +31,8 @@ dependencies:
   firebase_analytics: ^10.10.0
   firebase_crashlytics: ^3.5.0
   firebase_messaging: ^14.9.0
+  # Note: Firebase iOS SDK 12.x requires iOS 15+ deployment target.
+  # Podfile is set to platform :ios, '15.0' for compatibility.
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4
 
