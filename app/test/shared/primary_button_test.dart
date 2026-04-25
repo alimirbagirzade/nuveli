@@ -2,91 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nuveli/shared/widgets/primary_button.dart';
 
-import '../_helpers/widget_test_helpers.dart';
-
 void main() {
-  group('PrimaryButton', () {
-    testWidgets('displays the label', (tester) async {
-      await pumpScaffoldWithProviders(
-        tester,
-        PrimaryButton(label: 'Devam Et', onPressed: () {}),
-      );
+  Widget wrap(Widget child) {
+    return MaterialApp(home: Scaffold(body: child));
+  }
 
+  group('PrimaryButton', () {
+    testWidgets('renders label', (tester) async {
+      await tester.pumpWidget(wrap(
+        PrimaryButton(label: 'Devam Et', onPressed: () {}),
+      ));
       expect(find.text('Devam Et'), findsOneWidget);
     });
 
-    testWidgets('fires onPressed when tapped', (tester) async {
-      var tapped = 0;
-      await pumpScaffoldWithProviders(
-        tester,
-        PrimaryButton(label: 'Giriş Yap', onPressed: () => tapped++),
-      );
-
+    testWidgets('calls onPressed when tapped', (tester) async {
+      var pressed = false;
+      await tester.pumpWidget(wrap(
+        PrimaryButton(label: 'Tap', onPressed: () => pressed = true),
+      ));
       await tester.tap(find.byType(PrimaryButton));
       await tester.pump();
-
-      expect(tapped, 1);
+      expect(pressed, true);
     });
 
-    testWidgets('does not fire onPressed when disabled (null callback)',
-        (tester) async {
-      await pumpScaffoldWithProviders(
-        tester,
-        const PrimaryButton(label: 'Kapalı', onPressed: null),
-      );
-
-      final btn = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
-      expect(btn.onPressed, isNull);
+    testWidgets('shows loading spinner when isLoading', (tester) async {
+      await tester.pumpWidget(wrap(
+        PrimaryButton(label: 'Submit', onPressed: () {}, isLoading: true),
+      ));
+      expect(find.text('Submit'), findsNothing);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('does not fire onPressed when isEnabled: false',
-        (tester) async {
-      var tapped = 0;
-      await pumpScaffoldWithProviders(
-        tester,
+    testWidgets('does not call onPressed when isLoading', (tester) async {
+      var pressed = false;
+      await tester.pumpWidget(wrap(
+        PrimaryButton(
+          label: 'Submit',
+          onPressed: () => pressed = true,
+          isLoading: true,
+        ),
+      ));
+      await tester.tap(find.byType(PrimaryButton));
+      await tester.pump();
+      expect(pressed, false);
+    });
+
+    testWidgets('disabled when isEnabled is false', (tester) async {
+      var pressed = false;
+      await tester.pumpWidget(wrap(
         PrimaryButton(
           label: 'Disabled',
+          onPressed: () => pressed = true,
           isEnabled: false,
-          onPressed: () => tapped++,
         ),
-      );
-
-      await tester.tap(find.byType(PrimaryButton), warnIfMissed: false);
+      ));
+      await tester.tap(find.byType(PrimaryButton));
       await tester.pump();
-
-      expect(tapped, 0);
+      expect(pressed, false);
     });
 
-    testWidgets('shows loading indicator when isLoading', (tester) async {
-      await pumpScaffoldWithProviders(
-        tester,
+    testWidgets('renders icon if provided', (tester) async {
+      await tester.pumpWidget(wrap(
         PrimaryButton(
-          label: 'Kaydediliyor',
-          isLoading: true,
+          label: 'With Icon',
           onPressed: () {},
+          icon: const Icon(Icons.check),
         ),
-      );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      // Label loading esnasında gizlenir
-      expect(find.text('Kaydediliyor'), findsNothing);
+      ));
+      expect(find.byIcon(Icons.check), findsOneWidget);
+      expect(find.text('With Icon'), findsOneWidget);
     });
+  });
 
-    testWidgets('ignores taps while loading', (tester) async {
-      var tapped = 0;
-      await pumpScaffoldWithProviders(
-        tester,
-        PrimaryButton(
-          label: 'Yükleniyor',
-          isLoading: true,
-          onPressed: () => tapped++,
-        ),
-      );
-
-      await tester.tap(find.byType(PrimaryButton), warnIfMissed: false);
+  group('SecondaryButton', () {
+    testWidgets('renders label and is tappable', (tester) async {
+      var pressed = false;
+      await tester.pumpWidget(wrap(
+        SecondaryButton(label: 'Vazgeç', onPressed: () => pressed = true),
+      ));
+      expect(find.text('Vazgeç'), findsOneWidget);
+      await tester.tap(find.byType(SecondaryButton));
       await tester.pump();
-
-      expect(tapped, 0);
+      expect(pressed, true);
     });
   });
 }

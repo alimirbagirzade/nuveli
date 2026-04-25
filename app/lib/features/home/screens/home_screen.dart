@@ -8,7 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/error_state_view.dart';
-import '../../../shared/widgets/loading_view.dart';
+import '../../../shared/widgets/skeleton_loader.dart';
 import '../../premium/data/premium_service.dart';
 import '../../premium/utils/trial_gift_trigger.dart';
 import '../data/home_repository.dart';
@@ -62,7 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         color: AppColors.primary,
         onRefresh: () async => ref.invalidate(homePayloadProvider),
         child: homeAsync.when(
-          loading: () => const LoadingView(),
+          loading: () => const HomeSkeleton(),
           error: (err, _) {
             final msg = err is AppError ? err.userMessage : 'Bir şeyler ters gitti';
             return ErrorStateView(

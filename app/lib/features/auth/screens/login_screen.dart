@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/app_validators.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
@@ -97,11 +98,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     labelText: 'Email',
                     prefixIcon: Icon(Icons.email_outlined),
                   ),
-                  validator: (v) {
-                    if (v == null || v.trim().isEmpty) return 'Email gerekli';
-                    if (!v.contains('@')) return 'Geçerli bir email gir';
-                    return null;
-                  },
+                  validator: AppValidators.email,
                 ),
                 const SizedBox(height: 16),
 
@@ -124,11 +121,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Şifre gerekli';
-                    if (v.length < 6) return 'En az 6 karakter';
-                    return null;
-                  },
+                  validator: AppValidators.password,
                 ),
                 const SizedBox(height: 8),
 

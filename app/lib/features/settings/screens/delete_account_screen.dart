@@ -6,6 +6,7 @@ import '../../../core/network/app_error.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/app_haptics.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/settings_providers.dart';
@@ -65,6 +66,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
     });
 
     try {
+      AppHaptics.heavy(); // Kritik geri alınamaz aksiyon
       await ref.read(deleteAccountActionProvider)();
       if (!mounted) return;
       // Login'e yönlendir (tüm stack'i temizle)

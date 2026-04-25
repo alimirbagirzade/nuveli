@@ -1,5 +1,7 @@
 # Nuveli — AI Calorie Coach
 
+[![CI](https://github.com/alimirbagirzade/nuveli_test/actions/workflows/ci.yml/badge.svg)](https://github.com/alimirbagirzade/nuveli_test/actions/workflows/ci.yml)
+
 Fotoğraf tabanlı yemek analizi, AI koç ve davranışsal destek sunan bir wellness uygulaması.
 
 > ⚠️ Nuveli bir wellness aracıdır. Tıbbi teşhis, klinik diyet planı veya doktor/diyetisyen yerine geçen yönlendirme sunmaz. Kritik sınırlar için bkz. `docs/protocols/safety-wellness-boundary.md`.

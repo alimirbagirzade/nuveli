@@ -21,12 +21,14 @@ import 'page_transitions.dart';
 import '../../features/progress/screens/empty_day_screen.dart';
 import '../../features/progress/screens/monthly_insight_screen.dart';
 import '../../features/progress/screens/weekly_summary_screen.dart';
+import '../../features/settings/screens/about_screen.dart';
 import '../../features/settings/screens/delete_account_screen.dart';
 import '../../features/settings/screens/how_ai_works_screen.dart';
 import '../../features/settings/screens/notification_prefs_screen.dart';
 import '../../features/settings/screens/privacy_safety_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/settings/screens/support_screen.dart';
+import '../../features/shared/screens/error_screen.dart';
 
 /// Tüm route isimleri burada tanımlıdır.
 class AppRoute {
@@ -72,6 +74,7 @@ class AppRoute {
   // Settings sub
   static const notificationPrefs = '/settings/notifications';
   static const support = '/settings/support';
+  static const about = '/settings/about';
   static const howAiWorks = '/settings/how-ai-works';
   static const privacySafety = '/settings/privacy-safety';
   static const deleteAccount = '/settings/delete-account';
@@ -232,33 +235,44 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       // Settings
       GoRoute(
         path: AppRoute.settings,
-        builder: (context, state) => const SettingsScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const SettingsScreen()),
       ),
       GoRoute(
         path: AppRoute.notificationPrefs,
-        builder: (context, state) => const NotificationPrefsScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const NotificationPrefsScreen()),
       ),
       GoRoute(
         path: AppRoute.support,
-        builder: (context, state) => const SupportScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const SupportScreen()),
+      ),
+      GoRoute(
+        path: AppRoute.about,
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const AboutScreen()),
       ),
       GoRoute(
         path: AppRoute.howAiWorks,
-        builder: (context, state) => const HowAiWorksScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const HowAiWorksScreen()),
       ),
       GoRoute(
         path: AppRoute.privacySafety,
-        builder: (context, state) => const PrivacySafetyScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const PrivacySafetyScreen()),
       ),
       GoRoute(
         path: AppRoute.deleteAccount,
-        builder: (context, state) => const DeleteAccountScreen(),
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const DeleteAccountScreen()),
       ),
     ],
-    errorBuilder: (context, state) => Scaffold(
-      body: Center(
-        child: Text('Sayfa bulunamadı: ${state.uri}'),
-      ),
+    errorBuilder: (context, state) => ErrorScreen(
+      title: 'Sayfa bulunamadı',
+      message:
+          'Aradığın sayfa burada değil. ${state.uri} adresine ulaşılamadı.',
     ),
   );
 });

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/network/app_error.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/app_haptics.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../data/premium_service.dart';
 
@@ -44,6 +45,7 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
       if (!mounted) return;
 
       if (claimed) {
+        AppHaptics.success();
         // Premium status cache'ini yenile — home/paywall anında trial görsün
         ref.invalidate(premiumStatusProvider);
         Navigator.pop(context, true);

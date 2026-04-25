@@ -8,7 +8,9 @@ import '../../../core/network/app_error.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/app_haptics.dart';
 import '../../../shared/widgets/app_scaffold.dart';
+import '../../../shared/widgets/skeleton_loader.dart';
 import '../data/coach_repository.dart';
 import '../widgets/coach_message_bubble.dart';
 
@@ -32,6 +34,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
     _ctrl.clear();
 
     try {
+      AppHaptics.light();
       await ref.read(coachChatProvider.notifier).sendMessage(text);
       _scrollToBottom();
     } catch (e) {
@@ -103,9 +106,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
             _SupportBanner(isCrisis: riskMode == 'crisis'),
           Expanded(
             child: chatAsync.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
-              ),
+              loading: () => _CoachChatSkeleton(),
               error: (err, _) {
                 final msg = err is AppError ? err.userMessage : 'Yüklenemedi.';
                 return Center(child: Text(msg, style: AppTextStyles.bodySmall));
@@ -296,6 +297,72 @@ class _SupportLink extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Chat yüklenirken gösterilen skeleton — 2 coach + 1 user bubble yer tutucusu.
+class _CoachChatSkeleton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: const [
+        // Coach bubble (sol)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SkeletonBox(width: 28, height: 28, borderRadius: 14),
+            SizedBox(width: 8),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SkeletonBox(width: 220, height: 44, borderRadius: 16),
+                  SizedBox(height: 4),
+                  SkeletonBox(width: 60, height: 10),
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        // User bubble (sağ)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SkeletonBox(width: 140, height: 36, borderRadius: 16),
+                  SizedBox(height: 4),
+                  SkeletonBox(width: 40, height: 10),
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        // Coach bubble (sol, daha uzun)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SkeletonBox(width: 28, height: 28, borderRadius: 14),
+            SizedBox(width: 8),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SkeletonBox(width: 260, height: 60, borderRadius: 16),
+                  SizedBox(height: 4),
+                  SkeletonBox(width: 60, height: 10),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

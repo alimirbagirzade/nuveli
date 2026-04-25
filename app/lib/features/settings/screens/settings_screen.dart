@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -95,6 +96,12 @@ class SettingsScreen extends ConsumerWidget {
             'Gizlilik ve Güvenlik',
             () => context.push(AppRoute.privacySafety),
           ),
+          _tile(
+            context,
+            Icons.info_outline,
+            'Nuveli Hakkında',
+            () => context.push(AppRoute.about),
+          ),
 
           _section('Abonelik'),
           _tile(
@@ -123,7 +130,10 @@ class SettingsScreen extends ConsumerWidget {
 
           const SizedBox(height: 20),
           Center(
-            child: Text('v1.0.0', style: AppTextStyles.caption),
+            child: Text(
+              'v${AppConfig.appVersion} • ${AppConfig.env}',
+              style: AppTextStyles.caption,
+            ),
           ),
           const SizedBox(height: 24),
         ],

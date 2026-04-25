@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
+import '../../../shared/widgets/skeleton_loader.dart';
 import '../providers/settings_providers.dart';
 
 class NotificationPrefsScreen extends ConsumerStatefulWidget {
@@ -83,7 +84,24 @@ class _NotificationPrefsScreenState
     return AppScaffold(
       appBar: AppBar(title: const Text('Bildirimler')),
       body: asyncPrefs.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ListView(
+          padding: const EdgeInsets.all(16),
+          children: const [
+            // 3 switch placeholder
+            SkeletonCard(height: 70),
+            SizedBox(height: 8),
+            SkeletonCard(height: 70),
+            SizedBox(height: 8),
+            SkeletonCard(height: 70),
+            SizedBox(height: 24),
+            SkeletonBox(width: 140, height: 12),
+            SizedBox(height: 12),
+            // Quiet hours
+            SkeletonCard(height: 60),
+            SizedBox(height: 8),
+            SkeletonCard(height: 60),
+          ],
+        ),
         error: (err, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
