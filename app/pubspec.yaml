@@ -31,6 +31,8 @@ dependencies:
   firebase_analytics: ^10.10.0
   firebase_crashlytics: ^3.5.0
   firebase_messaging: ^14.9.0
+  flutter_local_notifications: ^17.2.2
+  timezone: ^0.9.4
 
   # Storage
   hive_flutter: ^1.1.0
@@ -67,6 +69,29 @@ dev_dependencies:
   mocktail: ^1.0.4
   integration_test:
     sdk: flutter
+  # App icon & splash generation
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.0
+
+# Flutter Launcher Icons config
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0D0D0F"
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+
+# Flutter Native Splash config
+flutter_native_splash:
+  color: "#0D0D0F"
+  image: "assets/icons/splash_logo.png"
+  android_12:
+    color: "#0D0D0F"
+    image: "assets/icons/splash_logo.png"
+  ios: true
+  android: true
+  web: false
 
 flutter:
   uses-material-design: true
