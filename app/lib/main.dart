@@ -11,57 +11,59 @@ import 'app.dart';
 import 'core/config/app_config.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // Tüm initialization VE runApp aynı Zone içinde çalışmalı.
+  // Aksi halde Flutter "Zone mismatch" warning verir ve callback'lerde
+  // hard-to-debug Zone-specific davranış farkları oluşabilir.
+  // Reference: https://docs.flutter.dev/testing/errors
+  await runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  // Production config validation (non-fatal warning)
-  if (AppConfig.isProduction && !AppConfig.isProductionConfigValid) {
-    developer.log(
-      '⚠️  PRODUCTION CONFIG EKSİK: ${AppConfig.missingConfigKeys.join(", ")}',
-      name: 'nuveli.config',
-    );
-  }
-
-  // Firebase (sadece production/staging)
-  if (AppConfig.isFirebaseEnabled) {
-    try {
-      await Firebase.initializeApp();
-      FlutterError.onError =
-          FirebaseCrashlytics.instance.recordFlutterFatalError;
-    } catch (e) {
-      // Firebase yoksa uygulama yine çalışsın
+    // Production config validation (non-fatal warning)
+    if (AppConfig.isProduction && !AppConfig.isProductionConfigValid) {
       developer.log(
-        'Firebase başlatılamadı: $e',
-        name: 'nuveli.firebase',
+        '⚠️  PRODUCTION CONFIG EKSİK: ${AppConfig.missingConfigKeys.join(", ")}',
+        name: 'nuveli.config',
       );
     }
-  }
 
-  // Supabase
-  await Supabase.initialize(
-    url: AppConfig.supabaseUrl,
-    anonKey: AppConfig.supabaseAnonKey,
-  );
-
-  // Global async error handler
-  runZonedGuarded(
-    () => runApp(const ProviderScope(child: NuveliApp())),
-    (error, stack) {
-      if (AppConfig.isFirebaseEnabled) {
-        try {
-          FirebaseCrashlytics.instance
-              .recordError(error, stack, fatal: false);
-        } catch (_) {
-          // Crashlytics çökerse uygulama devam etsin
-        }
-      } else {
-        // Development: console'a yaz
+    // Firebase (sadece production/staging)
+    if (AppConfig.isFirebaseEnabled) {
+      try {
+        await Firebase.initializeApp();
+        FlutterError.onError =
+            FirebaseCrashlytics.instance.recordFlutterFatalError;
+      } catch (e) {
+        // Firebase yoksa uygulama yine çalışsın
         developer.log(
-          'Uncaught error: $error',
-          name: 'nuveli.error',
-          error: error,
-          stackTrace: stack,
+          'Firebase başlatılamadı: $e',
+          name: 'nuveli.firebase',
         );
       }
-    },
-  );
+    }
+
+    // Supabase
+    await Supabase.initialize(
+      url: AppConfig.supabaseUrl,
+      anonKey: AppConfig.supabaseAnonKey,
+    );
+
+    runApp(const ProviderScope(child: NuveliApp()));
+  }, (error, stack) {
+    // Global async error handler — runZonedGuarded yakalanmamış async hatalar için
+    if (AppConfig.isFirebaseEnabled) {
+      try {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: false);
+      } catch (_) {
+        // Crashlytics çökerse uygulama devam etsin
+      }
+    } else {
+      // Development: console'a yaz
+      developer.log(
+        'Uncaught error: $error',
+        name: 'nuveli.error',
+        error: error,
+        stackTrace: stack,
+      );
+    }
+  });
 }
