@@ -26,12 +26,12 @@ dependencies:
   # RevenueCat
   purchases_flutter: ^8.11.0
 
-  # Firebase
-  firebase_core: ^2.30.0
-  firebase_analytics: ^10.10.0
-  firebase_crashlytics: ^3.5.0
-  firebase_messaging: ^14.9.0
-  # Note: Firebase iOS SDK 12.x requires iOS 15+ deployment target.
+  # Firebase (3.x+ uses Firebase iOS SDK 11.x with fixed modular headers — required for Xcode 16)
+  firebase_core: ^3.6.0
+  firebase_analytics: ^11.3.0
+  firebase_crashlytics: ^4.1.0
+  firebase_messaging: ^15.1.0
+  # Note: Firebase iOS SDK 11.x requires iOS 15+ deployment target.
   # Podfile is set to platform :ios, '15.0' for compatibility.
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4

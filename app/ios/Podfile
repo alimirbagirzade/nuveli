@@ -31,12 +31,6 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # Firebase requires modular headers to avoid 'non-modular header' errors
-  pod 'Firebase', :modular_headers => true
-  pod 'FirebaseCore', :modular_headers => true
-  pod 'FirebaseCoreInternal', :modular_headers => true
-  pod 'GoogleUtilities', :modular_headers => true
-
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths
