@@ -1,0 +1,47 @@
+# Render Blueprint — Nuveli Backend
+# 
+# Kullanım:
+# 1. Render hesabı oluştur (render.com)
+# 2. New > Blueprint > GitHub repo seç (alimirbagirzade/nuveli_test)
+# 3. Bu dosya otomatik tespit edilir
+# 4. Environment variables'ları Render UI'dan ekle (aşağıdaki listeye bak)
+# 5. Deploy
+
+services:
+  - type: web
+    name: nuveli-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free  # starter, standard, pro
+    region: frankfurt  # frankfurt (EU), oregon (US-West), ohio (US-East)
+    branch: main
+    healthCheckPath: /health
+    
+    # Environment variables (manuel set edilmeli Render UI'dan)
+    envVars:
+      - key: ENV
+        value: production
+      
+      # Supabase (sync dropdown ile gizli olarak ekle)
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      
+      # OpenAI
+      - key: OPENAI_API_KEY
+        sync: false
+      
+      # RevenueCat
+      - key: REVENUECAT_WEBHOOK_SECRET
+        sync: false
+      
+      # Optional: Sentry, monitoring
+      - key: SENTRY_DSN
+        sync: false
+
+# Auto-deploy: GitHub'a her push'ta otomatik deploy
+# Manuel deploy: Render dashboard > Manual Deploy

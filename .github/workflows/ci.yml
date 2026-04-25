@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  flutter-test:
+    runs-on: ubuntu-latest
+    name: Flutter tests
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Static analysis
+        run: flutter analyze --no-pub
+        continue-on-error: true
+
+      - name: Run tests
+        run: flutter test --no-pub
+
+  backend-test:
+    runs-on: ubuntu-latest
+    name: Backend tests
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Syntax check
+        run: |
+          python -m py_compile app/main.py
+          python -m py_compile app/core/config.py
+          python -m py_compile app/services/profile_service.py
+
+      - name: Run tests
+        env:
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: placeholder
+          SUPABASE_JWT_SECRET: placeholder-secret-min-32-chars-long
+          OPENAI_API_KEY: sk-placeholder
+          REVENUECAT_WEBHOOK_SECRET: placeholder
+        run: |
+          if [ -d "tests" ]; then
+            pytest tests/ -v
+          else
+            echo "No tests directory found"
+          fi

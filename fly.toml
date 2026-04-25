@@ -1,0 +1,47 @@
+# Fly.io deployment config — Nuveli Backend
+#
+# Kurulum:
+# 1. Fly CLI yükle: brew install flyctl
+# 2. Login: fly auth login
+# 3. App oluştur: fly launch (bu dosyayı kullanır)
+# 4. Secrets ekle:
+#    fly secrets set SUPABASE_URL=https://xxx.supabase.co
+#    fly secrets set SUPABASE_SERVICE_ROLE_KEY=eyJ...
+#    fly secrets set SUPABASE_JWT_SECRET=secret
+#    fly secrets set OPENAI_API_KEY=sk-...
+#    fly secrets set REVENUECAT_WEBHOOK_SECRET=...
+# 5. Deploy: fly deploy
+
+app = "nuveli-backend"
+primary_region = "fra"  # Frankfurt (EU). Alternatives: iad (US-East), sjc (US-West)
+
+[build]
+  dockerfile = "backend/Dockerfile"
+  dockerignore = "backend/.dockerignore"
+
+[env]
+  ENV = "production"
+  PORT = "8000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true   # Free tier: idle olunca durdur
+  auto_start_machines = true  # İlk istekte uyandır
+  min_machines_running = 0    # Cold start kabul edilebilir (paywall, settings vs)
+  
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512  # Free tier: 256MB. Production: 1024MB recommended
+
+# Auto-rollback: deploy fail olursa önceki versiyona dön
+[deploy]
+  strategy = "rolling"  # canary, bluegreen, immediate, rolling

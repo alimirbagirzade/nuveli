@@ -71,3 +71,28 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # Tüm route'ları bağla
 app.include_router(api_router)
+
+
+@app.get("/health", tags=["health"])
+async def health_check():
+    """
+    Production health check endpoint.
+    
+    Render/Fly.io/Kubernetes liveness probe için.
+    Hızlı yanıt vermeli (DB query yok).
+    """
+    return {
+        "status": "healthy",
+        "service": "nuveli-backend",
+        "version": settings.app_version if hasattr(settings, "app_version") else "1.0.0",
+        "env": settings.app_env if hasattr(settings, "app_env") else "production",
+    }
+
+
+@app.get("/", tags=["health"])
+async def root():
+    """Root endpoint — uygulamanın ayakta olduğunu gösterir."""
+    return {
+        "service": "Nuveli API",
+        "version": settings.app_version if hasattr(settings, "app_version") else "1.0.0",
+    }
