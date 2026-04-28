@@ -32,18 +32,18 @@ class ProfileService:
             "special_conditions": data.get("special_conditions", []),
         }
 
-        result = self.db.table("profiles").upsert(payload).execute()
+        result = self.db.table("profiles").upsert(payload, on_conflict="id").execute()
         logger.info("onboarding_saved", user_id=user_id)
         return result.data[0] if result.data else {}
 
     async def save_coach_preferences(self, user_id: str, persona: str) -> dict:
         payload = {"user_id": user_id, "coach_persona": persona}
-        result = self.db.table("coach_preferences").upsert(payload).execute()
+        result = self.db.table("coach_preferences").upsert(payload, on_conflict="user_id").execute()
         return result.data[0] if result.data else {}
 
     async def save_notification_preferences(self, user_id: str, prefs: dict) -> dict:
         payload = {"user_id": user_id, **prefs}
-        result = self.db.table("notification_preferences").upsert(payload).execute()
+        result = self.db.table("notification_preferences").upsert(payload, on_conflict="user_id").execute()
         return result.data[0] if result.data else {}
 
     async def get_notification_preferences(self, user_id: str) -> dict:
@@ -112,7 +112,7 @@ class ProfileService:
         self.db.table("premium_status_cache").upsert({
             "user_id": user_id,
             "tier": "free",
-        }).execute()
+        }, on_conflict="user_id").execute()
         logger.info("onboarding_completed", user_id=user_id)
 
     async def get_profile(self, user_id: str) -> dict | None:
