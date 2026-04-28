@@ -22,6 +22,7 @@ import '../../features/progress/screens/empty_day_screen.dart';
 import '../../features/progress/screens/monthly_insight_screen.dart';
 import '../../features/progress/screens/weekly_summary_screen.dart';
 import '../../features/settings/screens/about_screen.dart';
+import '../../features/profile/screens/profile_screen.dart';
 import '../../features/settings/screens/delete_account_screen.dart';
 import '../../features/settings/screens/how_ai_works_screen.dart';
 import '../../features/settings/screens/notification_prefs_screen.dart';
@@ -67,6 +68,7 @@ class AppRoute {
   static const monthlyInsight = '/progress/monthly';
   static const emptyDay = '/progress/empty';
   static const settings = '/settings';
+  static const profile = '/profile';
 
   // Premium
   static const paywall = '/paywall';
@@ -237,6 +239,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoute.settings,
         pageBuilder: (context, state) =>
             AppPageTransitions.slideRight(const SettingsScreen()),
+      ),
+      GoRoute(
+        path: AppRoute.profile,
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const ProfileScreen()),
       ),
       GoRoute(
         path: AppRoute.notificationPrefs,

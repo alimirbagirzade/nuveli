@@ -23,6 +23,15 @@ class CoachPrefRequest(BaseModel):
     coach_persona: str
 
 
+class UpdateProfileRequest(BaseModel):
+    """Partial profile update — only fields user can edit themselves.
+    All fields optional so client can patch one at a time (e.g. avatar only).
+    """
+    display_name: Optional[str] = None
+    avatar_style: Optional[str] = None
+    avatar_seed: Optional[str] = None
+
+
 class NotifPrefRequest(BaseModel):
     meal_reminders: bool = True
     coach_nudges: bool = True
@@ -75,6 +84,34 @@ async def get_profile(user_id: str = Depends(get_current_user)):
     if not profile:
         from fastapi import HTTPException
         raise HTTPException(404, detail={"code": "NOT_FOUND", "message": "Profil bulunamadı."})
+    return ApiResponse.ok(profile)
+
+
+@router.patch("")
+async def update_profile(
+    body: UpdateProfileRequest,
+    user_id: str = Depends(get_current_user),
+):
+    """Partial update of user-editable profile fields.
+
+    Accepts any combination of: display_name, avatar_style, avatar_seed.
+    Validates avatar_style against known DiceBear styles. Empty/null
+    fields in the request are skipped — only provided fields are updated.
+    """
+    svc = ProfileService()
+    payload = {k: v for k, v in body.model_dump().items() if v is not None}
+    if not payload:
+        from fastapi import HTTPException
+        raise HTTPException(400, detail={"code": "EMPTY_UPDATE", "message": "En az bir alan girin."})
+
+    # Guard against bad avatar_style values that would violate the DB check constraint
+    if "avatar_style" in payload:
+        allowed = {"lorelei", "peep", "bottts", "adventurer", "fun-emoji"}
+        if payload["avatar_style"] not in allowed:
+            from fastapi import HTTPException
+            raise HTTPException(400, detail={"code": "BAD_AVATAR_STYLE", "message": "Geçersiz avatar stili."})
+
+    profile = await svc.update_profile(user_id, payload)
     return ApiResponse.ok(profile)
 
 

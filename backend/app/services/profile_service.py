@@ -119,6 +119,18 @@ class ProfileService:
         result = self.db.table("profiles").select("*").eq("id", user_id).single().execute()
         return result.data
 
+    async def update_profile(self, user_id: str, payload: dict) -> dict:
+        """Update only the user-editable fields of profiles.
+
+        Caller (route handler) is responsible for filtering payload to
+        the allow-list of editable fields. We trust whatever arrives
+        here and write it directly. Returns the full updated row so
+        the client can refresh state.
+        """
+        result = self.db.table("profiles").update(payload).eq("id", user_id).execute()
+        logger.info("profile_updated", user_id=user_id, fields=list(payload.keys()))
+        return result.data[0] if result.data else {}
+
     async def get_bootstrap(self, user_id: str) -> dict:
         """Uygulama açılışında tüm state'i tek seferde döndürür."""
         profile = await self.get_profile(user_id)
