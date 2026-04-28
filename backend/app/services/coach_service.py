@@ -132,6 +132,7 @@ class CoachService:
 
     async def _generate_ai_reply(self, user_id: str, user_message: str, decision) -> tuple[str, bool]:
         if not self.openai:
+            logger.warning("coach_ai_skipped_no_openai_key", user_id=user_id)
             return get_fallback("neutral"), True
 
         history = await self.get_thread(user_id, limit=6)
@@ -145,9 +146,16 @@ class CoachService:
                 temperature=0.7,
             )
             text = resp.choices[0].message.content.strip()
+            logger.info("coach_ai_success", user_id=user_id, tokens=resp.usage.total_tokens if resp.usage else 0)
             return text, False
         except Exception as e:
-            logger.warning("coach_ai_failed", user_id=user_id, error=str(e))
+            # Detailed error logging — surface the real OpenAI failure
+            logger.warning(
+                "coach_ai_failed",
+                user_id=user_id,
+                error=str(e),
+                error_type=type(e).__name__,
+            )
             kind = {"gentle": "tough", "celebrate": "encourage",
                     "invite": "greeting"}.get(decision.tone, "neutral")
             return get_fallback(kind), True
