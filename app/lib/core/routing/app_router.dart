@@ -19,6 +19,7 @@ import '../../features/onboarding/screens/welcome_age_gate_screen.dart';
 import '../../features/premium/screens/paywall_screen.dart';
 import 'page_transitions.dart';
 import '../../features/progress/screens/empty_day_screen.dart';
+import '../../features/progress/screens/day_detail_screen.dart';
 import '../../features/progress/screens/monthly_insight_screen.dart';
 import '../../features/progress/screens/weekly_summary_screen.dart';
 import '../../features/settings/screens/about_screen.dart';
@@ -67,6 +68,7 @@ class AppRoute {
   static const weeklySummary = '/progress/weekly';
   static const monthlyInsight = '/progress/monthly';
   static const emptyDay = '/progress/empty';
+  static const dayDetail = '/progress/day';
   static const settings = '/settings';
   static const profile = '/profile';
 
@@ -217,6 +219,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/progress/weekly',
         builder: (context, state) => const WeeklySummaryScreen(),
+      ),
+      GoRoute(
+        path: '/progress/day/:date',
+        builder: (context, state) {
+          final dateParam = state.pathParameters['date'] ?? '';
+          return DayDetailScreen(localDay: dateParam);
+        },
       ),
       GoRoute(
         path: '/progress/monthly',

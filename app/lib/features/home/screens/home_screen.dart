@@ -13,11 +13,11 @@ import '../../../shared/widgets/skeleton_loader.dart';
 import '../../premium/data/premium_service.dart';
 import '../../premium/utils/trial_gift_trigger.dart';
 import '../../profile/data/profile_repository.dart';
+import '../../progress/widgets/weekly_chart.dart';
 import '../data/home_repository.dart';
 import '../widgets/coach_card.dart';
 import '../widgets/craving_prompt_card.dart';
 import '../widgets/daily_summary_card.dart';
-import '../widgets/mini_progress_chart.dart';
 import '../widgets/mini_task_card.dart';
 import '../widgets/quick_actions_grid.dart';
 import '../widgets/today_meals_list.dart';
@@ -121,7 +121,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: 16),
               const CravingPromptCard(),
               const SizedBox(height: 16),
-              const MiniProgressChart(),
+              const WeeklyChart(),
               const SizedBox(height: 16),
               const TodayMealsList(),
               const SizedBox(height: 16),
