@@ -126,6 +126,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
                 }
                 return ListView.builder(
                   controller: _scrollCtrl,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.all(16),
                   itemCount: messages.length,
                   itemBuilder: (_, i) {
