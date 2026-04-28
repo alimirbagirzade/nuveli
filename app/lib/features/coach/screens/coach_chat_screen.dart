@@ -127,10 +127,13 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
                 return ListView.builder(
                   controller: _scrollCtrl,
                   physics: const AlwaysScrollableScrollPhysics(),
+                  reverse: true,
                   padding: const EdgeInsets.all(16),
                   itemCount: messages.length,
                   itemBuilder: (_, i) {
-                    final m = messages[i];
+                    // reverse:true draws bottom-up; flip the index so
+                    // the newest message is rendered at the visual bottom.
+                    final m = messages[messages.length - 1 - i];
                     return CoachMessageBubble(message: m);
                   },
                 );

@@ -36,16 +36,33 @@ async def post_thread_message(body: ThreadMessageRequest, user_id: str = Depends
     """Thread'de koçla konuşma — user mesajı + koç yanıtı kaydedilir.
 
     respond() persists both the user message and the coach reply
-    internally, then we fetch the most recent two messages from the
-    thread to return them to the client (frontend wants both).
+    internally. We then fetch the two most recent rows from
+    coach_messages directly (desc order, limit 2) so we always get
+    the just-saved pair regardless of how long the thread already is.
     """
     svc = CoachService()
     response = await svc.respond(user_id, body.message)
-    # respond() saved both user msg and coach msg; fetch them back.
-    # Most recent first, so [0] is the coach reply, [1] is the user msg.
-    recent = await svc.get_thread(user_id, limit=2)
-    coach_msg_obj = next((m for m in recent if m.get("role") == "coach"), None)
-    user_msg_obj = next((m for m in recent if m.get("role") == "user"), None)
+
+    # Get the thread id for this user
+    thread = svc.db.table("coach_threads").select("id").eq("user_id", user_id).execute()
+    thread_id = thread.data[0]["id"] if thread.data else None
+
+    user_msg_obj = None
+    coach_msg_obj = None
+    if thread_id:
+        recent = svc.db.table("coach_messages")\
+            .select("*")\
+            .eq("thread_id", thread_id)\
+            .order("created_at", desc=True)\
+            .limit(2)\
+            .execute()
+        rows = recent.data or []
+        # rows[0] is the most recent (coach reply), rows[1] is user msg
+        for row in rows:
+            if row.get("role") == "coach" and coach_msg_obj is None:
+                coach_msg_obj = row
+            elif row.get("role") == "user" and user_msg_obj is None:
+                user_msg_obj = row
 
     return ApiResponse.ok({
         "user_message": user_msg_obj,
