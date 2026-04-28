@@ -35,22 +35,20 @@ async def get_thread(user_id: str = Depends(get_current_user)):
 async def post_thread_message(body: ThreadMessageRequest, user_id: str = Depends(get_current_user)):
     """Thread'de koçla konuşma — user mesajı + koç yanıtı kaydedilir.
 
-    Note: respond() already persists both the user message and the coach
-    reply via save_message internally, so we don't double-save here.
-    We just call respond() and reshape its return into the format
-    the Flutter coach_chat_screen expects.
+    respond() persists both the user message and the coach reply
+    internally, then we fetch the most recent two messages from the
+    thread to return them to the client (frontend wants both).
     """
     svc = CoachService()
     response = await svc.respond(user_id, body.message)
-    # respond() saves both messages internally and returns:
-    #   message, is_fallback, risk_level, audio_url, message_id
+    # respond() saved both user msg and coach msg; fetch them back.
+    # Most recent first, so [0] is the coach reply, [1] is the user msg.
+    recent = await svc.get_thread(user_id, limit=2)
+    coach_msg_obj = next((m for m in recent if m.get("role") == "coach"), None)
+    user_msg_obj = next((m for m in recent if m.get("role") == "user"), None)
+
     return ApiResponse.ok({
-        "coach_message": {
-            "id": response["message_id"],
-            "content": response["message"],
-            "role": "coach",
-            "is_fallback": response["is_fallback"],
-            "audio_url": response.get("audio_url"),
-        },
+        "user_message": user_msg_obj,
+        "coach_message": coach_msg_obj,
         "risk_mode": response["risk_level"],
     })
