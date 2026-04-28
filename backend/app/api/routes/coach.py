@@ -33,18 +33,24 @@ async def get_thread(user_id: str = Depends(get_current_user)):
 
 @router.post("/thread/message")
 async def post_thread_message(body: ThreadMessageRequest, user_id: str = Depends(get_current_user)):
-    """Thread'de koçla konuşma — user mesajı + koç yanıtı kaydedilir."""
+    """Thread'de koçla konuşma — user mesajı + koç yanıtı kaydedilir.
+
+    Note: respond() already persists both the user message and the coach
+    reply via save_message internally, so we don't double-save here.
+    We just call respond() and reshape its return into the format
+    the Flutter coach_chat_screen expects.
+    """
     svc = CoachService()
-    # User mesajını kaydet
-    user_msg = await svc.save_message(user_id, "user", body.message)
-    # Yanıt üret
     response = await svc.respond(user_id, body.message)
-    # Koç yanıtını kaydet
-    coach_msg = await svc.save_message(
-        user_id, "coach", response["message"], is_fallback=response["is_fallback"]
-    )
+    # respond() saves both messages internally and returns:
+    #   message, is_fallback, risk_level, audio_url, message_id
     return ApiResponse.ok({
-        "user_message": user_msg,
-        "coach_message": coach_msg,
-        "risk_mode": response["risk_mode"],
+        "coach_message": {
+            "id": response["message_id"],
+            "content": response["message"],
+            "role": "coach",
+            "is_fallback": response["is_fallback"],
+            "audio_url": response.get("audio_url"),
+        },
+        "risk_mode": response["risk_level"],
     })
