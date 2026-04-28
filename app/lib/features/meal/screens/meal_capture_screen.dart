@@ -28,12 +28,28 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
 
   Future<void> _pickFromCamera() async {
     AnalyticsService.mealCaptureStarted(source: 'camera');
-    final path = await MealImageCapture.fromCamera();
-    if (path != null) {
-      setState(() => _imagePath = path);
-      // Breadcrumb: file size log'u (crash olursa büyük dosya şüphesi için)
-      final sizeKb = await MealImageCapture.fileSizeKb(path);
-      CrashReporter.log('meal_image_captured: ${sizeKb}KB (camera)');
+    try {
+      final path = await MealImageCapture.fromCamera();
+      if (path != null) {
+        setState(() => _imagePath = path);
+        // Breadcrumb: file size log'u (crash olursa büyük dosya şüphesi için)
+        final sizeKb = await MealImageCapture.fileSizeKb(path);
+        CrashReporter.log('meal_image_captured: ${sizeKb}KB (camera)');
+      }
+    } on CameraUnavailableException catch (e) {
+      // Simulator'de kamera yok ya da gerçek cihazda izin verilmedi.
+      // Hata göster ve tek dokunuşta galeriye yönlendir.
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message),
+          behavior: SnackBarBehavior.floating,
+          action: SnackBarAction(
+            label: 'Galeri',
+            onPressed: _pickFromGallery,
+          ),
+        ),
+      );
     }
   }
 
@@ -144,6 +160,32 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
             const SizedBox(height: 16),
             _ImageArea(imagePath: _imagePath),
             const SizedBox(height: 12),
+            // Simulator'de kamera çalışmaz — bunu önceden bildir.
+            if (MealImageCapture.isIosSimulator) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppColors.divider),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline, size: 16, color: AppColors.textTertiary),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Simulator\'de kamera yok. Galeri\'yi kullan.',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.textTertiary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             Row(
               children: [
                 Expanded(
