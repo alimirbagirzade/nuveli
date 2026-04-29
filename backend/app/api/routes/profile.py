@@ -30,6 +30,33 @@ class UpdateProfileRequest(BaseModel):
     display_name: Optional[str] = None
     avatar_style: Optional[str] = None
     avatar_seed: Optional[str] = None
+    avatar_photo_url: Optional[str] = None
+
+    # Personal info
+    birth_year: Optional[int] = None
+    gender: Optional[str] = None
+    height_cm: Optional[float] = None
+    weight_kg: Optional[float] = None
+
+    # Goals
+    goal: Optional[str] = None
+    activity_level: Optional[str] = None
+    daily_calorie_target: Optional[int] = None
+    avatar_photo_url: Optional[str] = None  # Pass empty string to clear
+
+    # Personal info — editable from the new "Kişisel Bilgiler" screen
+    birth_year: Optional[int] = None
+    gender: Optional[str] = None
+    height_cm: Optional[float] = None
+    weight_kg: Optional[float] = None
+    activity_level: Optional[str] = None
+    goal: Optional[str] = None
+
+    # Goals — editable from the new "Hedefler" screen
+    daily_calorie_target: Optional[int] = None
+    target_protein_g: Optional[int] = None
+    target_carb_g: Optional[int] = None
+    target_fat_g: Optional[int] = None
 
 
 class NotifPrefRequest(BaseModel):
@@ -94,7 +121,10 @@ async def update_profile(
 ):
     """Partial update of user-editable profile fields.
 
-    Accepts any combination of: display_name, avatar_style, avatar_seed.
+    Accepts any combination of: display_name, avatar_style, avatar_seed,
+    avatar_photo_url, birth_year, gender, height_cm, weight_kg,
+    activity_level, goal, daily_calorie_target, target_protein_g,
+    target_carb_g, target_fat_g.
     Validates avatar_style against known DiceBear styles. Empty/null
     fields in the request are skipped — only provided fields are updated.
     """
@@ -106,13 +136,63 @@ async def update_profile(
 
     # Guard against bad avatar_style values that would violate the DB check constraint
     if "avatar_style" in payload:
-        allowed = {"lorelei", "peep", "bottts", "adventurer", "fun-emoji"}
+        allowed = {"lorelei", "peep", "bottts", "adventurer", "fun-emoji", "custom"}
         if payload["avatar_style"] not in allowed:
             from fastapi import HTTPException
             raise HTTPException(400, detail={"code": "BAD_AVATAR_STYLE", "message": "Geçersiz avatar stili."})
 
+    # Empty string for photo_url means "clear it", so allow it through
+    # but treat None as "don't touch the column" (already filtered above).
+    if payload.get("avatar_photo_url") == "":
+        payload["avatar_photo_url"] = None
+
     profile = await svc.update_profile(user_id, payload)
     return ApiResponse.ok(profile)
+
+
+class AvatarUploadRequest(BaseModel):
+    """Base64-encoded image upload for the user's avatar.
+
+    Client sends the image as base64 (already resized client-side to
+    keep payload small — see meal_image_capture). We push it to Supabase
+    Storage and return the public URL, which the client then PATCHes
+    into avatar_photo_url.
+    """
+    image_b64: str
+    content_type: str = "image/jpeg"
+
+
+@router.post("/avatar")
+async def upload_avatar(
+    body: AvatarUploadRequest,
+    user_id: str = Depends(get_current_user),
+):
+    """Upload a user-supplied photo as their avatar.
+
+    Stores the file in Supabase Storage under avatars/{user_id}.jpg
+    (overwriting any previous one) and updates profiles.avatar_photo_url
+    to the public URL. Returns the new URL so the client can refresh.
+    """
+    import base64
+    import time
+    from fastapi import HTTPException
+
+    svc = ProfileService()
+    try:
+        image_bytes = base64.b64decode(body.image_b64)
+    except Exception:
+        raise HTTPException(400, detail={"code": "BAD_IMAGE", "message": "Geçersiz fotoğraf."})
+
+    # Sanity check — avatars shouldn't be huge. Client should resize first.
+    if len(image_bytes) > 5 * 1024 * 1024:
+        raise HTTPException(400, detail={"code": "IMAGE_TOO_LARGE", "message": "Fotoğraf çok büyük."})
+
+    # Cache-busting suffix so the public URL changes on every upload —
+    # otherwise iOS/CDN serves the old image even after replace.
+    suffix = int(time.time())
+    storage_path = f"{user_id}/{suffix}.jpg"
+    public_url = await svc.upload_avatar_photo(user_id, storage_path, image_bytes, body.content_type)
+    return ApiResponse.ok({"url": public_url})
 
 
 @router.get("/notification-preferences")

@@ -12,6 +12,8 @@ import '../../../shared/widgets/nuveli_avatar.dart';
 import '../../auth/data/auth_repository.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/profile_repository.dart';
+import 'goals_screen.dart';
+import 'personal_info_screen.dart';
 
 /// Profile screen — user identity (avatar + name) at the top,
 /// settings tiles below in 6 grouped sections.
@@ -62,13 +64,21 @@ class _ProfileBody extends ConsumerWidget {
           icon: Icons.person_outline,
           title: 'Kişisel bilgiler',
           subtitle: 'İsim, hedefler, vücut bilgileri',
-          onTap: () => _showComingSoon(context, 'Yakında eklenecek'),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const PersonalInfoScreen(),
+            ),
+          ),
         ),
         _Tile(
           icon: Icons.flag_outlined,
           title: 'Hedefler',
           subtitle: 'Kalori ve makro hedefin',
-          onTap: () => _showComingSoon(context, 'Yakında eklenecek'),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const GoalsScreen(),
+            ),
+          ),
         ),
 
         const SizedBox(height: 16),
@@ -267,6 +277,7 @@ class _IdentityHeaderState extends ConsumerState<_IdentityHeader> {
                 NuveliAvatar(
                   style: widget.profile.avatarStyle,
                   seed: widget.profile.avatarSeed,
+                  photoUrl: widget.profile.avatarPhotoUrl,
                   size: 120,
                 ),
                 Positioned(
@@ -388,6 +399,7 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
   late String _style;
   late String _seed;
   bool _saving = false;
+  bool _uploading = false;
 
   @override
   void initState() {
@@ -399,8 +411,6 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
   /// Generate 16 deterministic seed candidates so the user has a
   /// reasonable selection without scrolling forever.
   List<String> _seedCandidates() {
-    // Use the user's id as a base namespace — same user always sees the
-    // same options, even if they don't pick one immediately.
     final rng = Random(widget.profile.id.hashCode);
     return List.generate(16, (_) {
       final n = rng.nextInt(1 << 30);
@@ -408,12 +418,15 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
     });
   }
 
-  Future<void> _save() async {
+  Future<void> _saveGeneratedAvatar() async {
     setState(() => _saving = true);
     try {
+      // Saving a generated avatar means we ALSO want to clear any uploaded
+      // photo, otherwise the photo keeps overriding it.
       await ref.read(profileRepositoryProvider).updateProfile(
             avatarStyle: _style,
             avatarSeed: _seed,
+            avatarPhotoUrl: '', // empty string → backend translates to NULL
           );
       ref.invalidate(userProfileProvider);
       if (mounted) Navigator.pop(context);
@@ -425,6 +438,41 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
         ),
       );
       setState(() => _saving = false);
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    setState(() => _uploading = true);
+    try {
+      final path = await MealImageCapture.fromGallery();
+      if (path == null) {
+        // user cancelled
+        setState(() => _uploading = false);
+        return;
+      }
+      final b64 = await MealImageCapture.toBase64(path);
+      if (b64 == null) {
+        throw Exception('Fotoğraf okunamadı');
+      }
+      final url = await ref.read(profileRepositoryProvider).uploadAvatarPhoto(b64);
+      // Backend already updated profiles.avatar_photo_url; just invalidate.
+      ref.invalidate(userProfileProvider);
+      if (!mounted) return;
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Avatar güncellendi'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e is AppError ? e.userMessage : 'Yüklenemedi: $e'),
+        ),
+      );
+      setState(() => _uploading = false);
     }
   }
 
@@ -451,11 +499,68 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
               children: [
                 Text('Avatarını seç', style: AppTextStyles.headingMedium),
                 const Spacer(),
-                NuveliAvatar(style: _style, seed: _seed, size: 56),
+                NuveliAvatar(
+                  style: _style,
+                  seed: _seed,
+                  photoUrl: widget.profile.avatarPhotoUrl,
+                  size: 56,
+                ),
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            // Photo upload — galeriden kendi fotoğrafını seç
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: _uploading ? null : _pickFromGallery,
+                icon: _uploading
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.photo_library_outlined),
+                label: Text(_uploading
+                    ? 'Yükleniyor…'
+                    : 'Galeri\'den fotoğraf seç'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+              ),
+            ),
+            // If user already has an uploaded photo, offer a clear button
+            if (widget.profile.hasPhoto) ...[
+              const SizedBox(height: 8),
+              TextButton.icon(
+                onPressed: () async {
+                  await ref.read(profileRepositoryProvider).clearAvatarPhoto();
+                  ref.invalidate(userProfileProvider);
+                  if (mounted) Navigator.pop(context);
+                },
+                icon: const Icon(Icons.delete_outline, size: 18),
+                label: const Text('Yüklenen fotoğrafı kaldır'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.warning,
+                ),
+              ),
+            ],
+
+            const SizedBox(height: 12),
+            const Divider(),
+            const SizedBox(height: 12),
+
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'veya hazır avatar seç',
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.textTertiary,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
             // Style chips
             SizedBox(
               height: 36,
@@ -481,10 +586,9 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
               ),
             ),
 
-            const SizedBox(height: 20),
-            // Seed grid
+            const SizedBox(height: 16),
             ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 320),
+              constraints: const BoxConstraints(maxHeight: 240),
               child: GridView.builder(
                 shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -515,11 +619,11 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: FilledButton(
-                onPressed: _saving ? null : _save,
+                onPressed: _saving ? null : _saveGeneratedAvatar,
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -533,7 +637,7 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text('Kaydet'),
+                    : const Text('Hazır avatarı kaydet'),
               ),
             ),
           ],

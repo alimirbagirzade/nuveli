@@ -100,6 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             );
           },
           data: (payload) => ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.all(20),
             children: [
               _GreetingHeader(name: payload.greeting),

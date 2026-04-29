@@ -131,6 +131,41 @@ class ProfileService:
         logger.info("profile_updated", user_id=user_id, fields=list(payload.keys()))
         return result.data[0] if result.data else {}
 
+    async def upload_avatar_photo(
+        self,
+        user_id: str,
+        storage_path: str,
+        image_bytes: bytes,
+        content_type: str = "image/jpeg",
+    ) -> str:
+        """Upload bytes to the 'avatars' Supabase Storage bucket and write
+        the resulting public URL into profiles.avatar_photo_url.
+
+        Bucket must exist and be marked Public for the URL to be accessible
+        from the iOS/Android clients without a download token. Create it once
+        in the Supabase dashboard (or via SQL) before this endpoint is hit.
+        """
+        bucket = "avatars"
+        # supabase-py accepts bytes directly; upsert=true so re-upload works.
+        try:
+            self.db.storage.from_(bucket).upload(
+                path=storage_path,
+                file=image_bytes,
+                file_options={"content-type": content_type, "upsert": "true"},
+            )
+        except Exception as e:
+            # If the bucket doesn't exist yet, surface a clearer message.
+            logger.error("avatar_upload_failed", user_id=user_id, error=str(e))
+            raise
+
+        public_url = self.db.storage.from_(bucket).get_public_url(storage_path)
+        # supabase-py returns a string already, but double-strip any trailing slash
+        public_url = public_url.rstrip("/")
+
+        self.db.table("profiles").update({"avatar_photo_url": public_url}).eq("id", user_id).execute()
+        logger.info("avatar_uploaded", user_id=user_id, url=public_url)
+        return public_url
+
     async def get_bootstrap(self, user_id: str) -> dict:
         """Uygulama açılışında tüm state'i tek seferde döndürür."""
         profile = await self.get_profile(user_id)
