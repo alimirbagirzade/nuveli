@@ -7,6 +7,7 @@ import '../../../core/network/app_error.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/meal_image_capture.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/nuveli_avatar.dart';
 import '../../auth/data/auth_repository.dart';
