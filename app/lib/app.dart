@@ -42,6 +42,26 @@ class _AppScrollBehavior extends MaterialScrollBehavior {
       parent: AlwaysScrollableScrollPhysics(),
     );
   }
+
+  @override
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    // Don't draw the desktop-style scrollbar — on iOS sim it can
+    // intercept hover events that prevent drag gestures from starting
+    // along the right edge of every list. Pure iOS apps don't draw
+    // permanent scrollbars anyway.
+    return child;
+  }
+
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    // Use the iOS-style overscroll bounce — no glow effect — so that
+    // Material's default GlowingOverscrollIndicator (which on Android
+    // wraps the child with a NotificationListener that can sometimes
+    // intercept gestures) doesn't interfere with our scrolling.
+    return child;
+  }
 }
 
 /// Nuveli uygulamasının kök widget'ı.
