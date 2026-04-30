@@ -126,9 +126,19 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
                 }
                 return ListView.builder(
                   controller: _scrollCtrl,
-                  physics: const AlwaysScrollableScrollPhysics(),
+                  // BouncingScrollPhysics for natural iOS feel +
+                  // AlwaysScrollable so the gesture is always recognized
+                  // (otherwise short conversations can't scroll at all).
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
+                  // Tap on the list to dismiss the keyboard — without this
+                  // a focused TextField intercepts touches and blocks
+                  // scroll gestures from registering on the messages.
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   reverse: true,
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                   itemCount: messages.length,
                   itemBuilder: (_, i) {
                     // reverse:true draws bottom-up; flip the index so

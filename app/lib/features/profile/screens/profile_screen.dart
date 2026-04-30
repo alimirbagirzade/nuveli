@@ -56,7 +56,15 @@ class _ProfileBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView(
-      padding: EdgeInsets.zero,
+      // BouncingScrollPhysics + AlwaysScrollable so the list can be
+      // dragged even when its children don't overflow the viewport.
+      // Without AlwaysScrollable, iOS sometimes refuses to start a
+      // scroll gesture if the calculated content extent equals the
+      // viewport extent (rounding edge case in iPhone 17 simulator).
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      padding: const EdgeInsets.only(bottom: 48),
       children: [
         _IdentityHeader(profile: profile),
         const SizedBox(height: 24),
