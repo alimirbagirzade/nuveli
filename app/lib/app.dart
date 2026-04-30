@@ -78,47 +78,6 @@ class NuveliApp extends ConsumerWidget {
       theme: AppTheme.dark(),
       scrollBehavior: const _AppScrollBehavior(),
       routerConfig: router,
-      // DIAGNOSTIC: log every pointer event we receive. This is
-      // temporary — once scroll is confirmed working, remove this
-      // builder and the print statements. iOS 26 simulator has a
-      // documented gesture-translation regression and we need to see
-      // what device kind events are actually arriving as.
-      builder: (context, child) {
-        return Listener(
-          behavior: HitTestBehavior.translucent,
-          onPointerDown: (e) {
-            // ignore: avoid_print
-            print('[POINTER DOWN] kind=${e.kind} pos=${e.position} '
-                'buttons=${e.buttons}');
-          },
-          onPointerMove: (e) {
-            if (e.delta.distance > 1.0) {
-              // ignore: avoid_print
-              print('[POINTER MOVE] kind=${e.kind} '
-                  'delta=${e.delta} buttons=${e.buttons}');
-            }
-          },
-          onPointerUp: (e) {
-            // ignore: avoid_print
-            print('[POINTER UP] kind=${e.kind}');
-          },
-          onPointerSignal: (e) {
-            // ignore: avoid_print
-            print('[POINTER SIGNAL] runtimeType=${e.runtimeType}');
-          },
-          onPointerPanZoomStart: (e) {
-            // ignore: avoid_print
-            print('[PAN ZOOM START] kind=${e.kind} (trackpad)');
-          },
-          onPointerPanZoomUpdate: (e) {
-            if (e.panDelta.distance > 1.0) {
-              // ignore: avoid_print
-              print('[PAN ZOOM UPDATE] kind=${e.kind} pan=${e.panDelta}');
-            }
-          },
-          child: child ?? const SizedBox.shrink(),
-        );
-      },
     );
   }
 }
