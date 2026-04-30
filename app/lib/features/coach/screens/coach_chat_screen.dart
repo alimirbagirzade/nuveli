@@ -126,15 +126,12 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
                 }
                 return ListView.builder(
                   controller: _scrollCtrl,
-                  // BouncingScrollPhysics for natural iOS feel +
-                  // AlwaysScrollable so the gesture is always recognized
-                  // (otherwise short conversations can't scroll at all).
-                  physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics(),
-                  ),
-                  // Tap on the list to dismiss the keyboard — without this
-                  // a focused TextField intercepts touches and blocks
-                  // scroll gestures from registering on the messages.
+                  // Scroll physics handled globally by _AppScrollBehavior
+                  // in app.dart. We only configure chat-specific behavior:
+                  //
+                  // keyboardDismissBehavior: dragging on the message list
+                  // dismisses the keyboard so the scroll gesture takes
+                  // precedence over TextField focus events.
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
                   reverse: true,
