@@ -127,7 +127,41 @@ class ProfileService:
         here and write it directly. Returns the full updated row so
         the client can refresh state.
         """
-        result = self.db.table("profiles").update(payload).eq("id", user_id).execute()
+        try:
+            result = self.db.table("profiles").update(payload).eq("id", user_id).execute()
+        except Exception as e:
+            # Postgres CHECK constraint violations and similar surface here as
+            # 5xx errors otherwise, which the client renders as a generic
+            # "Bir şeyler ters gitti". Translate the most common ones so the
+            # user sees what was actually wrong (most commonly: a goal or
+            # activity_level value the constraint doesn't allow).
+            err_msg = str(e).lower()
+            from fastapi import HTTPException
+            if "profiles_goal_check" in err_msg:
+                raise HTTPException(400, detail={
+                    "code": "BAD_GOAL",
+                    "message": "Hedef değeri güncellenemedi. Lütfen daha sonra tekrar dene.",
+                })
+            if "profiles_activity_level_check" in err_msg:
+                raise HTTPException(400, detail={
+                    "code": "BAD_ACTIVITY_LEVEL",
+                    "message": "Aktivite seviyesi güncellenemedi. Lütfen daha sonra tekrar dene.",
+                })
+            if "profiles_gender_check" in err_msg:
+                raise HTTPException(400, detail={
+                    "code": "BAD_GENDER",
+                    "message": "Cinsiyet değeri güncellenemedi.",
+                })
+            if "profiles_avatar_style_check" in err_msg:
+                raise HTTPException(400, detail={
+                    "code": "BAD_AVATAR_STYLE",
+                    "message": "Geçersiz avatar stili.",
+                })
+            # Re-raise anything we don't specifically handle so the route
+            # layer / global error handler returns its normal 500.
+            logger.error("profile_update_failed", user_id=user_id, error=str(e))
+            raise
+
         logger.info("profile_updated", user_id=user_id, fields=list(payload.keys()))
         return result.data[0] if result.data else {}
 
@@ -205,13 +239,17 @@ class ProfileService:
             "light": 1.375,
             "moderate": 1.55,
             "active": 1.725,
+            "very_active": 1.9,
         }
         tdee = bmr * activity_factors.get(activity, 1.375)
 
-        # Hedef ayarı
-        if goal == "lose":
+        # Hedef ayarı — handle both old codes (lose/gain) and new ones
+        # (lose_weight/gain_muscle) so the math stays correct regardless
+        # of where the goal value originated (legacy onboarding vs Goals
+        # screen). New writes always use the long forms.
+        if goal in ("lose", "lose_weight"):
             target = tdee - 500
-        elif goal == "gain":
+        elif goal in ("gain", "gain_muscle"):
             target = tdee + 300
         else:
             target = tdee

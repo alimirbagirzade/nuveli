@@ -22,9 +22,9 @@ class GoalSelectionScreen extends ConsumerWidget {
     final controller = ref.read(onboardingControllerProvider.notifier);
 
     const goals = [
-      ('lose', 'Kilo vermek', 'Sürdürülebilir ve yargısız şekilde'),
+      ('lose_weight', 'Kilo vermek', 'Sürdürülebilir ve yargısız şekilde'),
       ('maintain', 'Kiloyu korumak', 'Denge ve farkındalık'),
-      ('gain', 'Kilo almak', 'Sağlıklı şekilde'),
+      ('gain_muscle', 'Kilo almak', 'Sağlıklı şekilde'),
     ];
 
     return AppScaffold(
@@ -519,8 +519,8 @@ class _OnboardingResultScreenState
         }[data.activityLevel] ??
         1.375;
     double tdee = bmr * factor;
-    if (data.goal == 'lose') tdee -= 500;
-    if (data.goal == 'gain') tdee += 300;
+    if (data.goal == 'lose_weight') tdee -= 500;
+    if (data.goal == 'gain_muscle') tdee += 300;
     final minimum = data.gender == 'male' ? 1500 : 1200;
     return tdee.toInt().clamp(minimum, 4000);
   }
