@@ -15,8 +15,18 @@ class LimitExceededError(NuveliError):
     code = "LIMIT_EXCEEDED"
     status_code = 429
 
+    # Veritabanı alan adlarını kullanıcı dostu Türkçe metinlere çevirir.
+    # Yeni feature eklenirse buraya da eklenmeli.
+    _FEATURE_LABELS = {
+        "meal_analyses": "fotoğraf analizi",
+        "coach_messages": "koç mesajı",
+    }
+
     def __init__(self, feature: str, limit: int):
-        super().__init__(f"Günlük {feature} limitine ulaştın ({limit}).")
+        label = self._FEATURE_LABELS.get(feature, feature)
+        super().__init__(
+            f"Günlük {limit} {label} hakkını kullandın."
+        )
         self.feature = feature
         self.limit = limit
 
