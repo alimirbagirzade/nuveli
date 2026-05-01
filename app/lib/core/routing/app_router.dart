@@ -27,6 +27,7 @@ import '../../features/progress/screens/day_detail_screen.dart';
 import '../../features/progress/screens/monthly_insight_screen.dart';
 import '../../features/progress/screens/weekly_summary_screen.dart';
 import '../../features/settings/screens/about_screen.dart';
+import '../../features/settings/screens/coach_persona_settings_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/settings/screens/delete_account_screen.dart';
 import '../../features/settings/screens/how_ai_works_screen.dart';
@@ -91,6 +92,7 @@ class AppRoute {
 
   // Settings sub
   static const notificationPrefs = '/settings/notifications';
+  static const coachPersonaSettings = '/settings/coach-persona';
   static const support = '/settings/support';
   static const about = '/settings/about';
   static const howAiWorks = '/settings/how-ai-works';
@@ -300,6 +302,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoute.notificationPrefs,
         pageBuilder: (context, state) =>
             AppPageTransitions.slideRight(const NotificationPrefsScreen()),
+      ),
+      GoRoute(
+        path: AppRoute.coachPersonaSettings,
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const CoachPersonaSettingsScreen()),
       ),
       GoRoute(
         path: AppRoute.support,

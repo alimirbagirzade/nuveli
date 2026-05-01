@@ -76,6 +76,12 @@ class SettingsScreen extends ConsumerWidget {
             'Bildirimler',
             () => context.push(AppRoute.notificationPrefs),
           ),
+          _tile(
+            context,
+            Icons.psychology_outlined,
+            'Koçun tonu',
+            () => context.push(AppRoute.coachPersonaSettings),
+          ),
 
           _section('Destek ve Güvenlik'),
           _tile(
