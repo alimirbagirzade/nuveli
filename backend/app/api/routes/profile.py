@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from ...core.dependencies import get_current_user
 from ...services.profile_service import ProfileService
 from ...schemas.common import ApiResponse
@@ -17,6 +17,10 @@ class OnboardingRequest(BaseModel):
     goal: str
     activity_level: str
     special_conditions: List[str] = []
+    # Sprint 2.1: yeni alanlar
+    food_relationship: Optional[Dict[str, Any]] = None
+    allergies: List[str] = []
+    dietary_preference: str = "none"
 
 
 class CoachPrefRequest(BaseModel):

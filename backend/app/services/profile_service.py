@@ -30,6 +30,10 @@ class ProfileService:
             "activity_level": data.get("activity_level"),
             "daily_calorie_target": calorie_target,
             "special_conditions": data.get("special_conditions", []),
+            # Sprint 2.1: yeni alanlar
+            "food_relationship": data.get("food_relationship"),
+            "allergies": data.get("allergies", []),
+            "dietary_preference": data.get("dietary_preference", "none"),
         }
 
         result = self.db.table("profiles").upsert(payload, on_conflict="id").execute()
