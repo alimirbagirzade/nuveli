@@ -7,22 +7,22 @@ import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
+import '../../premium/data/premium_service.dart';
 import '../data/progress_repository.dart';
 
 /// Weekly summary — 7-day report opened from the home chart header.
 ///
-/// Sections:
-///   1. Hero: total calories, avg/day, days logged out of 7
-///   2. Macro distribution: protein/carb/fat as a stacked bar with legend
-///   3. Per-day breakdown: tap any row to drill into day detail
-///
-/// All data comes from /summary/weekly/current via weeklySummaryProvider.
+/// Sprint 2.2: AI insight kart eklendi (premium-only).
+/// Free kullanici icin lock kart gosterilir.
 class WeeklySummaryScreen extends ConsumerWidget {
   const WeeklySummaryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weeklyAsync = ref.watch(weeklySummaryProvider);
+    final premiumStatus = ref.watch(premiumStatusProvider);
+    final isPremium = premiumStatus.maybeWhen(
+        data: (s) => s.isPremium, orElse: () => false);
 
     return AppScaffold(
       appBar: AppBar(title: const Text('Haftalık Özet')),
@@ -38,7 +38,7 @@ class WeeklySummaryScreen extends ConsumerWidget {
             message: e is AppError ? e.userMessage : 'Yüklenemedi',
             onRetry: () => ref.invalidate(weeklySummaryProvider),
           ),
-          data: (weekly) => _Body(weekly: weekly),
+          data: (weekly) => _Body(weekly: weekly, isPremium: isPremium),
         ),
       ),
     );
@@ -46,8 +46,9 @@ class WeeklySummaryScreen extends ConsumerWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.weekly});
+  const _Body({required this.weekly, required this.isPremium});
   final WeeklySummary weekly;
+  final bool isPremium;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +73,16 @@ class _Body extends StatelessWidget {
           ),
         _HeroCard(weekly: weekly),
         const SizedBox(height: 16),
+
+        // Sprint 2.2: AI insight kart (premium-only)
+        if (isPremium && weekly.aiInsight != null && weekly.aiInsight!.isNotEmpty)
+          _AiInsightCard(text: weekly.aiInsight!)
+        else if (!isPremium && weekly.aiInsight != null)
+          _LockedAiInsightCard(),
+        if ((isPremium && weekly.aiInsight != null) ||
+            (!isPremium && weekly.aiInsight != null))
+          const SizedBox(height: 16),
+
         if (hasMacros) ...[
           Text('Makro Dağılımı', style: AppTextStyles.headingSmall),
           const SizedBox(height: 12),
@@ -87,6 +98,114 @@ class _Body extends StatelessWidget {
         ...weekly.sevenDays.map((d) => _DayRow(day: d)),
         const SizedBox(height: 32),
       ],
+    );
+  }
+}
+
+class _AiInsightCard extends StatelessWidget {
+  const _AiInsightCard({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primary.withOpacity(0.15),
+            AppColors.surface,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.auto_awesome, color: Colors.white, size: 12),
+                    const SizedBox(width: 4),
+                    Text(
+                      'KOÇUN YORUMU',
+                      style: AppTextStyles.caption.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(text, style: AppTextStyles.bodyLarge),
+        ],
+      ),
+    );
+  }
+}
+
+class _LockedAiInsightCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => context.push(AppRoute.paywall),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.divider),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.lock_outline,
+                  color: AppColors.primary, size: 22),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Koçun yorumu',
+                      style: AppTextStyles.headingSmall),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Premium ile haftalık örüntülerin için kişisel yorum',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios,
+                size: 14, color: AppColors.textSecondary),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -417,7 +536,7 @@ class _DayRow extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(Icons.chevron_right,
+                const Icon(Icons.chevron_right,
                     size: 20, color: AppColors.textTertiary),
               ],
             ),
@@ -439,7 +558,7 @@ class _Error extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.cloud_off_outlined,
+              const Icon(Icons.cloud_off_outlined,
                   size: 56, color: AppColors.error),
               const SizedBox(height: 12),
               Text(message, style: AppTextStyles.bodyMedium),

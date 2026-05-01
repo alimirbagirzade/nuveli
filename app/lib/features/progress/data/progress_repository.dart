@@ -5,10 +5,8 @@ import '../../../core/network/api_client.dart';
 import '../../../core/network/app_error.dart';
 
 /// One day's summary from the weekly progress endpoint.
-/// Mirrors a row of `daily_summaries` plus the local_day key the
-/// chart needs for grouping.
 class DaySummary {
-  final String localDay; // 'YYYY-MM-DD'
+  final String localDay;
   final int totalCalories;
   final int targetCalories;
   final int mealCount;
@@ -28,9 +26,6 @@ class DaySummary {
     required this.waterMl,
   });
 
-  /// Convenience: fraction of target reached today (0 → 1+).
-  /// Used by the bar chart to scale heights. Capped at 1.5 so a
-  /// way-over day still renders inside the chart frame.
   double get fractionOfTarget {
     if (targetCalories <= 0) return 0;
     final f = totalCalories / targetCalories;
@@ -39,12 +34,11 @@ class DaySummary {
 
   bool get hasData => mealCount > 0;
 
-  /// Day-of-week index 0=Monday … 6=Sunday for charting.
-  /// Built from the localDay string to avoid timezone drift.
   int get weekdayIndex {
     final parts = localDay.split('-');
-    final d = DateTime(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
-    return d.weekday - 1; // DateTime weekday is 1=Mon..7=Sun
+    final d = DateTime(
+        int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+    return d.weekday - 1;
   }
 
   factory DaySummary.fromJson(Map<String, dynamic> j) => DaySummary(
@@ -59,7 +53,6 @@ class DaySummary {
       );
 }
 
-/// Aggregated summary for the past 7 days, returned by /summary/weekly/current.
 class WeeklySummary {
   final String startDate;
   final String endDate;
@@ -69,6 +62,8 @@ class WeeklySummary {
   final int daysLogged;
   final List<DaySummary> dailyBreakdown;
   final String headline;
+  // Sprint 2.2: premium-only AI insight
+  final String? aiInsight;
 
   const WeeklySummary({
     required this.startDate,
@@ -79,12 +74,9 @@ class WeeklySummary {
     required this.daysLogged,
     required this.dailyBreakdown,
     required this.headline,
+    this.aiInsight,
   });
 
-  /// Build a complete 7-day series [Mon..Sun] of the *current calendar week*,
-  /// filling in empty DaySummary records for any day the backend didn't
-  /// return. The chart needs exactly 7 slots in weekday order — the backend
-  /// returns rolling 7 days and skips no-data days, so we reconcile here.
   List<DaySummary> get sevenDays {
     final byDay = <String, DaySummary>{};
     for (final d in dailyBreakdown) {
@@ -92,10 +84,10 @@ class WeeklySummary {
     }
     final today = DateTime.now();
     final list = <DaySummary>[];
-    // Build the last 7 days ending today, oldest first
     for (int i = 6; i >= 0; i--) {
       final dt = today.subtract(Duration(days: i));
-      final key = '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
+      final key =
+          '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
       list.add(
         byDay[key] ??
             DaySummary(
@@ -124,6 +116,49 @@ class WeeklySummary {
             .map((e) => DaySummary.fromJson(e as Map<String, dynamic>))
             .toList(),
         headline: j['headline'] as String? ?? '',
+        aiInsight: j['ai_insight'] as String?,
+      );
+}
+
+/// Sprint 2.2 Part 2: Monthly insight model.
+class MonthlyInsight {
+  final String startDate;
+  final String endDate;
+  final int daysLogged;
+  final int totalDays;
+  final List<InsightItem> insights;
+  final String? aiInsight;
+
+  const MonthlyInsight({
+    required this.startDate,
+    required this.endDate,
+    required this.daysLogged,
+    required this.totalDays,
+    required this.insights,
+    this.aiInsight,
+  });
+
+  factory MonthlyInsight.fromJson(Map<String, dynamic> j) => MonthlyInsight(
+        startDate: j['start_date'] as String? ?? '',
+        endDate: j['end_date'] as String? ?? '',
+        daysLogged: (j['days_logged'] as num?)?.toInt() ?? 0,
+        totalDays: (j['total_days'] as num?)?.toInt() ?? 30,
+        insights: ((j['insights'] as List?) ?? [])
+            .map((e) => InsightItem.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        aiInsight: j['ai_insight'] as String?,
+      );
+}
+
+class InsightItem {
+  final String title;
+  final String body;
+
+  const InsightItem({required this.title, required this.body});
+
+  factory InsightItem.fromJson(Map<String, dynamic> j) => InsightItem(
+        title: j['title'] as String? ?? '',
+        body: j['body'] as String? ?? '',
       );
 }
 
@@ -131,11 +166,19 @@ class ProgressRepository {
   ProgressRepository(this._dio);
   final Dio _dio;
 
-  /// GET /summary/weekly/current
   Future<WeeklySummary> getWeekly() async {
     try {
       final resp = await _dio.get('/summary/weekly/current');
       return WeeklySummary.fromJson(resp.data['data'] as Map<String, dynamic>);
+    } on DioException catch (e) {
+      throw AppError.fromDio(e);
+    }
+  }
+
+  Future<MonthlyInsight> getMonthly() async {
+    try {
+      final resp = await _dio.get('/summary/monthly/current');
+      return MonthlyInsight.fromJson(resp.data['data'] as Map<String, dynamic>);
     } on DioException catch (e) {
       throw AppError.fromDio(e);
     }
@@ -148,4 +191,8 @@ final progressRepositoryProvider = Provider<ProgressRepository>(
 
 final weeklySummaryProvider = FutureProvider<WeeklySummary>((ref) async {
   return ref.watch(progressRepositoryProvider).getWeekly();
+});
+
+final monthlyInsightProvider = FutureProvider<MonthlyInsight>((ref) async {
+  return ref.watch(progressRepositoryProvider).getMonthly();
 });
