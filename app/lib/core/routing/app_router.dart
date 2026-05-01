@@ -31,6 +31,8 @@ import '../../features/settings/screens/privacy_safety_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/settings/screens/support_screen.dart';
 import '../../features/shared/screens/error_screen.dart';
+import '../../features/tracking/screens/water_history_screen.dart';
+import '../../features/tracking/screens/weight_history_screen.dart';
 
 /// Tüm route isimleri burada tanımlıdır.
 class AppRoute {
@@ -71,6 +73,10 @@ class AppRoute {
   static const dayDetail = '/progress/day';
   static const settings = '/settings';
   static const profile = '/profile';
+
+  // Tracking history
+  static const waterHistory = '/tracking/water-history';
+  static const weightHistory = '/tracking/weight-history';
 
   // Premium
   static const paywall = '/paywall';
@@ -241,6 +247,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoute.paywall,
         pageBuilder: (context, state) =>
             AppPageTransitions.slideUp(const PaywallScreen()),
+      ),
+
+      // Tracking history
+      GoRoute(
+        path: AppRoute.waterHistory,
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const WaterHistoryScreen()),
+      ),
+      GoRoute(
+        path: AppRoute.weightHistory,
+        pageBuilder: (context, state) =>
+            AppPageTransitions.slideRight(const WeightHistoryScreen()),
       ),
 
       // Settings

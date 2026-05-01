@@ -39,6 +39,64 @@ async def list_water(local_day: str | None = None, user_id: str = Depends(get_cu
     return ApiResponse.ok({"entries": result.data or [], "total_ml": total})
 
 
+@router.get("/water/history")
+async def water_history(
+    days: int = 30,
+    user_id: str = Depends(get_current_user),
+):
+    """Daily water totals for the last N days.
+
+    Returns a list of {local_day, total_ml} sorted newest-first. Days
+    with no entries are still included with total_ml=0 so the UI can
+    plot a continuous chart without gaps.
+    """
+    from datetime import datetime, timedelta
+
+    db = get_supabase()
+    # Clamp days to a reasonable range so a malicious client can't
+    # request 10000 days and pull the whole history.
+    days = max(1, min(days, 90))
+
+    today = date.today()
+    start_day = today - timedelta(days=days - 1)
+    start_str = str(start_day)
+
+    # Pull every entry in the window in one query, then aggregate
+    # client-side. Faster than N round-trips and Supabase free-tier
+    # friendly.
+    result = (
+        db.table("water_logs")
+        .select("local_day, amount_ml")
+        .eq("user_id", user_id)
+        .gte("local_day", start_str)
+        .execute()
+    )
+
+    # Initialise every day in the window to 0 so the chart has a point
+    # for empty days too.
+    totals: dict[str, int] = {}
+    for i in range(days):
+        d = today - timedelta(days=i)
+        totals[str(d)] = 0
+    for row in (result.data or []):
+        d = row.get("local_day")
+        if d in totals:
+            totals[d] += int(row.get("amount_ml") or 0)
+
+    # Sort newest-first to match weight_history's convention.
+    entries = [
+        {"local_day": d, "total_ml": ml}
+        for d, ml in sorted(totals.items(), reverse=True)
+    ]
+    avg = sum(e["total_ml"] for e in entries) // max(1, len(entries))
+
+    return ApiResponse.ok({
+        "entries": entries,
+        "average_ml": avg,
+        "days": days,
+    })
+
+
 # ─── Weight ───────────────────────
 class WeightRequest(BaseModel):
     weight_kg: float

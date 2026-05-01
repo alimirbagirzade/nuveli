@@ -187,7 +187,25 @@ class _WaterSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Su Ekle', style: AppTextStyles.headingMedium),
+          Row(
+            children: [
+              Text('Su Ekle', style: AppTextStyles.headingMedium),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                  context.push(AppRoute.waterHistory);
+                },
+                icon: const Icon(Icons.bar_chart_rounded, size: 18),
+                label: const Text('Geçmiş'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.info,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
           Text('Ne kadar içtin?', style: AppTextStyles.bodySmall),
           const SizedBox(height: 16),
@@ -247,7 +265,25 @@ class _WeightSheetState extends State<_WeightSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Kilonu Girin', style: AppTextStyles.headingMedium),
+          Row(
+            children: [
+              Text('Kilonu Girin', style: AppTextStyles.headingMedium),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                  context.push(AppRoute.weightHistory);
+                },
+                icon: const Icon(Icons.show_chart_rounded, size: 18),
+                label: const Text('Geçmiş'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.accent,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
           TextField(
             controller: _ctrl,
