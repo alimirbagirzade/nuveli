@@ -1,12 +1,4 @@
 // app/lib/features/premium/screens/trial_gift_modal.dart
-//
-// Day 2 Trial Gift Modal — PRD §6.4, §7.1.
-// Çerçeveleme: "Hediye", baskı veya korkutma DEĞİL.
-// "Dünkü davranışı hatırlıyoruz" hissi.
-//
-// Kullanım: showDialog(...) ile açılır, doğrudan satın alma yapar
-// (yıllık plan trial ile, RevenueCat üzerinden).
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,8 +7,6 @@ import 'package:nuveli/core/theme/app_text_styles.dart';
 import 'package:nuveli/features/premium/data/premium_service.dart';
 
 class TrialGiftModal extends ConsumerStatefulWidget {
-  /// Kullanıcının dünkü ilk-isim selamlaması veya kısa mini-özet.
-  /// "Ali, dün ilk öğününü kaydettin" gibi.
   final String? personalizedHook;
 
   const TrialGiftModal({super.key, this.personalizedHook});
@@ -56,16 +46,16 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Trial başladı. Yanındayız.'),
+          content: Text('Trial basladi. Yanindayiz.'),
           duration: Duration(seconds: 2),
         ),
       );
     } else if (result.userCancelled) {
-      // Kullanıcı iptal etti — sessizce dön
+      // sessizce don
     } else {
       setState(() {
         _error = result.userMessage ??
-            'Şu an başlatamadım, biraz sonra tekrar dener misin?';
+            'Su an baslatamadim, biraz sonra tekrar dener misin?';
       });
     }
   }
@@ -78,19 +68,19 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      insetPadding:
+          const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: AppColors.border, width: 1),
+          border: Border.all(color: AppColors.divider, width: 1),
         ),
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hediye ikonu
             Container(
               width: 56,
               height: 56,
@@ -105,14 +95,11 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Başlık
             Text(
-              'Sana küçük bir hediye',
-              style: AppTextStyles.headlineSmall,
+              'Sana kucuk bir hediye',
+              style: AppTextStyles.headingLarge,
             ),
             const SizedBox(height: 8),
-
             if (widget.personalizedHook != null) ...[
               Text(
                 widget.personalizedHook!,
@@ -122,18 +109,14 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
               ),
               const SizedBox(height: 12),
             ],
-
-            // Alt metin
             Text(
-              '7 gün boyunca premium her şeyi dene. Daha derin haftalık özet, '
-              'daha kişisel koç, sınırsız fotoğraf analizi.',
+              '7 gun boyunca premium her seyi dene. Daha derin haftalik ozet, '
+              'daha kisisel koc, sinirsiz fotograf analizi.',
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
             const SizedBox(height: 16),
-
-            // Net bilgi (manipülatif olmayan)
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -150,9 +133,9 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '7 gün ücretsiz, sonra yıllık plan otomatik başlar. '
-                      'İstediğin zaman ayarlardan iptal edebilirsin.',
-                      style: AppTextStyles.labelSmall.copyWith(
+                      '7 gun ucretsiz, sonra yillik plan otomatik baslar. '
+                      'Istedigin zaman ayarlardan iptal edebilirsin.',
+                      style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -160,7 +143,6 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
                 ],
               ),
             ),
-
             if (_error != null) ...[
               const SizedBox(height: 12),
               Container(
@@ -171,16 +153,13 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
                 ),
                 child: Text(
                   _error!,
-                  style: AppTextStyles.labelSmall.copyWith(
+                  style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.error,
                   ),
                 ),
               ),
             ],
-
             const SizedBox(height: 24),
-
-            // CTA — yıllık trial başlat
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -203,22 +182,20 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
                         ),
                       )
                     : Text(
-                        '7 gün ücretsiz başlat',
-                        style: AppTextStyles.titleMedium.copyWith(
+                        '7 gun ucretsiz basla',
+                        style: AppTextStyles.headingMedium.copyWith(
                           color: Colors.white,
                         ),
                       ),
               ),
             ),
             const SizedBox(height: 8),
-
-            // Decline
             SizedBox(
               width: double.infinity,
               child: TextButton(
                 onPressed: _claiming ? null : _decline,
                 child: Text(
-                  'Şimdi değil',
+                  'Simdi degil',
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
