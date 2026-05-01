@@ -1,54 +1,84 @@
 // app/lib/features/premium/data/premium_service.dart
 //
-// Premium Service — RevenueCat ile uygulamanin tek arayuzu.
-// PRD §7 Premium ve RevenueCat, §6.4 Trial sirasi.
+// Premium Service — RevenueCat ile uygulamanın tek arayüzü.
+// PRD §7 Premium ve RevenueCat, §6.4 Trial sırası.
+//
+// Sorumluluğu:
+// - Purchases SDK initialize
+// - Offerings çekme, satın alma, restore
+// - Entitlement değişikliklerini stream et
+// - Backend'e sync et (premium_status_cache cache'i)
+//
+// Bu servis tek bir static instance gibi davranır (Riverpod provider ile).
 
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'package:nuveli/core/config/app_config.dart';
 import 'package:nuveli/core/network/api_client.dart';
+import 'package:nuveli/core/network/app_error.dart';
 
-enum PremiumTier { free, trial, premium, expired, unknown }
+// ═══════════════════════════════════════════════════════════════
+// Models
+// ═══════════════════════════════════════════════════════════════
 
-class PremiumStatus {
-  final PremiumTier tier;
+enum PremiumStatus { free, trial, premium, expired, unknown }
+
+class PremiumState {
+  final PremiumStatus status;
   final DateTime? trialEndsAt;
   final DateTime? currentPeriodEnd;
   final String? activeProductId;
   final bool day2GiftAvailable;
 
-  const PremiumStatus({
-    required this.tier,
+  const PremiumState({
+    required this.status,
     this.trialEndsAt,
     this.currentPeriodEnd,
     this.activeProductId,
     this.day2GiftAvailable = false,
   });
 
-  factory PremiumStatus.unknown() => const PremiumStatus(tier: PremiumTier.unknown);
-  factory PremiumStatus.free() => const PremiumStatus(tier: PremiumTier.free);
+  factory PremiumState.unknown() =>
+      const PremiumState(status: PremiumStatus.unknown);
 
-  bool get isPremium => tier == PremiumTier.premium || tier == PremiumTier.trial;
+  factory PremiumState.free() =>
+      const PremiumState(status: PremiumStatus.free);
+
+  bool get isPremium =>
+      status == PremiumStatus.premium || status == PremiumStatus.trial;
+
   bool get isInTrial =>
-      tier == PremiumTier.trial &&
+      status == PremiumStatus.trial &&
       trialEndsAt != null &&
       trialEndsAt!.isAfter(DateTime.now());
-  bool get isFree => tier == PremiumTier.free;
+
+  PremiumState copyWith({
+    PremiumStatus? status,
+    DateTime? trialEndsAt,
+    DateTime? currentPeriodEnd,
+    String? activeProductId,
+    bool? day2GiftAvailable,
+  }) =>
+      PremiumState(
+        status: status ?? this.status,
+        trialEndsAt: trialEndsAt ?? this.trialEndsAt,
+        currentPeriodEnd: currentPeriodEnd ?? this.currentPeriodEnd,
+        activeProductId: activeProductId ?? this.activeProductId,
+        day2GiftAvailable: day2GiftAvailable ?? this.day2GiftAvailable,
+      );
 }
 
 class PremiumOffering {
-  final String identifier;
+  final String identifier;       // 'monthly' | 'yearly'
   final String productId;
-  final String displayPrice;
-  final String periodLabel;
+  final String displayPrice;     // "₺149,00 / yıl"
+  final String periodLabel;      // "Yıllık"
   final bool hasFreeTrial;
   final int? trialDays;
-  final Package package;
+  final Package package;          // RevenueCat raw Package (purchase için)
 
   const PremiumOffering({
     required this.identifier,
@@ -66,69 +96,91 @@ class PurchaseResult {
   final String? errorCode;
   final String? userMessage;
   final bool userCancelled;
-  final PremiumStatus? newStatus;
+  final PremiumState? newState;
 
   const PurchaseResult({
     required this.success,
     this.errorCode,
     this.userMessage,
     this.userCancelled = false,
-    this.newStatus,
+    this.newState,
   });
 
-  factory PurchaseResult.successResult(PremiumStatus status) =>
-      PurchaseResult(success: true, newStatus: status);
-  factory PurchaseResult.cancelled() => const PurchaseResult(
-      success: false, userCancelled: true, userMessage: 'Satin alma iptal edildi');
+  factory PurchaseResult.success(PremiumState state) =>
+      PurchaseResult(success: true, newState: state);
+
+  factory PurchaseResult.cancelled() =>
+      const PurchaseResult(
+        success: false,
+        userCancelled: true,
+        userMessage: 'Satın alma iptal edildi',
+      );
+
   factory PurchaseResult.failed(String code, String message) =>
       PurchaseResult(success: false, errorCode: code, userMessage: message);
 }
 
+// ═══════════════════════════════════════════════════════════════
+// Service
+// ═══════════════════════════════════════════════════════════════
+
 class PremiumService {
-  final Dio _dio;
+  final AppConfig _config;
+  final ApiClient _api;
+
   bool _initialized = false;
-  final _stateController = StreamController<PremiumStatus>.broadcast();
-  PremiumStatus _currentStatus = PremiumStatus.unknown();
+  final _stateController = StreamController<PremiumState>.broadcast();
+  PremiumState _currentState = PremiumState.unknown();
 
-  PremiumService(this._dio);
+  PremiumService(this._config, this._api);
 
-  Stream<PremiumStatus> get statusStream => _stateController.stream;
-  PremiumStatus get currentStatus => _currentStatus;
+  Stream<PremiumState> get stateStream => _stateController.stream;
+  PremiumState get currentState => _currentState;
 
+  // ───────────────────────────────────────────────────
+  // Initialize
+  // ───────────────────────────────────────────────────
+
+  /// Uygulama açılırken bir kez çağrılır.
+  /// userId Supabase auth user UUID'si.
   Future<void> initialize({required String userId}) async {
     if (_initialized) {
+      // Login değişikliklerinde re-identify
       await Purchases.logIn(userId);
       await _refreshFromCustomerInfo();
       return;
     }
 
     final apiKey = defaultTargetPlatform == TargetPlatform.iOS
-        ? AppConfig.revenueCatAppleKey
-        : AppConfig.revenueCatGoogleKey;
+        ? _config.revenueCatAppleKey
+        : _config.revenueCatGoogleKey;
 
     if (apiKey.isEmpty) {
-      debugPrint('PremiumService: RevenueCat API key empty, stub mode');
-      _currentStatus = PremiumStatus.free();
-      _stateController.add(_currentStatus);
-      _initialized = true;
+      debugPrint('PremiumService: RevenueCat API key empty, running in stub mode');
+      _currentState = PremiumState.free();
+      _stateController.add(_currentState);
       return;
     }
 
     await Purchases.setLogLevel(
-        AppConfig.isDevelopment ? LogLevel.debug : LogLevel.warn);
+      _config.isDebug ? LogLevel.debug : LogLevel.warn,
+    );
 
-    final configuration = PurchasesConfiguration(apiKey)..appUserID = userId;
+    final configuration = PurchasesConfiguration(apiKey)
+      ..appUserID = userId;
     await Purchases.configure(configuration);
 
     Purchases.addCustomerInfoUpdateListener(_handleCustomerInfoUpdate);
+
     _initialized = true;
     await _refreshFromCustomerInfo();
   }
 
   void _handleCustomerInfoUpdate(CustomerInfo info) {
-    final status = _statusFromCustomerInfo(info);
-    _currentStatus = status;
-    _stateController.add(status);
+    final state = _stateFromCustomerInfo(info);
+    _currentState = state;
+    _stateController.add(state);
+    // Async backend sync — fire and forget
     unawaited(_syncToBackend(info));
   }
 
@@ -136,24 +188,29 @@ class PremiumService {
     try {
       final info = await Purchases.getCustomerInfo();
       _handleCustomerInfoUpdate(info);
-    } catch (e) {
-      debugPrint('PremiumService.refresh failed: $e');
-      _currentStatus = PremiumStatus.free();
-      _stateController.add(_currentStatus);
+    } catch (e, st) {
+      debugPrint('PremiumService.refresh failed: $e\n$st');
+      _currentState = PremiumState.free();
+      _stateController.add(_currentState);
     }
   }
 
-  PremiumStatus _statusFromCustomerInfo(CustomerInfo info) {
+  PremiumState _stateFromCustomerInfo(CustomerInfo info) {
+    // RevenueCat entitlement adı: 'premium' (RevenueCat dashboard'da bunu kur)
     const entitlementId = 'premium';
     final ent = info.entitlements.active[entitlementId];
+
     if (ent == null) {
+      // Aktif entitlement yok → free veya expired
       final hadEntitlement = info.entitlements.all.containsKey(entitlementId);
-      return PremiumStatus(
-          tier: hadEntitlement ? PremiumTier.expired : PremiumTier.free);
+      return PremiumState(
+        status: hadEntitlement ? PremiumStatus.expired : PremiumStatus.free,
+      );
     }
+
     final isTrial = ent.periodType == PeriodType.trial;
-    return PremiumStatus(
-      tier: isTrial ? PremiumTier.trial : PremiumTier.premium,
+    return PremiumState(
+      status: isTrial ? PremiumStatus.trial : PremiumStatus.premium,
       trialEndsAt: isTrial && ent.expirationDate != null
           ? DateTime.tryParse(ent.expirationDate!)
           : null,
@@ -164,24 +221,48 @@ class PremiumService {
     );
   }
 
+  // ───────────────────────────────────────────────────
+  // Offerings
+  // ───────────────────────────────────────────────────
+
   Future<List<PremiumOffering>> getOfferings() async {
-    if (!_initialized) throw Exception('Premium servis baslatilmadi');
+    if (!_initialized) {
+      throw const AppError(
+        code: 'premium_not_initialized',
+        message: 'Premium servis başlatılmadı',
+      );
+    }
+
     try {
       final offerings = await Purchases.getOfferings();
       final current = offerings.current;
-      if (current == null) return [];
-      return current.availablePackages.map(_packageToOffering).toList();
+      if (current == null) {
+        return [];
+      }
+
+      final result = <PremiumOffering>[];
+      for (final pkg in current.availablePackages) {
+        result.add(_packageToOffering(pkg));
+      }
+      return result;
     } on PlatformException catch (e) {
-      throw Exception('Premium secenekleri yuklenemedi: ${e.message}');
+      throw AppError(
+        code: 'offerings_fetch_failed',
+        message: 'Premium seçenekleri yüklenemedi',
+        cause: e,
+      );
     }
   }
 
   PremiumOffering _packageToOffering(Package pkg) {
     final product = pkg.storeProduct;
     final periodLabel = _periodLabel(pkg.packageType);
+
+    // Trial bilgisi
     final intro = product.introductoryPrice;
-    final hasTrial = intro != null && intro.price == 0;
+    final hasTrial = intro != null && intro.priceAmount == 0;
     final trialDays = hasTrial ? _periodToDays(intro.period) : null;
+
     return PremiumOffering(
       identifier: pkg.identifier,
       productId: product.identifier,
@@ -196,7 +277,7 @@ class PremiumService {
   String _periodLabel(PackageType type) {
     switch (type) {
       case PackageType.annual:
-        return 'yil';
+        return 'yıl';
       case PackageType.monthly:
         return 'ay';
       case PackageType.weekly:
@@ -210,6 +291,7 @@ class PremiumService {
 
   int? _periodToDays(String? period) {
     if (period == null) return null;
+    // ISO 8601 duration: P7D, P1W, P1M
     final dayMatch = RegExp(r'P(\d+)D').firstMatch(period);
     if (dayMatch != null) return int.tryParse(dayMatch.group(1)!);
     final weekMatch = RegExp(r'P(\d+)W').firstMatch(period);
@@ -220,103 +302,125 @@ class PremiumService {
     return null;
   }
 
+  // ───────────────────────────────────────────────────
+  // Purchase & Restore
+  // ───────────────────────────────────────────────────
+
   Future<PurchaseResult> purchase(PremiumOffering offering) async {
     try {
       final purchaseResult = await Purchases.purchasePackage(offering.package);
-      final newStatus = _statusFromCustomerInfo(purchaseResult);
-      _currentStatus = newStatus;
-      _stateController.add(newStatus);
+      // CustomerInfo otomatik update'lenir, listener tetiklenir
+      final newState = _stateFromCustomerInfo(purchaseResult);
+      _currentState = newState;
+      _stateController.add(newState);
       unawaited(_syncToBackend(purchaseResult));
-      return PurchaseResult.successResult(newStatus);
+      return PurchaseResult.success(newState);
     } on PlatformException catch (e) {
       final errorCode = PurchasesErrorHelper.getErrorCode(e);
       if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
         return PurchaseResult.cancelled();
       }
       return PurchaseResult.failed(
-          errorCode.name, _userMessageFromError(errorCode));
+        errorCode.name,
+        _userMessageFromError(errorCode),
+      );
     } catch (e) {
       return PurchaseResult.failed(
-          'unknown', 'Beklenmedik bir sorun oldu, tekrar dener misin?');
+        'unknown',
+        'Beklenmedik bir sorun oldu, tekrar dener misin?',
+      );
     }
   }
 
   Future<PurchaseResult> restore() async {
     try {
       final info = await Purchases.restorePurchases();
-      final newStatus = _statusFromCustomerInfo(info);
-      _currentStatus = newStatus;
-      _stateController.add(newStatus);
+      final newState = _stateFromCustomerInfo(info);
+      _currentState = newState;
+      _stateController.add(newState);
       unawaited(_syncToBackend(info));
-      return PurchaseResult.successResult(newStatus);
-    } on PlatformException catch (_) {
+      return PurchaseResult.success(newState);
+    } on PlatformException catch (e) {
       return PurchaseResult.failed(
-          'restore_failed', 'Geri yukleme basarisiz oldu');
+        'restore_failed',
+        'Geri yükleme başarısız oldu, biraz sonra dener misin?',
+      );
     }
   }
 
   String _userMessageFromError(PurchasesErrorCode code) {
     switch (code) {
       case PurchasesErrorCode.purchaseNotAllowedError:
-        return 'Bu cihazda satin alma izni yok';
+        return 'Bu cihazda satın alma izni yok';
       case PurchasesErrorCode.networkError:
-        return 'Baglanti kurulamadi';
+        return 'Bağlantı kurulamadı, tekrar dener misin?';
       case PurchasesErrorCode.paymentPendingError:
-        return 'Odeme onayi bekleniyor';
+        return 'Ödeme onayı bekleniyor';
       case PurchasesErrorCode.productNotAvailableForPurchaseError:
-        return 'Bu plan su an satin alinamiyor';
+        return 'Bu plan şu an satın alınamıyor';
       default:
-        return 'Satin alma tamamlanamadi';
+        return 'Satın alma tamamlanamadı';
     }
   }
+
+  // ───────────────────────────────────────────────────
+  // Backend Sync
+  // ───────────────────────────────────────────────────
 
   Future<void> _syncToBackend(CustomerInfo info) async {
     try {
-      await _dio.post('/premium/sync', data: {
-        'rc_customer_id': info.originalAppUserId,
-        'active_entitlement_ids': info.entitlements.active.keys.toList(),
-        'active_product_id': info.entitlements.active.values.isNotEmpty
-            ? info.entitlements.active.values.first.productIdentifier
-            : null,
-        'expiration_date': info.entitlements.active.values.isNotEmpty
-            ? info.entitlements.active.values.first.expirationDate
-            : null,
-        'period_type': info.entitlements.active.values.isNotEmpty
-            ? info.entitlements.active.values.first.periodType.name
-            : null,
-      });
+      await _api.post(
+        '/premium/sync',
+        data: {
+          'rc_customer_id': info.originalAppUserId,
+          'active_entitlement_ids': info.entitlements.active.keys.toList(),
+          'active_product_id': info.entitlements.active.values.isNotEmpty
+              ? info.entitlements.active.values.first.productIdentifier
+              : null,
+          'expiration_date': info.entitlements.active.values.isNotEmpty
+              ? info.entitlements.active.values.first.expirationDate
+              : null,
+          'period_type': info.entitlements.active.values.isNotEmpty
+              ? info.entitlements.active.values.first.periodType.name
+              : null,
+        },
+      );
     } catch (e) {
-      debugPrint('PremiumService._syncToBackend failed: $e');
+      // Sync hatası satın almayı bozmaz — backend cache eninde sonunda güncellenir
+      debugPrint('PremiumService._syncToBackend failed (non-fatal): $e');
     }
   }
 
+  // ───────────────────────────────────────────────────
+  // Day 2 Trial Gift
+  // ───────────────────────────────────────────────────
+
+  /// Backend'den day2 gift uygunluğunu sorgular.
   Future<bool> isDay2GiftEligible() async {
     try {
-      final res = await _dio.get('/premium/day2-gift-status');
+      final res = await _api.get('/premium/day2-gift-status');
       return (res.data?['eligible'] as bool?) ?? false;
     } catch (_) {
       return false;
     }
   }
 
+  /// Trial'ı yıllık plan üzerinden başlatır.
   Future<PurchaseResult> claimDay2Gift() async {
     final offerings = await getOfferings();
-    if (offerings.isEmpty) {
-      return PurchaseResult.failed(
-          'no_offerings', 'Henuz hediye hazir degil');
-    }
     final yearly = offerings.firstWhere(
-      (o) =>
-          o.identifier.toLowerCase().contains('annual') ||
-          o.identifier.toLowerCase().contains('yearly'),
+      (o) => o.identifier.toLowerCase().contains('annual') ||
+             o.identifier.toLowerCase().contains('yearly'),
       orElse: () => offerings.first,
     );
+
     final result = await purchase(yearly);
     if (result.success) {
       try {
-        await _dio.post('/premium/day2-gift-claim',
-            data: {'product_id': yearly.productId});
-      } catch (_) {}
+        await _api.post('/premium/day2-gift-claim', data: {
+          'product_id': yearly.productId,
+        });
+      } catch (_) {/* non-fatal */}
     }
     return result;
   }
@@ -326,13 +430,20 @@ class PremiumService {
   }
 }
 
+// ═══════════════════════════════════════════════════════════════
+// Riverpod providers
+// ═══════════════════════════════════════════════════════════════
+
 final premiumServiceProvider = Provider<PremiumService>((ref) {
-  final dio = ref.watch(apiClientProvider);
-  final svc = PremiumService(dio);
+  // app_config / api_client mevcut provider'larından gelmeli
+  // Senin AppConfig + ApiClient provider isimlerine göre uyarla:
+  final config = ref.watch(appConfigProvider);
+  final api = ref.watch(apiClientProvider);
+  final svc = PremiumService(config, api);
   ref.onDispose(svc.dispose);
   return svc;
 });
 
-final premiumStatusProvider = StreamProvider<PremiumStatus>((ref) {
-  return ref.watch(premiumServiceProvider).statusStream;
+final premiumStateProvider = StreamProvider<PremiumState>((ref) {
+  return ref.watch(premiumServiceProvider).stateStream;
 });

@@ -1,4 +1,13 @@
 // app/lib/features/premium/screens/paywall_screen.dart
+//
+// Paywall — PRD §7.3 ile uyumlu.
+// Kuralları:
+// - Korkutucu satış dili YOK
+// - Premium = "daha fazla kişiselleşme" çerçevesi
+// - Trial gösteriliyorsa ön plana çıkar
+// - Restore purchases dahil
+// - Yargılayıcı veya başarısızlık tetikleyici dil yok
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +17,8 @@ import 'package:nuveli/core/theme/app_text_styles.dart';
 import 'package:nuveli/features/premium/data/premium_service.dart';
 
 class PaywallScreen extends ConsumerStatefulWidget {
+  /// Hangi kaynaktan açıldı? Analytics için.
+  /// 'day0_post_log' | 'day2_gift' | 'weekly_summary' | 'feature_preview' | 'manual'
   final String source;
 
   const PaywallScreen({super.key, this.source = 'manual'});
@@ -41,31 +52,39 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       if (!mounted) return;
       setState(() {
         _offerings = offerings;
-        if (offerings.isNotEmpty) {
-          _selectedIdentifier = offerings
-              .firstWhere(
-                (o) =>
-                    o.identifier.toLowerCase().contains('annual') ||
-                    o.identifier.toLowerCase().contains('yearly'),
-                orElse: () => offerings.first,
-              )
-              .identifier;
-        }
+        // Yıllık seçili gelsin (anchor)
+        _selectedIdentifier = offerings
+            .firstWhere(
+              (o) => o.identifier.toLowerCase().contains('annual') ||
+                     o.identifier.toLowerCase().contains('yearly'),
+              orElse: () => offerings.isNotEmpty ? offerings.first : _placeholder(),
+            )
+            .identifier;
         _loadingOfferings = false;
       });
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = 'Premium secenekleri yuklenemedi. Tekrar dener misin?';
+        _errorMessage = 'Premium seçenekleri yüklenemedi. Tekrar dener misin?';
         _loadingOfferings = false;
       });
     }
   }
 
+  PremiumOffering _placeholder() => PremiumOffering(
+    identifier: '',
+    productId: '',
+    displayPrice: '',
+    periodLabel: '',
+    hasFreeTrial: false,
+    package: throw UnimplementedError(),
+  );
+
   Future<void> _handlePurchase() async {
     if (_selectedIdentifier == null) return;
-    final selected =
-        _offerings.firstWhere((o) => o.identifier == _selectedIdentifier);
+    final selected = _offerings.firstWhere(
+      (o) => o.identifier == _selectedIdentifier,
+    );
 
     setState(() {
       _purchasing = true;
@@ -81,11 +100,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     if (result.success) {
       _showSuccessAndPop();
     } else if (result.userCancelled) {
-      // sessizce don
+      // Sessizce dön — kullanıcı zaten karar verdi
     } else {
       setState(() {
         _errorMessage = result.userMessage ??
-            'Satin alma tamamlanamadi, biraz sonra dener misin?';
+            'Satın alma tamamlanamadı, biraz sonra dener misin?';
       });
     }
   }
@@ -102,16 +121,15 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     if (!mounted) return;
     setState(() => _purchasing = false);
 
-    if (result.success && result.newStatus?.isPremium == true) {
+    if (result.success && result.newState?.isPremium == true) {
       _showSuccessAndPop();
     } else if (!result.success) {
       setState(() {
-        _errorMessage = result.userMessage ??
-            'Geri yuklenecek bir premium bulunamadi';
+        _errorMessage = result.userMessage ?? 'Geri yüklenecek bir premium bulunamadı';
       });
     } else {
       setState(() {
-        _errorMessage = 'Bu hesaba bagli premium bulunamadi';
+        _errorMessage = 'Bu hesaba bağlı premium bulunamadı';
       });
     }
   }
@@ -119,7 +137,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   void _showSuccessAndPop() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Premium aktif. Yanindayiz.'),
+        content: Text('Premium aktif. Yanındayız.'),
         duration: Duration(seconds: 2),
       ),
     );
@@ -142,15 +160,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   backgroundColor: AppColors.background,
                   elevation: 0,
                   leading: IconButton(
-                    icon: const Icon(Icons.close,
-                        color: AppColors.textPrimary),
+                    icon: const Icon(Icons.close, color: AppColors.textPrimary),
                     onPressed: () => context.pop(),
                   ),
                   actions: [
                     TextButton(
                       onPressed: _purchasing ? null : _handleRestore,
                       child: const Text(
-                        'Geri yukle',
+                        'Geri yükle',
                         style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
@@ -179,8 +196,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             if (_purchasing)
               Container(
                 color: Colors.black54,
-                child:
-                    const Center(child: CircularProgressIndicator()),
+                child: const Center(child: CircularProgressIndicator()),
               ),
           ],
         ),
@@ -193,12 +209,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Daha cok seni\ntaniyan koc.',
-          style: AppTextStyles.displayLarge,
+          'Daha çok seni\ntanıyan koç.',
+          style: AppTextStyles.headlineLarge,
         ),
         const SizedBox(height: 12),
         Text(
-          'Ucretsiz surum seni takip eder, premium surum seni tanir.',
+          'Ücretsiz sürüm seni takip eder, premium sürüm seni tanır.',
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -209,12 +225,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
 
   Widget _buildValueProps() {
     final items = [
-      ('Daha derin haftalik ozet', 'Oruntulerini fark eden, sicak yorum'),
-      ('Daha kisisel koc tonu', 'Seni hatirlayan, sana gore konusan'),
-      ('Daha erken uyari',
-          'Riskli aliskanliklar gorunmeden acilmadan once'),
-      ('Sinirsiz fotograf analizi', 'Gunde 10 ogune kadar tahmin'),
-      ('Sesli koc', 'Kisa, sicak ve kisisel sesli yanitlar'),
+      ('Daha derin haftalık özet', 'Örüntülerini fark eden, sıcak yorum'),
+      ('Daha kişisel koç tonu', 'Seni hatırlayan, sana göre konuşan'),
+      ('Daha erken uyarı', 'Riskli alışkanlıklar görünmeden açılmadan önce'),
+      ('Sınırsız fotoğraf analizi', 'Günde 10 öğüne kadar tahmin'),
+      ('Sesli koç', 'Kısa, sıcak ve kişisel sesli yanıtlar'),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +240,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 6),
+                      margin: const EdgeInsets.only(top: 4),
                       width: 6,
                       height: 6,
                       decoration: const BoxDecoration(
@@ -242,7 +257,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                           const SizedBox(height: 2),
                           Text(
                             item.$2,
-                            style: AppTextStyles.bodyMedium.copyWith(
+                            style: AppTextStyles.bodySmall.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),
@@ -273,22 +288,19 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 size: 48, color: AppColors.textSecondary),
             const SizedBox(height: 12),
             Text(
-              'Su an secenekleri yukleyemedim.',
+              'Şu an seçenekleri yükleyemedim.',
               style: AppTextStyles.bodyMedium,
             ),
             const SizedBox(height: 12),
-            TextButton(
-                onPressed: _loadOfferings,
-                child: const Text('Tekrar dene')),
+            TextButton(onPressed: _loadOfferings, child: const Text('Tekrar dene')),
           ],
         ),
       );
     }
 
     return Column(
-      children: _offerings
-          .map((offering) => _buildOfferingCard(offering))
-          .toList(),
+      children:
+          _offerings.map((offering) => _buildOfferingCard(offering)).toList(),
     );
   }
 
@@ -298,8 +310,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         offering.identifier.toLowerCase().contains('yearly');
 
     return GestureDetector(
-      onTap: () =>
-          setState(() => _selectedIdentifier = offering.identifier),
+      onTap: () => setState(() => _selectedIdentifier = offering.identifier),
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
@@ -307,7 +318,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? AppColors.accent : AppColors.divider,
+            color: isSelected ? AppColors.accent : AppColors.border,
             width: 2,
           ),
         ),
@@ -317,9 +328,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               isSelected
                   ? Icons.radio_button_checked
                   : Icons.radio_button_off,
-              color: isSelected
-                  ? AppColors.accent
-                  : AppColors.textSecondary,
+              color: isSelected ? AppColors.accent : AppColors.textSecondary,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -329,21 +338,21 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   Row(
                     children: [
                       Text(
-                        isYearly ? 'Yillik' : 'Aylik',
-                        style: AppTextStyles.headingSmall,
+                        isYearly ? 'Yıllık' : 'Aylık',
+                        style: AppTextStyles.titleMedium,
                       ),
                       if (isYearly) ...[
                         const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: AppColors.accent.withOpacity(0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            'En cok secilen',
-                            style: AppTextStyles.bodySmall.copyWith(
+                            'En çok seçilen',
+                            style: AppTextStyles.labelSmall.copyWith(
                               color: AppColors.accent,
                             ),
                           ),
@@ -358,12 +367,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                       color: AppColors.textSecondary,
                     ),
                   ),
-                  if (offering.hasFreeTrial &&
-                      offering.trialDays != null) ...[
+                  if (offering.hasFreeTrial && offering.trialDays != null) ...[
                     const SizedBox(height: 4),
                     Text(
-                      '${offering.trialDays} gun ucretsiz dene, sonra otomatik yenilenir',
-                      style: AppTextStyles.bodySmall.copyWith(
+                      '${offering.trialDays} gün ücretsiz dene, sonra otomatik yenilenir',
+                      style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.accent,
                       ),
                     ),
@@ -386,8 +394,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       ),
       child: Row(
         children: [
-          const Icon(Icons.info_outline,
-              color: AppColors.error, size: 20),
+          const Icon(Icons.info_outline, color: AppColors.error, size: 20),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -420,28 +427,27 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         onPressed: disabled ? null : _handlePurchase,
         child: Text(
           _selectedIdentifier != null && _hasTrialFor(_selectedIdentifier!)
-              ? 'Ucretsiz dene'
+              ? 'Ücretsiz dene'
               : 'Devam et',
-          style: AppTextStyles.headingMedium.copyWith(color: Colors.white),
+          style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
         ),
       ),
     );
   }
 
   bool _hasTrialFor(String identifier) {
-    if (_offerings.isEmpty) return false;
     final o = _offerings.firstWhere(
       (x) => x.identifier == identifier,
-      orElse: () => _offerings.first,
+      orElse: () => _placeholder(),
     );
     return o.hasFreeTrial;
   }
 
   Widget _buildLegalNote() {
     return Text(
-      'Aboneligi istedigin zaman App Store / Play Store ayarlarindan iptal edebilirsin. '
-      'Trial sona ermeden 24 saat once iptal etmediginde otomatik yenilenir.',
-      style: AppTextStyles.bodySmall.copyWith(
+      'Aboneliği istediğin zaman App Store / Play Store ayarlarından iptal edebilirsin. '
+      'Trial sona ermeden 24 saat önce iptal etmediğinde otomatik yenilenir.',
+      style: AppTextStyles.labelSmall.copyWith(
         color: AppColors.textSecondary,
       ),
       textAlign: TextAlign.center,
