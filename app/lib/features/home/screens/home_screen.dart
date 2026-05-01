@@ -14,6 +14,7 @@ import '../../premium/data/premium_service.dart';
 import '../../premium/utils/trial_gift_trigger.dart';
 import '../../profile/data/profile_repository.dart';
 import '../../progress/widgets/weekly_chart.dart';
+import '../../streak/widgets/streak_badge.dart';
 import '../data/home_repository.dart';
 import '../widgets/coach_card.dart';
 import '../widgets/craving_prompt_card.dart';
@@ -105,6 +106,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               _GreetingHeader(name: payload.greeting),
               const SizedBox(height: 16),
+              const StreakBadge(),
               DailySummaryCard(
                 consumedCalories: payload.summary.totalCalories,
                 targetCalories: payload.summary.targetCalories,

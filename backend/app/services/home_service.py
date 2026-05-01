@@ -3,6 +3,7 @@ from datetime import date
 from ..core.config import settings
 from ..core.logging import get_logger
 from ..db.client import get_supabase
+from .streak_service import StreakService
 
 logger = get_logger(__name__)
 
@@ -11,6 +12,7 @@ class HomeService:
 
     def __init__(self):
         self.db = get_supabase()
+        self.streak_service = StreakService()
 
     async def get_home_payload(self, user_id: str) -> dict:
         today = str(date.today())
@@ -23,6 +25,19 @@ class HomeService:
 
         # Summary
         summary = await self._get_or_build_summary(user_id, today)
+
+        # Streak (gamification)
+        try:
+            streak_data = await self.streak_service.compute_streak(user_id)
+        except Exception as e:
+            logger.warning("streak_compute_failed", error=str(e))
+            streak_data = {
+                "current_streak": 0,
+                "longest_streak": 0,
+                "today_logged": False,
+                "at_risk": False,
+                "milestone": None,
+            }
 
         profile_data = profile.data or {}
         premium_data = premium.data[0] if premium.data else {"tier": "free"}
@@ -58,6 +73,13 @@ class HomeService:
             "premium_preview": {
                 "tier": tier,
                 "trial_ends_at": premium_data.get("trial_ends_at"),
+            },
+            "streak": {
+                "current": streak_data.get("current_streak", 0),
+                "longest": streak_data.get("longest_streak", 0),
+                "today_logged": streak_data.get("today_logged", False),
+                "at_risk": streak_data.get("at_risk", False),
+                "milestone": streak_data.get("milestone"),
             },
         }
 

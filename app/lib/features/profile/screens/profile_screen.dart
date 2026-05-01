@@ -12,6 +12,7 @@ import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/nuveli_avatar.dart';
 import '../../auth/data/auth_repository.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../streak/data/streak_repository.dart';
 import '../data/profile_repository.dart';
 import 'goals_screen.dart';
 import 'personal_info_screen.dart';
@@ -63,7 +64,9 @@ class _ProfileBody extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: 48),
       children: [
         _IdentityHeader(profile: profile),
-        const SizedBox(height: 24),
+        const SizedBox(height: 16),
+        const _StreakStatsCard(),
+        const SizedBox(height: 16),
         _SectionLabel('Hesap'),
         _Tile(
           icon: Icons.person_outline,
@@ -776,6 +779,122 @@ class _ErrorView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ─── Streak Stats Card ──────────────────────────────────────────────
+//
+// Profile sayfasının üstünde "Şu an: 7 gün · En uzun: 23 gün" şeklinde
+// streak istatistiği gösterir. Loading/error/empty durumlarda widget
+// kendini gizler — UI gürültüsü yapmasın.
+
+class _StreakStatsCard extends ConsumerWidget {
+  const _StreakStatsCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncStreak = ref.watch(streakProvider);
+
+    return asyncStreak.when(
+      loading: () => const SizedBox.shrink(),
+      error: (_, __) => const SizedBox.shrink(),
+      data: (streak) {
+        // Hiç streak yoksa profil ekranını sadeleştir, kart gösterme
+        if (streak.longest == 0 && streak.current == 0) {
+          return const SizedBox.shrink();
+        }
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.divider),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: _ProfileStatColumn(
+                  icon: '🔥',
+                  label: 'Şu an',
+                  value: '${streak.current}',
+                  unit: streak.current == 1 ? 'gün' : 'gün',
+                  color: streak.current > 0
+                      ? const Color(0xFFFF6B35)
+                      : AppColors.textTertiary,
+                ),
+              ),
+              Container(
+                width: 1,
+                height: 50,
+                color: AppColors.divider,
+              ),
+              Expanded(
+                child: _ProfileStatColumn(
+                  icon: '🏆',
+                  label: 'En uzun',
+                  value: '${streak.longest}',
+                  unit: 'gün',
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ProfileStatColumn extends StatelessWidget {
+  const _ProfileStatColumn({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.unit,
+    required this.color,
+  });
+  final String icon;
+  final String label;
+  final String value;
+  final String unit;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(icon, style: const TextStyle(fontSize: 22)),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(
+              value,
+              style: AppTextStyles.headingLarge.copyWith(color: color),
+            ),
+            const SizedBox(width: 3),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 3),
+              child: Text(
+                unit,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
 import '../../../features/home/data/home_repository.dart';
+import '../../../features/streak/data/streak_repository.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../data/meal_models.dart';
@@ -154,9 +155,10 @@ class _MealAnalysisResultScreenState
 
   void _showSavedAndGoHome() {
     AppHaptics.success();
-    // Bugünkü öğün listesini + home özet/koç kartını yenile
+    // Bugünkü öğün listesini + home özet/koç kartını + streak'i yenile
     ref.invalidate(todayMealsProvider);
     ref.invalidate(homePayloadProvider);
+    ref.invalidate(streakProvider);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Öğün kaydedildi.')),

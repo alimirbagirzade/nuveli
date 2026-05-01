@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../home/data/home_repository.dart';
+import '../../streak/data/streak_repository.dart';
 import '../data/meal_models.dart';
 import '../data/meal_repository.dart';
 
@@ -57,8 +58,9 @@ final deleteMealActionProvider =
   return (mealId) async {
     final repo = ref.read(mealRepositoryProvider);
     await repo.deleteMeal(mealId);
-    // Home ve history otomatik yenilensin
+    // Home, history ve streak otomatik yenilensin
     ref.invalidate(todayMealsProvider);
     ref.invalidate(homePayloadProvider);
+    ref.invalidate(streakProvider);
   };
 });

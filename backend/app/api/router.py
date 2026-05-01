@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from .routes import (
     health, profile, app as app_route, meals, home, tracking,
-    coach, premium, summary, notifications, safety,
+    coach, premium, summary, notifications, safety, streak,
 )
 
 api_router = APIRouter()
@@ -23,6 +23,9 @@ api_router.include_router(home.router, tags=["home"])
 
 # Tracking (water, weight, checkin)
 api_router.include_router(tracking.router, tags=["tracking"])
+
+# Streak (gamification)
+api_router.include_router(streak.router, tags=["streak"])
 
 # Coach
 api_router.include_router(coach.router, prefix="/coach", tags=["coach"])
