@@ -1,173 +1,456 @@
+// app/lib/features/premium/screens/paywall_screen.dart
+//
+// Paywall — PRD §7.3 ile uyumlu.
+// Kuralları:
+// - Korkutucu satış dili YOK
+// - Premium = "daha fazla kişiselleşme" çerçevesi
+// - Trial gösteriliyorsa ön plana çıkar
+// - Restore purchases dahil
+// - Yargılayıcı veya başarısızlık tetikleyici dil yok
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_text_styles.dart';
-import '../../../shared/widgets/app_scaffold.dart';
-import '../../../shared/widgets/primary_button.dart';
-import '../data/premium_service.dart';
+import 'package:nuveli/core/theme/app_colors.dart';
+import 'package:nuveli/core/theme/app_text_styles.dart';
+import 'package:nuveli/features/premium/data/premium_service.dart';
 
 class PaywallScreen extends ConsumerStatefulWidget {
-  const PaywallScreen({super.key});
+  /// Hangi kaynaktan açıldı? Analytics için.
+  /// 'day0_post_log' | 'day2_gift' | 'weekly_summary' | 'feature_preview' | 'manual'
+  final String source;
+
+  const PaywallScreen({super.key, this.source = 'manual'});
 
   @override
   ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
 }
 
 class _PaywallScreenState extends ConsumerState<PaywallScreen> {
-  bool _busy = false;
+  bool _loadingOfferings = true;
+  bool _purchasing = false;
+  String? _errorMessage;
+  List<PremiumOffering> _offerings = [];
+  String? _selectedIdentifier;
 
-  Future<void> _purchase() async {
-    final offering = ref.read(revenueCatOfferingProvider).valueOrNull;
-    final pkg = offering?.monthly ?? offering?.availablePackages.firstOrNull;
-    if (pkg == null) {
-      _showMessage('Şu an satın alma seçeneği yüklenemedi. Sonra dene.');
-      return;
-    }
+  @override
+  void initState() {
+    super.initState();
+    _loadOfferings();
+  }
 
-    setState(() => _busy = true);
-    final result = await ref.read(revenueCatServiceProvider).purchasePackage(pkg);
-    if (!mounted) return;
-    setState(() => _busy = false);
+  Future<void> _loadOfferings() async {
+    setState(() {
+      _loadingOfferings = true;
+      _errorMessage = null;
+    });
 
-    switch (result) {
-      case PurchaseSuccess(hasPremium: final hp):
-        if (hp) {
-          // Premium state'i yenile
-          ref.invalidate(premiumStatusProvider);
-          if (mounted) Navigator.pop(context, true);
-        }
-      case PurchaseCancelled():
-        break; // sessiz
-      case PurchaseFailure(message: final m):
-        _showMessage(m);
-      case PurchaseNotConfigured():
-        _showMessage('Satın alma şu an kullanılamıyor.');
+    try {
+      final svc = ref.read(premiumServiceProvider);
+      final offerings = await svc.getOfferings();
+      if (!mounted) return;
+      setState(() {
+        _offerings = offerings;
+        // Yıllık seçili gelsin (anchor)
+        _selectedIdentifier = offerings
+            .firstWhere(
+              (o) => o.identifier.toLowerCase().contains('annual') ||
+                     o.identifier.toLowerCase().contains('yearly'),
+              orElse: () => offerings.isNotEmpty ? offerings.first : _placeholder(),
+            )
+            .identifier;
+        _loadingOfferings = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = 'Premium seçenekleri yüklenemedi. Tekrar dener misin?';
+        _loadingOfferings = false;
+      });
     }
   }
 
-  Future<void> _restore() async {
-    setState(() => _busy = true);
-    final result = await ref.read(revenueCatServiceProvider).restorePurchases();
-    if (!mounted) return;
-    setState(() => _busy = false);
+  PremiumOffering _placeholder() => PremiumOffering(
+    identifier: '',
+    productId: '',
+    displayPrice: '',
+    periodLabel: '',
+    hasFreeTrial: false,
+    package: throw UnimplementedError(),
+  );
 
-    if (result is PurchaseSuccess && result.hasPremium) {
-      ref.invalidate(premiumStatusProvider);
-      _showMessage('Premium geri yüklendi.');
+  Future<void> _handlePurchase() async {
+    if (_selectedIdentifier == null) return;
+    final selected = _offerings.firstWhere(
+      (o) => o.identifier == _selectedIdentifier,
+    );
+
+    setState(() {
+      _purchasing = true;
+      _errorMessage = null;
+    });
+
+    final svc = ref.read(premiumServiceProvider);
+    final result = await svc.purchase(selected);
+
+    if (!mounted) return;
+    setState(() => _purchasing = false);
+
+    if (result.success) {
+      _showSuccessAndPop();
+    } else if (result.userCancelled) {
+      // Sessizce dön — kullanıcı zaten karar verdi
     } else {
-      _showMessage('Geri yüklenebilecek satın alma yok.');
+      setState(() {
+        _errorMessage = result.userMessage ??
+            'Satın alma tamamlanamadı, biraz sonra dener misin?';
+      });
     }
   }
 
-  void _showMessage(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  Future<void> _handleRestore() async {
+    setState(() {
+      _purchasing = true;
+      _errorMessage = null;
+    });
+
+    final svc = ref.read(premiumServiceProvider);
+    final result = await svc.restore();
+
+    if (!mounted) return;
+    setState(() => _purchasing = false);
+
+    if (result.success && result.newState?.isPremium == true) {
+      _showSuccessAndPop();
+    } else if (!result.success) {
+      setState(() {
+        _errorMessage = result.userMessage ?? 'Geri yüklenecek bir premium bulunamadı';
+      });
+    } else {
+      setState(() {
+        _errorMessage = 'Bu hesaba bağlı premium bulunamadı';
+      });
+    }
+  }
+
+  void _showSuccessAndPop() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Premium aktif. Yanındayız.'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (mounted) context.pop();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final features = [
-      ('Sınırsız öğün analizi', Icons.camera_alt_outlined),
-      ('Gelişmiş AI koç + sesli yanıt', Icons.auto_awesome),
-      ('Haftalık özet ve aylık içgörü', Icons.insights_outlined),
-      ('Tüm ilerleme grafikleri', Icons.trending_up_rounded),
-      ('Öncelikli destek', Icons.support_agent_outlined),
-    ];
-
-    final offeringAsync = ref.watch(revenueCatOfferingProvider);
-    final priceLabel = offeringAsync.when(
-      data: (offering) {
-        final pkg = offering?.monthly ?? offering?.availablePackages.firstOrNull;
-        return pkg?.storeProduct.priceString ?? '—';
-      },
-      loading: () => '...',
-      error: (_, __) => '—',
-    );
-
-    return AppScaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Stack(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text('NUVELI PREMIUM',
-                  style: AppTextStyles.labelSmall.copyWith(color: AppColors.primaryLight)),
-            ),
-            const SizedBox(height: 16),
-            Text('Tüm özellikler,\nsınır yok.', style: AppTextStyles.displayLarge),
-            const SizedBox(height: 24),
-            Expanded(
-              child: ListView.separated(
-                itemCount: features.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 14),
-                itemBuilder: (_, i) {
-                  final (text, icon) = features[i];
-                  return Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(icon, color: AppColors.primaryLight, size: 20),
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  backgroundColor: AppColors.background,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: const Icon(Icons.close, color: AppColors.textPrimary),
+                    onPressed: () => context.pop(),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: _purchasing ? null : _handleRestore,
+                      child: const Text(
+                        'Geri yükle',
+                        style: TextStyle(color: AppColors.textSecondary),
                       ),
-                      const SizedBox(width: 14),
-                      Expanded(child: Text(text, style: AppTextStyles.bodyLarge)),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ],
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate([
+                      _buildHero(),
+                      const SizedBox(height: 32),
+                      _buildValueProps(),
+                      const SizedBox(height: 32),
+                      _buildOfferings(),
+                      const SizedBox(height: 16),
+                      if (_errorMessage != null) _buildError(),
+                      const SizedBox(height: 24),
+                      _buildCta(),
+                      const SizedBox(height: 16),
+                      _buildLegalNote(),
+                    ]),
+                  ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.primary, width: 1.5),
+            if (_purchasing)
+              Container(
+                color: Colors.black54,
+                child: const Center(child: CircularProgressIndicator()),
               ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHero() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Daha çok seni\ntanıyan koç.',
+          style: AppTextStyles.headlineLarge,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'Ücretsiz sürüm seni takip eder, premium sürüm seni tanır.',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildValueProps() {
+    final items = [
+      ('Daha derin haftalık özet', 'Örüntülerini fark eden, sıcak yorum'),
+      ('Daha kişisel koç tonu', 'Seni hatırlayan, sana göre konuşan'),
+      ('Daha erken uyarı', 'Riskli alışkanlıklar görünmeden açılmadan önce'),
+      ('Sınırsız fotoğraf analizi', 'Günde 10 öğüne kadar tahmin'),
+      ('Sesli koç', 'Kısa, sıcak ve kişisel sesli yanıtlar'),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: items
+          .map((item) => Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 4),
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(
+                        color: AppColors.accent,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(item.$1, style: AppTextStyles.bodyLarge),
+                          const SizedBox(height: 2),
+                          Text(
+                            item.$2,
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
+    );
+  }
+
+  Widget _buildOfferings() {
+    if (_loadingOfferings) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 40),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_offerings.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Column(
+          children: [
+            const Icon(Icons.cloud_off_outlined,
+                size: 48, color: AppColors.textSecondary),
+            const SizedBox(height: 12),
+            Text(
+              'Şu an seçenekleri yükleyemedim.',
+              style: AppTextStyles.bodyMedium,
+            ),
+            const SizedBox(height: 12),
+            TextButton(onPressed: _loadOfferings, child: const Text('Tekrar dene')),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children:
+          _offerings.map((offering) => _buildOfferingCard(offering)).toList(),
+    );
+  }
+
+  Widget _buildOfferingCard(PremiumOffering offering) {
+    final isSelected = _selectedIdentifier == offering.identifier;
+    final isYearly = offering.identifier.toLowerCase().contains('annual') ||
+        offering.identifier.toLowerCase().contains('yearly');
+
+    return GestureDetector(
+      onTap: () => setState(() => _selectedIdentifier = offering.identifier),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected ? AppColors.accent : AppColors.border,
+            width: 2,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_off,
+              color: isSelected ? AppColors.accent : AppColors.textSecondary,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('7 gün ücretsiz dene', style: AppTextStyles.headingSmall),
+                  Row(
+                    children: [
+                      Text(
+                        isYearly ? 'Yıllık' : 'Aylık',
+                        style: AppTextStyles.titleMedium,
+                      ),
+                      if (isYearly) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.accent.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            'En çok seçilen',
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: AppColors.accent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                   const SizedBox(height: 4),
-                  Text('Sonrasında $priceLabel/ay · istediğin zaman iptal et',
-                      style: AppTextStyles.bodySmall),
+                  Text(
+                    offering.displayPrice,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  if (offering.hasFreeTrial && offering.trialDays != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      '${offering.trialDays} gün ücretsiz dene, sonra otomatik yenilenir',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: AppColors.accent,
+                      ),
+                    ),
+                  ],
                 ],
-              ),
-            ),
-            const SizedBox(height: 14),
-            PrimaryButton(
-              label: '7 Gün Ücretsiz Başla',
-              isLoading: _busy,
-              onPressed: _purchase,
-            ),
-            const SizedBox(height: 8),
-            Center(
-              child: TextButton(
-                onPressed: _busy ? null : _restore,
-                child: Text('Satın almayı geri yükle', style: AppTextStyles.bodySmall),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildError() {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.error.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.info_outline, color: AppColors.error, size: 20),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              _errorMessage!,
+              style: AppTextStyles.bodySmall,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCta() {
+    final disabled = _loadingOfferings ||
+        _purchasing ||
+        _selectedIdentifier == null;
+
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.accent,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: AppColors.accent.withOpacity(0.4),
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        onPressed: disabled ? null : _handlePurchase,
+        child: Text(
+          _selectedIdentifier != null && _hasTrialFor(_selectedIdentifier!)
+              ? 'Ücretsiz dene'
+              : 'Devam et',
+          style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  bool _hasTrialFor(String identifier) {
+    final o = _offerings.firstWhere(
+      (x) => x.identifier == identifier,
+      orElse: () => _placeholder(),
+    );
+    return o.hasFreeTrial;
+  }
+
+  Widget _buildLegalNote() {
+    return Text(
+      'Aboneliği istediğin zaman App Store / Play Store ayarlarından iptal edebilirsin. '
+      'Trial sona ermeden 24 saat önce iptal etmediğinde otomatik yenilenir.',
+      style: AppTextStyles.labelSmall.copyWith(
+        color: AppColors.textSecondary,
+      ),
+      textAlign: TextAlign.center,
     );
   }
 }

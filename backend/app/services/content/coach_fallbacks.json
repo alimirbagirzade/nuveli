@@ -1,0 +1,291 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-05-01",
+  "entries": {
+    "tr": {
+      "gentle": {
+        "home_card": {
+          "normal": [
+            "Bugün küçük bir adım yeterli. Bir bardak su ile başlayalım mı?",
+            "Burada olman bile bir başlangıç. Önce su, sonra plan.",
+            "Hafif başlayalım: 5 dakika hareket, küçük bir öğün."
+          ]
+        },
+        "chat_response": {
+          "normal": [
+            "Yanındayım. Şu an ne hissediyorsun, kısaca anlatabilir misin?",
+            "Anladım. Bunu birlikte adım adım açalım.",
+            "Bugün ideal gitmemiş olabilir, ama buradasın. Bu yeterli."
+          ],
+          "sensitive": [
+            "Seni duyuyorum. Acele etmeden konuşalım.",
+            "Yargısız buradayım. Sen anlatmak istediğin kadarını anlat."
+          ],
+          "high_risk": [
+            "Bu konuda profesyonel desteğe ulaşman önemli. Yanında destek olabilecek bir uzmanla konuşmanı öneriyorum.",
+            "Burada dinlemek için varım, ama bu konu için bir ruh sağlığı uzmanı çok daha doğru bir adres olur."
+          ]
+        },
+        "meal_reaction": {
+          "normal": [
+            "Güzel, kaydettim. Bugün dengeyi tutalım.",
+            "Aldım, teşekkürler. Bir sonraki öğüne hafif bir şey ekleyelim mi?"
+          ]
+        },
+        "weekly_summary": {
+          "normal": [
+            "Hafta boyunca ritim tutmaya çalıştın. Düzen oluşmaya başladı, sürdürmek önemli.",
+            "Bu hafta küçük adımlar attın. Önümüzdeki hafta birini daha eklemek yeter."
+          ]
+        },
+        "empty_day": {
+          "normal": [
+            "Bugün giriş yapmadın, sorun değil. Akşam tek soru: nasıl geçti?",
+            "Boş bir gün de bilgi. Şimdi tek dokunuş yeterli."
+          ]
+        },
+        "recovery_day": {
+          "normal": [
+            "Bugünü ceza gününe çevirmiyoruz. Su, hafif öğün, küçük bir yürüyüş — yeter.",
+            "Dünü silelim. Bugün sıfırdan değil, devam ediyoruz. Hafif başla."
+          ],
+          "sensitive": [
+            "Telafi etmek değil, dengeye dönmek. Bugün küçük bir mola yeter.",
+            "Geri dönmek için baştan başlamak gerekmiyor. Olduğun yerden devam et."
+          ]
+        },
+        "celebration": {
+          "normal": [
+            "Güzel iş. Küçük adımlar birikiyor.",
+            "Bunu fark ettim. Devam et."
+          ]
+        }
+      },
+      "funny": {
+        "home_card": {
+          "normal": [
+            "Tatlı krizi mi geliyor? Önce bir bardak su, sonra konuşalım.",
+            "Bugünün planı: az lafla çok hareket. Hadi başlayalım."
+          ]
+        },
+        "chat_response": {
+          "normal": [
+            "Anladım, anladım. Krizimiz var. Hadi bir bardak suyla açalım.",
+            "Bu durumu çözeriz. Önce kısa bir nefes, sonra plan."
+          ]
+        },
+        "meal_reaction": {
+          "normal": [
+            "Aldım. Kalori savunma takımı görevde.",
+            "Listeye eklendi. Kalan günü dengeyle götürürüz."
+          ]
+        },
+        "weekly_summary": {
+          "normal": [
+            "Hafta fena değildi. Birkaç pürüz var ama düzen kuruluyor.",
+            "Bu hafta gayet \"cool\" gittin. Devam edelim."
+          ]
+        },
+        "empty_day": {
+          "normal": [
+            "Sessizdik bugün. Akşam tek soru: nasıl geçti?",
+            "Bilgisiz gün de gün. Tek dokunuşla geri dönelim mi?"
+          ]
+        },
+        "recovery_day": {
+          "normal": [
+            "Dün biraz coştuk. Bugün dengeyi koruyalım, ceza yok.",
+            "Toparlama günü. Su, protein, hareket. Drama yok."
+          ]
+        },
+        "celebration": {
+          "normal": [
+            "Bu güzeldi. Devam.",
+            "Listeye ekledik: \"İyi gün\"."
+          ]
+        }
+      },
+      "direct": {
+        "home_card": {
+          "normal": [
+            "Bugünkü hedef net: 3 öğün, 2 litre su, kısa yürüyüş.",
+            "Plan basit: erken protein, akşam hafif öğün, su."
+          ]
+        },
+        "chat_response": {
+          "normal": [
+            "Anladım. Şimdi şunu yap: bir bardak su, ve bir sonraki öğüne karar ver.",
+            "Net konuşalım: bugün dengeye dönmek için en hızlı yol — protein ağırlıklı bir sonraki öğün."
+          ]
+        },
+        "meal_reaction": {
+          "normal": [
+            "Kaydedildi. Sonraki öğünde protein ağırlığı arttır.",
+            "Aldım. Gün sonuna kadar 1 litre daha su."
+          ]
+        },
+        "weekly_summary": {
+          "normal": [
+            "Hafta dengelendi. Önümüzdeki hafta tek odak: tutarlı kahvaltı.",
+            "Veri net: rakamlar yerinde. Devam et."
+          ]
+        },
+        "empty_day": {
+          "normal": [
+            "Bugün veri yok. Tek soru: gün nasıl geçti?",
+            "Boş gün. Hızlı seç: iyi / yoğun / dağıldım."
+          ]
+        },
+        "recovery_day": {
+          "normal": [
+            "Dün hedef aşıldı. Bugün plan: protein, su, 30 dakika hareket. Ceza yok.",
+            "Reset günü. Hafif öğün, bol su, erken uyku."
+          ]
+        },
+        "celebration": {
+          "normal": [
+            "İyi iş. Devam.",
+            "Tutarlılık görülüyor."
+          ]
+        }
+      },
+      "calm": {
+        "home_card": {
+          "normal": [
+            "Bugün acelesi yok. Bir nefes, bir su.",
+            "Hafif bir gün düşünelim. Önce küçük bir adım."
+          ],
+          "sensitive": [
+            "Bugün sadece var olmak yeterli. Küçük bir su ile başla.",
+            "Acele etmeden gidelim. Sen burada olduğun sürece, plan kurulur."
+          ]
+        },
+        "chat_response": {
+          "normal": [
+            "Buradayım. Acelemiz yok, ne istersen onu konuşalım.",
+            "Sakince ele alalım. Önce nefes, sonra plan."
+          ],
+          "sensitive": [
+            "Anlıyorum. Şu an sadece burada olmak yeterli.",
+            "Yavaşça konuşalım. Hiçbir şey acil değil."
+          ],
+          "high_risk": [
+            "Bu hisseler ağır olabilir. Bir uzmanla konuşman, en doğru destek olacaktır.",
+            "Sen değerlisin. Bu yükü tek başına taşımak zorunda değilsin — bir profesyonele ulaşmanı öneririm."
+          ]
+        },
+        "meal_reaction": {
+          "normal": [
+            "Aldım. Gerisi için zaman var.",
+            "Kayıt tamam. Acele etme."
+          ]
+        },
+        "weekly_summary": {
+          "normal": [
+            "Bu hafta küçük denge anları vardı. Onlar yeterli.",
+            "Hafta tamamlandı. Görünür olan: devam ediyorsun. Bu önemli."
+          ]
+        },
+        "empty_day": {
+          "normal": [
+            "Bugün sessizdi, sorun değil. Tek bir cevap yeterli.",
+            "Boş gün de bir gündür. Şimdi nasıl olduğunu söyle yeter."
+          ],
+          "sensitive": [
+            "Bugün veri girmemiş olman önemsiz. Sen buradasın, bu yeter."
+          ]
+        },
+        "recovery_day": {
+          "normal": [
+            "Bugünü ceza gününe çevirmiyoruz. Bir bardak su, hafif bir öğün, dinlenme.",
+            "Yeni başlangıca gerek yok. Olduğun yerden devam, sakin."
+          ],
+          "sensitive": [
+            "Acele yok. Sadece bugün için küçük bir mola düşünelim.",
+            "Telafi etmeye çalışmana gerek yok. Sadece dengeye yumuşakça dön."
+          ]
+        },
+        "celebration": {
+          "normal": [
+            "Görüldü. İyi.",
+            "Bunu fark ettim, sessizce kutlayalım."
+          ]
+        }
+      }
+    },
+
+    "en": {
+      "gentle": {
+        "home_card": {
+          "normal": [
+            "A small step today is enough. Want to start with a glass of water?",
+            "You being here is a start. Water first, plan after."
+          ]
+        },
+        "chat_response": {
+          "normal": [
+            "I'm here. Can you tell me briefly how you're feeling?",
+            "Understood. Let's unpack this together, one step at a time.",
+            "Today might not have gone ideally, but you're here. That's enough."
+          ],
+          "sensitive": [
+            "I hear you. Let's go slowly.",
+            "I'm here without judgment. Tell me only as much as you'd like."
+          ],
+          "high_risk": [
+            "Reaching out to a professional matters here. I recommend talking to someone qualified to support you.",
+            "I'm here to listen, but for this topic a mental health professional would be the right place."
+          ]
+        },
+        "meal_reaction": {
+          "normal": [
+            "Got it, logged. Let's keep balance today.",
+            "Noted. Want to add something light to the next meal?"
+          ]
+        },
+        "weekly_summary": {
+          "normal": [
+            "You kept some rhythm this week. A pattern is forming, keeping it matters.",
+            "Small steps this week. Adding one more next week is enough."
+          ]
+        },
+        "empty_day": {
+          "normal": [
+            "No entries today, that's okay. One question: how did it go?",
+            "An empty day is also data. One tap is enough now."
+          ]
+        },
+        "recovery_day": {
+          "normal": [
+            "Today isn't a punishment day. Water, light meal, a short walk — enough.",
+            "Let yesterday go. Today isn't from zero, you're continuing. Start light."
+          ],
+          "sensitive": [
+            "Not compensation, just returning to balance. A small pause today is enough.",
+            "You don't need to start over to come back. Continue from where you are."
+          ]
+        },
+        "celebration": {
+          "normal": [
+            "Nice work. Small steps add up.",
+            "I noticed. Keep going."
+          ]
+        }
+      },
+      "calm": {
+        "chat_response": {
+          "high_risk": [
+            "These feelings can be heavy. Talking with a professional would be the right support here.",
+            "You matter. You don't have to carry this alone — I recommend reaching out to a professional."
+          ]
+        },
+        "recovery_day": {
+          "normal": [
+            "We're not making today a punishment day. Water, a light meal, rest.",
+            "No need to start over. Continue from here, gently."
+          ]
+        }
+      }
+    }
+  }
+}

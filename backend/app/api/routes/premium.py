@@ -1,86 +1,156 @@
-from fastapi import APIRouter, Depends, Header, Request, HTTPException
-from pydantic import BaseModel
-from typing import Optional
-from ...core.config import settings
-from ...core.dependencies import get_current_user
-from ...core.logging import get_logger
-from ...services.premium_service import PremiumService
-from ...schemas.common import ApiResponse
+"""
+backend/app/api/routes/premium.py
 
-logger = get_logger(__name__)
+Premium routes — RevenueCat sync, webhook, status, features, usage.
+PRD §7.2 Premium backend logic.
+"""
+
+from __future__ import annotations
+from typing import Optional
+import logging
+
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
+from pydantic import BaseModel, Field
+
+from app.core.dependencies import get_current_user_id, get_premium_service
+from app.services.premium_service import PremiumService, PremiumSyncPayload
+
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.get("/status")
-async def premium_status(user_id: str = Depends(get_current_user)):
-    svc = PremiumService()
-    data = await svc.get_status(user_id)
-    return ApiResponse.ok(data)
+# ═══════════════════════════════════════════════════════════════
+# Request / Response models
+# ═══════════════════════════════════════════════════════════════
+
+class PremiumSyncRequest(BaseModel):
+    rc_customer_id: str
+    active_entitlement_ids: list[str] = []
+    active_product_id: Optional[str] = None
+    expiration_date: Optional[str] = None
+    period_type: Optional[str] = None
 
 
-@router.get("/features")
-async def premium_features(user_id: str = Depends(get_current_user)):
-    svc = PremiumService()
-    data = await svc.get_features(user_id)
-    return ApiResponse.ok(data)
+class PremiumStatusResponse(BaseModel):
+    status: str  # 'free' | 'trial' | 'premium' | 'expired'
+    is_premium: bool
+    trial_ends_at: Optional[str] = None
+    current_period_end: Optional[str] = None
+    active_product_id: Optional[str] = None
 
 
-@router.post("/trial-claim")
-async def claim_trial(user_id: str = Depends(get_current_user)):
-    svc = PremiumService()
-    data = await svc.claim_trial(user_id)
-    return ApiResponse.ok(data)
+class FeaturesResponse(BaseModel):
+    status: str
+    features: dict
 
 
-@router.post("/webhook/revenuecat")
-async def revenuecat_webhook(
+class Day2GiftStatus(BaseModel):
+    eligible: bool
+
+
+class UsageTodayResponse(BaseModel):
+    date: str
+    status: str
+    usage: dict
+
+
+# ═══════════════════════════════════════════════════════════════
+# Endpoints
+# ═══════════════════════════════════════════════════════════════
+
+@router.get("/status", response_model=PremiumStatusResponse)
+async def premium_status(
+    user_id: str = Depends(get_current_user_id),
+    svc: PremiumService = Depends(get_premium_service),
+):
+    return PremiumStatusResponse(**await svc.get_status(user_id))
+
+
+@router.get("/features", response_model=FeaturesResponse)
+async def premium_features(
+    user_id: str = Depends(get_current_user_id),
+    svc: PremiumService = Depends(get_premium_service),
+):
+    return FeaturesResponse(**await svc.get_features(user_id))
+
+
+@router.post("/sync")
+async def premium_sync(
+    body: PremiumSyncRequest,
+    user_id: str = Depends(get_current_user_id),
+    svc: PremiumService = Depends(get_premium_service),
+):
+    payload = PremiumSyncPayload.from_dict(body.dict())
+    result = await svc.sync_from_client(user_id, payload)
+    return {"ok": True, **result}
+
+
+@router.post("/webhook")
+async def premium_webhook(
     request: Request,
+    svc: PremiumService = Depends(get_premium_service),
     authorization: Optional[str] = Header(None),
 ):
     """
-    RevenueCat webhook handler.
-    Auth: Authorization header RC'de tanımlanan secret ile eşleşmeli.
-    RC panelinden: Project Settings → Integrations → Webhooks → Authorization header.
+    RevenueCat webhook endpoint.
+
+    RevenueCat dashboard'da konfigure et:
+    - URL: https://nuveli-api.onrender.com/premium/webhook
+    - Authorization header: Bearer <REVENUECAT_WEBHOOK_SECRET>
+
+    NOT: RevenueCat HMAC signature kullanmaz, sadece Bearer header.
+    Authorization header'ı env'deki REVENUECAT_WEBHOOK_SECRET ile karşılaştırılır.
     """
-    # 1. Webhook secret doğrulama
-    expected = getattr(settings, "revenuecat_webhook_secret", None)
-    if expected and authorization != expected:
-        logger.warning("rc_webhook_unauthorized")
-        raise HTTPException(401, detail={"code": "AUTH_REQUIRED", "message": "Unauthorized."})
+    raw_body = await request.body()
+    expected = f"Bearer {svc.webhook_secret}" if svc.webhook_secret else ""
 
-    # 2. Payload parse
-    body = await request.json()
-    event = body.get("event", {})
-    app_user_id = event.get("app_user_id")
-    event_type = event.get("type")
-    expiration = event.get("expiration_at_iso") or event.get("expiration_at_ms")
+    if svc.webhook_secret and authorization != expected:
+        logger.warning("Webhook auth mismatch")
+        raise HTTPException(status_code=401, detail="invalid_signature")
 
-    if not app_user_id:
-        raise HTTPException(400, detail={"code": "VALIDATION_ERROR", "message": "app_user_id eksik"})
+    try:
+        event = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="invalid_json")
 
-    # 3. Event → tier map
-    #   NOT: CANCELLATION geldiğinde kullanıcı expire olana kadar premium kalır.
-    tier_map = {
-        "INITIAL_PURCHASE": "premium",
-        "RENEWAL": "premium",
-        "UNCANCELLATION": "premium",
-        "CANCELLATION": "premium",
-        "EXPIRATION": "free",
-        "NON_RENEWING_PURCHASE": "premium",
-        "SUBSCRIPTION_PAUSED": "free",
-        "BILLING_ISSUE": "free",
-    }
-    tier = tier_map.get(event_type, "free")
+    result = await svc.handle_webhook(event)
+    return result
 
-    # 4. Update
-    rc_customer_id = event.get("original_app_user_id") or app_user_id
-    svc = PremiumService()
-    await svc.update_from_webhook(
-        user_id=app_user_id,
-        tier=tier,
-        ends_at=expiration if isinstance(expiration, str) else None,
-        rc_customer_id=rc_customer_id,
-    )
 
-    logger.info("rc_webhook_processed", user_id=app_user_id, event_type=event_type, new_tier=tier)
-    return ApiResponse.ok({"processed": True})
+@router.get("/day2-gift-status", response_model=Day2GiftStatus)
+async def day2_gift_status(
+    user_id: str = Depends(get_current_user_id),
+    svc: PremiumService = Depends(get_premium_service),
+):
+    eligible = await svc.is_day2_gift_eligible(user_id)
+    if eligible:
+        # Status sorgulanması = modal gösterildi → mark
+        await svc.mark_day2_gift_offered(user_id)
+    return Day2GiftStatus(eligible=eligible)
+
+
+class Day2ClaimRequest(BaseModel):
+    product_id: str
+
+
+@router.post("/day2-gift-claim")
+async def day2_gift_claim(
+    body: Day2ClaimRequest,
+    user_id: str = Depends(get_current_user_id),
+    svc: PremiumService = Depends(get_premium_service),
+):
+    await svc.mark_day2_gift_claimed(user_id)
+    return {"ok": True}
+
+
+# ═══════════════════════════════════════════════════════════════
+# /usage/today — buradan değil ama isimsel olarak premium ile ilişkili
+# Mevcut kodda /usage/today nerede ise oraya taşı, ya da burada bırak
+# ═══════════════════════════════════════════════════════════════
+
+@router.get("/usage/today", response_model=UsageTodayResponse)
+async def usage_today(
+    user_id: str = Depends(get_current_user_id),
+    svc: PremiumService = Depends(get_premium_service),
+):
+    return UsageTodayResponse(**await svc.get_usage_today(user_id))

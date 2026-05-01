@@ -1,186 +1,320 @@
 """
-Coach Service
-DecisionEngine + PromptEngine + Safety + Fallback + TTS orkestrasyon.
+backend/app/services/coach_service.py
 
-Akış:
-  1. Safety scan (risk level)
-  2. Decision engine (use_ai? tone? persona? context?)
-  3. Crisis/distress → sabit metin, AI yok
-  4. Normal → prompt_engine → OpenAI
-  5. Başarısız → fallback copy
-  6. Opsiyonel: TTS üret, storage'a yükle
-  7. Thread'e kaydet
+Coach Service — AI Boru Hattı Orkestrası.
+PRD §7.2: Decision → Prompt → Model → Safety → (TTS) → Response.
+
+Bu servis NE iş yapmaz:
+- AI logic doğrudan yazmaz (prompt_engine yapar)
+- Karar vermez (decision_engine verir)
+- Filtreleme yapmaz (safety_service yapar)
+- Fallback üretmez (fallback_copy_service çağırır)
+
+Sadece zinciri orkestre eder ve usage counter'ı artırır.
 """
-from datetime import date
-from openai import OpenAI
 
-from ..core.config import settings
-from ..core.exceptions import LimitExceededError
-from ..core.logging import get_logger
-from ..db.client import get_supabase
-from .decision_engine import DecisionEngine
-from .fallback_copy_service import get_fallback
-from .prompt_engine import PromptEngine
-from .safety_service import SafetyService
-from .tts_service import TTSService
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional
+import logging
+import asyncio
 
-logger = get_logger(__name__)
+from openai import AsyncOpenAI
+from openai import OpenAIError, APITimeoutError, RateLimitError
+
+from app.services.decision_engine import (
+    DecisionEngine,
+    Decision,
+    Surface,
+    SafetyMode,
+    PremiumState,
+)
+from app.services.prompt_engine import PromptEngine
+from app.services.safety_service import SafetyService, BlockReason
+from app.services.fallback_copy_service import FallbackCopyService
+from app.services.tts_service import TTSService
+
+logger = logging.getLogger(__name__)
+
+
+# Feature key mapping (decision_engine.FEATURE_LIMITS ile uyumlu)
+FEATURE_KEYS = {
+    Surface.CHAT_RESPONSE: "coach_text_response",
+    Surface.HOME_CARD: "coach_text_response",
+    Surface.MEAL_REACTION: "coach_text_response",
+    Surface.WEEKLY_SUMMARY: None,  # weekly summary limit'siz (job tarafı)
+    Surface.EMPTY_DAY: None,
+    Surface.RECOVERY_DAY: None,
+    Surface.CELEBRATION: None,
+}
+
+
+@dataclass
+class CoachResponse:
+    text: str
+    mode: str                    # 'normal' | 'sensitive' | 'high_risk'
+    persona: str
+    surface: str
+    is_fallback: bool = False
+    fallback_reason: Optional[str] = None
+    voice_url: Optional[str] = None     # TTS varsa
+    show_resources: bool = False        # high_risk için pro destek linki
+    show_premium_upsell: bool = False
+    show_day2_gift: bool = False
+    usage_remaining: Optional[int] = None  # Bu surface için kalan
+    error_code: Optional[str] = None    # 'limit_reached' | 'service_unavailable' | None
+    metadata: dict = field(default_factory=dict)
 
 
 class CoachService:
+    def __init__(
+        self,
+        decision_engine: DecisionEngine,
+        prompt_engine: PromptEngine,
+        safety_service: SafetyService,
+        fallback_copy_service: FallbackCopyService,
+        openai_client: AsyncOpenAI,
+        tts_service: Optional[TTSService] = None,
+    ):
+        self.decision_engine = decision_engine
+        self.prompt_engine = prompt_engine
+        self.safety_service = safety_service
+        self.fallback_copy_service = fallback_copy_service
+        self.openai_client = openai_client
+        self.tts_service = tts_service
 
-    def __init__(self):
-        self.db = get_supabase()
-        self.openai = OpenAI(api_key=settings.openai_api_key) if settings.openai_api_key else None
-        self.safety = SafetyService()
-        self.decision = DecisionEngine()
-        self.prompt = PromptEngine()
-        self.tts = TTSService()
-
-    async def respond(self, user_id: str, user_message: str, want_audio: bool = False) -> dict:
-        """Kullanıcı mesajına koç yanıtı üretir."""
-        # 1. Limit kontrolü
-        from .premium_service import PremiumService
-        status = await PremiumService().get_status(user_id)
-        if status["tier"] == "free":
-            used = await self._get_coach_usage_today(user_id)
-            if used >= settings.free_coach_messages_per_day:
-                raise LimitExceededError("coach_messages", settings.free_coach_messages_per_day)
-
-        # 2. Risk tarama
-        risk_level = self.safety.scan(user_message)
-        fixed_message = self.safety.get_fixed_message(risk_level)
-
-        # 3. Decision
-        decision = await self.decision.decide(
+    async def respond(
+        self,
+        user_id: str,
+        surface: Surface,
+        user_message: Optional[str] = None,
+        meal_context: Optional[dict] = None,
+        weekly_data: Optional[dict] = None,
+        request_voice: bool = False,
+    ) -> CoachResponse:
+        """
+        Ana entry point. Tüm AI cevap akışı buradan geçer.
+        """
+        # ────────────────────────────────────────────
+        # 1. DECISION
+        # ────────────────────────────────────────────
+        feature_key = FEATURE_KEYS.get(surface)
+        decision = await self.decision_engine.resolve(
             user_id=user_id,
-            user_message=user_message,
-            risk_level=risk_level,
-            fixed_safety_message=fixed_message,
+            surface=surface,
+            feature_key=feature_key,
         )
+        logger.info("Coach.respond: %s", decision)
 
-        # 4. Kullanıcı mesajını kaydet
-        await self.save_message(user_id, "user", user_message)
+        # ────────────────────────────────────────────
+        # 2. USAGE GATE
+        # ────────────────────────────────────────────
+        if not decision.usage_ok:
+            return self._limit_reached_response(decision)
 
-        # 5. Yanıt üret
-        if not decision.use_ai:
-            message_text = decision.fixed_message
-            is_fallback = True
-            audio_url = None
-        else:
-            message_text, is_fallback = await self._generate_ai_reply(user_id, user_message, decision)
-            audio_url = None
-            if want_audio and status["tier"] in ("trial", "premium") and not is_fallback:
-                audio_url = await self._try_tts(user_id, message_text)
-
-        # 6. Usage ++
-        await self._increment_coach_usage(user_id)
-
-        # 7. Risk mode güncelle
-        if risk_level != "normal":
-            self.db.table("coach_preferences").upsert({
-                "user_id": user_id,
-                "risk_mode": risk_level,
-            }, on_conflict="user_id").execute()
-
-        # 8. Koç yanıtını kaydet
-        saved = await self.save_message(
-            user_id, "coach", message_text,
-            is_fallback=is_fallback, audio_url=audio_url,
-        )
-
-        return {
-            "message": message_text,
-            "is_fallback": is_fallback,
-            "risk_level": risk_level,
-            "audio_url": audio_url,
-            "message_id": saved["id"],
-        }
-
-    async def save_message(
-        self, user_id: str, role: str, content: str,
-        is_fallback: bool = False, audio_url: str | None = None,
-    ) -> dict:
-        thread = self.db.table("coach_threads").select("id").eq("user_id", user_id).execute()
-        if not thread.data:
-            t = self.db.table("coach_threads").insert({"user_id": user_id}).execute()
-            thread_id = t.data[0]["id"]
-        else:
-            thread_id = thread.data[0]["id"]
-
-        row = self.db.table("coach_messages").insert({
-            "thread_id": thread_id,
-            "user_id": user_id,
-            "role": role,
-            "content": content,
-            "is_fallback": is_fallback,
-            "audio_url": audio_url,
-        }).execute()
-        return row.data[0]
-
-    async def get_thread(self, user_id: str, limit: int = 50) -> list:
-        thread = self.db.table("coach_threads").select("id").eq("user_id", user_id).execute()
-        if not thread.data:
-            return []
-        thread_id = thread.data[0]["id"]
-        result = self.db.table("coach_messages")\
-            .select("*").eq("thread_id", thread_id)\
-            .order("created_at", desc=False).limit(limit).execute()
-        return result.data or []
-
-    # ─── İçeriden ────
-
-    async def _generate_ai_reply(self, user_id: str, user_message: str, decision) -> tuple[str, bool]:
-        if not self.openai:
-            logger.warning("coach_ai_skipped_no_openai_key", user_id=user_id)
-            return get_fallback("neutral"), True
-
-        history = await self.get_thread(user_id, limit=6)
-        messages = self.prompt.build_messages(decision, user_message, history)
-
+        # ────────────────────────────────────────────
+        # 3. PROMPT
+        # ────────────────────────────────────────────
         try:
-            resp = self.openai.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=messages,
-                max_tokens=150,
-                temperature=0.7,
+            prompt_output = self.prompt_engine.build(
+                decision=decision,
+                user_message=user_message,
+                meal_context=meal_context,
+                weekly_data=weekly_data,
             )
-            text = resp.choices[0].message.content.strip()
-            logger.info("coach_ai_success", user_id=user_id, tokens=resp.usage.total_tokens if resp.usage else 0)
-            return text, False
         except Exception as e:
-            # Detailed error logging — surface the real OpenAI failure
-            logger.warning(
-                "coach_ai_failed",
-                user_id=user_id,
-                error=str(e),
-                error_type=type(e).__name__,
+            logger.exception("PromptEngine failed: %s", e)
+            return self._fallback_response(
+                decision, reason="prompt_engine_error"
             )
-            kind = {"gentle": "tough", "celebrate": "encourage",
-                    "invite": "greeting"}.get(decision.tone, "neutral")
-            return get_fallback(kind), True
 
-    async def _try_tts(self, user_id: str, text: str) -> str | None:
-        audio_bytes = await self.tts.synthesize_short(text)
-        if not audio_bytes:
-            return None
-        from uuid import uuid4
-        return await self.tts.upload_to_storage(user_id, audio_bytes, str(uuid4()))
+        # ────────────────────────────────────────────
+        # 4. MODEL
+        # ────────────────────────────────────────────
+        try:
+            ai_text = await self._call_openai(
+                messages=prompt_output.messages,
+                model=prompt_output.model_recommendation,
+                mode=decision.safety_mode,
+            )
+        except (APITimeoutError, RateLimitError) as e:
+            logger.warning("OpenAI rate/timeout: %s", e)
+            return self._fallback_response(decision, reason="openai_unavailable")
+        except OpenAIError as e:
+            logger.error("OpenAI error: %s", e)
+            return self._fallback_response(decision, reason="openai_error")
+        except Exception as e:
+            logger.exception("Unexpected OpenAI error: %s", e)
+            return self._fallback_response(decision, reason="unexpected_error")
 
-    async def _get_coach_usage_today(self, user_id: str) -> int:
-        today = str(date.today())
-        res = self.db.table("usage_counters_daily")\
-            .select("coach_messages")\
-            .eq("user_id", user_id).eq("local_day", today).execute()
-        if res.data:
-            return res.data[0].get("coach_messages") or 0
-        return 0
+        if not ai_text or not ai_text.strip():
+            return self._fallback_response(decision, reason="empty_response")
 
-    async def _increment_coach_usage(self, user_id: str) -> None:
-        today = str(date.today())
-        current = await self._get_coach_usage_today(user_id)
-        self.db.table("usage_counters_daily").upsert({
-            "user_id": user_id,
-            "local_day": today,
-            "coach_messages": current + 1,
-        }, on_conflict="user_id,local_day").execute()
+        # ────────────────────────────────────────────
+        # 5. SAFETY FILTER
+        # ────────────────────────────────────────────
+        safety_result = self.safety_service.filter(
+            text=ai_text,
+            mode=decision.safety_mode,
+            locale=decision.locale,
+        )
+        if not safety_result.passed:
+            logger.warning(
+                "Safety blocked AI response: reason=%s patterns=%s",
+                safety_result.block_reason.value if safety_result.block_reason else None,
+                safety_result.triggered_patterns,
+            )
+            return self._fallback_response(
+                decision,
+                reason=f"safety_block:{safety_result.block_reason.value if safety_result.block_reason else 'unknown'}",
+            )
+
+        # ────────────────────────────────────────────
+        # 6. TTS (opsiyonel)
+        # ────────────────────────────────────────────
+        voice_url = None
+        if request_voice and self.tts_service and decision.safety_mode != SafetyMode.HIGH_RISK:
+            # TTS için ayrı feature limit kontrolü
+            voice_decision = await self.decision_engine.resolve(
+                user_id=user_id,
+                surface=surface,
+                feature_key="coach_voice_response",
+            )
+            if voice_decision.usage_ok:
+                try:
+                    voice_url = await self.tts_service.synthesize(
+                        text=safety_result.filtered_text,
+                        user_id=user_id,
+                        locale=decision.locale,
+                    )
+                    await self.decision_engine.increment_usage(
+                        user_id, "coach_voice_response"
+                    )
+                except Exception as e:
+                    logger.warning("TTS failed (non-fatal): %s", e)
+
+        # ────────────────────────────────────────────
+        # 7. USAGE INCREMENT
+        # ────────────────────────────────────────────
+        if feature_key:
+            await self.decision_engine.increment_usage(user_id, feature_key)
+
+        # ────────────────────────────────────────────
+        # 8. RESPONSE
+        # ────────────────────────────────────────────
+        usage_remaining = None
+        if feature_key:
+            usage_remaining = max(
+                0, decision.usage_limit_today - (decision.usage_count_today + 1)
+            )
+
+        return CoachResponse(
+            text=safety_result.filtered_text,
+            mode=decision.safety_mode.value,
+            persona=decision.persona.value,
+            surface=surface.value,
+            is_fallback=False,
+            voice_url=voice_url,
+            show_resources=self.safety_service.should_show_resources(
+                decision.safety_mode, user_message
+            ),
+            show_premium_upsell=decision.show_premium_upsell,
+            show_day2_gift=decision.show_day2_gift,
+            usage_remaining=usage_remaining,
+            metadata={
+                "model_used": prompt_output.model_recommendation,
+                "estimated_tokens": prompt_output.estimated_tokens,
+            },
+        )
+
+    # ───────────────────────────────────────────────────
+    # Internal: OpenAI call
+    # ───────────────────────────────────────────────────
+
+    async def _call_openai(
+        self,
+        messages: list[dict],
+        model: str,
+        mode: SafetyMode,
+    ) -> str:
+        """
+        OpenAI çağrısı. Mode'a göre temperature ayarlar.
+        Timeout: high_risk'te daha uzun verilir (yanıt önemli).
+        """
+        temperature = {
+            SafetyMode.NORMAL: 0.7,
+            SafetyMode.SENSITIVE: 0.5,
+            SafetyMode.HIGH_RISK: 0.3,
+        }.get(mode, 0.7)
+
+        timeout = 30.0 if mode == SafetyMode.HIGH_RISK else 15.0
+
+        completion = await asyncio.wait_for(
+            self.openai_client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=300,  # Cevaplar kısa olmalı (PRD §11)
+            ),
+            timeout=timeout,
+        )
+
+        return (completion.choices[0].message.content or "").strip()
+
+    # ───────────────────────────────────────────────────
+    # Response helpers
+    # ───────────────────────────────────────────────────
+
+    def _limit_reached_response(self, decision: Decision) -> CoachResponse:
+        """Kullanım limiti dolmuş — PRD §10.2."""
+        if decision.locale == "en":
+            text = (
+                "You've used today's coach replies. Tomorrow they reset, "
+                "or premium gives you more depth."
+                if decision.premium_state == PremiumState.FREE
+                else "You've reached today's limit. Tomorrow we continue."
+            )
+        else:
+            text = (
+                "Bugünkü koç haklarını kullandın. Yarın yeniden açılıyor, "
+                "ya da premium daha derin bir deneyim sunuyor."
+                if decision.premium_state == PremiumState.FREE
+                else "Bugünkü limiti tamamladın. Yarın yine konuşuruz."
+            )
+
+        return CoachResponse(
+            text=text,
+            mode=decision.safety_mode.value,
+            persona=decision.persona.value,
+            surface=decision.surface.value,
+            is_fallback=False,
+            error_code="limit_reached",
+            show_premium_upsell=decision.show_premium_upsell,
+            usage_remaining=0,
+        )
+
+    def _fallback_response(
+        self,
+        decision: Decision,
+        reason: str,
+    ) -> CoachResponse:
+        """AI/safety başarısız — fallback metin."""
+        text = self.fallback_copy_service.get(
+            persona=decision.persona,
+            surface=decision.surface,
+            locale=decision.locale,
+            safety_mode=decision.safety_mode,
+        )
+        # Fallback'te usage SAYAÇLAMAYIZ (kullanıcı hak yanmasın — PRD §10.1)
+        return CoachResponse(
+            text=text,
+            mode=decision.safety_mode.value,
+            persona=decision.persona.value,
+            surface=decision.surface.value,
+            is_fallback=True,
+            fallback_reason=reason,
+            show_resources=self.safety_service.should_show_resources(
+                decision.safety_mode
+            ),
+            metadata={"fallback_reason": reason},
+        )

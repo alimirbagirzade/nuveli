@@ -65,3 +65,4 @@ deploy/secrets/
 landing/app/node_modules/
 landing/app/dist/
 landing/app/.env
+landing.zip
