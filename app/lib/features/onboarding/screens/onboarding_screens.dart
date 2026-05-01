@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/routing/app_router.dart';
+import '../../../core/services/local_notification_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
@@ -415,13 +416,22 @@ class NotificationOptInScreen extends ConsumerWidget {
           const Spacer(),
           PrimaryButton(
             label: 'Evet, istiyorum',
-            onPressed: () {
+            onPressed: () async {
               controller.setNotificationPrefs(
                 mealReminders: true,
                 coachNudges: true,
                 weeklySummary: true,
               );
-              context.go(AppRoute.onboardingResult);
+              // İzin iste — reddederse de devam et, kullanıcı sonra
+              // ayarlardan tekrar deneyebilir.
+              try {
+                await LocalNotificationService.instance.requestPermissions();
+              } catch (_) {
+                // Permission API çökerse onboarding kesilmesin
+              }
+              if (context.mounted) {
+                context.go(AppRoute.onboardingResult);
+              }
             },
           ),
           const SizedBox(height: 10),

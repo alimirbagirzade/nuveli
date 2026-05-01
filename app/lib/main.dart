@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
 import 'core/config/app_config.dart';
+import 'core/services/local_notification_service.dart';
 
 Future<void> main() async {
   // Tüm initialization VE runApp aynı Zone içinde çalışmalı.
@@ -46,6 +47,18 @@ Future<void> main() async {
       url: AppConfig.supabaseUrl,
       anonKey: AppConfig.supabaseAnonKey,
     );
+
+    // Local notifications — timezone DB ve plugin'i hazırla.
+    // Permission isteme initialize'da yapılmaz; kullanıcı onboarding'de
+    // veya bildirim tercihi ekranında izin verir.
+    try {
+      await LocalNotificationService.instance.initialize();
+    } catch (e) {
+      developer.log(
+        'Notification init failed: $e',
+        name: 'nuveli.notifications',
+      );
+    }
 
     runApp(const ProviderScope(child: NuveliApp()));
   }, (error, stack) {

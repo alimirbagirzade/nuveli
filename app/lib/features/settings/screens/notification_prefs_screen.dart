@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/network/app_error.dart';
+import '../../../core/services/local_notification_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../../../shared/widgets/skeleton_loader.dart';
+import '../../streak/data/streak_repository.dart';
 import '../providers/settings_providers.dart';
 
 class NotificationPrefsScreen extends ConsumerStatefulWidget {
@@ -62,6 +64,30 @@ class _NotificationPrefsScreenState
 
     try {
       await ref.read(notificationPrefsControllerProvider.notifier).save();
+
+      // Backend kaydı başarılı — local notification'ları yeniden schedule et.
+      // Permission yoksa OS dialog'u burada açılır (ilk seferinde).
+      final prefs = ref.read(notificationPrefsControllerProvider).value;
+      if (prefs != null) {
+        // İzin yoksa iste; reddederse de devam — schedule fail olmaz,
+        // sadece bildirim gözükmez.
+        await LocalNotificationService.instance.requestPermissions();
+
+        // Streak verisi varsa onu da hesaba kat. Yoksa null geçilir
+        // (streak risk reminder schedule edilmez, diğerleri yine olur).
+        StreakInfo? currentStreak;
+        try {
+          currentStreak = await ref.read(streakProvider.future);
+        } catch (_) {
+          currentStreak = null;
+        }
+
+        await LocalNotificationService.instance.rescheduleAll(
+          prefs: prefs,
+          streak: currentStreak,
+        );
+      }
+
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Tercihler kaydedildi.')),

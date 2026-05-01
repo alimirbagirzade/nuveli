@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/network/app_error.dart';
 import '../../../core/routing/app_router.dart';
+import '../../../core/services/notification_sync_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
@@ -50,6 +51,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeAsync = ref.watch(homePayloadProvider);
+
+    // Notification scheduler — streak veya tercih değiştiğinde local
+    // bildirimleri otomatik reschedule eder. Watch ederek listener'ı
+    // app yaşamı boyunca aktif tutuyoruz; widget rebuild olsa bile
+    // listener tek kez kurulur (Riverpod cache).
+    ref.watch(notificationSyncProvider);
 
     return AppScaffold(
       appBar: AppBar(
