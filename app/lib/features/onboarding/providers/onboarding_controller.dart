@@ -48,6 +48,36 @@ class OnboardingController extends StateNotifier<OnboardingData> {
     state = state.copyWith(specialConditions: conditions);
   }
 
+  // ---------------------------------------------------------------------------
+  // Sprint 2.1: yeni setterlar
+  // ---------------------------------------------------------------------------
+
+  /// Sensitivity check ekraninin sonucu.
+  /// 'normal' | 'sensitive' | 'high_risk'
+  void setSensitivityLevel(String level) {
+    state = state.copyWith(sensitivityLevel: level);
+  }
+
+  /// Food relationship ekraninin sonucu.
+  /// Beklenen sekil:
+  ///   { 'history_struggle': 'no'|'past_yes'|'current_yes'|'no_answer',
+  ///     'current_feeling': 'ok'|'mixed'|'hard'|'no_answer' }
+  void setFoodRelationship(Map<String, dynamic> data) {
+    state = state.copyWith(foodRelationship: data);
+  }
+
+  /// Allergies ekraninin sonucu (multi-select).
+  void setAllergies(List<String> allergies) {
+    state = state.copyWith(allergies: allergies);
+  }
+
+  /// Dietary preference (single select).
+  /// 'none' | 'vegetarian' | 'vegan' | 'pescatarian' | 'halal' | 'kosher' | 'other'
+  void setDietaryPreference(String pref) {
+    state = state.copyWith(dietaryPreference: pref);
+  }
+
+  /// Coach persona (PRD: gentle | funny | direct | calm).
   void setCoachPersona(String persona) {
     state = state.copyWith(coachPersona: persona);
   }

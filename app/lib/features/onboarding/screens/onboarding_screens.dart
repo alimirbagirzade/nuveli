@@ -56,7 +56,7 @@ class GoalSelectionScreen extends ConsumerWidget {
             isEnabled: selected != null,
             onPressed: selected == null
                 ? null
-                : () => context.go(AppRoute.onboardingProfileOne),
+                : () => context.go(AppRoute.onboardingSensitivity),
           ),
         ],
       ),
@@ -324,7 +324,7 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
                       weightKg: double.parse(_weightCtrl.text),
                       activityLevel: _activity!,
                     );
-                    context.go(AppRoute.onboardingCoach);
+                    context.go(AppRoute.onboardingAllergies);
                   },
           ),
         ],
@@ -345,9 +345,10 @@ class CoachSelectionScreen extends ConsumerWidget {
     final controller = ref.read(onboardingControllerProvider.notifier);
 
     const personas = [
-      ('supportive', 'Destekleyici', 'Nazik, sakin, empati önce'),
-      ('motivating', 'Motive edici', 'Enerjik, hedef odaklı'),
-      ('realistic', 'Gerçekçi', 'Doğrudan ama şefkatli'),
+      ('gentle', 'Nazik', 'Yumuşak, baskısız, empati önce'),
+      ('funny', 'Esprili', 'Hafif, gülümseten, ciddi anlarda dengeli'),
+      ('direct', 'Doğrudan', 'Kısa, net, gerçekçi geri bildirim'),
+      ('calm', 'Sakin', 'Yargılamayan, sabırlı, ölçülü'),
     ];
 
     return AppScaffold(
@@ -379,7 +380,7 @@ class CoachSelectionScreen extends ConsumerWidget {
             isEnabled: persona != null,
             onPressed: persona == null
                 ? null
-                : () => context.go(AppRoute.onboardingNotification),
+                : () => context.go(AppRoute.onboardingCaloriePreview),
           ),
         ],
       ),
@@ -421,7 +422,7 @@ class NotificationOptInScreen extends ConsumerWidget {
                 coachNudges: true,
                 weeklySummary: true,
               );
-              context.go(AppRoute.onboardingResult);
+              context.go(AppRoute.onboardingSuccess);
             },
           ),
           const SizedBox(height: 10),
@@ -433,7 +434,7 @@ class NotificationOptInScreen extends ConsumerWidget {
                 coachNudges: false,
                 weeklySummary: false,
               );
-              context.go(AppRoute.onboardingResult);
+              context.go(AppRoute.onboardingSuccess);
             },
           ),
         ],

@@ -14,6 +14,11 @@ class OnboardingData {
     this.notifMealReminders = true,
     this.notifCoachNudges = true,
     this.notifWeeklySummary = true,
+    // Sprint 2.1: yeni alanlar
+    this.sensitivityLevel,
+    this.foodRelationship,
+    this.allergies = const [],
+    this.dietaryPreference = 'none',
   });
 
   final String? displayName;
@@ -24,10 +29,15 @@ class OnboardingData {
   final double? weightKg;
   final String? activityLevel; // 'sedentary' | 'light' | 'moderate' | 'active'
   final List<String> specialConditions;
-  final String? coachPersona; // 'supportive' | 'analytical' | 'motivational' | 'casual'
+  final String? coachPersona; // 'gentle' | 'funny' | 'direct' | 'calm' (PRD)
   final bool notifMealReminders;
   final bool notifCoachNudges;
   final bool notifWeeklySummary;
+  // Sprint 2.1: yeni alanlar
+  final String? sensitivityLevel; // 'normal' | 'sensitive' | 'high_risk'
+  final Map<String, dynamic>? foodRelationship;
+  final List<String> allergies;
+  final String dietaryPreference;
 
   OnboardingData copyWith({
     String? displayName,
@@ -42,6 +52,10 @@ class OnboardingData {
     bool? notifMealReminders,
     bool? notifCoachNudges,
     bool? notifWeeklySummary,
+    String? sensitivityLevel,
+    Map<String, dynamic>? foodRelationship,
+    List<String>? allergies,
+    String? dietaryPreference,
   }) {
     return OnboardingData(
       displayName: displayName ?? this.displayName,
@@ -56,6 +70,10 @@ class OnboardingData {
       notifMealReminders: notifMealReminders ?? this.notifMealReminders,
       notifCoachNudges: notifCoachNudges ?? this.notifCoachNudges,
       notifWeeklySummary: notifWeeklySummary ?? this.notifWeeklySummary,
+      sensitivityLevel: sensitivityLevel ?? this.sensitivityLevel,
+      foodRelationship: foodRelationship ?? this.foodRelationship,
+      allergies: allergies ?? this.allergies,
+      dietaryPreference: dietaryPreference ?? this.dietaryPreference,
     );
   }
 
@@ -70,6 +88,10 @@ class OnboardingData {
       'goal': goal,
       'activity_level': activityLevel,
       'special_conditions': specialConditions,
+      // Sprint 2.1
+      'food_relationship': foodRelationship,
+      'allergies': allergies,
+      'dietary_preference': dietaryPreference,
     };
   }
 

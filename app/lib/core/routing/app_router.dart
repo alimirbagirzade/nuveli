@@ -14,8 +14,12 @@ import '../../features/meal/screens/manual_meal_entry_screen.dart';
 import '../../features/meal/screens/meal_analysis_result_screen.dart';
 import '../../features/meal/screens/meal_capture_screen.dart';
 import '../../features/onboarding/screens/acceptance_screens.dart';
+import '../../features/onboarding/screens/allergies_diet_screen.dart';
+import '../../features/onboarding/screens/calorie_preview_screen.dart';
 import '../../features/onboarding/screens/onboarding_screens.dart';
+import '../../features/onboarding/screens/sensitivity_check_screen.dart';
 import '../../features/onboarding/screens/welcome_age_gate_screen.dart';
+import '../../features/onboarding/screens/welcome_success_screen.dart';
 import '../../features/premium/screens/paywall_screen.dart';
 import 'page_transitions.dart';
 import '../../features/progress/screens/empty_day_screen.dart';
@@ -53,10 +57,14 @@ class AppRoute {
 
   // Onboarding
   static const onboardingGoal = '/onboarding/goal';
+  static const onboardingSensitivity = '/onboarding/sensitivity';
   static const onboardingProfileOne = '/onboarding/profile/1';
   static const onboardingProfileTwo = '/onboarding/profile/2';
+  static const onboardingAllergies = '/onboarding/allergies';
   static const onboardingCoach = '/onboarding/coach';
+  static const onboardingCaloriePreview = '/onboarding/preview';
   static const onboardingNotification = '/onboarding/notification';
+  static const onboardingSuccess = '/onboarding/success';
   static const onboardingResult = '/onboarding/result';
 
   // Main
@@ -160,10 +168,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const TermsPrivacyScreen(),
       ),
 
-      // Onboarding (6 ekran)
+      // Onboarding (10 ekran — Sprint 2.1)
       GoRoute(
         path: AppRoute.onboardingGoal,
         builder: (context, state) => const GoalSelectionScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingSensitivity,
+        builder: (context, state) => const SensitivityCheckScreen(),
       ),
       GoRoute(
         path: AppRoute.onboardingProfileOne,
@@ -174,12 +186,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const ProfileStepTwoScreen(),
       ),
       GoRoute(
+        path: AppRoute.onboardingAllergies,
+        builder: (context, state) => const AllergiesDietScreen(),
+      ),
+      GoRoute(
         path: AppRoute.onboardingCoach,
         builder: (context, state) => const CoachSelectionScreen(),
       ),
       GoRoute(
+        path: AppRoute.onboardingCaloriePreview,
+        builder: (context, state) => const CaloriePreviewScreen(),
+      ),
+      GoRoute(
         path: AppRoute.onboardingNotification,
         builder: (context, state) => const NotificationOptInScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.onboardingSuccess,
+        builder: (context, state) => const WelcomeSuccessScreen(),
       ),
       GoRoute(
         path: AppRoute.onboardingResult,
