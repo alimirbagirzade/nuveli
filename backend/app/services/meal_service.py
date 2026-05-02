@@ -176,25 +176,48 @@ class MealService:
         return json.loads(resp.choices[0].message.content)
 
     async def _check_and_increment_usage(self, user_id: str, counter: str) -> None:
+        """Kullanım sayacını arttırır. Schema: her feature ayrı satır."""
         today = str(date.today())
-        current = await self._get_usage(user_id, counter)
-        self.db.table("usage_counters_daily").upsert({
-            "user_id": user_id,
-            "local_day": today,
-            counter: current + 1,
-        }, on_conflict="user_id,local_day").execute()
+        try:
+            self.db.rpc("increment_usage_counter", {
+                "p_user_id": user_id,
+                "p_date": today,
+                "p_feature": counter,
+            }).execute()
+        except Exception:
+            current = await self._get_usage(user_id, counter)
+            existing = (
+                self.db.table("usage_counters_daily")
+                .select("id")
+                .eq("user_id", user_id)
+                .eq("local_day", today)
+                .eq("feature", counter)
+                .execute()
+            )
+            if existing.data:
+                self.db.table("usage_counters_daily").update({
+                    "count": current + 1,
+                }).eq("id", existing.data[0]["id"]).execute()
+            else:
+                self.db.table("usage_counters_daily").insert({
+                    "user_id": user_id,
+                    "local_day": today,
+                    "feature": counter,
+                    "count": 1,
+                }).execute()
 
     async def _get_usage(self, user_id: str, counter: str) -> int:
+        """Bugünkü feature kullanım sayısı. Schema: her feature ayrı satır."""
         today = str(date.today())
         res = self.db.table("usage_counters_daily")\
-            .select(counter)\
+            .select("count")\
             .eq("user_id", user_id)\
             .eq("local_day", today)\
+            .eq("feature", counter)\
             .execute()
         if res.data:
-            return res.data[0].get(counter) or 0
+            return res.data[0].get("count") or 0
         return 0
-
     async def _invalidate_summary(self, user_id: str, local_day: str) -> None:
         """Summary'yi yeniden hesaplar (cache silip beklemek yerine proaktif)."""
         from .summary_generator import SummaryGenerator
