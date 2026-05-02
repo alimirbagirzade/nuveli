@@ -98,15 +98,46 @@ async def coach_respond(
 
 @router.get("/thread")
 async def get_coach_thread(
+    request: Request,
     user_id: str = Depends(get_current_user_id),
 ):
     """
-    Mevcut chat thread'ini getir.
-    NOT: Mevcut implementasyon korunabilir (coach_threads / coach_messages
-    tabloları kullanılıyor). Burayı dokümantasyon için bırakıyorum.
+    Mevcut chat thread'ini getir. coach_threads + coach_messages'tan oku.
     """
-    # TODO: Thread fetch logic — mevcut kodu koru
-    raise HTTPException(status_code=501, detail="Use existing implementation")
+    from app.core.dependencies import get_supabase
+    db = get_supabase()
+    
+    # Thread bul, yoksa olustur
+    thread_res = db.table("coach_threads")\
+        .select("id")\
+        .eq("user_id", user_id)\
+        .order("updated_at", desc=True)\
+        .limit(1)\
+        .execute()
+    
+    if thread_res.data:
+        thread_id = thread_res.data[0]["id"]
+    else:
+        new_thread = db.table("coach_threads").insert({
+            "user_id": user_id,
+        }).execute()
+        thread_id = new_thread.data[0]["id"] if new_thread.data else None
+    
+    # Mesajlari getir
+    messages = []
+    if thread_id:
+        msg_res = db.table("coach_messages")\
+            .select("*")\
+            .eq("thread_id", thread_id)\
+            .order("created_at", desc=False)\
+            .limit(50)\
+            .execute()
+        messages = msg_res.data or []
+    
+    return {
+        "thread_id": thread_id,
+        "messages": messages,
+    }
 
 
 @router.post("/thread/message")
