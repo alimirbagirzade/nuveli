@@ -143,7 +143,7 @@ async def increment_feature_usage(
                 db.table("usage_counters_daily")
                 .select("id, count")
                 .eq("user_id", user_id)
-                .eq("usage_date", today)
+                .eq("local_day", today)
                 .eq("feature", feature_key)
                 .maybe_single()
                 .execute()
@@ -156,7 +156,7 @@ async def increment_feature_usage(
                 db.table("usage_counters_daily").insert(
                     {
                         "user_id": user_id,
-                        "usage_date": today,
+                        "local_day": today,
                         "feature": feature_key,
                         "count": 1,
                     }
