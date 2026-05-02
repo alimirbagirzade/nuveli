@@ -117,7 +117,8 @@ class HomeService:
             "meal_count": len(meals.data or []),
         }
 
-        self.db.table("daily_summaries").insert(summary).execute()
+        # UPSERT: zaten varsa güncelle (yeni yemek eklendiyse total değişir)
+        self.db.table("daily_summaries").upsert(summary, on_conflict="user_id,local_day").execute()
         return summary
 
     def _greeting(self, name: str | None) -> str:
