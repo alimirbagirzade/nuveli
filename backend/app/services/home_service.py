@@ -40,10 +40,18 @@ class HomeService:
             }
 
         profile_data = profile.data or {}
-        premium_data = premium.data[0] if premium.data else {"tier": "free"}
-        usage_data = usage.data[0] if usage.data else {"meal_analyses": 0, "coach_messages": 0}
+        premium_data = premium.data[0] if premium.data else {"status": "free"}
+        # Row-based: each feature is a separate row. Aggregate into dict.
+        usage_data = {"meal_analyses": 0, "coach_messages": 0}
+        for row in (usage.data or []):
+            feature = row.get("feature")
+            count = row.get("count", 0)
+            if feature in ("meal_analyses", "meal_photo_analysis"):
+                usage_data["meal_analyses"] = count
+            elif feature in ("coach_messages", "coach_text_response", "coach_voice_response"):
+                usage_data["coach_messages"] = count
 
-        tier = premium_data.get("tier", "free")
+        tier = premium_data.get("status", premium_data.get("tier", "free"))
         meal_limit = 9999 if tier in ("trial", "premium") else settings.free_meal_analyses_per_day
         coach_limit = 9999 if tier in ("trial", "premium") else settings.free_coach_messages_per_day
 
