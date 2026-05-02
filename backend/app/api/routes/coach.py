@@ -104,7 +104,7 @@ async def get_coach_thread(
     """
     Mevcut chat thread'ini getir. coach_threads + coach_messages'tan oku.
     """
-    from app.core.dependencies import get_supabase
+    from app.db.client import get_supabase
     db = get_supabase()
     
     # Thread bul, yoksa olustur
