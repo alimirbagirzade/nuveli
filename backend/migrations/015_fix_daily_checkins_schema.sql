@@ -1,7 +1,6 @@
 -- 015_fix_daily_checkins_schema.sql
 -- Fix: daily_checkins tablosu schema mismatch
 -- Backend mood, note, local_day bekliyor ama eski tablo type, value, payload yapısındaydı.
--- DROP + CREATE: tabloda kullanıcı verisi yok (Sprint 2'de eklenmiş, hiç kaydedilememiş)
 
 DROP TABLE IF EXISTS daily_checkins CASCADE;
 
@@ -9,7 +8,11 @@ CREATE TABLE daily_checkins (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   local_day DATE NOT NULL,
-  mood TEXT CHECK (mood IN ('great', 'good', 'okay', 'rough', 'tough')),
+  mood TEXT CHECK (mood IS NULL OR mood IN (
+    'great', 'good', 'okay', 'rough', 'tough',
+    'neutral', 'bad', 'terrible', 'amazing',
+    'happy', 'sad', 'meh', 'fine', 'low', 'high'
+  )),
   note TEXT,
   type TEXT,
   payload JSONB,
