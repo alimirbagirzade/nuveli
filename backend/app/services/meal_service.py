@@ -38,7 +38,7 @@ class MealService:
         """OpenAI Vision ile yemek analizi yapar."""
         # Limit kontrolü (free tier)
         from .premium_service import PremiumService
-        premium = await PremiumService().get_status(user_id)
+        premium = await PremiumService(self.db).get_status(user_id)
         if premium["tier"] == "free":
             current = await self._get_usage(user_id, "meal_analyses")
             if current >= settings.free_meal_analyses_per_day:
