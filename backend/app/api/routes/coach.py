@@ -135,8 +135,10 @@ async def get_coach_thread(
         messages = msg_res.data or []
     
     return {
-        "thread_id": thread_id,
-        "messages": messages,
+        "data": {
+            "thread_id": thread_id,
+            "messages": messages,
+        }
     }
 
 
