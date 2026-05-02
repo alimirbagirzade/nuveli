@@ -57,12 +57,12 @@ class HomeService:
 
         return {
             "greeting": self._greeting(profile_data.get("display_name")),
-            "daily_summary": {
-                "calories": summary.get("total_calories", 0),
-                "target": profile_data.get("daily_calorie_target", 2000),
-                "protein_g": summary.get("total_protein_g", 0),
-                "carb_g": summary.get("total_carb_g", 0),
-                "fat_g": summary.get("total_fat_g", 0),
+            "summary": {
+                "total_calories": summary.get("total_calories", 0),
+                "target_calories": profile_data.get("daily_calorie_target", 2000),
+                "total_protein_g": summary.get("total_protein_g", 0),
+                "total_carb_g": summary.get("total_carb_g", 0),
+                "total_fat_g": summary.get("total_fat_g", 0),
                 "water_ml": summary.get("water_ml", 0),
                 "meal_count": summary.get("meal_count", 0),
             },
