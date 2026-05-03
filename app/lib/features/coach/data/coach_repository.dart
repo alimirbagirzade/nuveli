@@ -29,7 +29,7 @@ class CoachMessage {
         content: j['content'] as String,
         audioUrl: j['audio_url'] as String?,
         isFallback: j['is_fallback'] as bool? ?? false,
-        createdAt: DateTime.parse(j['created_at'] as String),
+        createdAt: DateTime.parse(j['created_at'] as String).toLocal(),
       );
 }
 

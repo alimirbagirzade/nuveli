@@ -154,7 +154,7 @@ async def post_coach_message(
     Chat'te mesaj gönderme. /respond ile aynı boru hattını kullanır
     ama mesajı + cevabı coach_messages tablosuna yazar.
     """
-    from datetime import datetime
+    from datetime import datetime, timezone
     from app.db.client import get_supabase
     
     if not body.message:
@@ -209,7 +209,7 @@ async def post_coach_message(
             
             # Thread updated_at guncelle
             db.table("coach_threads").update({
-                "updated_at": datetime.utcnow().isoformat(),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
             }).eq("id", thread_id).execute()
         except Exception as e:
             logger.warning(f"coach_messages insert failed: {e}")
@@ -220,14 +220,14 @@ async def post_coach_message(
             "id": "temp-user",
             "role": "user",
             "content": body.message,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }
     if not coach_msg:
         coach_msg = {
             "id": "temp-coach",
             "role": "assistant",
             "content": response.text,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }
 
     return {
