@@ -25,7 +25,7 @@ router = APIRouter()
 # ═══════════════════════════════════════════════════════════════
 
 class CoachRespondRequest(BaseModel):
-    surface: str = Field(..., description="home_card | chat_response | meal_reaction | weekly_summary | empty_day | recovery_day | celebration")
+    surface: Optional[str] = Field(None, description="home_card | chat_response | meal_reaction | weekly_summary | empty_day | recovery_day | celebration")
     message: Optional[str] = Field(None, description="Chat surface'inde kullanıcı mesajı")
     meal_context: Optional[dict] = Field(None, description="Meal reaction surface'inde öğün")
     weekly_data: Optional[dict] = Field(None, description="Weekly summary surface'inde 7 günlük")
@@ -62,6 +62,8 @@ async def coach_respond(
     Ana coach endpoint. Tüm AI cevap akışı buradan geçer.
     PRD §7.2 boru hattı: Decision → Prompt → Model → Safety → Response
     """
+    if not body.surface:
+        raise HTTPException(status_code=400, detail="surface required for /respond")
     try:
         surface = Surface(body.surface)
     except ValueError:
