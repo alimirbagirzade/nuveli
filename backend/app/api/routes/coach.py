@@ -154,12 +154,14 @@ async def post_coach_message(
     Chat'te mesaj gönderme. /respond ile aynı boru hattını kullanır
     ama mesajı + cevabı coach_messages tablosuna yazar.
     """
-    # 1. coach_service.respond ile cevap al
-    try:
-        surface = Surface.CHAT_RESPONSE
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid surface")
-
+    from datetime import datetime
+    from app.db.client import get_supabase
+    
+    if not body.message:
+        raise HTTPException(status_code=400, detail="message required")
+    
+    # 1. AI cevabı al
+    surface = Surface.CHAT_RESPONSE
     response = await coach.respond(
         user_id=user_id,
         surface=surface,
@@ -167,23 +169,71 @@ async def post_coach_message(
         request_voice=body.request_voice,
     )
 
-    # 2. coach_messages tablosuna user mesajı + AI cevabı yaz
-    # TODO: Mevcut thread persistence kodu burada — coach_repository
-    # üzerinden insert. Bu dosyayı yazarken mevcut implementasyonu
-    # bilmediğim için placeholder bırakıyorum.
+    # 2. Thread bul/yarat
+    db = get_supabase()
+    thread_res = db.table("coach_threads")\
+        .select("id")\
+        .eq("user_id", user_id)\
+        .order("updated_at", desc=True)\
+        .limit(1)\
+        .execute()
+    
+    if thread_res.data:
+        thread_id = thread_res.data[0]["id"]
+    else:
+        new_thread = db.table("coach_threads").insert({
+            "user_id": user_id,
+        }).execute()
+        thread_id = new_thread.data[0]["id"] if new_thread.data else None
 
-    return CoachRespondResponse(
-        text=response.text,
-        mode=response.mode,
-        persona=response.persona,
-        surface=response.surface,
-        is_fallback=response.is_fallback,
-        fallback_reason=response.fallback_reason,
-        voice_url=response.voice_url,
-        show_resources=response.show_resources,
-        show_premium_upsell=response.show_premium_upsell,
-        show_day2_gift=response.show_day2_gift,
-        usage_remaining=response.usage_remaining,
-        error_code=response.error_code,
-        metadata=response.metadata,
-    )
+    # 3. coach_messages tablosuna user mesaji + AI cevabi yaz
+    user_msg = None
+    coach_msg = None
+    if thread_id:
+        try:
+            user_insert = db.table("coach_messages").insert({
+                "thread_id": thread_id,
+                "user_id": user_id,
+                "role": "user",
+                "content": body.message,
+            }).execute()
+            user_msg = user_insert.data[0] if user_insert.data else None
+            
+            coach_insert = db.table("coach_messages").insert({
+                "thread_id": thread_id,
+                "user_id": user_id,
+                "role": "assistant",
+                "content": response.text,
+            }).execute()
+            coach_msg = coach_insert.data[0] if coach_insert.data else None
+            
+            # Thread updated_at guncelle
+            db.table("coach_threads").update({
+                "updated_at": datetime.utcnow().isoformat(),
+            }).eq("id", thread_id).execute()
+        except Exception as e:
+            logger.warning(f"coach_messages insert failed: {e}")
+
+    # Fallback: insert fail olursa mock messages
+    if not user_msg:
+        user_msg = {
+            "id": "temp-user",
+            "role": "user",
+            "content": body.message,
+            "created_at": datetime.utcnow().isoformat(),
+        }
+    if not coach_msg:
+        coach_msg = {
+            "id": "temp-coach",
+            "role": "assistant",
+            "content": response.text,
+            "created_at": datetime.utcnow().isoformat(),
+        }
+
+    return {
+        "data": {
+            "user_message": user_msg,
+            "coach_message": coach_msg,
+            "risk_mode": response.metadata.get("risk_mode", "normal") if response.metadata else "normal",
+        }
+    }
