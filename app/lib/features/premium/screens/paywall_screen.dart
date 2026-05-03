@@ -362,7 +362,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                       offering.trialDays != null) ...[
                     const SizedBox(height: 4),
                     Text(
-                      '${offering.trialDays} gun ucretsiz dene, sonra otomatik yenilenir',
+                      '${offering.trialDays} gün ücretsiz dene, sonra otomatik yenilenir',
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.accent,
                       ),
