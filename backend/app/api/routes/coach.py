@@ -202,7 +202,7 @@ async def post_coach_message(
             coach_insert = db.table("coach_messages").insert({
                 "thread_id": thread_id,
                 "user_id": user_id,
-                "role": "assistant",
+                "role": "coach",
                 "content": response.text,
             }).execute()
             coach_msg = coach_insert.data[0] if coach_insert.data else None
@@ -225,7 +225,7 @@ async def post_coach_message(
     if not coach_msg:
         coach_msg = {
             "id": "temp-coach",
-            "role": "assistant",
+            "role": "coach",
             "content": response.text,
             "created_at": datetime.now(timezone.utc).isoformat(),
         }
