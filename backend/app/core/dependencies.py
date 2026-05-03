@@ -52,11 +52,18 @@ def get_coach_service():
     from app.services.coach_service import CoachService
     
     db = get_supabase_client()
+    
+    # OpenAI client
+    from openai import AsyncOpenAI
+    openai_api_key = os.getenv("OPENAI_API_KEY", "")
+    openai_client = AsyncOpenAI(api_key=openai_api_key)
+    
     return CoachService(
         decision_engine=DecisionEngine(db),
         prompt_engine=PromptEngine(),
         safety_service=SafetyService(),
         fallback_copy_service=FallbackCopyService(),
+        openai_client=openai_client,
     )
 
 
