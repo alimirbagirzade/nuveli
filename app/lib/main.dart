@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
 import 'core/config/app_config.dart';
+import 'core/notifications/notification_service.dart';
 
 Future<void> main() async {
   // Tüm initialization VE runApp aynı Zone içinde çalışmalı.
@@ -18,6 +19,9 @@ Future<void> main() async {
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
+
+  // Notification service'i baslat
+  await NotificationService.initialize();
     // Production config validation (non-fatal warning)
     if (AppConfig.isProduction && !AppConfig.isProductionConfigValid) {
       developer.log(
