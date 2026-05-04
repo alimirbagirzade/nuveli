@@ -87,7 +87,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
         if (!mounted) return;
         if (_scrollCtrl.hasClients) {
           _scrollCtrl.animateTo(
-            _scrollCtrl.position.maxScrollExtent,
+            0.0,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOut,
           );

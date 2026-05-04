@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 /// Nuveli tipografi sistemi.
-/// Inter font ailesi kullanılır.
+/// Inter font ailesi kullanılır (heading'lerde Plus Jakarta Sans fallback ile).
 class AppTextStyles {
   AppTextStyles._();
 

@@ -45,3 +45,22 @@ android/app/*.keystore
 
 # Test output
 test/failures/
+
+# Environment files (her ihtimale karşı)
+.env
+.env.development
+.env.production
+.env.staging
+.env.*.local
+
+# Backup folders
+_backup_*/
+_backup/
+
+# macOS
+.DS_Store
+
+# Editor backups
+*.save
+*.swp
+*~

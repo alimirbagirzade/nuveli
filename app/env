@@ -1,0 +1,28 @@
+# ============================================
+# NUVELI APP — ENVIRONMENT VARIABLES
+# Son güncelleme: 3 Mayıs 2026
+# DİKKAT: Bu dosya .gitignore'da olmalı, ASLA commit etme!
+# ============================================
+
+# --- Environment ---
+APP_ENV=development
+
+# --- Supabase (Frankfurt EU - eu-central-1) ---
+SUPABASE_URL=https://asicgcnpahdnitzalcva.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzaWNnY25wYWhkbml0emFsY3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTU1NzIsImV4cCI6MjA5MjMzMTU3Mn0.0UX_wdWYSRCG-xULsrKzNwgjIhXJh7pfUygQqjgz-_k
+
+# --- Backend API (Render.com) ---
+API_BASE_URL=https://nuveli-api.onrender.com
+
+# --- RevenueCat (henüz eklenmedi, app açılıyor ama in-app purchase olmaz) ---
+# RC_APPLE_KEY=appl_xxxxxxxxxxxxxxxxxxxxxxxxx
+# RC_GOOGLE_KEY=goog_xxxxxxxxxxxxxxxxxxxxxxxxx
+
+# --- Feature Flags ---
+ENABLE_VOICE_COACH=false
+ENABLE_PREMIUM=true
+ENABLE_ANALYTICS=true
+
+# --- Debug ---
+DEBUG_MODE=true
+LOG_LEVEL=info

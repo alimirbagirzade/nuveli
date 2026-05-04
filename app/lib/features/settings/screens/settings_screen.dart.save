@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+Xx3import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,7 +24,6 @@ class SettingsScreen extends ConsumerWidget {
           if (user != null)
             Padding(
               padding: const EdgeInsets.all(20),
-
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
