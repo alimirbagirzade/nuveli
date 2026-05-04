@@ -273,7 +273,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.paywall,
         pageBuilder: (context, state) =>
-            AppPageTransitions.slideUp(const PaywallScreen()),
+            AppPageTransitions.slideUp(const PremiumComingSoonScreen()),
       ),
 
       // Tracking history
