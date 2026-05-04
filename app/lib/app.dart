@@ -51,6 +51,9 @@ class NuveliApp extends ConsumerWidget {
     final language = ref.watch(languageProvider);
     
     return MaterialApp.router(
+      // KEY: locale degisirken tum widget agacini force rebuild
+      // Flutter bug #117210: locale field null'dan non-null'a gectiginde state guncel olmaz
+      key: ValueKey('app_${language.code}'),
       title: 'Nuveli',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark(),

@@ -52,21 +52,26 @@ class LanguageController extends StateNotifier<AppLanguage> {
     _loadSavedLanguage();
   }
 
+  bool _initialized = false;
+
   Future<void> _loadSavedLanguage() async {
+    if (_initialized) return;
     try {
       final prefs = await SharedPreferences.getInstance();
       final saved = prefs.getString(_prefsKey);
       if (saved != null) {
         state = AppLanguage.fromCode(saved);
       }
+      _initialized = true;
     } catch (e) {
       // SharedPreferences hatasi durumunda system dili kullan
-      state = AppLanguage.system;
+      _initialized = true;
     }
   }
 
   Future<void> setLanguage(AppLanguage language) async {
     state = language;
+    _initialized = true;  // manuel set sonrasi initialized say
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_prefsKey, language.code);

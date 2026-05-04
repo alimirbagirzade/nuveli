@@ -6,6 +6,7 @@ import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_validators.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
@@ -59,6 +60,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = ref.watch(authLoadingProvider);
     final errorMsg = ref.watch(authErrorProvider);
 
@@ -74,13 +76,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 // Logo
                 Text(
-                  'nuveli',
+                  l10n.appName.toLowerCase(),
                   style: AppTextStyles.displayLarge.copyWith(letterSpacing: -1),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'AI Calorie Coach',
+                  l10n.appTagline,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -94,9 +96,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: Icon(Icons.email_outlined),
+                  decoration: InputDecoration(
+                    labelText: l10n.loginEmail,
+                    prefixIcon: const Icon(Icons.email_outlined),
                   ),
                   validator: AppValidators.email,
                 ),
@@ -109,7 +111,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => _handleLogin(),
                   decoration: InputDecoration(
-                    labelText: 'Şifre',
+                    labelText: l10n.loginPassword,
                     prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -131,7 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: TextButton(
                     onPressed: () => context.push(AppRoute.forgotPassword),
                     child: Text(
-                      'Şifremi unuttum',
+                      l10n.loginForgotPassword,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.primary,
                       ),
@@ -161,7 +163,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                 // Login button
                 PrimaryButton(
-                  label: 'Giriş Yap',
+                  label: l10n.loginButton,
                   isLoading: isLoading,
                   onPressed: isLoading ? null : _handleLogin,
                 ),
@@ -172,7 +174,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Hesabın yok mu? ',
+                      '${l10n.loginNoAccount} ',
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -180,7 +182,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     GestureDetector(
                       onTap: () => context.push(AppRoute.signUp),
                       child: Text(
-                        'Kaydol',
+                        l10n.loginRegisterLink,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,

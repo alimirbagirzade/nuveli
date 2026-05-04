@@ -40,6 +40,7 @@ import '../../features/tracking/screens/water_history_screen.dart';
 import '../../features/tracking/screens/weight_history_screen.dart';
 import '../../features/auth/screens/splash_screen.dart';
 import '../../features/onboarding/screens/combined_acceptance_screen.dart';
+import '../../features/settings/screens/language_picker_screen.dart';
 
 /// Tüm route isimleri burada tanımlıdır.
 class AppRoute {
@@ -95,6 +96,7 @@ class AppRoute {
 
   // Settings sub
   static const notificationPrefs = '/settings/notifications';
+  static const languagePicker = '/settings/language';
   static const coachPersonaSettings = '/settings/coach-persona';
   static const support = '/settings/support';
   static const about = '/settings/about';
@@ -306,6 +308,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoute.profile,
         pageBuilder: (context, state) =>
             AppPageTransitions.slideRight(const ProfileScreen()),
+      ),
+      GoRoute(
+        path: AppRoute.languagePicker,
+        builder: (context, state) => const LanguagePickerScreen(),
       ),
       GoRoute(
         path: AppRoute.notificationPrefs,

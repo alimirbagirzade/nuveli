@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../../core/i18n/language_provider.dart';
 import '../widgets/theme_selector_tile.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -85,6 +86,19 @@ class SettingsScreen extends ConsumerWidget {
             Icons.psychology_outlined,
             'Koçun tonu',
             () => context.push(AppRoute.coachPersonaSettings),
+          ),
+          // Dil tile - i18n
+          Consumer(
+            builder: (context, ref, _) {
+              final language = ref.watch(languageProvider);
+              return _tile(
+                context,
+                Icons.language,
+                'Dil / Language',
+                () => context.push(AppRoute.languagePicker),
+                trailing: language.label,
+              );
+            },
           ),
 
           _section('Destek ve Güvenlik'),
@@ -200,6 +214,7 @@ class SettingsScreen extends ConsumerWidget {
     VoidCallback onTap, {
     bool isDestructive = false,
     String? badge,
+    String? trailing,
   }) {
     return ListTile(
       leading: Icon(
