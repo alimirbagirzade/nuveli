@@ -42,7 +42,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e.message),
+          content: const Text('Bu ozellik gercek cihazda calisir. Galeriden secebilirsin.'),
           behavior: SnackBarBehavior.floating,
           action: SnackBarAction(
             label: 'Galeri',

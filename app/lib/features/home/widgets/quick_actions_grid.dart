@@ -39,7 +39,7 @@ class QuickActionsGrid extends ConsumerWidget {
         const SizedBox(width: 10),
         _ActionTile(
           icon: Icons.mood_outlined,
-          label: 'Check-in',
+          label: 'Mod',
           color: AppColors.warning,
           onTap: () => _showCheckinSheet(context, ref),
         ),
@@ -98,7 +98,7 @@ class QuickActionsGrid extends ConsumerWidget {
       context: context,
       ref: ref,
       action: () => ref.read(trackingRepositoryProvider).saveMood(mood),
-      successMsg: 'Check-in kaydedildi ✓',
+      successMsg: 'Modun kaydedildi ✓',
     );
   }
 

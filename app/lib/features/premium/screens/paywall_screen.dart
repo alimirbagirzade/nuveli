@@ -56,7 +56,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = 'Premium secenekleri yuklenemedi. Tekrar dener misin?';
+        _errorMessage = 'Premium yakinda aktif olacak. Su anlik beklemede.';
         _loadingOfferings = false;
       });
     }
@@ -273,7 +273,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 size: 48, color: AppColors.textSecondary),
             const SizedBox(height: 12),
             Text(
-              'Su an secenekleri yukleyemedim.',
+              'Premium yakinda. Su an seceneklere ulasilamiyor.',
               style: AppTextStyles.bodyMedium,
             ),
             const SizedBox(height: 12),

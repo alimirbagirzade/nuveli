@@ -95,7 +95,7 @@ class _Body extends StatelessWidget {
         ],
         Text('Günlük Detay', style: AppTextStyles.headingSmall),
         const SizedBox(height: 12),
-        ...weekly.sevenDays.map((d) => _DayRow(day: d)),
+        ...weekly.sevenDays.reversed.map((d) => _DayRow(day: d)),
         const SizedBox(height: 32),
       ],
     );
