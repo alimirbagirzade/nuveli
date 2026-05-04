@@ -127,8 +127,8 @@ class _Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasData = day.hasData;
     final fraction = day.fractionOfTarget;
-    // 70 = max bar height in px (chart frame is 100 minus label area)
-    final barHeight = hasData ? (70 * fraction.clamp(0.05, 1.0)) : 4.0;
+    // 55 = max bar height in px (chart frame ~100, label + padding icin yer)
+    final barHeight = hasData ? (55 * fraction.clamp(0.05, 1.0)) : 4.0;
 
     // Color logic:
     //   no data → faint gray
@@ -153,6 +153,7 @@ class _Bar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 3),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
           children: [
             // Calorie label above bar (small, only if data)
             if (hasData)

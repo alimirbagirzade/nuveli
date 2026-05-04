@@ -15,8 +15,11 @@ class CoachCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF2A1F5C), Color(0xFF1A1A1E)],
+          gradient: LinearGradient(
+            colors: [
+              AppColors.primary.withOpacity(0.18),
+              AppColors.surface,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -45,7 +48,7 @@ class CoachCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios, size: 14, color: AppColors.textTertiary),
+            Icon(Icons.arrow_forward_ios, size: 14, color: AppColors.textTertiary),
           ],
         ),
       ),
