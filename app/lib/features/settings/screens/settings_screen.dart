@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../widgets/theme_selector_tile.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -20,6 +21,8 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Ayarlar')),
       body: ListView(
         children: [
+          ThemeSelectorTile(),
+          const SizedBox(height: 8),
           // Kullanıcı bilgisi kartı
           if (user != null)
             Padding(
