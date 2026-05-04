@@ -65,10 +65,10 @@ final signUpActionProvider = Provider<Future<void> Function({
     try {
       await repo.signUp(email: email, password: password);
     } on AuthException catch (e) {
-      ref.read(authErrorProvider.notifier).state = e.message;
+      ref.read(authErrorProvider.notifier).state = _translateAuthError(e.message);
       rethrow;
     } catch (e) {
-      ref.read(authErrorProvider.notifier).state = 'Bir hata oluştu. Tekrar dene.';
+      ref.read(authErrorProvider.notifier).state = 'Bir sorun olustu. Lutfen tekrar dene.';
       rethrow;
     } finally {
       ref.read(authLoadingProvider.notifier).state = false;
@@ -91,10 +91,10 @@ final signInActionProvider = Provider<Future<void> Function({
       // Bootstrap'i yenile
       ref.invalidate(bootstrapProvider);
     } on AuthException catch (e) {
-      ref.read(authErrorProvider.notifier).state = e.message;
+      ref.read(authErrorProvider.notifier).state = _translateAuthError(e.message);
       rethrow;
     } catch (e) {
-      ref.read(authErrorProvider.notifier).state = 'Giriş başarısız. Tekrar dene.';
+      ref.read(authErrorProvider.notifier).state = 'Giris basarisiz. Lutfen tekrar dene.';
       rethrow;
     } finally {
       ref.read(authLoadingProvider.notifier).state = false;
@@ -128,3 +128,60 @@ final resetPasswordActionProvider = Provider<Future<void> Function(String email)
     }
   };
 });
+
+// ---------------------------------------------------------------------------
+// Auth Error Translation - Supabase'in Ingilizce hatalarini Turkce'ye cevirir
+// ---------------------------------------------------------------------------
+
+String _translateAuthError(String englishMessage) {
+  final msg = englishMessage.toLowerCase();
+
+  // Login hatalari
+  if (msg.contains('invalid login credentials') ||
+      msg.contains('invalid email or password')) {
+    return 'E-posta veya sifre yanlis. Lutfen tekrar dene.';
+  }
+  if (msg.contains('email not confirmed')) {
+    return 'E-postani henuz dogrulamadin. Gelen kutuni kontrol et.';
+  }
+  if (msg.contains('user not found')) {
+    return 'Bu e-posta ile kayitli kullanici bulunamadi.';
+  }
+
+  // Signup hatalari
+  if (msg.contains('user already registered') ||
+      msg.contains('already exists')) {
+    return 'Bu e-posta zaten kayitli. Giris yapmayi dene.';
+  }
+  if (msg.contains('weak password') ||
+      msg.contains('password should be at least')) {
+    return 'Sifre cok zayif. En az 6 karakter olmali.';
+  }
+  if (msg.contains('unable to validate email') ||
+      msg.contains('invalid email')) {
+    return 'E-posta formati gecersiz.';
+  }
+
+  // Rate limit
+  if (msg.contains('rate limit') ||
+      msg.contains('too many requests') ||
+      msg.contains('for security purposes')) {
+    return 'Cok hizli denedin. Lutfen birkac saniye bekle.';
+  }
+
+  // Network
+  if (msg.contains('network') ||
+      msg.contains('connection') ||
+      msg.contains('timeout')) {
+    return 'Internet baglantini kontrol et.';
+  }
+
+  // Session
+  if (msg.contains('session expired') ||
+      msg.contains('jwt expired')) {
+    return 'Oturumun suresi doldu. Lutfen tekrar giris yap.';
+  }
+
+  // Genel
+  return 'Bir sorun olustu. Lutfen tekrar dene.';
+}
