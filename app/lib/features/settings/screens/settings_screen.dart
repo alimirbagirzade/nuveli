@@ -118,7 +118,8 @@ class SettingsScreen extends ConsumerWidget {
             context,
             Icons.workspace_premium_outlined,
             'Premium',
-            () => context.push(AppRoute.paywall),
+            () => _showPremiumComingSoon(context),
+            badge: 'YAKINDA',
           ),
 
           _section('Oturum'),
@@ -198,6 +199,7 @@ class SettingsScreen extends ConsumerWidget {
     String label,
     VoidCallback onTap, {
     bool isDestructive = false,
+    String? badge,
   }) {
     return ListTile(
       leading: Icon(
@@ -210,9 +212,146 @@ class SettingsScreen extends ConsumerWidget {
           color: isDestructive ? AppColors.error : AppColors.textPrimary,
         ),
       ),
-      trailing:
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (badge != null) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: AppColors.primary.withOpacity(0.4),
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                badge,
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 11,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+          ],
           const Icon(Icons.chevron_right, color: AppColors.textTertiary),
+        ],
+      ),
       onTap: onTap,
+    );
+  }
+
+  void _showPremiumComingSoon(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.surface,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Drag handle
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.textTertiary.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 24),
+            // Icon
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                gradient: AppColors.gradientCta,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Icon(
+                Icons.workspace_premium_rounded,
+                color: Colors.white,
+                size: 44,
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Title
+            Text(
+              'Premium çok yakında! 🚀',
+              style: AppTextStyles.headingMedium.copyWith(
+                color: AppColors.textPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            // Description
+            Text(
+              'Sınırsız AI öğün analizi, gelişmiş koç ve haftalık içgörüler için son hazırlıkları yapıyoruz. Hazır olduğumuzda seninle iletişime geçeceğiz.',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            // Features list
+            _featureRow(Icons.check_circle_outline, 'Sınırsız AI öğün analizi'),
+            const SizedBox(height: 8),
+            _featureRow(Icons.check_circle_outline, 'Sesli koç + 3 persona'),
+            const SizedBox(height: 8),
+            _featureRow(Icons.check_circle_outline, 'Haftalık + aylık içgörü'),
+            const SizedBox(height: 28),
+            // OK button
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  elevation: 0,
+                ),
+                child: Text(
+                  'Anladım',
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _featureRow(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(icon, color: AppColors.primary, size: 18),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

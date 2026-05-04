@@ -1,4 +1,4 @@
-package com.example.nuveli
+package com.nuveli.app
 
 import io.flutter.embedding.android.FlutterActivity
 
