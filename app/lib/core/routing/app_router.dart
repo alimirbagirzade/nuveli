@@ -6,7 +6,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/auth/screens/forgot_password_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
-import '../../features/auth/screens/splash_screen.dart';
 import '../../features/coach/screens/coach_chat_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/meal/data/meal_models.dart';
@@ -132,6 +131,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      
+      // Animated Splash (initial)
       GoRoute(
         path: AppRoute.splash,
         builder: (context, state) => const SplashScreen(),
