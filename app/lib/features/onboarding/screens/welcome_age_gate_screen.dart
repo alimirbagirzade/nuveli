@@ -49,7 +49,7 @@ class _WelcomeAgeGateScreenState extends State<WelcomeAgeGateScreen> {
           PrimaryButton(
             label: 'Devam Et',
             isEnabled: _accepted,
-            onPressed: () => context.go(AppRoute.acceptanceWellnessScope),
+            onPressed: () => context.go(AppRoute.acceptanceCombined),
           ),
           const SizedBox(height: 16),
         ],

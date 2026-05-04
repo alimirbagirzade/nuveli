@@ -38,8 +38,12 @@ class _WelcomeSuccessScreenState
     final controller = ref.read(onboardingControllerProvider.notifier);
 
     try {
-      // Notification preferences kaydet (önceki ekranda set edildi)
-      await controller.submitNotificationPrefs();
+      // Notification preferences kaydet (hata olursa devam et)
+      try {
+        await controller.submitNotificationPrefs();
+      } catch (e) {
+        print('⚠️  Notification prefs failed (devam ediliyor): $e');
+      }
       // Onboarding'i tamamlandı işaretle (premium 'free' başlatır)
       await controller.completeOnboarding();
 

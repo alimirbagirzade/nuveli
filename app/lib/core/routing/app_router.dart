@@ -39,6 +39,7 @@ import '../../features/shared/screens/error_screen.dart';
 import '../../features/tracking/screens/water_history_screen.dart';
 import '../../features/tracking/screens/weight_history_screen.dart';
 import '../../features/auth/screens/splash_screen.dart';
+import '../../features/onboarding/screens/combined_acceptance_screen.dart';
 
 /// Tüm route isimleri burada tanımlıdır.
 class AppRoute {
@@ -53,6 +54,7 @@ class AppRoute {
   // Acceptance
   static const acceptanceAgeGate = '/acceptance/age-gate';
   static const acceptanceWellnessScope = '/acceptance/wellness-scope';
+  static const acceptanceCombined = '/acceptance/combined';
   static const acceptanceAiEstimates = '/acceptance/ai-estimates';
   static const acceptanceSpecialCases = '/acceptance/special-cases';
   static const acceptanceTerms = '/acceptance/terms';
@@ -155,6 +157,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.acceptanceAgeGate,
         builder: (context, state) => const WelcomeAgeGateScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.acceptanceCombined,
+        builder: (context, state) => const CombinedAcceptanceScreen(),
       ),
       GoRoute(
         path: AppRoute.acceptanceWellnessScope,
