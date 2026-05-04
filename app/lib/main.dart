@@ -10,6 +10,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/config/app_config.dart';
 import 'core/notifications/notification_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/generated/app_localizations.dart';
+import 'core/i18n/language_provider.dart';
 
 Future<void> main() async {
   // Tüm initialization VE runApp aynı Zone içinde çalışmalı.
