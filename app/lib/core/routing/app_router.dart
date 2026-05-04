@@ -38,6 +38,7 @@ import '../../features/settings/screens/support_screen.dart';
 import '../../features/shared/screens/error_screen.dart';
 import '../../features/tracking/screens/water_history_screen.dart';
 import '../../features/tracking/screens/weight_history_screen.dart';
+import '../../features/auth/screens/splash_screen.dart';
 
 /// Tüm route isimleri burada tanımlıdır.
 class AppRoute {
