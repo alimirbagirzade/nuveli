@@ -319,6 +319,52 @@ class NotificationService {
     );
     // await api.post('/notifications/register', body: {'token': token});
   }
+
+  /// Default 5 hatirlatma olusturur (kahvalti, ogle, aksam, su x2)
+  static Future<void> schedule5DefaultReminders() async {
+    await NotificationService.cancelAll();
+
+    await NotificationService.scheduleDailyReminder(
+      id: 100,
+      title: '🌅 Gunaydin!',
+      body: 'Kahvaltiyi kayit etmeyi unutma 🍳',
+      hour: 9,
+      minute: 0,
+    );
+
+    await NotificationService.scheduleDailyReminder(
+      id: 101,
+      title: '🍽️ Ogle vakti!',
+      body: 'Bugun ne yedin? Hizlica ekle',
+      hour: 12,
+      minute: 30,
+    );
+
+    await NotificationService.scheduleDailyReminder(
+      id: 102,
+      title: '🌙 Aksam zamani',
+      body: 'Aksam yemegi nasildi? Koc yorum bekliyor 💬',
+      hour: 19,
+      minute: 0,
+    );
+
+    await NotificationService.scheduleDailyReminder(
+      id: 103,
+      title: '💧 Su molasi!',
+      body: 'Bardak su ic, sagligin icin 🥤',
+      hour: 11,
+      minute: 0,
+    );
+
+    await NotificationService.scheduleDailyReminder(
+      id: 104,
+      title: '💧 Su molasi!',
+      body: 'Bardak su ic, sagligin icin 🥤',
+      hour: 16,
+      minute: 0,
+    );
+  }
+
 }
 
 /// Standardize notification ID'leri — çakışma olmasın.
@@ -331,55 +377,4 @@ class NotificationId {
   static const coachCheckIn = 2001;
   static const weeklyReview = 3001;
   static const trialEnding = 4001;
-
-  /// Default 5 hatirlatma olusturur (kahvalti, ogle, aksam, su x2)
-  static Future<void> schedule5DefaultReminders() async {
-    // Once tum eski hatirlatmalari iptal et
-    await cancelAll();
-
-    // 1. Kahvalti - 09:00
-    await scheduleDailyReminder(
-      id: 100,
-      title: '🌅 Gunaydin!',
-      body: 'Kahvaltiyi kayit etmeyi unutma 🍳',
-      hour: 9,
-      minute: 0,
-    );
-
-    // 2. Ogle - 12:30
-    await scheduleDailyReminder(
-      id: 101,
-      title: '🍽️ Ogle vakti!',
-      body: 'Bugun ne yedin? Hizlica ekle',
-      hour: 12,
-      minute: 30,
-    );
-
-    // 3. Aksam - 19:00
-    await scheduleDailyReminder(
-      id: 102,
-      title: '🌙 Aksam zamani',
-      body: 'Aksam yemegi nasildi? Koc yorum bekliyor 💬',
-      hour: 19,
-      minute: 0,
-    );
-
-    // 4. Su - 11:00
-    await scheduleDailyReminder(
-      id: 103,
-      title: '💧 Su molasi!',
-      body: 'Bardak su ic, sagligin icin 🥤',
-      hour: 11,
-      minute: 0,
-    );
-
-    // 5. Su - 16:00
-    await scheduleDailyReminder(
-      id: 104,
-      title: '💧 Su molasi!',
-      body: 'Bardak su ic, sagligin icin 🥤',
-      hour: 16,
-      minute: 0,
-    );
-  }
 }

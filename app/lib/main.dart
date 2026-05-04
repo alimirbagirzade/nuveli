@@ -20,8 +20,12 @@ Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
 
 
-  // Notification service'i baslat
-  await NotificationService.initialize();
+  // Notification service'i baslat (hata olursa devam et)
+  try {
+    await NotificationService.initialize();
+  } catch (e) {
+    print('⚠️  Notification init failed: $e');
+  }
     // Production config validation (non-fatal warning)
     if (AppConfig.isProduction && !AppConfig.isProductionConfigValid) {
       developer.log(

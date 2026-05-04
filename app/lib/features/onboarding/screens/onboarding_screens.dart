@@ -477,8 +477,12 @@ class _OnboardingResultScreenState
       // 2. Koç persona kaydet
       await controller.submitCoachPersona();
 
-      // 3. Notification prefs kaydet
-      await controller.submitNotificationPrefs();
+      // 3. Notification prefs kaydet (hata olursa devam et)
+      try {
+        await controller.submitNotificationPrefs();
+      } catch (e) {
+        print('⚠️  Notification prefs submit failed: $e');
+      }
 
       // 4. Onboarding'i kapat + bootstrap'i yenile
       await controller.completeOnboarding();
