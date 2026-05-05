@@ -155,6 +155,7 @@ async def get_coach_thread(
 @router.post("/thread/message")
 async def post_coach_message(
     body: CoachRespondRequest,
+    request: Request,
     user_id: str = Depends(get_current_user_id),
     coach: CoachService = Depends(get_coach_service),
 ):
@@ -169,12 +170,19 @@ async def post_coach_message(
         raise HTTPException(status_code=400, detail="message required")
     
     # 1. AI cevabı al
+    # Accept-Language header'dan dil kodu cikar (tr-TR -> tr)
+    accept_lang = request.headers.get("accept-language", "tr")
+    locale_override = accept_lang.split(",")[0].split("-")[0].lower()
+    if locale_override not in ["tr", "en", "de", "fr", "es"]:
+        locale_override = "tr"
+
     surface = Surface.CHAT_RESPONSE
     response = await coach.respond(
         user_id=user_id,
         surface=surface,
         user_message=body.message,
         request_voice=body.request_voice,
+        locale_override=locale_override,
     )
 
     # 2. Thread bul/yarat
