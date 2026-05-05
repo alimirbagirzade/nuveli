@@ -91,6 +91,7 @@ class CoachService:
         meal_context: Optional[dict] = None,
         weekly_data: Optional[dict] = None,
         request_voice: bool = False,
+        locale_override: Optional[str] = None,
     ) -> CoachResponse:
         """
         Ana entry point. Tüm AI cevap akışı buradan geçer.
@@ -104,6 +105,9 @@ class CoachService:
             surface=surface,
             feature_key=feature_key,
         )
+        # Frontend Accept-Language header'i decision locale'ini override eder
+        if locale_override and locale_override in ["tr", "en", "de", "fr", "es"]:
+            decision.locale = locale_override
         logger.info("Coach.respond: %s", decision)
 
         # ────────────────────────────────────────────

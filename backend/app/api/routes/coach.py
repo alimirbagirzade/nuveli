@@ -55,6 +55,7 @@ class CoachRespondResponse(BaseModel):
 @router.post("/respond", response_model=CoachRespondResponse)
 async def coach_respond(
     body: CoachRespondRequest,
+    request: Request,
     user_id: str = Depends(get_current_user_id),
     coach: CoachService = Depends(get_coach_service),
 ):
@@ -72,6 +73,12 @@ async def coach_respond(
             detail=f"Invalid surface: {body.surface}",
         )
 
+    # Accept-Language header'dan dil kodu cikar (tr-TR -> tr)
+    accept_lang = request.headers.get("accept-language", "tr")
+    locale_override = accept_lang.split(",")[0].split("-")[0].lower()
+    if locale_override not in ["tr", "en", "de", "fr", "es"]:
+        locale_override = "tr"
+
     response: CoachResponse = await coach.respond(
         user_id=user_id,
         surface=surface,
@@ -79,6 +86,7 @@ async def coach_respond(
         meal_context=body.meal_context,
         weekly_data=body.weekly_data,
         request_voice=body.request_voice,
+        locale_override=locale_override,
     )
 
     return CoachRespondResponse(
