@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "appName": "Nuveli",
-  "appTagline": "Coach AI per Calorie",
+  "appTagline": "Coach AI Calorie",
   "loginEmail": "E-mail",
   "loginPassword": "Password",
   "loginPasswordRepeat": "Ripeti password",

@@ -404,7 +404,7 @@
   "mealSimulatorWarn": "Keine Kamera im Simulator. Galerie verwenden.",
   "mealDescHint": "Oder beschreibe die Mahlzeit (z.B. Hähnchenbrust, Reis)",
   "mealAnalyze": "Analysieren",
-  "mealManualEntry": "Manuelle Eingabe",
+  "mealManualEntry": "Manuell eingeben",
   "mealAnalyzeFailed": "Analyse fehlgeschlagen.",
   "mealLimitTitle": "Tageslimit erreicht",
   "mealLimitBody": "{reason}\n\nMit Premium unbegrenzte Fotoanalyse.",
