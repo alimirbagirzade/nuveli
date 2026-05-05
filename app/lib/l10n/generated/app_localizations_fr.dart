@@ -110,7 +110,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ageGateContinue => 'Continuer';
 
   @override
-  String get acceptanceTitle => 'Information';
+  String get acceptanceTitle => 'Informations';
 
   @override
   String get acceptanceHeader => 'Avant de commencer';
@@ -505,7 +505,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsThemeSystem => 'Système';
 
   @override
-  String get settingsPremium => 'Premium';
+  String get settingsPremium => 'PREMIUM';
 
   @override
   String get settingsPremiumComingSoon => 'BIENTÔT';
@@ -520,7 +520,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsPrivacy => 'Politique de confidentialité';
 
   @override
-  String get settingsSupport => 'Support';
+  String get settingsSupport => 'Assistance';
 
   @override
   String get settingsLogout => 'Déconnexion';
@@ -839,7 +839,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsAppearance => 'APPARENCE';
 
   @override
-  String get supportTitle => 'Support';
+  String get supportTitle => 'Assistance';
 
   @override
   String get supportEmailSubject => 'Support Nuveli';
@@ -1380,13 +1380,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get monthShortJan => 'Jan';
+  String get monthShortJan => 'Janv';
 
   @override
-  String get monthShortFeb => 'Fév';
+  String get monthShortFeb => 'Févr';
 
   @override
-  String get monthShortMar => 'Mar';
+  String get monthShortMar => 'Mars';
 
   @override
   String get monthShortApr => 'Avr';
@@ -1398,13 +1398,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get monthShortJun => 'Juin';
 
   @override
-  String get monthShortJul => 'Jul';
+  String get monthShortJul => 'Juil';
 
   @override
-  String get monthShortAug => 'Aoû';
+  String get monthShortAug => 'Août';
 
   @override
-  String get monthShortSep => 'Sep';
+  String get monthShortSep => 'Sept';
 
   @override
   String get monthShortOct => 'Oct';
@@ -1459,7 +1459,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileDarkThemeSub => 'Actif actuellement (par défaut)';
 
   @override
-  String get profilePremium => 'Premium';
+  String get profilePremium => 'PREMIUM';
 
   @override
   String get profilePremiumSub => 'Plan, facturation et fonctionnalités';
@@ -1471,7 +1471,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileHelpSafety => 'Aide et sécurité';
 
   @override
-  String get profileSupport => 'Support';
+  String get profileSupport => 'Assistance';
 
   @override
   String get profileSupportSub => 'Questions et retours';

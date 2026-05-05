@@ -291,7 +291,7 @@ abstract class AppLocalizations {
   /// No description provided for @acceptanceTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Bilgilendirme'**
+  /// **'Bilgi'**
   String get acceptanceTitle;
 
   /// No description provided for @acceptanceHeader.
@@ -855,7 +855,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Ana Sayfa'**
+  /// **'Ana sayfa'**
   String get homeTitle;
 
   /// No description provided for @homeGreetingMorning.
@@ -915,7 +915,7 @@ abstract class AppLocalizations {
   /// No description provided for @navHome.
   ///
   /// In tr, this message translates to:
-  /// **'Ana Sayfa'**
+  /// **'Ana sayfa'**
   String get navHome;
 
   /// No description provided for @navMeals.
@@ -1035,7 +1035,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsPremium.
   ///
   /// In tr, this message translates to:
-  /// **'Premium'**
+  /// **'PREMİUM'**
   String get settingsPremium;
 
   /// No description provided for @settingsPremiumComingSoon.
@@ -1503,7 +1503,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeMealSnack.
   ///
   /// In tr, this message translates to:
-  /// **'Ara öğün'**
+  /// **'Atıştırmalık'**
   String get homeMealSnack;
 
   /// No description provided for @homeCalorieTarget.
@@ -2475,7 +2475,7 @@ abstract class AppLocalizations {
   /// No description provided for @themeSystem.
   ///
   /// In tr, this message translates to:
-  /// **'Sistem ayarı'**
+  /// **'Sistem'**
   String get themeSystem;
 
   /// No description provided for @themeDark.
@@ -2835,7 +2835,7 @@ abstract class AppLocalizations {
   /// No description provided for @profilePremium.
   ///
   /// In tr, this message translates to:
-  /// **'Premium'**
+  /// **'PREMİUM'**
   String get profilePremium;
 
   /// No description provided for @profilePremiumSub.
@@ -3315,7 +3315,7 @@ abstract class AppLocalizations {
   /// No description provided for @mealTypeSnackShort.
   ///
   /// In tr, this message translates to:
-  /// **'Ara öğün'**
+  /// **'Atıştırma'**
   String get mealTypeSnackShort;
 
   /// No description provided for @streakLongestNeverActive.

@@ -105,7 +105,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get ageGateContinue => 'Devam et';
 
   @override
-  String get acceptanceTitle => 'Bilgilendirme';
+  String get acceptanceTitle => 'Bilgi';
 
   @override
   String get acceptanceHeader => 'Başlamadan önce';
@@ -405,7 +405,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get onboardingContinue => 'Devam Et';
 
   @override
-  String get homeTitle => 'Ana Sayfa';
+  String get homeTitle => 'Ana sayfa';
 
   @override
   String get homeGreetingMorning => 'Günaydın';
@@ -435,7 +435,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeNoMealsHint => 'Yemeğinin fotoğrafını çek ya da yaz';
 
   @override
-  String get navHome => 'Ana Sayfa';
+  String get navHome => 'Ana sayfa';
 
   @override
   String get navMeals => 'Öğünler';
@@ -495,7 +495,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsThemeSystem => 'Sistem';
 
   @override
-  String get settingsPremium => 'Premium';
+  String get settingsPremium => 'PREMİUM';
 
   @override
   String get settingsPremiumComingSoon => 'YAKINDA';
@@ -732,7 +732,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeMealDinner => 'Akşam';
 
   @override
-  String get homeMealSnack => 'Ara öğün';
+  String get homeMealSnack => 'Atıştırmalık';
 
   @override
   String get homeCalorieTarget => 'hedefi';
@@ -1251,7 +1251,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get weekdaySun => 'Pazar';
 
   @override
-  String get themeSystem => 'Sistem ayarı';
+  String get themeSystem => 'Sistem';
 
   @override
   String get themeDark => 'Koyu (Gece)';
@@ -1447,7 +1447,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get profileDarkThemeSub => 'Şu an aktif (varsayılan)';
 
   @override
-  String get profilePremium => 'Premium';
+  String get profilePremium => 'PREMİUM';
 
   @override
   String get profilePremiumSub => 'Plan, fatura ve özellikler';
@@ -1694,7 +1694,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get mealTypeDinnerShort => 'Akşam';
 
   @override
-  String get mealTypeSnackShort => 'Ara öğün';
+  String get mealTypeSnackShort => 'Atıştırma';
 
   @override
   String streakLongestNeverActive(int longest) {

@@ -411,7 +411,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get onboardingContinue => 'Weiter';
 
   @override
-  String get homeTitle => 'Startseite';
+  String get homeTitle => 'Start';
 
   @override
   String get homeGreetingMorning => 'Guten Morgen';
@@ -441,7 +441,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeNoMealsHint => 'Mache ein Foto deines Essens oder schreibe';
 
   @override
-  String get navHome => 'Startseite';
+  String get navHome => 'Start';
 
   @override
   String get navMeals => 'Mahlzeiten';
@@ -501,7 +501,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsThemeSystem => 'System';
 
   @override
-  String get settingsPremium => 'Premium';
+  String get settingsPremium => 'PREMIUM';
 
   @override
   String get settingsPremiumComingSoon => 'BALD';
@@ -1453,7 +1453,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get profileDarkThemeSub => 'Derzeit aktiv (Standard)';
 
   @override
-  String get profilePremium => 'Premium';
+  String get profilePremium => 'PREMIUM';
 
   @override
   String get profilePremiumSub => 'Plan, Abrechnung und Funktionen';

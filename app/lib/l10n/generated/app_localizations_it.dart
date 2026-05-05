@@ -856,7 +856,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get supportEmailCard => 'Contatta via e-mail';
 
   @override
-  String get supportFaq => 'Domande frequenti';
+  String get supportFaq => 'FAQ';
 
   @override
   String get supportFaqDesc => 'Domande e risposte frequenti';

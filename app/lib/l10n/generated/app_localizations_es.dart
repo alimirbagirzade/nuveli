@@ -502,7 +502,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsThemeSystem => 'Sistema';
 
   @override
-  String get settingsPremium => 'Premium';
+  String get settingsPremium => 'PREMIUM';
 
   @override
   String get settingsPremiumComingSoon => 'PRÓXIMAMENTE';
@@ -740,7 +740,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeMealDinner => 'Cena';
 
   @override
-  String get homeMealSnack => 'Merienda';
+  String get homeMealSnack => 'Snack';
 
   @override
   String get homeCalorieTarget => 'objetivo';
@@ -914,7 +914,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyDownload => 'Descargar mis datos';
 
   @override
-  String get aboutApp => 'Aplicación';
+  String get aboutApp => 'App';
 
   @override
   String get aboutLinks => 'Enlaces';
@@ -1015,7 +1015,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mealTypeDinner => 'Cena';
 
   @override
-  String get mealTypeSnack => 'Merienda';
+  String get mealTypeSnack => 'Snack';
 
   @override
   String get mealTypeOther => 'Comida';
@@ -1451,7 +1451,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profileDarkThemeSub => 'Activo actualmente (predeterminado)';
 
   @override
-  String get profilePremium => 'Premium';
+  String get profilePremium => 'PREMIUM';
 
   @override
   String get profilePremiumSub => 'Plan, facturación y funciones';

@@ -857,7 +857,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get supportEmailCard => 'Связаться по e-mail';
 
   @override
-  String get supportFaq => 'Часто задаваемые вопросы';
+  String get supportFaq => 'Частые вопросы';
 
   @override
   String get supportFaqDesc => 'Часто задаваемые вопросы и ответы';
