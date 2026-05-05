@@ -85,327 +85,333 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get authSessionExpired =>
-      'Your session has expired. Please sign in again.';
+      'Ваша сессия истекла. Пожалуйста, войдите снова.';
 
   @override
   String get authGenericError => 'Что-то пошло не так. Попробуйте снова.';
 
   @override
-  String get ageGateTitle => 'Let\'s start with your age';
+  String get ageGateTitle => 'Начнём с возраста';
 
   @override
-  String get ageGateSubtitle => 'We tailor recommendations to your age.';
+  String get ageGateSubtitle => 'Мы адаптируем рекомендации под ваш возраст.';
 
   @override
-  String get ageGateBirthYear => 'Birth year';
+  String get ageGateBirthYear => 'Год рождения';
 
   @override
   String get ageGateUnderageError =>
-      'Sorry, Nuveli is not suitable for under 13.';
+      'Извините, Nuveli не подходит для лиц до 13 лет.';
 
   @override
-  String get ageGateContinue => 'Continue';
+  String get ageGateContinue => 'Продолжить';
 
   @override
-  String get acceptanceTitle => 'Information';
+  String get acceptanceTitle => 'Информация';
 
   @override
-  String get acceptanceHeader => 'Before we start';
+  String get acceptanceHeader => 'Перед началом';
 
   @override
   String get acceptanceSubtitle =>
-      '4 important notes for safe use of Nuveli. You need to confirm all of them.';
+      '4 важных пункта для безопасного использования Nuveli. Подтвердите все.';
 
   @override
-  String get acceptanceWellnessTitle => 'Nuveli is a wellness app';
+  String get acceptanceWellnessTitle => 'Nuveli — приложение велнеса';
 
   @override
   String get acceptanceWellnessBody =>
-      'Nuveli does not provide medical diagnosis, treatment, or clinical diet plans. For special health conditions, support from your doctor is important.';
+      'Nuveli не предоставляет медицинскую диагностику, лечение или клинические диеты. Это приложение для здоровых привычек.';
 
   @override
   String get acceptanceWellnessCheck =>
-      'I understand. Nuveli does not replace my doctor.';
+      'Я понимаю. Nuveli не заменяет моего врача.';
 
   @override
-  String get acceptanceAiTitle => 'AI estimates are approximate';
+  String get acceptanceAiTitle => 'Оценки ИИ приблизительны';
 
   @override
   String get acceptanceAiBody =>
-      'The calorie and nutritional value estimates we make from food photos are approximate results. You can always edit them.';
+      'Калории и пищевая ценность, которые мы оцениваем по фото, являются приблизительными. Используйте как ориентир, а не как точную меру.';
 
   @override
-  String get acceptanceAiCheck => 'I know the results may be approximate.';
+  String get acceptanceAiCheck =>
+      'Я понимаю, что результаты могут быть приблизительными.';
 
   @override
-  String get acceptanceSpecialTitle => 'Special situations require attention';
+  String get acceptanceSpecialTitle => 'Особые ситуации требуют внимания';
 
   @override
   String get acceptanceSpecialBody =>
-      'If you have pregnancy, breastfeeding, eating disorder history or chronic illness, consult a health professional before applying calorie suggestions.';
+      'Если у вас беременность, кормление грудью, история расстройства пищевого поведения или хроническое заболевание — проконсультируйтесь со специалистом.';
 
   @override
   String get acceptanceSpecialCheck =>
-      'I\'ll consult an expert in my special situation.';
+      'Я проконсультируюсь со специалистом в моей особой ситуации.';
 
   @override
-  String get acceptanceTermsTitle => 'Terms and privacy';
+  String get acceptanceTermsTitle => 'Условия и конфиденциальность';
 
   @override
   String get acceptanceTermsBody =>
-      'You must read and accept the Terms of Use and Privacy Policy. Your data is kept safe and you can delete it anytime from settings.';
+      'Вы должны прочитать и принять Условия использования и Политику конфиденциальности. Ваши данные защищены.';
 
   @override
-  String get acceptanceTermsCheck => 'I accept the Terms and Privacy Policy.';
+  String get acceptanceTermsCheck =>
+      'Я принимаю Условия и Политику конфиденциальности.';
 
   @override
-  String get acceptanceContinue => 'Continue';
+  String get acceptanceContinue => 'Продолжить';
 
   @override
-  String get acceptanceCheckAll => 'Check all boxes';
+  String get acceptanceCheckAll => 'Отметьте все';
 
   @override
-  String get onboardingGoalTitle => 'What\'s your goal?';
+  String get onboardingGoalTitle => 'Какая ваша цель?';
 
   @override
-  String get onboardingGoalLose => 'Lose weight';
+  String get onboardingGoalLose => 'Похудеть';
 
   @override
-  String get onboardingGoalMaintain => 'Maintain weight';
+  String get onboardingGoalMaintain => 'Поддерживать вес';
 
   @override
-  String get onboardingGoalGain => 'Gain muscle';
+  String get onboardingGoalGain => 'Набрать мышечную массу';
 
   @override
-  String get onboardingSensitivityTitle => 'Sensitivity';
+  String get onboardingSensitivityTitle => 'Чувствительность';
 
   @override
   String get onboardingSensitivityQ1 =>
-      '1. Have you ever struggled with eating habits in the past?';
+      '1. Были ли у вас в прошлом проблемы с пищевыми привычками?';
 
   @override
-  String get onboardingSensitivityQ1A1 => 'No, never had such a period';
+  String get onboardingSensitivityQ1A1 => 'Нет, никогда не было такого периода';
 
   @override
-  String get onboardingSensitivityQ1A2 => 'Used to, but I\'m fine now';
+  String get onboardingSensitivityQ1A2 => 'Раньше было, сейчас всё в порядке';
 
   @override
-  String get onboardingSensitivityQ1A3 => 'Yes, still struggling sometimes';
+  String get onboardingSensitivityQ1A3 => 'Сейчас иногда сложно';
 
   @override
-  String get onboardingSensitivityQ1A4 => 'Prefer not to say';
+  String get onboardingSensitivityQ1A4 => 'Предпочитаю не отвечать';
 
   @override
   String get onboardingSensitivityQ2 =>
-      '2. How would you describe your relationship with food right now?';
+      '2. Как вы относитесь к подсчёту калорий?';
 
   @override
-  String get onboardingSensitivityQ2A1 => 'Comfortable, in control';
+  String get onboardingSensitivityQ2A1 => 'Чувствую себя комфортно';
 
   @override
-  String get onboardingSensitivityQ2A2 => 'Mixed days happen';
+  String get onboardingSensitivityQ2A2 => 'Нейтрально';
 
   @override
-  String get onboardingSensitivityQ2A3 => 'It\'s hard most of the time';
+  String get onboardingSensitivityQ2A3 => 'Может вызывать стресс';
 
   @override
-  String get onboardingSensitivityQ2A4 => 'Prefer not to say';
+  String get onboardingSensitivityQ2A4 => 'Предпочитаю не отвечать';
 
   @override
-  String get onboardingProfileTitle => 'Tell us about yourself';
+  String get onboardingProfileTitle => 'Расскажите о себе';
 
   @override
-  String get onboardingProfileGender => 'Gender';
+  String get onboardingProfileGender => 'Пол';
 
   @override
-  String get onboardingProfileGenderMale => 'Male';
+  String get onboardingProfileGenderMale => 'Мужской';
 
   @override
-  String get onboardingProfileGenderFemale => 'Female';
+  String get onboardingProfileGenderFemale => 'Женский';
 
   @override
-  String get onboardingProfileGenderOther => 'Other / Prefer not to say';
+  String get onboardingProfileGenderOther => 'Другой / Не указывать';
 
   @override
-  String get onboardingProfileHeight => 'Height (cm)';
+  String get onboardingProfileHeight => 'Рост (см)';
 
   @override
-  String get onboardingProfileWeight => 'Weight (kg)';
+  String get onboardingProfileWeight => 'Вес (кг)';
 
   @override
-  String get onboardingProfileActivity => 'Activity level';
+  String get onboardingProfileActivity => 'Уровень активности';
 
   @override
-  String get onboardingProfileActivitySedentary => 'Sedentary (desk job)';
+  String get onboardingProfileActivitySedentary =>
+      'Малоподвижный (сидячая работа)';
 
   @override
-  String get onboardingProfileActivityLight => 'Lightly active';
+  String get onboardingProfileActivityLight => 'Лёгкая активность';
 
   @override
-  String get onboardingProfileActivityModerate => 'Moderately active';
+  String get onboardingProfileActivityModerate => 'Умеренная активность';
 
   @override
-  String get onboardingProfileActivityActive => 'Very active';
+  String get onboardingProfileActivityActive => 'Очень активный';
 
   @override
-  String get onboardingDietTitle => 'Diet';
+  String get onboardingDietTitle => 'Диета';
 
   @override
-  String get onboardingDietAllergies => 'Allergies';
+  String get onboardingDietAllergies => 'Аллергии';
 
   @override
-  String get onboardingDietPreference => 'Diet preference';
+  String get onboardingDietPreference => 'Предпочтения в диете';
 
   @override
-  String get onboardingDietAllergyLactose => 'Lactose';
+  String get onboardingDietAllergyLactose => 'Лактоза';
 
   @override
-  String get onboardingDietAllergyGluten => 'Gluten';
+  String get onboardingDietAllergyGluten => 'Глютен';
 
   @override
-  String get onboardingDietAllergyPeanut => 'Peanut';
+  String get onboardingDietAllergyPeanut => 'Арахис';
 
   @override
-  String get onboardingDietAllergyNut => 'Nuts';
+  String get onboardingDietAllergyNut => 'Орехи';
 
   @override
-  String get onboardingDietAllergyEgg => 'Egg';
+  String get onboardingDietAllergyEgg => 'Яйца';
 
   @override
-  String get onboardingDietAllergyShellfish => 'Shellfish';
+  String get onboardingDietAllergyShellfish => 'Моллюски';
 
   @override
-  String get onboardingDietAllergySoy => 'Soy';
+  String get onboardingDietAllergySoy => 'Соя';
 
   @override
-  String get onboardingDietAllergySesame => 'Sesame';
+  String get onboardingDietAllergySesame => 'Кунжут';
 
   @override
-  String get onboardingDietAllergyFish => 'Fish';
+  String get onboardingDietAllergyFish => 'Рыба';
 
   @override
-  String get onboardingDietPrefNone => 'No specific preference';
+  String get onboardingDietPrefNone => 'Без особых предпочтений';
 
   @override
-  String get onboardingDietPrefVegetarian => 'Vegetarian';
+  String get onboardingDietPrefVegetarian => 'Вегетарианец';
 
   @override
-  String get onboardingDietPrefVegan => 'Vegan';
+  String get onboardingDietPrefVegan => 'Веган';
 
   @override
-  String get onboardingDietPrefPescatarian => 'Pescatarian (fish only)';
+  String get onboardingDietPrefPescatarian => 'Пескетарианец (только рыба)';
 
   @override
-  String get onboardingDietPrefHalal => 'Halal';
+  String get onboardingDietPrefHalal => 'Халяль';
 
   @override
-  String get onboardingDietPrefKosher => 'Kosher';
+  String get onboardingDietPrefKosher => 'Кошер';
 
   @override
-  String get onboardingDietPrefOther => 'Other';
+  String get onboardingDietPrefOther => 'Другое';
 
   @override
-  String get onboardingCoachTitle => 'Your coach';
+  String get onboardingCoachTitle => 'Ваш тренер';
 
   @override
-  String get onboardingCoachQuestion => 'How should your coach speak?';
+  String get onboardingCoachQuestion => 'Как должен говорить тренер?';
 
   @override
-  String get onboardingCoachSubtitle => 'You can change anytime.';
+  String get onboardingCoachSubtitle => 'Можете изменить в любое время.';
 
   @override
-  String get onboardingCoachKind => 'Kind';
+  String get onboardingCoachKind => 'Мягкий';
 
   @override
-  String get onboardingCoachKindDesc => 'Soft, no pressure, empathy first';
+  String get onboardingCoachKindDesc =>
+      'Мягкий, без давления, эмпатия превыше всего';
 
   @override
-  String get onboardingCoachWitty => 'Witty';
+  String get onboardingCoachWitty => 'Весёлый';
 
   @override
   String get onboardingCoachWittyDesc =>
-      'Light, smiling, balanced when serious';
+      'Лёгкий, улыбающийся, сбалансированный';
 
   @override
-  String get onboardingCoachDirect => 'Direct';
+  String get onboardingCoachDirect => 'Прямой';
 
   @override
-  String get onboardingCoachDirectDesc => 'Short, clear, realistic feedback';
+  String get onboardingCoachDirectDesc =>
+      'Короткий, чёткий, реалистичный фидбек';
 
   @override
-  String get onboardingCoachCalm => 'Calm';
+  String get onboardingCoachCalm => 'Спокойный';
 
   @override
-  String get onboardingCoachCalmDesc => 'Non-judgmental, patient, measured';
+  String get onboardingCoachCalmDesc =>
+      'Без осуждения, терпеливый, размеренный';
 
   @override
-  String get onboardingCalorieTitle => 'Calorie';
+  String get onboardingCalorieTitle => 'Дневная цель калорий';
 
   @override
-  String get onboardingCalorieReady => 'Your daily target is ready';
+  String get onboardingCalorieReady => 'Ваша дневная цель готова';
 
   @override
   String get onboardingCalorieDescription =>
-      'This number is based on your info. Not fixed — we\'ll adjust together based on your days.';
+      'Это число основано на ваших данных. Не фиксированное — мы будем корректировать вместе.';
 
   @override
-  String get onboardingCalorieDaily => 'Daily calories';
+  String get onboardingCalorieDaily => 'Дневная норма калорий';
 
   @override
-  String get onboardingCalorieKcal => 'kcal';
+  String get onboardingCalorieKcal => 'ккал';
 
   @override
   String get onboardingCalorieNote =>
-      'Calculated based on activity, goal, and situation. Reviewed monthly.';
+      'Рассчитано на основе активности, цели и ситуации. Пересматривается ежемесячно.';
 
   @override
-  String get onboardingNotificationTitle => 'Notifications';
+  String get onboardingNotificationTitle => 'Уведомления';
 
   @override
-  String get onboardingNotificationQuestion => 'Want gentle reminders?';
+  String get onboardingNotificationQuestion => 'Хотите мягкие напоминания?';
 
   @override
   String get onboardingNotificationDescription =>
-      'Brief support and meal reminders from your coach. We respect quiet hours.';
+      'Краткая поддержка и напоминания о приёмах пищи от тренера. Мы уважаем тихие часы.';
 
   @override
-  String get onboardingNotificationYes => 'Yes, I do';
+  String get onboardingNotificationYes => 'Да, хочу';
 
   @override
-  String get onboardingNotificationNo => 'Not now';
+  String get onboardingNotificationNo => 'Не сейчас';
 
   @override
-  String get onboardingWelcomeTitle => 'Welcome.';
+  String get onboardingWelcomeTitle => 'Добро пожаловать.';
 
   @override
-  String get onboardingWelcomeSubtitle => 'We\'re ready.';
+  String get onboardingWelcomeSubtitle => 'Мы готовы.';
 
   @override
   String get onboardingWelcomeBody =>
-      'No pressure, no judgment — just you and a coach by your side.';
+      'Без давления, без осуждения — только вы и тренер рядом.';
 
   @override
-  String get onboardingWelcomeFirstStep => 'First step idea';
+  String get onboardingWelcomeFirstStep => 'Идея для первого шага';
 
   @override
   String get onboardingWelcomeFirstStepDesc =>
-      'Start with one meal you ate today. Take a photo or write — your coach remembers the rest.';
+      'Начните с одного приёма пищи, который съели сегодня. Сделайте фото или напишите — ваш тренер вас встретит.';
 
   @override
-  String get onboardingWelcomeStart => 'Let\'s begin';
+  String get onboardingWelcomeStart => 'Начнём';
 
   @override
-  String get onboardingWelcomePreparing => 'Preparing...';
+  String get onboardingWelcomePreparing => 'Подготовка...';
 
   @override
   String get onboardingWelcomeError =>
-      'An unexpected issue occurred, want to try again?';
+      'Произошла неожиданная проблема, попробуем снова?';
 
   @override
-  String get onboardingContinue => 'Continue';
+  String get onboardingContinue => 'Продолжить';
 
   @override
-  String get homeTitle => 'Home';
+  String get homeTitle => 'Главная';
 
   @override
   String get homeGreetingMorning => 'Доброе утро';
@@ -417,37 +423,37 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeGreetingEvening => 'Добрый вечер';
 
   @override
-  String get homeTodayCalories => 'Today\'s calories';
+  String get homeTodayCalories => 'Калории сегодня';
 
   @override
-  String get homeRemainingCalories => 'Remaining';
+  String get homeRemainingCalories => 'Осталось';
 
   @override
   String get homeAddMeal => 'Добавить';
 
   @override
-  String get homeChat => 'Talk to coach';
+  String get homeChat => 'Поговорить с тренером';
 
   @override
-  String get homeNoMeals => 'No meals added yet';
+  String get homeNoMeals => 'Ещё не добавлено приёмов пищи';
 
   @override
-  String get homeNoMealsHint => 'Take a photo of your food or write';
+  String get homeNoMealsHint => 'Сфотографируйте еду или напишите';
 
   @override
-  String get navHome => 'Home';
+  String get navHome => 'Главная';
 
   @override
-  String get navMeals => 'Meals';
+  String get navMeals => 'Питание';
 
   @override
-  String get navCoach => 'Coach';
+  String get navCoach => 'Тренер';
 
   @override
-  String get navProfile => 'Profile';
+  String get navProfile => 'Профиль';
 
   @override
-  String get navSettings => 'Settings';
+  String get navSettings => 'Настройки';
 
   @override
   String get settingsTitle => 'Настройки';
@@ -456,7 +462,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsAccount => 'АККАУНТ';
 
   @override
-  String get settingsProfile => 'Profile';
+  String get settingsProfile => 'Профиль';
 
   @override
   String get settingsNotifications => 'Уведомления';
@@ -465,7 +471,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLanguage => 'Язык';
 
   @override
-  String get settingsLanguageSystem => 'System language';
+  String get settingsLanguageSystem => 'Системный язык';
 
   @override
   String get settingsLanguageTurkish => 'Türkçe';
@@ -486,25 +492,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsTheme => 'Тема';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => 'Тёмная';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => 'Светлая';
 
   @override
-  String get settingsThemeSystem => 'System';
+  String get settingsThemeSystem => 'Системная';
 
   @override
   String get settingsPremium => 'ПРЕМИУМ';
 
   @override
-  String get settingsPremiumComingSoon => 'COMING SOON';
+  String get settingsPremiumComingSoon => 'СКОРО';
 
   @override
   String get settingsAbout => 'О Nuveli';
 
   @override
-  String get settingsTerms => 'Terms of Use';
+  String get settingsTerms => 'Условия использования';
 
   @override
   String get settingsPrivacy => 'Конфиденциальность и безопасность';
@@ -516,7 +522,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLogout => 'Выйти';
 
   @override
-  String get settingsDeleteAccount => 'Delete My Account';
+  String get settingsDeleteAccount => 'Удалить аккаунт';
 
   @override
   String get settingsVersion => 'Версия';
@@ -531,16 +537,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get premiumFeatureUnlimited => 'Безлимитный анализ блюд ИИ';
 
   @override
-  String get premiumFeatureCoach => 'Advanced AI coach';
+  String get premiumFeatureCoach => 'Расширенный ИИ-тренер';
 
   @override
-  String get premiumFeatureReports => 'Detailed weekly reports';
+  String get premiumFeatureReports => 'Подробные еженедельные отчёты';
 
   @override
-  String get premiumFeatureExport => 'Data export';
+  String get premiumFeatureExport => 'Экспорт данных';
 
   @override
-  String get premiumNotifyMe => 'Notify me when ready';
+  String get premiumNotifyMe => 'Уведомить меня, когда будет готово';
 
   @override
   String get commonContinue => 'Продолжить';
@@ -573,7 +579,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonError => 'Ошибка';
 
   @override
-  String get commonSuccess => 'Success';
+  String get commonSuccess => 'Успех';
 
   @override
   String get commonYes => 'Да';
@@ -588,48 +594,48 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsCoachTone => 'Тон тренера';
 
   @override
-  String get settingsSupportSecurity => 'Support & Security';
+  String get settingsSupportSecurity => 'Поддержка и безопасность';
 
   @override
-  String get settingsHowAiWorks => 'How AI works';
+  String get settingsHowAiWorks => 'Как работает ИИ';
 
   @override
-  String get settingsPrivacySafety => 'Privacy & Safety';
+  String get settingsPrivacySafety => 'Конфиденциальность и безопасность';
 
   @override
-  String get settingsAboutNuveli => 'About Nuveli';
+  String get settingsAboutNuveli => 'О Nuveli';
 
   @override
-  String get settingsSubscription => 'Subscription';
+  String get settingsSubscription => 'Подписка';
 
   @override
-  String get settingsSession => 'Session';
+  String get settingsSession => 'Сессия';
 
   @override
-  String get settingsDangerZone => 'Danger Zone';
+  String get settingsDangerZone => 'Опасная зона';
 
   @override
-  String get settingsSignedInAs => 'Signed in as';
+  String get settingsSignedInAs => 'Вы вошли как';
 
   @override
-  String get settingsLogoutTitle => 'Sign out?';
+  String get settingsLogoutTitle => 'Выйти?';
 
   @override
   String get settingsLogoutBody =>
-      'You\'ll need your email and password to sign in again.';
+      'Вам понадобится e-mail и пароль, чтобы войти снова.';
 
   @override
-  String get settingsLogoutCancel => 'Cancel';
+  String get settingsLogoutCancel => 'Отмена';
 
   @override
-  String get settingsLogoutFailed => 'Failed to sign out.';
+  String get settingsLogoutFailed => 'Не удалось выйти.';
 
   @override
-  String get premiumModalTitle => 'Premium coming soon!';
+  String get premiumModalTitle => 'Премиум скоро!';
 
   @override
   String get premiumModalBody =>
-      'We\'re preparing unlimited AI meal analysis, advanced coaching, and weekly insights.';
+      'Мы готовим безлимитный анализ ИИ, расширенного тренера и многое другое. Скоро будет!';
 
   @override
   String get premiumFeatureVoice => 'Голосовой тренер + 3 персоны';
@@ -638,107 +644,107 @@ class AppLocalizationsRu extends AppLocalizations {
   String get premiumFeatureInsights => 'Еженедельные + ежемесячные инсайты';
 
   @override
-  String get premiumUnderstood => 'Got it';
+  String get premiumUnderstood => 'Понятно';
 
   @override
-  String get passwordVeryWeak => 'Very weak';
+  String get passwordVeryWeak => 'Очень слабый';
 
   @override
-  String get passwordWeak => 'Weak';
+  String get passwordWeak => 'Слабый';
 
   @override
-  String get passwordMedium => 'Medium';
+  String get passwordMedium => 'Средний';
 
   @override
-  String get passwordStrong => 'Strong';
+  String get passwordStrong => 'Сильный';
 
   @override
-  String get passwordVeryStrong => 'Very strong';
+  String get passwordVeryStrong => 'Очень сильный';
 
   @override
-  String get homeErrorGeneric => 'Something went wrong';
+  String get homeErrorGeneric => 'Что-то пошло не так';
 
   @override
-  String get homeCoachLabel => 'Your coach';
+  String get homeCoachLabel => 'Ваш тренер';
 
   @override
-  String get homeToday => 'Today';
+  String get homeToday => 'Сегодня';
 
   @override
-  String get homeRemaining => 'remaining';
+  String get homeRemaining => 'осталось';
 
   @override
-  String get homeThisWeek => 'This Week';
+  String get homeThisWeek => 'На этой неделе';
 
   @override
-  String get homeMiniGoalTitle => 'Today\'s Mini Goal';
+  String get homeMiniGoalTitle => 'Мини-цель сегодня';
 
   @override
-  String get homeMiniGoalDefault => 'Add protein to a meal';
+  String get homeMiniGoalDefault => 'Добавьте белок к приёму пищи';
 
   @override
-  String get homeAddMealLabel => 'Add Meal';
+  String get homeAddMealLabel => 'Добавить блюдо';
 
   @override
-  String get homeWater => 'Water';
+  String get homeWater => 'Вода';
 
   @override
-  String get homeWeight => 'Weight';
+  String get homeWeight => 'Вес';
 
   @override
-  String get homeMood => 'Mood';
+  String get homeMood => 'Настроение';
 
   @override
   String get homeAddWater => 'Вода';
 
   @override
-  String get homeEnterWeight => 'Enter Weight';
+  String get homeEnterWeight => 'Ввести вес';
 
   @override
-  String get homeMoodGreat => 'Great';
+  String get homeMoodGreat => 'Отлично';
 
   @override
-  String get homeMoodGood => 'Good';
+  String get homeMoodGood => 'Хорошо';
 
   @override
-  String get homeMoodNeutral => 'Neutral';
+  String get homeMoodNeutral => 'Нормально';
 
   @override
-  String get homeMoodBad => 'Tough';
+  String get homeMoodBad => 'Тяжело';
 
   @override
-  String get homeMoodRough => 'Very Tough';
+  String get homeMoodRough => 'Очень тяжело';
 
   @override
-  String get homeMoodPickOne => 'Pick one';
+  String get homeMoodPickOne => 'Выберите';
 
   @override
-  String get homeNoMealsTitle => 'No meals added yet';
+  String get homeNoMealsTitle => 'Ещё не добавлено приёмов пищи';
 
   @override
-  String get homeNoMealsMessage => 'Start the day by adding your first meal';
+  String get homeNoMealsMessage => 'Начните день, добавив первый приём пищи';
 
   @override
-  String get homeTodayMeals => 'Today\'s meals';
+  String get homeTodayMeals => 'Сегодняшние приёмы пищи';
 
   @override
-  String get homeMealBreakfast => 'Breakfast';
+  String get homeMealBreakfast => 'Завтрак';
 
   @override
-  String get homeMealLunch => 'Lunch';
+  String get homeMealLunch => 'Обед';
 
   @override
-  String get homeMealDinner => 'Dinner';
+  String get homeMealDinner => 'Ужин';
 
   @override
-  String get homeMealSnack => 'Snack';
+  String get homeMealSnack => 'Перекус';
 
   @override
-  String get homeCalorieTarget => 'target';
+  String get homeCalorieTarget => 'цель';
 
   @override
   String homeCalorieTargetLine(int target) {
-    return '/ $target kcal target';
+    return '/ $target ккал цель';
   }
 
   @override
@@ -752,74 +758,76 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get homeCravingText =>
-      'Craving something? Pause 60 seconds, take a deep breath.';
+      'Тяга к чему-то? Подождите 60 секунд, сделайте глубокий вдох.';
 
   @override
-  String get notifMealReminders => 'Meal Reminders';
+  String get notifMealReminders => 'Напоминания о еде';
 
   @override
   String get notifMealRemindersDesc =>
-      'Gentle reminder at breakfast, lunch, dinner time';
+      'Мягкое напоминание утром, в обед и вечером';
 
   @override
-  String get notifCoachNudges => 'Coach Nudges';
+  String get notifCoachNudges => 'Подсказки тренера';
 
   @override
-  String get notifCoachNudgesDesc => 'Personal support and motivation messages';
+  String get notifCoachNudgesDesc =>
+      'Личная поддержка и мотивационные сообщения';
 
   @override
-  String get notifWeeklySummary => 'Weekly Summary';
+  String get notifWeeklySummary => 'Недельный обзор';
 
   @override
-  String get notifWeeklySummaryDesc => 'Monday morning summary of last week';
+  String get notifWeeklySummaryDesc =>
+      'Сводка прошедшей недели в понедельник утром';
 
   @override
-  String get notifQuietHours => 'QUIET HOURS';
+  String get notifQuietHours => 'ТИХИЕ ЧАСЫ';
 
   @override
-  String get notifQuietHoursDesc => 'No notifications during these hours.';
+  String get notifQuietHoursDesc => 'Никаких уведомлений в эти часы.';
 
   @override
-  String get notifQuietStart => 'Start';
+  String get notifQuietStart => 'Начало';
 
   @override
-  String get notifQuietEnd => 'End';
+  String get notifQuietEnd => 'Конец';
 
   @override
-  String get notifSaved => 'Preferences saved.';
+  String get notifSaved => 'Настройки сохранены.';
 
   @override
-  String get notifSaveFailed => 'Could not save.';
+  String get notifSaveFailed => 'Не удалось сохранить.';
 
   @override
-  String get notifLoadFailed => 'Could not load.';
+  String get notifLoadFailed => 'Не удалось загрузить.';
 
   @override
   String get coachSettingsTitle => 'Тренер';
 
   @override
-  String get coachSettingsQuestion => 'How should your coach speak to you?';
+  String get coachSettingsQuestion => 'Как должен говорить с вами тренер?';
 
   @override
-  String get coachSettingsSubtitle => 'You can change anytime.';
+  String get coachSettingsSubtitle => 'Можете изменить в любое время.';
 
   @override
-  String get onboardingMoreMeasures => 'A few more measurements';
+  String get onboardingMoreMeasures => 'Ещё несколько измерений';
 
   @override
-  String get onboardingActivityLevel => 'Your activity level';
+  String get onboardingActivityLevel => 'Ваш уровень активности';
 
   @override
-  String get onboardingFirstMeal => 'Let\'s add my first meal';
+  String get onboardingFirstMeal => 'Добавим первый приём пищи';
 
   @override
-  String get onboardingGoToHome => 'Go to home screen';
+  String get onboardingGoToHome => 'Перейти на главную';
 
   @override
-  String get onboardingBirthYear => 'Birth year';
+  String get onboardingBirthYear => 'Год рождения';
 
   @override
-  String get onboardingGender => 'Gender';
+  String get onboardingGender => 'Пол';
 
   @override
   String get settingsAppearance => 'ВНЕШНИЙ ВИД';
@@ -843,87 +851,88 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coachToneUpdated => 'Тон тренера обновлён';
 
   @override
-  String get supportHowHelp => 'How can we help you?';
+  String get supportHowHelp => 'Чем мы можем помочь?';
 
   @override
-  String get supportEmailCard => 'Contact by email';
+  String get supportEmailCard => 'Связаться по e-mail';
 
   @override
   String get supportFaq => 'Часто задаваемые вопросы';
 
   @override
-  String get supportFaqDesc => 'Frequently asked questions and answers';
+  String get supportFaqDesc => 'Часто задаваемые вопросы и ответы';
 
   @override
-  String get aiBlockFood => 'Food Recognition';
+  String get aiBlockFood => 'Распознавание еды';
 
   @override
   String get aiBlockFoodBody =>
-      'I analyze your photo and estimate calories/nutrients. This is not an exact measurement — you can always edit.';
+      'Я анализирую ваше фото и оцениваю калории/нутриенты. Это не точное измерение.';
 
   @override
-  String get aiBlockCoach => 'Coach Responses';
+  String get aiBlockCoach => 'Ответы тренера';
 
   @override
   String get aiBlockCoachBody =>
-      'I generate short, non-judgmental, supportive messages. I don\'t provide medical advice or diet plans.';
+      'Я генерирую короткие, без осуждения, поддерживающие сообщения. Я не предоставляю медицинских советов.';
 
   @override
-  String get aiBlockSafety => 'Safety';
+  String get aiBlockSafety => 'Безопасность';
 
   @override
   String get aiBlockSafetyBody =>
-      'In risky situations, I show professional support resources. In crisis moments, fixed safety text appears.';
+      'В рискованных ситуациях я показываю ресурсы профессиональной поддержки. В кризисе — направляю к специалистам.';
 
   @override
-  String get aiBlockData => 'Your Data';
+  String get aiBlockData => 'Ваши данные';
 
   @override
   String get aiBlockDataBody =>
-      'Your data is transmitted encrypted and only you can access it. You can delete everything via Settings > Delete Account.';
+      'Ваши данные передаются зашифрованно, доступ только у вас. Вы можете удалить их в любой момент.';
 
   @override
-  String get privacyHeading => 'Your safety is our priority';
+  String get privacyHeading => 'Ваша безопасность — наш приоритет';
 
   @override
   String get privacyBody =>
-      'Nuveli is a wellness app. It does not provide medical diagnosis, treatment, or clinical diet plans. If you\'re going through a difficult time, please seek professional support.';
+      'Nuveli — приложение велнеса. Не предоставляет медицинскую диагностику или лечение.';
 
   @override
-  String get privacyEmergency => 'Emergency Support';
+  String get privacyEmergency => 'Экстренная поддержка';
 
   @override
-  String get privacyHotline => 'ALO 182 — Psychological Support Line (24/7)';
+  String get privacyHotline =>
+      'ALO 182 — Линия психологической поддержки (24/7)';
 
   @override
-  String get privacyPolicyLink => 'Privacy Policy';
+  String get privacyPolicyLink => 'Политика конфиденциальности';
 
   @override
-  String get privacyTermsLink => 'Terms of Use';
+  String get privacyTermsLink => 'Условия использования';
 
   @override
-  String get privacyDownload => 'Download My Data';
+  String get privacyDownload => 'Скачать мои данные';
 
   @override
-  String get aboutApp => 'App';
+  String get aboutApp => 'Приложение';
 
   @override
-  String get aboutLinks => 'Links';
+  String get aboutLinks => 'Ссылки';
 
   @override
   String get aboutWebsite => 'Веб-сайт';
 
   @override
-  String get aboutTechnical => 'Technical';
+  String get aboutTechnical => 'Технические';
 
   @override
-  String get aboutEnv => 'Environment';
+  String get aboutEnv => 'Среда';
 
   @override
-  String get aboutCopyright => '© 2026 Nuveli. All rights reserved.';
+  String get aboutCopyright => '© 2026 Nuveli. Все права защищены.';
 
   @override
-  String get aboutCopied => 'copied';
+  String get aboutCopied => 'скопировано';
 
   @override
   String get aboutVersion => 'Версия';
@@ -935,31 +944,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get streakDays => 'дней';
 
   @override
-  String get streakLongest => 'Longest streak';
+  String get streakLongest => 'Самая длинная серия';
 
   @override
-  String get streakTodayDone => 'You did it today too';
+  String get streakTodayDone => 'Вы сделали это сегодня';
 
   @override
   String streakSummary(int current) {
-    return '$current day streak';
+    return '$current день подряд';
   }
 
   @override
   String get streakExplanation =>
-      'Your streak is the number of consecutive days you\'ve added meals.';
+      'Ваша серия — это количество дней подряд с записями приёмов пищи.';
 
   @override
   String get weeklyTitle => 'Недельный обзор';
 
   @override
-  String get weeklyLoadFailed => 'Could not load';
+  String get weeklyLoadFailed => 'Не удалось загрузить';
 
   @override
-  String get weeklyChartLoadFailed => 'Could not load data';
+  String get weeklyChartLoadFailed => 'Не удалось загрузить данные';
 
   @override
-  String get commonRetryLow => 'Try again';
+  String get commonRetryLow => 'Попробовать снова';
 
   @override
   String get dayMon => 'Пн';
@@ -986,46 +995,46 @@ class AppLocalizationsRu extends AppLocalizations {
   String get dayDetailMeals => 'Приёмы пищи';
 
   @override
-  String get dayDetailMealsLoadFailed => 'Could not load meals';
+  String get dayDetailMealsLoadFailed => 'Не удалось загрузить приёмы пищи';
 
   @override
   String get dayDetailNoMeals => 'В этот день не было приёмов пищи';
 
   @override
   String dayDetailWaterMl(int ml) {
-    return '$ml ml water';
+    return '$ml мл воды';
   }
 
   @override
-  String get mealTypeBreakfast => 'Breakfast';
+  String get mealTypeBreakfast => 'Завтрак';
 
   @override
-  String get mealTypeLunch => 'Lunch';
+  String get mealTypeLunch => 'Обед';
 
   @override
-  String get mealTypeDinner => 'Dinner';
+  String get mealTypeDinner => 'Ужин';
 
   @override
-  String get mealTypeSnack => 'Snack';
+  String get mealTypeSnack => 'Перекус';
 
   @override
-  String get mealTypeOther => 'Meal';
+  String get mealTypeOther => 'Приём пищи';
 
   @override
-  String get weeklyMacroDist => 'Macro Distribution';
+  String get weeklyMacroDist => 'Распределение макронутриентов';
 
   @override
   String get weeklyDailyDetail => 'По дням';
 
   @override
-  String get weeklyCoachComment => 'COACH COMMENT';
+  String get weeklyCoachComment => 'КОММЕНТАРИЙ ТРЕНЕРА';
 
   @override
-  String get weeklyCoachCommentLocked => 'Coach comment';
+  String get weeklyCoachCommentLocked => 'Комментарий тренера';
 
   @override
   String get weeklyCoachCommentLockedDesc =>
-      'Personal weekly pattern comments with Premium';
+      'Персональные комментарии о неделе с Премиум';
 
   @override
   String streakLastLog(String date) {
@@ -1079,152 +1088,153 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coachChatSend => 'Отправить';
 
   @override
-  String get waterHowMuch => 'How much did you drink?';
+  String get waterHowMuch => 'Сколько вы выпили?';
 
   @override
-  String get waterHistory => 'History';
+  String get waterHistory => 'История';
 
   @override
-  String get weightInvalid => 'Enter a valid weight (1-500 kg).';
+  String get weightInvalid => 'Введите корректный вес (1-500 кг).';
 
   @override
-  String get weightKg => 'kg';
+  String get weightKg => 'кг';
 
   @override
-  String get moodHowToday => 'How are you today?';
+  String get moodHowToday => 'Как вы сегодня?';
 
   @override
   String get mealCameraNotAvailable =>
-      'This feature works on real devices. You can pick from gallery.';
+      'Эта функция работает на реальных устройствах. Можно выбрать из галереи.';
 
   @override
-  String get mealGallery => 'Gallery';
+  String get mealGallery => 'Галерея';
 
   @override
   String weeklyDaysLogged(int n) {
-    return 'You logged $n days. Good progress.';
+    return 'Вы записали $n дней. Хороший прогресс.';
   }
 
   @override
-  String get coachWelcome => 'Hi! How are you feeling today?';
+  String get coachWelcome => 'Привет! Как ты себя чувствуешь сегодня?';
 
   @override
-  String get coachInputPlaceholder => 'Type your message...';
+  String get coachInputPlaceholder => 'Введите сообщение...';
 
   @override
-  String get coachLoadFailed => 'Could not load.';
+  String get coachLoadFailed => 'Не удалось загрузить.';
 
   @override
-  String get coachSendFailed => 'Could not send message.';
+  String get coachSendFailed => 'Не удалось отправить сообщение.';
 
   @override
-  String get coachLimitTitle => 'Daily message limit reached';
+  String get coachLimitTitle => 'Дневной лимит';
 
   @override
   String coachLimitBody(String reason) {
-    return '$reason\n\nWith Premium, get unlimited coach chat + voice replies.';
+    return '$reason\n\nС Премиум — безлимитный чат с тренером и голосовые ответы.';
   }
 
   @override
-  String get coachLater => 'Later';
+  String get coachLater => 'Позже';
 
   @override
-  String get coachSeePremium => 'See Premium';
+  String get coachSeePremium => 'Смотреть Премиум';
 
   @override
-  String get coachCrisisTitle => 'You are not alone';
+  String get coachCrisisTitle => 'Вы не одни';
 
   @override
-  String get coachDistressTitle => 'You may be having a tough moment';
+  String get coachDistressTitle => 'У вас может быть тяжёлый момент';
 
   @override
   String get coachCrisisBody =>
-      'We want to be there for you, but reaching a professional for proper support is very important.';
+      'Мы хотим быть рядом, но обращение к специалисту для надлежащей поддержки — лучший шаг.';
 
   @override
   String get coachDistressBody =>
-      'Your coach can\'t help in these situations. Reaching out to someone who cares about you is always an option.';
+      'Ваш тренер не может помочь в таких ситуациях. Обратиться к кому-то, кому доверяете, — важно.';
 
   @override
-  String get mealAddTitle => 'Add Meal';
+  String get mealAddTitle => 'Добавить блюдо';
 
   @override
-  String get mealPhotoOrDesc => 'Photo or description';
+  String get mealPhotoOrDesc => 'Фото или описание';
 
   @override
-  String get mealNoPhoto => 'No photo added';
+  String get mealNoPhoto => 'Фото не добавлено';
 
   @override
-  String get mealCamera => 'Camera';
+  String get mealCamera => 'Камера';
 
   @override
-  String get mealGalleryBtn => 'Gallery';
+  String get mealGalleryBtn => 'Галерея';
 
   @override
-  String get mealSimulatorWarn => 'No camera in Simulator. Use Gallery.';
+  String get mealSimulatorWarn =>
+      'Нет камеры в Симуляторе. Используйте Галерею.';
 
   @override
   String get mealDescHint =>
-      'Or describe the meal (e.g. chicken breast, rice, salad)';
+      'Или опишите блюдо (например, куриная грудка, рис, салат)';
 
   @override
-  String get mealAnalyze => 'Analyze';
+  String get mealAnalyze => 'Анализировать';
 
   @override
-  String get mealManualEntry => 'Manual entry';
+  String get mealManualEntry => 'Ввести вручную';
 
   @override
-  String get mealAnalyzeFailed => 'Could not analyze.';
+  String get mealAnalyzeFailed => 'Не удалось проанализировать.';
 
   @override
-  String get mealLimitTitle => 'Daily limit reached';
+  String get mealLimitTitle => 'Дневной лимит достигнут';
 
   @override
   String mealLimitBody(String reason) {
-    return '$reason\n\nWith Premium, get unlimited photo analysis.';
+    return '$reason\n\nС Премиум — безлимитный анализ фото.';
   }
 
   @override
-  String get waterHistoryTitle => 'Water History';
+  String get waterHistoryTitle => 'История воды';
 
   @override
-  String get weightHistoryTitle => 'Weight History';
+  String get weightHistoryTitle => 'История веса';
 
   @override
-  String get monthJan => 'January';
+  String get monthJan => 'Январь';
 
   @override
-  String get monthFeb => 'February';
+  String get monthFeb => 'Февраль';
 
   @override
-  String get monthMar => 'March';
+  String get monthMar => 'Март';
 
   @override
-  String get monthApr => 'April';
+  String get monthApr => 'Апрель';
 
   @override
-  String get monthMay => 'May';
+  String get monthMay => 'Май';
 
   @override
-  String get monthJun => 'June';
+  String get monthJun => 'Июнь';
 
   @override
-  String get monthJul => 'July';
+  String get monthJul => 'Июль';
 
   @override
-  String get monthAug => 'August';
+  String get monthAug => 'Август';
 
   @override
-  String get monthSep => 'September';
+  String get monthSep => 'Сентябрь';
 
   @override
-  String get monthOct => 'October';
+  String get monthOct => 'Октябрь';
 
   @override
-  String get monthNov => 'November';
+  String get monthNov => 'Ноябрь';
 
   @override
-  String get monthDec => 'December';
+  String get monthDec => 'Декабрь';
 
   @override
   String get weekdayMon => 'Понедельник';
@@ -1409,7 +1419,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileTitle => 'Профиль';
 
   @override
-  String get profileLoadFailed => 'Could not load profile.';
+  String get profileLoadFailed => 'Не удалось загрузить профиль.';
 
   @override
   String get profileAccount => 'АККАУНТ';
@@ -1418,106 +1428,106 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profilePersonalInfo => 'Личная информация';
 
   @override
-  String get profilePersonalInfoSub => 'Name, goals, body info';
+  String get profilePersonalInfoSub => 'Имя, цели, информация о теле';
 
   @override
   String get profileGoals => 'Цели';
 
   @override
-  String get profileGoalsSub => 'Your calorie and macro targets';
+  String get profileGoalsSub => 'Цели по калориям и макронутриентам';
 
   @override
-  String get profileNotifications => 'Notifications';
+  String get profileNotifications => 'Уведомления';
 
   @override
-  String get profileNotifPrefs => 'Notification preferences';
+  String get profileNotifPrefs => 'Настройки уведомлений';
 
   @override
-  String get profileNotifPrefsSub => 'Reminders and quiet hours';
+  String get profileNotifPrefsSub => 'Напоминания и тихие часы';
 
   @override
   String get profileTheme => 'Тема';
 
   @override
-  String get profileDarkTheme => 'Dark theme';
+  String get profileDarkTheme => 'Тёмная тема';
 
   @override
-  String get profileDarkThemeSub => 'Currently active (default)';
+  String get profileDarkThemeSub => 'Активна (по умолчанию)';
 
   @override
   String get profilePremium => 'ПРЕМИУМ';
 
   @override
-  String get profilePremiumSub => 'Plan, billing and features';
+  String get profilePremiumSub => 'План, оплата и функции';
 
   @override
-  String get profilePremiumMy => 'My premium subscription';
+  String get profilePremiumMy => 'Моя Премиум-подписка';
 
   @override
-  String get profileHelpSafety => 'Help & Safety';
+  String get profileHelpSafety => 'Помощь и безопасность';
 
   @override
-  String get profileSupport => 'Support';
+  String get profileSupport => 'Поддержка';
 
   @override
-  String get profileSupportSub => 'Questions and feedback';
+  String get profileSupportSub => 'Вопросы и обратная связь';
 
   @override
-  String get profileHowAi => 'How AI works';
+  String get profileHowAi => 'Как работает ИИ';
 
   @override
-  String get profilePrivacy => 'Privacy & safety';
+  String get profilePrivacy => 'Конфиденциальность и безопасность';
 
   @override
-  String get profileAbout => 'About Nuveli';
+  String get profileAbout => 'О Nuveli';
 
   @override
-  String get profileLogout => 'Logout';
+  String get profileLogout => 'Выйти';
 
   @override
   String get profileSignOut => 'Выйти';
 
   @override
-  String get profileDeleteAccount => 'Delete account';
+  String get profileDeleteAccount => 'Удалить аккаунт';
 
   @override
   String get profileSignOutConfirm => 'Выйти';
 
   @override
-  String get homeGreetingNoonTime => 'Good afternoon';
+  String get homeGreetingNoonTime => 'Добрый день';
 
   @override
-  String get profileStreakNow => 'Current';
+  String get profileStreakNow => 'Текущая';
 
   @override
   String get profileStreakLongest => 'Самая длинная';
 
   @override
-  String get profileStreakDay => 'day';
+  String get profileStreakDay => 'день';
 
   @override
   String get personalInfoTitle => 'Личная информация';
 
   @override
-  String get personalInfoEdit => 'Edit';
+  String get personalInfoEdit => 'Редактировать';
 
   @override
   String get personalInfoSaved => 'Сохранено';
 
   @override
-  String get personalInfoSaveFailed => 'Could not save';
+  String get personalInfoSaveFailed => 'Не удалось сохранить';
 
   @override
-  String get personalInfoLoadFailed => 'Could not load';
+  String get personalInfoLoadFailed => 'Не удалось загрузить';
 
   @override
-  String get personalInfoSecAccount => 'Account';
+  String get personalInfoSecAccount => 'Аккаунт';
 
   @override
-  String get personalInfoSecBody => 'Body information';
+  String get personalInfoSecBody => 'Информация о теле';
 
   @override
-  String get personalInfoSecActivity => 'Activity';
+  String get personalInfoSecActivity => 'Активность';
 
   @override
   String get personalInfoName => 'Имя';
@@ -1535,28 +1545,28 @@ class AppLocalizationsRu extends AppLocalizations {
   String get personalInfoHeight => 'Рост';
 
   @override
-  String get personalInfoHeightCm => 'Height (cm)';
+  String get personalInfoHeightCm => 'Рост (см)';
 
   @override
   String get personalInfoWeight => 'Вес';
 
   @override
-  String get personalInfoWeightKg => 'Weight (kg)';
+  String get personalInfoWeightKg => 'Вес (кг)';
 
   @override
-  String get personalInfoActivityLevel => 'Daily activity level';
+  String get personalInfoActivityLevel => 'Дневной уровень активности';
 
   @override
-  String get personalInfoActivityLevelLabel => 'Activity level';
+  String get personalInfoActivityLevelLabel => 'Уровень активности';
 
   @override
-  String get personalInfoCancel => 'Cancel';
+  String get personalInfoCancel => 'Отмена';
 
   @override
-  String get personalInfoSave => 'Save';
+  String get personalInfoSave => 'Сохранить';
 
   @override
-  String get personalInfoSaving => 'Saving...';
+  String get personalInfoSaving => 'Сохранение...';
 
   @override
   String get genderFemale => 'Женский';
@@ -1571,58 +1581,58 @@ class AppLocalizationsRu extends AppLocalizations {
   String get activitySedentary => 'Малоподвижный';
 
   @override
-  String get activitySedentaryFull => 'Sedentary (desk job)';
+  String get activitySedentaryFull => 'Малоподвижный (сидячая работа)';
 
   @override
   String get activityLight => 'Лёгкая активность';
 
   @override
-  String get activityLightFull => 'Lightly active (1-3 days)';
+  String get activityLightFull => 'Лёгкая активность (1-3 дня)';
 
   @override
   String get activityModerate => 'Умеренная активность';
 
   @override
-  String get activityModerateFull => 'Moderately active (3-5 days)';
+  String get activityModerateFull => 'Умеренная активность (3-5 дней)';
 
   @override
   String get activityActive => 'Активный';
 
   @override
-  String get activityActiveFull => 'Active (6-7 days)';
+  String get activityActiveFull => 'Активный (6-7 дней)';
 
   @override
   String get activityVeryActive => 'Очень активный';
 
   @override
-  String get activityVeryActiveFull => 'Very active (athlete)';
+  String get activityVeryActiveFull => 'Очень активный (атлет)';
 
   @override
   String get goalsTitle => 'Цели';
 
   @override
-  String get goalsUpdated => 'Goals updated';
+  String get goalsUpdated => 'Цели обновлены';
 
   @override
-  String get goalsLoadFailed => 'Could not load';
+  String get goalsLoadFailed => 'Не удалось загрузить';
 
   @override
-  String get goalsSaveFailed => 'Could not save';
+  String get goalsSaveFailed => 'Не удалось сохранить';
 
   @override
-  String get goalsSecPurpose => 'Purpose';
+  String get goalsSecPurpose => 'Цель';
 
   @override
-  String get goalsSecDailyCalorie => 'Daily calorie target';
+  String get goalsSecDailyCalorie => 'Дневная цель калорий';
 
   @override
-  String get goalsSecMacroDist => 'Recommended macro distribution';
+  String get goalsSecMacroDist => 'Рекомендуемое распределение макронутриентов';
 
   @override
-  String get goalsLoseWeight => 'Lose weight';
+  String get goalsLoseWeight => 'Похудеть';
 
   @override
-  String get goalsLoseWeightDesc => 'Gradual decrease with calorie deficit';
+  String get goalsLoseWeightDesc => 'Постепенное снижение с дефицитом калорий';
 
   @override
   String get goalsMaintain => 'Поддерживать вес';
@@ -1631,16 +1641,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get goalsMaintainDesc => 'Поддержание текущего веса';
 
   @override
-  String get goalsGainMuscle => 'Gain muscle';
+  String get goalsGainMuscle => 'Набрать мышечную массу';
 
   @override
-  String get goalsGainMuscleDesc => 'Build with calorie surplus';
+  String get goalsGainMuscleDesc => 'Набор с профицитом калорий';
 
   @override
   String get goalsMacroNote => 'Макронутриенты рассчитываются автоматически';
 
   @override
-  String get goalsSave => 'Save';
+  String get goalsSave => 'Сохранить';
 
   @override
   String get premiumComingTitle => 'Премиум скоро! 🚀';
