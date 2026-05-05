@@ -106,7 +106,7 @@ class CoachService:
             feature_key=feature_key,
         )
         # Frontend Accept-Language header'i decision locale'ini override eder
-        if locale_override and locale_override in ["tr", "en", "de", "fr", "es", "ru"]:
+        if locale_override and locale_override in ["tr", "en", "de", "fr", "es", "ru", "it"]:
             decision.locale = locale_override
         logger.info("Coach.respond: %s", decision)
 

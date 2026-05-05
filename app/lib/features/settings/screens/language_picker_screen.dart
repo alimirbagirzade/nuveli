@@ -75,6 +75,7 @@ class LanguagePickerScreen extends ConsumerWidget {
       AppLanguage.french => '🇫🇷',
       AppLanguage.spanish => '🇪🇸',
       AppLanguage.russian => '🇷🇺',
+      AppLanguage.italian => '🇮🇹',
     };
     return Container(
       width: 40,

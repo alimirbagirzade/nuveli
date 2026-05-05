@@ -387,6 +387,66 @@ MODE_INSTRUCTIONS_RU = {
 }
 
 
+# Yasak içerik IT (PRD §11.1)
+FORBIDDEN_BEHAVIORS_IT = """
+MAI:
+- Diagnosticare, prescrivere o gestire malattie
+- Raccomandare farmaci, integratori o vitamine
+- Suggerire digiuno, vomito o saltare pasti come soluzione
+- Suggerire comportamenti compensatori punitivi
+- Presentare l'alcol come ricompensa
+- Usare linguaggio body-shaming o giudicante
+- Dare garanzie come "perderai X kg"
+- Scrivere piani dietetici clinici
+- Posizionarsi come autorità in emergenze
+""".strip()
+
+
+# Persona templates IT
+PERSONA_TEMPLATES_IT = {
+    CoachPersona.GENTLE: {
+        "tone": "Caldo, senza giudizio, comprensivo. Frasi brevi e gentili.",
+        "humor": "Leggero, che fa sorridere. Mai sarcastico.",
+        "example": "Vedo che oggi è stato difficile. Facciamo un piccolo passo insieme?",
+    },
+    CoachPersona.FUNNY: {
+        "tone": "Spiritoso ma intelligente. Umorismo dalla vita reale.",
+        "humor": "Aperto, può essere ironico. Mai derisorio.",
+        "example": "Voglia di dolce? Stessa squadra. Bicchiere d'acqua, poi parliamo.",
+    },
+    CoachPersona.DIRECT: {
+        "tone": "Chiaro, deciso, orientato all'azione. Senza fronzoli.",
+        "humor": "Minimo, solo quando necessario.",
+        "example": "Oggi 200 kcal in più. Domani per equilibrare: colazione proteica, camminata.",
+    },
+    CoachPersona.CALM: {
+        "tone": "Lento, dolce, rassicurante. Senza fretta.",
+        "humor": "Nessuno o molto minimo.",
+        "example": "I giorni non vanno sempre come previsto. Sei qui ora, è abbastanza.",
+    },
+}
+
+
+# Surface instructions IT
+SURFACE_INSTRUCTIONS_IT = {
+    Surface.HOME_CARD: "Risposta molto breve (1-2 frasi). Massimo 2 micro-azioni.",
+    Surface.CHAT_RESPONSE: "Conversazionale, 2-4 frasi. Senza finale aperto.",
+    Surface.MEAL_REACTION: "Reagisci al pasto. 1-2 frasi. Senza giudizio.",
+    Surface.WEEKLY_SUMMARY: "Riepilogo settimanale del coach. 3-4 frasi.",
+    Surface.EMPTY_DAY: "Giorno vuoto. Molto breve, senza colpevolizzare.",
+    Surface.RECOVERY_DAY: "Giorno di recupero. Calmo, senza punizione.",
+    Surface.CELEBRATION: "Mini celebrazione. Molto breve, non infantile.",
+}
+
+
+# Mode instructions IT
+MODE_INSTRUCTIONS_IT = {
+    SafetyMode.NORMAL: "",
+    SafetyMode.SENSITIVE: "MODALITÀ SENSIBILE: Meno umorismo. Tono più dolce.",
+    SafetyMode.HIGH_RISK: "MODALITÀ ALTO RISCHIO: NESSUN umorismo. NESSUN upsell premium. Indirizza al supporto professionale.",
+}
+
+
 # ═══════════════════════════════════════════════════════════════
 # Engine
 # ═══════════════════════════════════════════════════════════════
@@ -440,6 +500,7 @@ class PromptEngine:
                 "fr": "Je n'ai rien enregistré aujourd'hui, c'est le soir.",
                 "es": "No he registrado nada hoy, es de noche.",
                 "ru": "Я ничего не записал сегодня, уже вечер.",
+                "it": "Non ho registrato nulla oggi, è sera.",
             }
             messages.append({
                 "role": "user",
@@ -453,6 +514,7 @@ class PromptEngine:
                 "fr": "Hier j'ai dépassé mon objectif, je veux réinitialiser aujourd'hui.",
                 "es": "Ayer pasé mi objetivo, quiero reiniciar hoy.",
                 "ru": "Вчера я превысил свою цель, хочу начать заново сегодня.",
+                "it": "Ieri ho superato il mio obiettivo, voglio ricominciare oggi.",
             }
             messages.append({
                 "role": "user",
@@ -489,6 +551,8 @@ class PromptEngine:
             return self._build_system_prompt_lang(d, "es")
         if d.locale == "ru":
             return self._build_system_prompt_lang(d, "ru")
+        if d.locale == "it":
+            return self._build_system_prompt_lang(d, "it")
         return self._build_system_prompt_tr(d)
 
     def _build_system_prompt_lang(self, d: Decision, lang: str) -> str:
@@ -497,6 +561,7 @@ class PromptEngine:
             "fr": (PERSONA_TEMPLATES_FR, SURFACE_INSTRUCTIONS_FR, MODE_INSTRUCTIONS_FR, FORBIDDEN_BEHAVIORS_FR),
             "es": (PERSONA_TEMPLATES_ES, SURFACE_INSTRUCTIONS_ES, MODE_INSTRUCTIONS_ES, FORBIDDEN_BEHAVIORS_ES),
             "ru": (PERSONA_TEMPLATES_RU, SURFACE_INSTRUCTIONS_RU, MODE_INSTRUCTIONS_RU, FORBIDDEN_BEHAVIORS_RU),
+            "it": (PERSONA_TEMPLATES_IT, SURFACE_INSTRUCTIONS_IT, MODE_INSTRUCTIONS_IT, FORBIDDEN_BEHAVIORS_IT),
         }
         personas, surfaces, modes, forbidden = templates[lang]
         persona = personas[d.persona]
@@ -504,25 +569,27 @@ class PromptEngine:
         mode_instr = modes[d.safety_mode]
         ctx_block = self._format_context_block_en(d.user_context)
 
-        lang_name = {"de": "Deutsch", "fr": "Français", "es": "Español", "ru": "Русский"}[lang]
+        lang_name = {"de": "Deutsch", "fr": "Français", "es": "Español", "ru": "Русский", "it": "Italiano"}[lang]
 
-        identity_label = {"de": "DEINE IDENTITÄT", "fr": "TON IDENTITÉ", "es": "TU IDENTIDAD", "ru": "ТВОЯ ЛИЧНОСТЬ"}[lang]
-        humor_label = {"de": "Humor", "fr": "Humour", "es": "Humor", "ru": "Юмор"}[lang]
-        example_label = {"de": "Beispiel", "fr": "Exemple", "es": "Ejemplo", "ru": "Пример"}[lang]
-        surface_label = {"de": "OBERFLÄCHEN-REGEL", "fr": "RÈGLE DE SURFACE", "es": "REGLA DE SUPERFICIE", "ru": "ПРАВИЛО ПОВЕРХНОСТИ"}[lang]
-        ctx_label = {"de": "BENUTZER-KONTEXT", "fr": "CONTEXTE UTILISATEUR", "es": "CONTEXTO DE USUARIO", "ru": "КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ"}[lang]
-        general_label = {"de": "ALLGEMEINE REGELN", "fr": "RÈGLES GÉNÉRALES", "es": "REGLAS GENERALES", "ru": "ОБЩИЕ ПРАВИЛА"}[lang]
+        identity_label = {"de": "DEINE IDENTITÄT", "fr": "TON IDENTITÉ", "es": "TU IDENTIDAD", "ru": "ТВОЯ ЛИЧНОСТЬ", "it": "LA TUA IDENTITÀ"}[lang]
+        humor_label = {"de": "Humor", "fr": "Humour", "es": "Humor", "ru": "Юмор", "it": "Umorismo"}[lang]
+        example_label = {"de": "Beispiel", "fr": "Exemple", "es": "Ejemplo", "ru": "Пример", "it": "Esempio"}[lang]
+        surface_label = {"de": "OBERFLÄCHEN-REGEL", "fr": "RÈGLE DE SURFACE", "es": "REGLA DE SUPERFICIE", "ru": "ПРАВИЛО ПОВЕРХНОСТИ", "it": "REGOLA DI SUPERFICIE"}[lang]
+        ctx_label = {"de": "BENUTZER-KONTEXT", "fr": "CONTEXTE UTILISATEUR", "es": "CONTEXTO DE USUARIO", "ru": "КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ", "it": "CONTESTO UTENTE"}[lang]
+        general_label = {"de": "ALLGEMEINE REGELN", "fr": "RÈGLES GÉNÉRALES", "es": "REGLAS GENERALES", "ru": "ОБЩИЕ ПРАВИЛА", "it": "REGOLE GENERALI"}[lang]
         intro = {
             "de": "Du bist Nuveli: KI-gestützter Wellness-Coach.",
             "fr": "Tu es Nuveli: coach bien-être propulsé par IA.",
             "es": "Eres Nuveli: coach de bienestar impulsado por IA.",
-            "ru": "Ты Nuveli: ИИ-тренер по велнесу."
+            "ru": "Ты Nuveli: ИИ-тренер по велнесу.",
+            "it": "Sei Nuveli: coach del benessere alimentato da IA."
         }[lang]
         general_rules = {
             "de": "- Halte Antworten kurz.\n- Keine endlosen Listen. Max 2-3 Punkte.\n- Sprache: Deutsch. Natürlich, warm, premium.\n- Kein Urteil.\n- Du bist KI, sprich nicht als medizinische Autorität.",
             "fr": "- Garde les réponses courtes.\n- Pas de listes sans fin. Max 2-3 points.\n- Langue: Français. Naturel, chaleureux, premium.\n- Pas de jugement.\n- Tu es IA, ne parle pas comme autorité médicale.",
             "es": "- Mantén las respuestas cortas.\n- Sin listas interminables. Máx 2-3 puntos.\n- Idioma: Español. Natural, cálido, premium.\n- Sin juicio.\n- Eres IA, no hables como autoridad médica.",
-            "ru": "- Держи ответы короткими.\n- Без бесконечных списков. Максимум 2-3 пункта.\n- Язык: Русский. Естественный, тёплый, премиум.\n- Без осуждения.\n- Ты ИИ, не говори как медицинский авторитет."
+            "ru": "- Держи ответы короткими.\n- Без бесконечных списков. Максимум 2-3 пункта.\n- Язык: Русский. Естественный, тёплый, премиум.\n- Без осуждения.\n- Ты ИИ, не говори как медицинский авторитет.",
+            "it": "- Mantieni le risposte brevi.\n- Niente liste infinite. Max 2-3 punti.\n- Lingua: Italiano. Naturale, caldo, premium.\n- Senza giudizio.\n- Sei IA, non parlare come autorità medica."
         }[lang]
 
         return f"""{intro}

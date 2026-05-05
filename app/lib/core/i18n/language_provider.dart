@@ -10,7 +10,8 @@ enum AppLanguage {
   german('de', Locale('de'), 'Deutsch'),
   french('fr', Locale('fr'), 'Français'),
   spanish('es', Locale('es'), 'Español'),
-  russian('ru', Locale('ru'), 'Русский');
+  russian('ru', Locale('ru'), 'Русский'),
+  italian('it', Locale('it'), 'Italiano');
 
   final String code;
   final Locale? locale;
