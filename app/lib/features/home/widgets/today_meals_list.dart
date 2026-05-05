@@ -88,17 +88,17 @@ class TodayMealsList extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Öğünü sil?'),
+        title: Text(AppLocalizations.of(context)!.todayMealDeleteTitle),
         content: Text('"${meal.name}" silinecek. Bu işlem geri alınamaz.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Vazgeç'),
+            child: Text(AppLocalizations.of(context)!.todayMealDeleteCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Sil'),
+            child: Text(AppLocalizations.of(context)!.todayMealDeleteConfirm),
           ),
         ],
       ),
@@ -110,13 +110,13 @@ class TodayMealsList extends ConsumerWidget {
       await ref.read(deleteMealActionProvider)(meal.id);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Öğün silindi.')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.todayMealDeleted)),
         );
       }
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Silinemedi.')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.todayMealDeleteFailed)),
         );
       }
     }
@@ -128,12 +128,15 @@ class _MealRow extends StatelessWidget {
   final MealLog meal;
   final VoidCallback onDelete;
 
-  String get _mealTypeLabel => switch (meal.mealType) {
-        'breakfast' => 'Kahvaltı',
-        'lunch' => 'Öğle',
-        'dinner' => 'Akşam',
-        _ => 'Ara öğün',
-      };
+  String _mealTypeLabel(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return switch (meal.mealType) {
+      'breakfast' => l10n.mealTypeBreakfastShort,
+      'lunch' => l10n.mealTypeLunchShort,
+      'dinner' => l10n.mealTypeDinnerShort,
+      _ => l10n.mealTypeSnackShort,
+    };
+  }
 
   IconData get _mealTypeIcon => switch (meal.mealType) {
         'breakfast' => Icons.wb_sunny_outlined,
@@ -168,13 +171,13 @@ class _MealRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    meal.name.isEmpty ? _mealTypeLabel : meal.name,
+                    meal.name.isEmpty ? _mealTypeLabel(context) : meal.name,
                     style: AppTextStyles.bodyMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    _mealTypeLabel,
+                    _mealTypeLabel(context),
                     style: AppTextStyles.bodySmall
                         .copyWith(color: AppColors.textSecondary),
                   ),

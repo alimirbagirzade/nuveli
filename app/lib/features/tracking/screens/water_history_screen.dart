@@ -134,7 +134,7 @@ class _HeroCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Text(
-                  'L toplam',
+                  AppLocalizations.of(context)!.waterLitresTotal,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: Colors.white.withOpacity(0.75),
                   ),
@@ -146,12 +146,12 @@ class _HeroCard extends StatelessWidget {
           Row(
             children: [
               _MiniStat(
-                label: 'Bugün',
+                label: AppLocalizations.of(context)!.waterToday,
                 value: '${todayEntry.totalMl} ml',
               ),
               const SizedBox(width: 24),
               _MiniStat(
-                label: 'Ortalama',
+                label: AppLocalizations.of(context)!.waterAverage,
                 value: '${history.averageMl} ml',
               ),
             ],
@@ -228,7 +228,7 @@ class _BarChartCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Son 7 Gün', style: AppTextStyles.labelMedium),
+          Text(AppLocalizations.of(context)!.waterLast7, style: AppTextStyles.labelMedium),
           const SizedBox(height: 4),
           Text(
             'Hedef: ${goalMl} ml/gün',
@@ -342,10 +342,10 @@ class _DailyListCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
             child: Row(
               children: [
-                Text('Tüm Günler', style: AppTextStyles.labelMedium),
+                Text(AppLocalizations.of(context)!.waterAllDaysList, style: AppTextStyles.labelMedium),
                 const Spacer(),
                 Text(
-                  '${history.entries.length} gün',
+                  AppLocalizations.of(context)!.historyDaysSuffix(history.entries.length),
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textTertiary,
                   ),
@@ -373,8 +373,7 @@ class _DailyRow extends StatelessWidget {
     '', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
     'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
   ];
-  static const _days = ['', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe',
-      'Cuma', 'Cumartesi', 'Pazar'];
+  static const _days = ['', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
 
   @override
   Widget build(BuildContext context) {
@@ -430,7 +429,7 @@ class _DailyRow extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        _days[entry.day.weekday],
+                        _weekdayLocalized(context, entry.day.weekday),
                         style: AppTextStyles.bodyMedium,
                       ),
                       if (isToday) ...[
@@ -445,7 +444,7 @@ class _DailyRow extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            'BUGÜN',
+                            AppLocalizations.of(context)!.waterTodayBadge,
                             style: AppTextStyles.caption.copyWith(
                               fontSize: 9,
                               color: Colors.white,
@@ -458,7 +457,7 @@ class _DailyRow extends StatelessWidget {
                   ),
                   if (isEmpty)
                     Text(
-                      'Kayıt yok',
+                      AppLocalizations.of(context)!.waterNoEntry,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.textTertiary,
                       ),
@@ -564,5 +563,20 @@ class _ErrorView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Locale-aware weekday name (top-level helper).
+String _weekdayLocalized(BuildContext context, int weekday) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (weekday) {
+    case 1: return l10n.weekdayMon;
+    case 2: return l10n.weekdayTue;
+    case 3: return l10n.weekdayWed;
+    case 4: return l10n.weekdayThu;
+    case 5: return l10n.weekdayFri;
+    case 6: return l10n.weekdaySat;
+    case 7: return l10n.weekdaySun;
+    default: return '';
   }
 }

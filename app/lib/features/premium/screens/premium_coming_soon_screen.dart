@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class PremiumComingSoonScreen extends StatelessWidget {
   const PremiumComingSoonScreen({super.key});
@@ -56,7 +57,7 @@ class PremiumComingSoonScreen extends StatelessWidget {
               const SizedBox(height: 28),
               // Title
               Text(
-                'Premium çok yakında! 🚀',
+                AppLocalizations.of(context)!.premiumComingTitle,
                 style: AppTextStyles.headingLarge.copyWith(
                   color: AppColors.textPrimary,
                 ),
@@ -65,7 +66,7 @@ class PremiumComingSoonScreen extends StatelessWidget {
               const SizedBox(height: 16),
               // Description
               Text(
-                'Sınırsız AI öğün analizi, sesli koç ve haftalık içgörüler için son hazırlıkları yapıyoruz. Hazır olduğumuzda bildiririz.',
+                AppLocalizations.of(context)!.premiumComingDesc,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                   height: 1.5,
@@ -86,13 +87,13 @@ class PremiumComingSoonScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _featureRow(Icons.auto_awesome, 'Sınırsız AI öğün analizi'),
+                    _featureRow(context, Icons.auto_awesome, AppLocalizations.of(context)!.premiumFeatureUnlimited),
                     const SizedBox(height: 14),
-                    _featureRow(Icons.record_voice_over, 'Sesli koç + 3 persona'),
+                    _featureRow(context, Icons.record_voice_over, AppLocalizations.of(context)!.premiumFeatureVoice),
                     const SizedBox(height: 14),
-                    _featureRow(Icons.insights, 'Haftalık + aylık içgörü'),
+                    _featureRow(context, Icons.insights, AppLocalizations.of(context)!.premiumFeatureInsights),
                     const SizedBox(height: 14),
-                    _featureRow(Icons.show_chart, 'Gelişmiş grafikler ve eğilimler'),
+                    _featureRow(context, Icons.show_chart, AppLocalizations.of(context)!.premiumFeatureCharts),
                   ],
                 ),
               ),
@@ -111,7 +112,7 @@ class PremiumComingSoonScreen extends StatelessWidget {
                     elevation: 0,
                   ),
                   child: Text(
-                    'Anladım',
+                    AppLocalizations.of(context)!.premiumGotIt,
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
@@ -127,7 +128,7 @@ class PremiumComingSoonScreen extends StatelessWidget {
     );
   }
 
-  Widget _featureRow(IconData icon, String text) {
+  Widget _featureRow(BuildContext context, IconData icon, String text) {
     return Row(
       children: [
         Container(

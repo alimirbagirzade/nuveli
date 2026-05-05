@@ -411,7 +411,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeGreetingMorning => 'Günaydın';
 
   @override
-  String get homeGreetingAfternoon => 'İyi günler';
+  String get homeGreetingAfternoon => 'Tünaydın';
 
   @override
   String get homeGreetingEvening => 'İyi akşamlar';
@@ -1249,4 +1249,502 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get weekdaySun => 'Pazar';
+
+  @override
+  String get themeSystem => 'Sistem ayarı';
+
+  @override
+  String get themeDark => 'Koyu (Gece)';
+
+  @override
+  String get themeLight => 'Açık (Gündüz)';
+
+  @override
+  String get personaGentle => 'Nazik';
+
+  @override
+  String get personaGentleDesc => 'Yumuşak, baskısız, empati önce';
+
+  @override
+  String get personaGentleSample =>
+      '\"Bugün biraz zor olduğunu görüyorum. Bir öğün eksik kalsa da kendine sert davranma.\"';
+
+  @override
+  String get personaFunny => 'Esprili';
+
+  @override
+  String get personaFunnyDesc => 'Hafif, gülümseten, ciddi anlarda dengeli';
+
+  @override
+  String get personaFunnySample =>
+      '\"Pizza akşamı, anladım. Hayat zaten bir denge işi — yarın salata, bu akşam mutluluk.\"';
+
+  @override
+  String get personaDirect => 'Doğrudan';
+
+  @override
+  String get personaDirectDesc => 'Kısa, net, gerçekçi geri bildirim';
+
+  @override
+  String get personaDirectSample =>
+      '\"Bugün protein az. Akşam yemekte 25-30g hedefle, hafta dengesi tutar.\"';
+
+  @override
+  String get personaCalm => 'Sakin';
+
+  @override
+  String get personaCalmDesc => 'Yargılamayan, sabırlı, ölçülü';
+
+  @override
+  String get personaCalmSample =>
+      '\"Düşünmeden yedik bazen. Önemli olan farkına varmak. Sonraki öğüne odaklanalım.\"';
+
+  @override
+  String get coachToneQuestion => 'Koçun seninle nasıl konuşsun?';
+
+  @override
+  String get coachToneSubtitle => 'İstediğin zaman değiştirebilirsin.';
+
+  @override
+  String get coachToneSaving => 'Kaydediliyor...';
+
+  @override
+  String get coachToneSaveError =>
+      'Kaydedemedim. Bağlantını kontrol edip tekrar dener misin?';
+
+  @override
+  String get coachToneSaveErrorGeneric =>
+      'Beklenmedik bir sorun oldu, tekrar dener misin?';
+
+  @override
+  String waterLastDays(int n) {
+    return 'Son $n gün';
+  }
+
+  @override
+  String get waterLitresTotal => 'L toplam';
+
+  @override
+  String get waterToday => 'Bugün';
+
+  @override
+  String get waterAverage => 'Ortalama';
+
+  @override
+  String get waterLast7 => 'Son 7 Gün';
+
+  @override
+  String waterGoalMl(int ml) {
+    return 'Hedef: $ml ml/gün';
+  }
+
+  @override
+  String get waterAllDays => 'Tüm Günler';
+
+  @override
+  String get waterNoRecord => 'Kayıt yok';
+
+  @override
+  String waterDaysCount(int n) {
+    return '$n gün';
+  }
+
+  @override
+  String get weightCurrent => 'Güncel kilo';
+
+  @override
+  String get weightFirstRecord => 'İlk kayıt';
+
+  @override
+  String weightTrend(int n) {
+    return 'Trend ($n kayıt)';
+  }
+
+  @override
+  String get weightRecords => 'Kayıtlar';
+
+  @override
+  String weightEntryCount(int n) {
+    return '$n giriş';
+  }
+
+  @override
+  String get monthShortJan => 'Oca';
+
+  @override
+  String get monthShortFeb => 'Şub';
+
+  @override
+  String get monthShortMar => 'Mar';
+
+  @override
+  String get monthShortApr => 'Nis';
+
+  @override
+  String get monthShortMay => 'May';
+
+  @override
+  String get monthShortJun => 'Haz';
+
+  @override
+  String get monthShortJul => 'Tem';
+
+  @override
+  String get monthShortAug => 'Ağu';
+
+  @override
+  String get monthShortSep => 'Eyl';
+
+  @override
+  String get monthShortOct => 'Eki';
+
+  @override
+  String get monthShortNov => 'Kas';
+
+  @override
+  String get monthShortDec => 'Ara';
+
+  @override
+  String get todayBadge => 'BUGÜN';
+
+  @override
+  String get profileTitle => 'Profil';
+
+  @override
+  String get profileLoadFailed => 'Profil yüklenemedi.';
+
+  @override
+  String get profileAccount => 'Hesap';
+
+  @override
+  String get profilePersonalInfo => 'Kişisel bilgiler';
+
+  @override
+  String get profilePersonalInfoSub => 'İsim, hedefler, vücut bilgileri';
+
+  @override
+  String get profileGoals => 'Hedefler';
+
+  @override
+  String get profileGoalsSub => 'Kalori ve makro hedefin';
+
+  @override
+  String get profileNotifications => 'Bildirimler';
+
+  @override
+  String get profileNotifPrefs => 'Bildirim tercihleri';
+
+  @override
+  String get profileNotifPrefsSub => 'Hatırlatmalar ve sessiz saatler';
+
+  @override
+  String get profileTheme => 'Tema';
+
+  @override
+  String get profileDarkTheme => 'Karanlık tema';
+
+  @override
+  String get profileDarkThemeSub => 'Şu an aktif (varsayılan)';
+
+  @override
+  String get profilePremium => 'Premium';
+
+  @override
+  String get profilePremiumSub => 'Plan, fatura ve özellikler';
+
+  @override
+  String get profilePremiumMy => 'Premium aboneliğim';
+
+  @override
+  String get profileHelpSafety => 'Yardım & Güvenlik';
+
+  @override
+  String get profileSupport => 'Destek';
+
+  @override
+  String get profileSupportSub => 'Sorular ve geri bildirim';
+
+  @override
+  String get profileHowAi => 'AI nasıl çalışır';
+
+  @override
+  String get profilePrivacy => 'Gizlilik ve güvenlik';
+
+  @override
+  String get profileAbout => 'Nuveli hakkında';
+
+  @override
+  String get profileLogout => 'Çıkış';
+
+  @override
+  String get profileSignOut => 'Çıkış yap';
+
+  @override
+  String get profileDeleteAccount => 'Hesabı sil';
+
+  @override
+  String get profileSignOutConfirm =>
+      'Hesabından çıkmak istediğine emin misin?';
+
+  @override
+  String get homeGreetingNoonTime => 'Tünaydın';
+
+  @override
+  String get profileStreakNow => 'Şu an';
+
+  @override
+  String get profileStreakLongest => 'En uzun';
+
+  @override
+  String get profileStreakDay => 'gün';
+
+  @override
+  String get personalInfoTitle => 'Kişisel Bilgiler';
+
+  @override
+  String get personalInfoEdit => 'Düzenle';
+
+  @override
+  String get personalInfoSaved => 'Bilgiler kaydedildi';
+
+  @override
+  String get personalInfoSaveFailed => 'Kaydedilemedi';
+
+  @override
+  String get personalInfoLoadFailed => 'Yüklenemedi';
+
+  @override
+  String get personalInfoSecAccount => 'Hesap';
+
+  @override
+  String get personalInfoSecBody => 'Vücut bilgileri';
+
+  @override
+  String get personalInfoSecActivity => 'Aktivite';
+
+  @override
+  String get personalInfoName => 'İsim';
+
+  @override
+  String get personalInfoEmail => 'E-posta';
+
+  @override
+  String get personalInfoBirthYear => 'Doğum yılı';
+
+  @override
+  String get personalInfoGender => 'Cinsiyet';
+
+  @override
+  String get personalInfoHeight => 'Boy';
+
+  @override
+  String get personalInfoHeightCm => 'Boy (cm)';
+
+  @override
+  String get personalInfoWeight => 'Kilo';
+
+  @override
+  String get personalInfoWeightKg => 'Kilo (kg)';
+
+  @override
+  String get personalInfoActivityLevel => 'Günlük aktivite seviyesi';
+
+  @override
+  String get personalInfoActivityLevelLabel => 'Aktivite seviyesi';
+
+  @override
+  String get personalInfoCancel => 'Vazgeç';
+
+  @override
+  String get personalInfoSave => 'Kaydet';
+
+  @override
+  String get personalInfoSaving => 'Kaydediliyor...';
+
+  @override
+  String get genderFemale => 'Kadın';
+
+  @override
+  String get genderMale => 'Erkek';
+
+  @override
+  String get genderOther => 'Diğer';
+
+  @override
+  String get activitySedentary => 'Hareketsiz';
+
+  @override
+  String get activitySedentaryFull => 'Hareketsiz (masa başı)';
+
+  @override
+  String get activityLight => 'Hafif aktif';
+
+  @override
+  String get activityLightFull => 'Hafif aktif (1-3 gün)';
+
+  @override
+  String get activityModerate => 'Orta aktif';
+
+  @override
+  String get activityModerateFull => 'Orta aktif (3-5 gün)';
+
+  @override
+  String get activityActive => 'Aktif';
+
+  @override
+  String get activityActiveFull => 'Aktif (6-7 gün)';
+
+  @override
+  String get activityVeryActive => 'Çok aktif';
+
+  @override
+  String get activityVeryActiveFull => 'Çok aktif (sporcu)';
+
+  @override
+  String get goalsTitle => 'Hedefler';
+
+  @override
+  String get goalsUpdated => 'Hedefler güncellendi';
+
+  @override
+  String get goalsLoadFailed => 'Yüklenemedi';
+
+  @override
+  String get goalsSaveFailed => 'Kaydedilemedi';
+
+  @override
+  String get goalsSecPurpose => 'Amaç';
+
+  @override
+  String get goalsSecDailyCalorie => 'Günlük kalori hedefi';
+
+  @override
+  String get goalsSecMacroDist => 'Önerilen makro dağılımı';
+
+  @override
+  String get goalsLoseWeight => 'Kilo vermek';
+
+  @override
+  String get goalsLoseWeightDesc => 'Kalori açığıyla tedrici düşüş';
+
+  @override
+  String get goalsMaintain => 'Kiloyu korumak';
+
+  @override
+  String get goalsMaintainDesc => 'Mevcut kiloyu sürdürmek';
+
+  @override
+  String get goalsGainMuscle => 'Kas almak';
+
+  @override
+  String get goalsGainMuscleDesc => 'Kalori fazlasıyla yapı kazanmak';
+
+  @override
+  String get goalsMacroNote =>
+      'Bu öneri 25% protein, 50% karbonhidrat, 25% yağ dağılımına göredir. Koçun sana özel olarak ayarlayabilir.';
+
+  @override
+  String get goalsSave => 'Kaydet';
+
+  @override
+  String get premiumComingTitle => 'Premium çok yakında! 🚀';
+
+  @override
+  String get premiumComingDesc =>
+      'Sınırsız AI öğün analizi, sesli koç ve haftalık içgörüler için son hazırlıkları yapıyoruz. Hazır olduğumuzda bildiririz.';
+
+  @override
+  String get premiumFeatureCharts => 'Gelişmiş grafikler ve eğilimler';
+
+  @override
+  String get premiumGotIt => 'Anladım';
+
+  @override
+  String todayMealsCount(int n) {
+    return '$n öğün';
+  }
+
+  @override
+  String get todayMealDeleteTitle => 'Öğünü sil?';
+
+  @override
+  String todayMealDeleteMessage(String name) {
+    return '\"$name\" silinecek. Bu işlem geri alınamaz.';
+  }
+
+  @override
+  String get todayMealDeleteConfirm => 'Sil';
+
+  @override
+  String get todayMealDeleteCancel => 'Vazgeç';
+
+  @override
+  String get todayMealDeleted => 'Öğün silindi.';
+
+  @override
+  String get todayMealDeleteFailed => 'Silinemedi.';
+
+  @override
+  String get mealTypeBreakfastShort => 'Kahvaltı';
+
+  @override
+  String get mealTypeLunchShort => 'Öğle';
+
+  @override
+  String get mealTypeDinnerShort => 'Akşam';
+
+  @override
+  String get mealTypeSnackShort => 'Ara öğün';
+
+  @override
+  String streakLongestNeverActive(int longest) {
+    return 'En uzun serin: $longest gün';
+  }
+
+  @override
+  String streakTodayDoneSubtitle(int longest) {
+    return 'Bugün de hallettin · En uzun: $longest gün';
+  }
+
+  @override
+  String streakTodayMissedSubtitle(int longest) {
+    return 'Bugünü de eklemeyi unutma · En uzun: $longest';
+  }
+
+  @override
+  String get waterAllDaysList => 'Tüm Günler';
+
+  @override
+  String get waterTodayBadge => 'BUGÜN';
+
+  @override
+  String get waterNoEntry => 'Kayıt yok';
+
+  @override
+  String get weightRecordsList => 'Kayıtlar';
+
+  @override
+  String weightEntriesCount(int n) {
+    return '$n giriş';
+  }
+
+  @override
+  String historyDaysSuffix(int n) {
+    return '$n gün';
+  }
+
+  @override
+  String get moodGreat => 'Harika';
+
+  @override
+  String get moodGood => 'İyi';
+
+  @override
+  String get moodNeutral => 'Normal';
+
+  @override
+  String get moodBad => 'Zor';
+
+  @override
+  String get moodRough => 'Çok Zor';
 }

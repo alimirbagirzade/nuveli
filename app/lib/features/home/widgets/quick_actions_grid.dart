@@ -319,12 +319,13 @@ class _CheckinSheet extends StatelessWidget {
   const _CheckinSheet();
   @override
   Widget build(BuildContext context) {
-    const moods = [
-      ('great', '😄', 'Harika'),
-      ('good', '🙂', 'İyi'),
-      ('neutral', '😐', 'Normal'),
-      ('bad', '😔', 'Zor'),
-      ('rough', '😞', 'Çok Zor'),
+    final l10n = AppLocalizations.of(context)!;
+    final moods = [
+      ('great', '😄', l10n.moodGreat),
+      ('good', '🙂', l10n.moodGood),
+      ('neutral', '😐', l10n.moodNeutral),
+      ('bad', '😔', l10n.moodBad),
+      ('rough', '😞', l10n.moodRough),
     ];
     return Padding(
       padding: const EdgeInsets.all(20),

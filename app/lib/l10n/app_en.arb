@@ -442,5 +442,244 @@
         "type": "String"
       }
     }
-  }
+  },
+  "themeSystem": "System",
+  "themeDark": "Dark",
+  "themeLight": "Light",
+  "personaGentle": "Gentle",
+  "personaGentleDesc": "Soft, no pressure, empathy first",
+  "personaGentleSample": "\"I see today is a bit tough. Even if you skip a meal, don't be harsh on yourself.\"",
+  "personaFunny": "Funny",
+  "personaFunnyDesc": "Light, smiling, balanced in serious moments",
+  "personaFunnySample": "\"Pizza night, got it. Life is balance — salad tomorrow, happiness tonight.\"",
+  "personaDirect": "Direct",
+  "personaDirectDesc": "Short, clear, realistic feedback",
+  "personaDirectSample": "\"Protein is low today. Aim for 25-30g at dinner to balance the week.\"",
+  "personaCalm": "Calm",
+  "personaCalmDesc": "Non-judgmental, patient, measured",
+  "personaCalmSample": "\"Sometimes we eat without thinking. What matters is awareness. Let's focus on the next meal.\"",
+  "coachToneQuestion": "How should your coach talk to you?",
+  "coachToneSubtitle": "You can change anytime.",
+  "coachToneSaving": "Saving...",
+  "coachToneSaveError": "Couldn't save. Check your connection and try again?",
+  "coachToneSaveErrorGeneric": "Unexpected issue. Try again?",
+  "waterLastDays": "Last {n} days",
+  "waterLitresTotal": "L total",
+  "waterToday": "Today",
+  "waterAverage": "Average",
+  "waterLast7": "Last 7 Days",
+  "waterGoalMl": "Goal: {ml} ml/day",
+  "waterAllDays": "All Days",
+  "waterNoRecord": "No record",
+  "waterDaysCount": "{n} days",
+  "weightCurrent": "Current weight",
+  "weightFirstRecord": "First record",
+  "weightTrend": "Trend ({n} entries)",
+  "weightRecords": "Records",
+  "weightEntryCount": "{n} entries",
+  "monthShortJan": "Jan",
+  "monthShortFeb": "Feb",
+  "monthShortMar": "Mar",
+  "monthShortApr": "Apr",
+  "monthShortMay": "May",
+  "monthShortJun": "Jun",
+  "monthShortJul": "Jul",
+  "monthShortAug": "Aug",
+  "monthShortSep": "Sep",
+  "monthShortOct": "Oct",
+  "monthShortNov": "Nov",
+  "monthShortDec": "Dec",
+  "todayBadge": "TODAY",
+  "@waterLastDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterDaysCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterGoalMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightTrend": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightEntryCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileTitle": "Profile",
+  "profileLoadFailed": "Could not load profile.",
+  "profileAccount": "Account",
+  "profilePersonalInfo": "Personal information",
+  "profilePersonalInfoSub": "Name, goals, body info",
+  "profileGoals": "Goals",
+  "profileGoalsSub": "Your calorie and macro targets",
+  "profileNotifications": "Notifications",
+  "profileNotifPrefs": "Notification preferences",
+  "profileNotifPrefsSub": "Reminders and quiet hours",
+  "profileTheme": "Theme",
+  "profileDarkTheme": "Dark theme",
+  "profileDarkThemeSub": "Currently active (default)",
+  "profilePremium": "Premium",
+  "profilePremiumSub": "Plan, billing and features",
+  "profilePremiumMy": "My premium subscription",
+  "profileHelpSafety": "Help & Safety",
+  "profileSupport": "Support",
+  "profileSupportSub": "Questions and feedback",
+  "profileHowAi": "How AI works",
+  "profilePrivacy": "Privacy & safety",
+  "profileAbout": "About Nuveli",
+  "profileLogout": "Logout",
+  "profileSignOut": "Sign out",
+  "profileDeleteAccount": "Delete account",
+  "profileSignOutConfirm": "Are you sure you want to sign out?",
+  "homeGreetingNoonTime": "Good afternoon",
+  "profileStreakNow": "Current",
+  "profileStreakLongest": "Longest",
+  "profileStreakDay": "day",
+  "personalInfoTitle": "Personal Information",
+  "personalInfoEdit": "Edit",
+  "personalInfoSaved": "Information saved",
+  "personalInfoSaveFailed": "Could not save",
+  "personalInfoLoadFailed": "Could not load",
+  "personalInfoSecAccount": "Account",
+  "personalInfoSecBody": "Body information",
+  "personalInfoSecActivity": "Activity",
+  "personalInfoName": "Name",
+  "personalInfoEmail": "Email",
+  "personalInfoBirthYear": "Birth year",
+  "personalInfoGender": "Gender",
+  "personalInfoHeight": "Height",
+  "personalInfoHeightCm": "Height (cm)",
+  "personalInfoWeight": "Weight",
+  "personalInfoWeightKg": "Weight (kg)",
+  "personalInfoActivityLevel": "Daily activity level",
+  "personalInfoActivityLevelLabel": "Activity level",
+  "personalInfoCancel": "Cancel",
+  "personalInfoSave": "Save",
+  "personalInfoSaving": "Saving...",
+  "genderFemale": "Female",
+  "genderMale": "Male",
+  "genderOther": "Other",
+  "activitySedentary": "Sedentary",
+  "activitySedentaryFull": "Sedentary (desk job)",
+  "activityLight": "Lightly active",
+  "activityLightFull": "Lightly active (1-3 days)",
+  "activityModerate": "Moderately active",
+  "activityModerateFull": "Moderately active (3-5 days)",
+  "activityActive": "Active",
+  "activityActiveFull": "Active (6-7 days)",
+  "activityVeryActive": "Very active",
+  "activityVeryActiveFull": "Very active (athlete)",
+  "goalsTitle": "Goals",
+  "goalsUpdated": "Goals updated",
+  "goalsLoadFailed": "Could not load",
+  "goalsSaveFailed": "Could not save",
+  "goalsSecPurpose": "Purpose",
+  "goalsSecDailyCalorie": "Daily calorie target",
+  "goalsSecMacroDist": "Recommended macro distribution",
+  "goalsLoseWeight": "Lose weight",
+  "goalsLoseWeightDesc": "Gradual decrease with calorie deficit",
+  "goalsMaintain": "Maintain weight",
+  "goalsMaintainDesc": "Keep current weight",
+  "goalsGainMuscle": "Gain muscle",
+  "goalsGainMuscleDesc": "Build with calorie surplus",
+  "goalsMacroNote": "This recommendation is based on 25% protein, 50% carbs, 25% fat. Your coach can customize it for you.",
+  "goalsSave": "Save",
+  "premiumComingTitle": "Premium coming soon! 🚀",
+  "premiumComingDesc": "We're putting the finishing touches on unlimited AI meal analysis, voice coach, and weekly insights. We'll let you know when it's ready.",
+  "premiumFeatureCharts": "Advanced charts and trends",
+  "premiumGotIt": "Got it",
+  "todayMealsCount": "{n} meals",
+  "todayMealDeleteTitle": "Delete meal?",
+  "todayMealDeleteMessage": "\"{name}\" will be deleted. This cannot be undone.",
+  "todayMealDeleteConfirm": "Delete",
+  "todayMealDeleteCancel": "Cancel",
+  "todayMealDeleted": "Meal deleted.",
+  "todayMealDeleteFailed": "Could not delete.",
+  "mealTypeBreakfastShort": "Breakfast",
+  "mealTypeLunchShort": "Lunch",
+  "mealTypeDinnerShort": "Dinner",
+  "mealTypeSnackShort": "Snack",
+  "@todayMealsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@todayMealDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "streakLongestNeverActive": "Longest streak: {longest} days",
+  "streakTodayDoneSubtitle": "You did it today · Longest: {longest} days",
+  "streakTodayMissedSubtitle": "Don't forget today · Longest: {longest}",
+  "@streakLongestNeverActive": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayDoneSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayMissedSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "waterAllDaysList": "All Days",
+  "waterTodayBadge": "TODAY",
+  "waterNoEntry": "No entry",
+  "weightRecordsList": "Records",
+  "weightEntriesCount": "{n} entries",
+  "historyDaysSuffix": "{n} days",
+  "@weightEntriesCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@historyDaysSuffix": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "moodGreat": "Great",
+  "moodGood": "Good",
+  "moodNeutral": "Okay",
+  "moodBad": "Tough",
+  "moodRough": "Very tough"
 }

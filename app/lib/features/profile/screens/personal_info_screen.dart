@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../data/profile_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Personal info edit screen — all fields the user provided during
 /// onboarding plus anything they want to update later.
@@ -85,8 +86,8 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
         _saving = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Bilgiler kaydedildi'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.personalInfoSaved),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -96,7 +97,7 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
-              Text(e is AppError ? e.userMessage : 'Kaydedilemedi'),
+              Text(e is AppError ? e.userMessage : AppLocalizations.of(context)!.personalInfoSaveFailed),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -109,13 +110,13 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
 
     return AppScaffold(
       appBar: AppBar(
-        title: const Text('Kişisel Bilgiler'),
+        title: Text(AppLocalizations.of(context)!.personalInfoTitle),
         actions: [
           if (!_editing)
             profileAsync.maybeWhen(
               data: (p) => TextButton(
                 onPressed: () => _startEdit(p),
-                child: const Text('Düzenle'),
+                child: Text(AppLocalizations.of(context)!.personalInfoEdit),
               ),
               orElse: () => const SizedBox.shrink(),
             ),
@@ -124,7 +125,7 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
-          child: Text(e is AppError ? e.userMessage : 'Yüklenemedi'),
+          child: Text(e is AppError ? e.userMessage : AppLocalizations.of(context)!.personalInfoLoadFailed),
         ),
         data: (p) {
           if (_editing) return _buildEditForm(p);
@@ -140,33 +141,33 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        _Section('Hesap'),
-        _ReadRow(label: 'İsim', value: p.displayName ?? '—'),
-        _ReadRow(label: 'E-posta', value: p.email ?? '—'),
+        _Section(AppLocalizations.of(context)!.personalInfoSecAccount),
+        _ReadRow(label: AppLocalizations.of(context)!.personalInfoName, value: p.displayName ?? '—'),
+        _ReadRow(label: AppLocalizations.of(context)!.personalInfoEmail, value: p.email ?? '—'),
 
         const SizedBox(height: 16),
-        _Section('Vücut bilgileri'),
+        _Section(AppLocalizations.of(context)!.personalInfoSecBody),
         _ReadRow(
-          label: 'Doğum yılı',
+          label: AppLocalizations.of(context)!.personalInfoBirthYear,
           value: p.birthYear?.toString() ?? '—',
         ),
-        _ReadRow(label: 'Cinsiyet', value: _genderLabel(p.gender)),
+        _ReadRow(label: AppLocalizations.of(context)!.personalInfoGender, value: _genderLabel(context, p.gender)),
         _ReadRow(
-          label: 'Boy',
+          label: AppLocalizations.of(context)!.personalInfoHeight,
           value: p.heightCm != null ? '${p.heightCm!.toInt()} cm' : '—',
         ),
         _ReadRow(
-          label: 'Kilo',
+          label: AppLocalizations.of(context)!.personalInfoWeight,
           value: p.weightKg != null
               ? '${p.weightKg!.toStringAsFixed(1)} kg'
               : '—',
         ),
 
         const SizedBox(height: 16),
-        _Section('Aktivite'),
+        _Section(AppLocalizations.of(context)!.personalInfoSecActivity),
         _ReadRow(
-          label: 'Günlük aktivite seviyesi',
-          value: _activityLabel(p.activityLevel),
+          label: AppLocalizations.of(context)!.personalInfoActivityLevel,
+          value: _activityLabel(context, p.activityLevel),
         ),
       ],
     );
@@ -178,15 +179,15 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        _Section('Hesap'),
+        _Section(AppLocalizations.of(context)!.personalInfoSecAccount),
         _TextField(
-          label: 'İsim',
+          label: AppLocalizations.of(context)!.personalInfoName,
           controller: _nameCtrl,
           textCapitalization: TextCapitalization.words,
         ),
 
         const SizedBox(height: 16),
-        _Section('Vücut bilgileri'),
+        _Section(AppLocalizations.of(context)!.personalInfoSecBody),
         _BirthYearPicker(
           value: _birthYear,
           onChanged: (y) => setState(() => _birthYear = y),
@@ -198,20 +199,20 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
         ),
         const SizedBox(height: 12),
         _TextField(
-          label: 'Boy (cm)',
+          label: AppLocalizations.of(context)!.personalInfoHeightCm,
           controller: _heightCtrl,
           keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 12),
         _TextField(
-          label: 'Kilo (kg)',
+          label: AppLocalizations.of(context)!.personalInfoWeightKg,
           controller: _weightCtrl,
           keyboardType:
               const TextInputType.numberWithOptions(decimal: true),
         ),
 
         const SizedBox(height: 16),
-        _Section('Aktivite'),
+        _Section(AppLocalizations.of(context)!.personalInfoSecActivity),
         _ActivityPicker(
           value: _activityLevel,
           onChanged: (a) => setState(() => _activityLevel = a),
@@ -225,7 +226,7 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
                 onPressed: _saving
                     ? null
                     : () => setState(() => _editing = false),
-                child: const Text('Vazgeç'),
+                child: Text(AppLocalizations.of(context)!.personalInfoCancel),
               ),
             ),
             const SizedBox(width: 12),
@@ -255,31 +256,33 @@ class _PersonalInfoScreenState extends ConsumerState<PersonalInfoScreen> {
 
   // ─── Labels ────────────────────────────────────────────────────────
 
-  static String _genderLabel(String? g) {
+  static String _genderLabel(BuildContext context, String? g) {
+    final l10n = AppLocalizations.of(context)!;
     switch (g) {
       case 'female':
-        return 'Kadın';
+        return l10n.genderFemale;
       case 'male':
-        return 'Erkek';
+        return l10n.genderMale;
       case 'other':
-        return 'Diğer';
+        return l10n.genderOther;
       default:
         return '—';
     }
   }
 
-  static String _activityLabel(String? a) {
+  static String _activityLabel(BuildContext context, String? a) {
+    final l10n = AppLocalizations.of(context)!;
     switch (a) {
       case 'sedentary':
-        return 'Hareketsiz';
+        return l10n.activitySedentary;
       case 'light':
-        return 'Hafif aktif';
+        return l10n.activityLight;
       case 'moderate':
-        return 'Orta aktif';
+        return l10n.activityModerate;
       case 'active':
-        return 'Aktif';
+        return l10n.activityActive;
       case 'very_active':
-        return 'Çok aktif';
+        return l10n.activityVeryActive;
       default:
         return '—';
     }
@@ -371,9 +374,9 @@ class _BirthYearPicker extends StatelessWidget {
     final years = List<int>.generate(80, (i) => DateTime.now().year - 12 - i);
     return DropdownButtonFormField<int>(
       value: value,
-      hint: const Text('Doğum yılı'),
+      hint: Text(AppLocalizations.of(context)!.personalInfoBirthYear),
       decoration: InputDecoration(
-        labelText: 'Doğum yılı',
+        labelText: AppLocalizations.of(context)!.personalInfoBirthYear,
         filled: true,
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
@@ -398,7 +401,7 @@ class _GenderPicker extends StatelessWidget {
     return DropdownButtonFormField<String>(
       value: value,
       decoration: InputDecoration(
-        labelText: 'Cinsiyet',
+        labelText: AppLocalizations.of(context)!.personalInfoGender,
         filled: true,
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
@@ -406,10 +409,10 @@ class _GenderPicker extends StatelessWidget {
           borderSide: BorderSide(color: AppColors.divider),
         ),
       ),
-      items: const [
-        DropdownMenuItem(value: 'female', child: Text('Kadın')),
-        DropdownMenuItem(value: 'male', child: Text('Erkek')),
-        DropdownMenuItem(value: 'other', child: Text('Diğer')),
+      items: [
+        DropdownMenuItem(value: 'female', child: Text(AppLocalizations.of(context)!.genderFemale)),
+        DropdownMenuItem(value: 'male', child: Text(AppLocalizations.of(context)!.genderMale)),
+        DropdownMenuItem(value: 'other', child: Text(AppLocalizations.of(context)!.genderOther)),
       ],
       onChanged: onChanged,
     );
@@ -425,7 +428,7 @@ class _ActivityPicker extends StatelessWidget {
     return DropdownButtonFormField<String>(
       value: value,
       decoration: InputDecoration(
-        labelText: 'Aktivite seviyesi',
+        labelText: AppLocalizations.of(context)!.personalInfoActivityLevelLabel,
         filled: true,
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
@@ -433,12 +436,12 @@ class _ActivityPicker extends StatelessWidget {
           borderSide: BorderSide(color: AppColors.divider),
         ),
       ),
-      items: const [
-        DropdownMenuItem(value: 'sedentary', child: Text('Hareketsiz (masa başı)')),
-        DropdownMenuItem(value: 'light', child: Text('Hafif aktif (1-3 gün)')),
-        DropdownMenuItem(value: 'moderate', child: Text('Orta aktif (3-5 gün)')),
-        DropdownMenuItem(value: 'active', child: Text('Aktif (6-7 gün)')),
-        DropdownMenuItem(value: 'very_active', child: Text('Çok aktif (sporcu)')),
+      items: [
+        DropdownMenuItem(value: 'sedentary', child: Text(AppLocalizations.of(context)!.activitySedentaryFull)),
+        DropdownMenuItem(value: 'light', child: Text(AppLocalizations.of(context)!.activityLightFull)),
+        DropdownMenuItem(value: 'moderate', child: Text(AppLocalizations.of(context)!.activityModerateFull)),
+        DropdownMenuItem(value: 'active', child: Text(AppLocalizations.of(context)!.activityActiveFull)),
+        DropdownMenuItem(value: 'very_active', child: Text(AppLocalizations.of(context)!.activityVeryActiveFull)),
       ],
       onChanged: onChanged,
     );

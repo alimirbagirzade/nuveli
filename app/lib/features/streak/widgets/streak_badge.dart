@@ -136,7 +136,7 @@ class _StreakCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        _subtitleText(streak),
+                        _subtitleText(context, streak),
                         style: AppTextStyles.bodySmall.copyWith(
                           color: Colors.white.withOpacity(0.85),
                         ),
@@ -157,7 +157,7 @@ class _StreakCard extends StatelessWidget {
     );
   }
 
-  static String _subtitleText(StreakInfo streak) {
+  static String _subtitleText(BuildContext context, StreakInfo streak) {
     if (streak.milestone != null) {
       // Milestone'lara özel mesajlar — küçük zaferleri kutla.
       switch (streak.milestone) {

@@ -123,14 +123,14 @@ class _CoachPersonaSettingsScreenState
       if (!mounted) return;
       setState(() {
         _saving = false;
-        _error = 'Kaydedemedim. Bağlantını kontrol edip tekrar dener misin?';
+        _error = AppLocalizations.of(context)!.coachToneSaveError;
       });
       debugPrint('CoachPersonaSettings save: ${e.message}');
     } catch (e) {
       if (!mounted) return;
       setState(() {
         _saving = false;
-        _error = 'Beklenmedik bir sorun oldu, tekrar dener misin?';
+        _error = AppLocalizations.of(context)!.coachToneSaveErrorGeneric;
       });
     }
   }
@@ -148,12 +148,12 @@ class _CoachPersonaSettingsScreenState
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Koçun seninle nasıl konuşsun?',
+                  AppLocalizations.of(context)!.coachToneQuestion,
                   style: AppTextStyles.headingLarge,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'İstediğin zaman değiştirebilirsin.',
+                  AppLocalizations.of(context)!.coachToneSubtitle,
                   style: AppTextStyles.bodyMedium
                       .copyWith(color: AppColors.textSecondary),
                 ),
@@ -195,7 +195,7 @@ class _CoachPersonaSettingsScreenState
                 ],
 
                 PrimaryButton(
-                  label: _saving ? 'Kaydediliyor...' : 'Kaydet',
+                  label: _saving ? AppLocalizations.of(context)!.coachToneSaving : AppLocalizations.of(context)!.commonSave,
                   isEnabled: !_saving && _selected != null,
                   onPressed: _saving ? null : _save,
                 ),

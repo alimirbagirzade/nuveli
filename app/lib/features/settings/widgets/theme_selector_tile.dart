@@ -51,7 +51,7 @@ class ThemeSelectorTile extends ConsumerWidget {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Text(mode.label, style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary, fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400)),
+                        child: Text(_themeLabel(context, mode), style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary, fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400)),
                       ),
                       if (isSelected) Icon(Icons.check_circle, color: AppColors.primary, size: 22) else Container(width: 22, height: 22, decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.divider, width: 2))),
                     ],
@@ -64,5 +64,13 @@ class ThemeSelectorTile extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+String _themeLabel(BuildContext context, NuveliThemeMode mode) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (mode) {
+    case NuveliThemeMode.system: return l10n.themeSystem;
+    case NuveliThemeMode.dark: return l10n.themeDark;
   }
 }

@@ -112,7 +112,7 @@ class _HeroCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                'Güncel kilo',
+                AppLocalizations.of(context)!.weightCurrent,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: Colors.white.withOpacity(0.85),
                 ),
@@ -172,9 +172,9 @@ class _HeroCard extends StatelessWidget {
           Row(
             children: [
               _MiniStat(
-                label: 'İlk kayıt',
+                label: AppLocalizations.of(context)!.weightFirstRecord,
                 value:
-                    '${_fmt(earliest.weightKg)} kg · ${_shortDate(earliest.day)}',
+                    '${_fmt(earliest.weightKg)} kg · ${_shortDateLocalized(context, earliest.day)}',
               ),
             ],
           ),
@@ -188,13 +188,7 @@ class _HeroCard extends StatelessWidget {
     return v < 0 ? '-${abs.toStringAsFixed(1)}' : abs.toStringAsFixed(1);
   }
 
-  static String _shortDate(DateTime d) {
-    const months = [
-      '', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
-      'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
-    ];
-    return '${d.day} ${months[d.month]}';
-  }
+
 }
 
 class _MiniStat extends StatelessWidget {
@@ -318,7 +312,7 @@ class _LineChartCard extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  _shortDate(ordered.first.day),
+                  _shortDateLocalized(context, ordered.first.day),
                   style: AppTextStyles.caption.copyWith(
                     fontSize: 10,
                     color: AppColors.textTertiary,
@@ -326,7 +320,7 @@ class _LineChartCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  _shortDate(ordered.last.day),
+                  _shortDateLocalized(context, ordered.last.day),
                   style: AppTextStyles.caption.copyWith(
                     fontSize: 10,
                     color: AppColors.textTertiary,
@@ -340,13 +334,7 @@ class _LineChartCard extends StatelessWidget {
     );
   }
 
-  static String _shortDate(DateTime d) {
-    const months = [
-      '', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
-      'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
-    ];
-    return '${d.day} ${months[d.month]}';
-  }
+
 }
 
 class _LineChartPainter extends CustomPainter {
@@ -462,10 +450,10 @@ class _EntryListCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
             child: Row(
               children: [
-                Text('Kayıtlar', style: AppTextStyles.labelMedium),
+                Text(AppLocalizations.of(context)!.weightRecordsList, style: AppTextStyles.labelMedium),
                 const Spacer(),
                 Text(
-                  '${entries.length} giriş',
+                  AppLocalizations.of(context)!.weightEntriesCount(entries.length),
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textTertiary,
                   ),
@@ -503,8 +491,7 @@ class _EntryRow extends StatelessWidget {
     '', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
     'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
   ];
-  static const _days = ['', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe',
-      'Cuma', 'Cumartesi', 'Pazar'];
+  static const _days = ['', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
 
   @override
   Widget build(BuildContext context) {
@@ -560,7 +547,7 @@ class _EntryRow extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        _days[entry.day.weekday],
+                        _weekdayLocalized(context, entry.day.weekday),
                         style: AppTextStyles.bodyMedium,
                       ),
                       if (isToday) ...[
@@ -701,5 +688,32 @@ class _ErrorView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Locale-aware short date format helper (top-level so all classes can use it).
+String _shortDateLocalized(BuildContext context, DateTime d) {
+  final l10n = AppLocalizations.of(context)!;
+  final months = [
+    l10n.monthShortJan, l10n.monthShortFeb, l10n.monthShortMar,
+    l10n.monthShortApr, l10n.monthShortMay, l10n.monthShortJun,
+    l10n.monthShortJul, l10n.monthShortAug, l10n.monthShortSep,
+    l10n.monthShortOct, l10n.monthShortNov, l10n.monthShortDec,
+  ];
+  return '${d.day} ${months[d.month - 1]}';
+}
+
+/// Locale-aware weekday name (top-level helper).
+String _weekdayLocalized(BuildContext context, int weekday) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (weekday) {
+    case 1: return l10n.weekdayMon;
+    case 2: return l10n.weekdayTue;
+    case 3: return l10n.weekdayWed;
+    case 4: return l10n.weekdayThu;
+    case 5: return l10n.weekdayFri;
+    case 6: return l10n.weekdaySat;
+    case 7: return l10n.weekdaySun;
+    default: return '';
   }
 }

@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../data/profile_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Goals screen — user adjusts daily calorie target and goal type.
 ///
@@ -47,8 +48,8 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
       if (!mounted) return;
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Hedefler güncellendi'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.goalsUpdated),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -58,7 +59,7 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(e is AppError ? e.userMessage : 'Kaydedilemedi'),
+          content: Text(e is AppError ? e.userMessage : AppLocalizations.of(context)!.goalsSaveFailed),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -70,11 +71,11 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
     final profileAsync = ref.watch(userProfileProvider);
 
     return AppScaffold(
-      appBar: AppBar(title: const Text('Hedefler')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.goalsTitle)),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
-          child: Text(e is AppError ? e.userMessage : 'Yüklenemedi'),
+          child: Text(e is AppError ? e.userMessage : AppLocalizations.of(context)!.goalsLoadFailed),
         ),
         data: (p) {
           _hydrate(p);
@@ -88,26 +89,26 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              _Section('Amaç'),
+              _Section(AppLocalizations.of(context)!.goalsSecPurpose),
               _GoalCard(
-                title: 'Kilo vermek',
-                subtitle: 'Kalori açığıyla tedrici düşüş',
+                title: AppLocalizations.of(context)!.goalsLoseWeight,
+                subtitle: AppLocalizations.of(context)!.goalsLoseWeightDesc,
                 icon: Icons.trending_down,
                 value: 'lose_weight',
                 groupValue: _goal,
                 onChanged: (v) => setState(() => _goal = v),
               ),
               _GoalCard(
-                title: 'Kiloyu korumak',
-                subtitle: 'Mevcut kiloyu sürdürmek',
+                title: AppLocalizations.of(context)!.goalsMaintain,
+                subtitle: AppLocalizations.of(context)!.goalsMaintainDesc,
                 icon: Icons.balance,
                 value: 'maintain',
                 groupValue: _goal,
                 onChanged: (v) => setState(() => _goal = v),
               ),
               _GoalCard(
-                title: 'Kas almak',
-                subtitle: 'Kalori fazlasıyla yapı kazanmak',
+                title: AppLocalizations.of(context)!.goalsGainMuscle,
+                subtitle: AppLocalizations.of(context)!.goalsGainMuscleDesc,
                 icon: Icons.trending_up,
                 value: 'gain_muscle',
                 groupValue: _goal,
@@ -115,7 +116,7 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
               ),
 
               const SizedBox(height: 24),
-              _Section('Günlük kalori hedefi'),
+              _Section(AppLocalizations.of(context)!.goalsSecDailyCalorie),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -169,7 +170,7 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
               ),
 
               const SizedBox(height: 16),
-              _Section('Önerilen makro dağılımı'),
+              _Section(AppLocalizations.of(context)!.goalsSecMacroDist),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -179,11 +180,11 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
                 ),
                 child: Row(
                   children: [
-                    _MacroChip(label: 'Protein', value: '${protein}g', color: AppColors.success),
+                    _MacroChip(label: AppLocalizations.of(context)!.macroProtein, value: '${protein}g', color: AppColors.success),
                     const SizedBox(width: 8),
-                    _MacroChip(label: 'Karb', value: '${carb}g', color: AppColors.primary),
+                    _MacroChip(label: AppLocalizations.of(context)!.macroCarb, value: '${carb}g', color: AppColors.primary),
                     const SizedBox(width: 8),
-                    _MacroChip(label: 'Yağ', value: '${fat}g', color: AppColors.warning),
+                    _MacroChip(label: AppLocalizations.of(context)!.macroFat, value: '${fat}g', color: AppColors.warning),
                   ],
                 ),
               ),
@@ -191,7 +192,7 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Text(
-                  'Bu öneri 25% protein, 50% karbonhidrat, 25% yağ dağılımına göredir. Koçun sana özel olarak ayarlayabilir.',
+                  AppLocalizations.of(context)!.goalsMacroNote,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.textTertiary,
                   ),

@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeGreetingAfternoon.
   ///
   /// In tr, this message translates to:
-  /// **'İyi günler'**
+  /// **'Tünaydın'**
   String get homeGreetingAfternoon;
 
   /// No description provided for @homeGreetingEvening.
@@ -2467,6 +2467,936 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Pazar'**
   String get weekdaySun;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sistem ayarı'**
+  String get themeSystem;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koyu (Gece)'**
+  String get themeDark;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açık (Gündüz)'**
+  String get themeLight;
+
+  /// No description provided for @personaGentle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nazik'**
+  String get personaGentle;
+
+  /// No description provided for @personaGentleDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yumuşak, baskısız, empati önce'**
+  String get personaGentleDesc;
+
+  /// No description provided for @personaGentleSample.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"Bugün biraz zor olduğunu görüyorum. Bir öğün eksik kalsa da kendine sert davranma.\"'**
+  String get personaGentleSample;
+
+  /// No description provided for @personaFunny.
+  ///
+  /// In tr, this message translates to:
+  /// **'Esprili'**
+  String get personaFunny;
+
+  /// No description provided for @personaFunnyDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hafif, gülümseten, ciddi anlarda dengeli'**
+  String get personaFunnyDesc;
+
+  /// No description provided for @personaFunnySample.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"Pizza akşamı, anladım. Hayat zaten bir denge işi — yarın salata, bu akşam mutluluk.\"'**
+  String get personaFunnySample;
+
+  /// No description provided for @personaDirect.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrudan'**
+  String get personaDirect;
+
+  /// No description provided for @personaDirectDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kısa, net, gerçekçi geri bildirim'**
+  String get personaDirectDesc;
+
+  /// No description provided for @personaDirectSample.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"Bugün protein az. Akşam yemekte 25-30g hedefle, hafta dengesi tutar.\"'**
+  String get personaDirectSample;
+
+  /// No description provided for @personaCalm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sakin'**
+  String get personaCalm;
+
+  /// No description provided for @personaCalmDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yargılamayan, sabırlı, ölçülü'**
+  String get personaCalmDesc;
+
+  /// No description provided for @personaCalmSample.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"Düşünmeden yedik bazen. Önemli olan farkına varmak. Sonraki öğüne odaklanalım.\"'**
+  String get personaCalmSample;
+
+  /// No description provided for @coachToneQuestion.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun seninle nasıl konuşsun?'**
+  String get coachToneQuestion;
+
+  /// No description provided for @coachToneSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstediğin zaman değiştirebilirsin.'**
+  String get coachToneSubtitle;
+
+  /// No description provided for @coachToneSaving.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydediliyor...'**
+  String get coachToneSaving;
+
+  /// No description provided for @coachToneSaveError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedemedim. Bağlantını kontrol edip tekrar dener misin?'**
+  String get coachToneSaveError;
+
+  /// No description provided for @coachToneSaveErrorGeneric.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beklenmedik bir sorun oldu, tekrar dener misin?'**
+  String get coachToneSaveErrorGeneric;
+
+  /// No description provided for @waterLastDays.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son {n} gün'**
+  String waterLastDays(int n);
+
+  /// No description provided for @waterLitresTotal.
+  ///
+  /// In tr, this message translates to:
+  /// **'L toplam'**
+  String get waterLitresTotal;
+
+  /// No description provided for @waterToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün'**
+  String get waterToday;
+
+  /// No description provided for @waterAverage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ortalama'**
+  String get waterAverage;
+
+  /// No description provided for @waterLast7.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 7 Gün'**
+  String get waterLast7;
+
+  /// No description provided for @waterGoalMl.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef: {ml} ml/gün'**
+  String waterGoalMl(int ml);
+
+  /// No description provided for @waterAllDays.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm Günler'**
+  String get waterAllDays;
+
+  /// No description provided for @waterNoRecord.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt yok'**
+  String get waterNoRecord;
+
+  /// No description provided for @waterDaysCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} gün'**
+  String waterDaysCount(int n);
+
+  /// No description provided for @weightCurrent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güncel kilo'**
+  String get weightCurrent;
+
+  /// No description provided for @weightFirstRecord.
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk kayıt'**
+  String get weightFirstRecord;
+
+  /// No description provided for @weightTrend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Trend ({n} kayıt)'**
+  String weightTrend(int n);
+
+  /// No description provided for @weightRecords.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlar'**
+  String get weightRecords;
+
+  /// No description provided for @weightEntryCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} giriş'**
+  String weightEntryCount(int n);
+
+  /// No description provided for @monthShortJan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oca'**
+  String get monthShortJan;
+
+  /// No description provided for @monthShortFeb.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şub'**
+  String get monthShortFeb;
+
+  /// No description provided for @monthShortMar.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mar'**
+  String get monthShortMar;
+
+  /// No description provided for @monthShortApr.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nis'**
+  String get monthShortApr;
+
+  /// No description provided for @monthShortMay.
+  ///
+  /// In tr, this message translates to:
+  /// **'May'**
+  String get monthShortMay;
+
+  /// No description provided for @monthShortJun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haz'**
+  String get monthShortJun;
+
+  /// No description provided for @monthShortJul.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tem'**
+  String get monthShortJul;
+
+  /// No description provided for @monthShortAug.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ağu'**
+  String get monthShortAug;
+
+  /// No description provided for @monthShortSep.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eyl'**
+  String get monthShortSep;
+
+  /// No description provided for @monthShortOct.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eki'**
+  String get monthShortOct;
+
+  /// No description provided for @monthShortNov.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kas'**
+  String get monthShortNov;
+
+  /// No description provided for @monthShortDec.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ara'**
+  String get monthShortDec;
+
+  /// No description provided for @todayBadge.
+  ///
+  /// In tr, this message translates to:
+  /// **'BUGÜN'**
+  String get todayBadge;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil'**
+  String get profileTitle;
+
+  /// No description provided for @profileLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil yüklenemedi.'**
+  String get profileLoadFailed;
+
+  /// No description provided for @profileAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap'**
+  String get profileAccount;
+
+  /// No description provided for @profilePersonalInfo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kişisel bilgiler'**
+  String get profilePersonalInfo;
+
+  /// No description provided for @profilePersonalInfoSub.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsim, hedefler, vücut bilgileri'**
+  String get profilePersonalInfoSub;
+
+  /// No description provided for @profileGoals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefler'**
+  String get profileGoals;
+
+  /// No description provided for @profileGoalsSub.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori ve makro hedefin'**
+  String get profileGoalsSub;
+
+  /// No description provided for @profileNotifications.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler'**
+  String get profileNotifications;
+
+  /// No description provided for @profileNotifPrefs.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim tercihleri'**
+  String get profileNotifPrefs;
+
+  /// No description provided for @profileNotifPrefsSub.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatmalar ve sessiz saatler'**
+  String get profileNotifPrefsSub;
+
+  /// No description provided for @profileTheme.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tema'**
+  String get profileTheme;
+
+  /// No description provided for @profileDarkTheme.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karanlık tema'**
+  String get profileDarkTheme;
+
+  /// No description provided for @profileDarkThemeSub.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu an aktif (varsayılan)'**
+  String get profileDarkThemeSub;
+
+  /// No description provided for @profilePremium.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium'**
+  String get profilePremium;
+
+  /// No description provided for @profilePremiumSub.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plan, fatura ve özellikler'**
+  String get profilePremiumSub;
+
+  /// No description provided for @profilePremiumMy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium aboneliğim'**
+  String get profilePremiumMy;
+
+  /// No description provided for @profileHelpSafety.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yardım & Güvenlik'**
+  String get profileHelpSafety;
+
+  /// No description provided for @profileSupport.
+  ///
+  /// In tr, this message translates to:
+  /// **'Destek'**
+  String get profileSupport;
+
+  /// No description provided for @profileSupportSub.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sorular ve geri bildirim'**
+  String get profileSupportSub;
+
+  /// No description provided for @profileHowAi.
+  ///
+  /// In tr, this message translates to:
+  /// **'AI nasıl çalışır'**
+  String get profileHowAi;
+
+  /// No description provided for @profilePrivacy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik ve güvenlik'**
+  String get profilePrivacy;
+
+  /// No description provided for @profileAbout.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nuveli hakkında'**
+  String get profileAbout;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış'**
+  String get profileLogout;
+
+  /// No description provided for @profileSignOut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get profileSignOut;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabı sil'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileSignOutConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabından çıkmak istediğine emin misin?'**
+  String get profileSignOutConfirm;
+
+  /// No description provided for @homeGreetingNoonTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tünaydın'**
+  String get homeGreetingNoonTime;
+
+  /// No description provided for @profileStreakNow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu an'**
+  String get profileStreakNow;
+
+  /// No description provided for @profileStreakLongest.
+  ///
+  /// In tr, this message translates to:
+  /// **'En uzun'**
+  String get profileStreakLongest;
+
+  /// No description provided for @profileStreakDay.
+  ///
+  /// In tr, this message translates to:
+  /// **'gün'**
+  String get profileStreakDay;
+
+  /// No description provided for @personalInfoTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kişisel Bilgiler'**
+  String get personalInfoTitle;
+
+  /// No description provided for @personalInfoEdit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düzenle'**
+  String get personalInfoEdit;
+
+  /// No description provided for @personalInfoSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bilgiler kaydedildi'**
+  String get personalInfoSaved;
+
+  /// No description provided for @personalInfoSaveFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi'**
+  String get personalInfoSaveFailed;
+
+  /// No description provided for @personalInfoLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi'**
+  String get personalInfoLoadFailed;
+
+  /// No description provided for @personalInfoSecAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap'**
+  String get personalInfoSecAccount;
+
+  /// No description provided for @personalInfoSecBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vücut bilgileri'**
+  String get personalInfoSecBody;
+
+  /// No description provided for @personalInfoSecActivity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite'**
+  String get personalInfoSecActivity;
+
+  /// No description provided for @personalInfoName.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsim'**
+  String get personalInfoName;
+
+  /// No description provided for @personalInfoEmail.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta'**
+  String get personalInfoEmail;
+
+  /// No description provided for @personalInfoBirthYear.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğum yılı'**
+  String get personalInfoBirthYear;
+
+  /// No description provided for @personalInfoGender.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cinsiyet'**
+  String get personalInfoGender;
+
+  /// No description provided for @personalInfoHeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boy'**
+  String get personalInfoHeight;
+
+  /// No description provided for @personalInfoHeightCm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boy (cm)'**
+  String get personalInfoHeightCm;
+
+  /// No description provided for @personalInfoWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo'**
+  String get personalInfoWeight;
+
+  /// No description provided for @personalInfoWeightKg.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo (kg)'**
+  String get personalInfoWeightKg;
+
+  /// No description provided for @personalInfoActivityLevel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük aktivite seviyesi'**
+  String get personalInfoActivityLevel;
+
+  /// No description provided for @personalInfoActivityLevelLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite seviyesi'**
+  String get personalInfoActivityLevelLabel;
+
+  /// No description provided for @personalInfoCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get personalInfoCancel;
+
+  /// No description provided for @personalInfoSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get personalInfoSave;
+
+  /// No description provided for @personalInfoSaving.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydediliyor...'**
+  String get personalInfoSaving;
+
+  /// No description provided for @genderFemale.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kadın'**
+  String get genderFemale;
+
+  /// No description provided for @genderMale.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erkek'**
+  String get genderMale;
+
+  /// No description provided for @genderOther.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer'**
+  String get genderOther;
+
+  /// No description provided for @activitySedentary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hareketsiz'**
+  String get activitySedentary;
+
+  /// No description provided for @activitySedentaryFull.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hareketsiz (masa başı)'**
+  String get activitySedentaryFull;
+
+  /// No description provided for @activityLight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hafif aktif'**
+  String get activityLight;
+
+  /// No description provided for @activityLightFull.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hafif aktif (1-3 gün)'**
+  String get activityLightFull;
+
+  /// No description provided for @activityModerate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Orta aktif'**
+  String get activityModerate;
+
+  /// No description provided for @activityModerateFull.
+  ///
+  /// In tr, this message translates to:
+  /// **'Orta aktif (3-5 gün)'**
+  String get activityModerateFull;
+
+  /// No description provided for @activityActive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktif'**
+  String get activityActive;
+
+  /// No description provided for @activityActiveFull.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktif (6-7 gün)'**
+  String get activityActiveFull;
+
+  /// No description provided for @activityVeryActive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok aktif'**
+  String get activityVeryActive;
+
+  /// No description provided for @activityVeryActiveFull.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok aktif (sporcu)'**
+  String get activityVeryActiveFull;
+
+  /// No description provided for @goalsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefler'**
+  String get goalsTitle;
+
+  /// No description provided for @goalsUpdated.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefler güncellendi'**
+  String get goalsUpdated;
+
+  /// No description provided for @goalsLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi'**
+  String get goalsLoadFailed;
+
+  /// No description provided for @goalsSaveFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi'**
+  String get goalsSaveFailed;
+
+  /// No description provided for @goalsSecPurpose.
+  ///
+  /// In tr, this message translates to:
+  /// **'Amaç'**
+  String get goalsSecPurpose;
+
+  /// No description provided for @goalsSecDailyCalorie.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük kalori hedefi'**
+  String get goalsSecDailyCalorie;
+
+  /// No description provided for @goalsSecMacroDist.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önerilen makro dağılımı'**
+  String get goalsSecMacroDist;
+
+  /// No description provided for @goalsLoseWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo vermek'**
+  String get goalsLoseWeight;
+
+  /// No description provided for @goalsLoseWeightDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori açığıyla tedrici düşüş'**
+  String get goalsLoseWeightDesc;
+
+  /// No description provided for @goalsMaintain.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kiloyu korumak'**
+  String get goalsMaintain;
+
+  /// No description provided for @goalsMaintainDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mevcut kiloyu sürdürmek'**
+  String get goalsMaintainDesc;
+
+  /// No description provided for @goalsGainMuscle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kas almak'**
+  String get goalsGainMuscle;
+
+  /// No description provided for @goalsGainMuscleDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori fazlasıyla yapı kazanmak'**
+  String get goalsGainMuscleDesc;
+
+  /// No description provided for @goalsMacroNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu öneri 25% protein, 50% karbonhidrat, 25% yağ dağılımına göredir. Koçun sana özel olarak ayarlayabilir.'**
+  String get goalsMacroNote;
+
+  /// No description provided for @goalsSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get goalsSave;
+
+  /// No description provided for @premiumComingTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium çok yakında! 🚀'**
+  String get premiumComingTitle;
+
+  /// No description provided for @premiumComingDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sınırsız AI öğün analizi, sesli koç ve haftalık içgörüler için son hazırlıkları yapıyoruz. Hazır olduğumuzda bildiririz.'**
+  String get premiumComingDesc;
+
+  /// No description provided for @premiumFeatureCharts.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelişmiş grafikler ve eğilimler'**
+  String get premiumFeatureCharts;
+
+  /// No description provided for @premiumGotIt.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anladım'**
+  String get premiumGotIt;
+
+  /// No description provided for @todayMealsCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} öğün'**
+  String todayMealsCount(int n);
+
+  /// No description provided for @todayMealDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğünü sil?'**
+  String get todayMealDeleteTitle;
+
+  /// No description provided for @todayMealDeleteMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"{name}\" silinecek. Bu işlem geri alınamaz.'**
+  String todayMealDeleteMessage(String name);
+
+  /// No description provided for @todayMealDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sil'**
+  String get todayMealDeleteConfirm;
+
+  /// No description provided for @todayMealDeleteCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get todayMealDeleteCancel;
+
+  /// No description provided for @todayMealDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün silindi.'**
+  String get todayMealDeleted;
+
+  /// No description provided for @todayMealDeleteFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Silinemedi.'**
+  String get todayMealDeleteFailed;
+
+  /// No description provided for @mealTypeBreakfastShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kahvaltı'**
+  String get mealTypeBreakfastShort;
+
+  /// No description provided for @mealTypeLunchShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğle'**
+  String get mealTypeLunchShort;
+
+  /// No description provided for @mealTypeDinnerShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Akşam'**
+  String get mealTypeDinnerShort;
+
+  /// No description provided for @mealTypeSnackShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ara öğün'**
+  String get mealTypeSnackShort;
+
+  /// No description provided for @streakLongestNeverActive.
+  ///
+  /// In tr, this message translates to:
+  /// **'En uzun serin: {longest} gün'**
+  String streakLongestNeverActive(int longest);
+
+  /// No description provided for @streakTodayDoneSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün de hallettin · En uzun: {longest} gün'**
+  String streakTodayDoneSubtitle(int longest);
+
+  /// No description provided for @streakTodayMissedSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünü de eklemeyi unutma · En uzun: {longest}'**
+  String streakTodayMissedSubtitle(int longest);
+
+  /// No description provided for @waterAllDaysList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm Günler'**
+  String get waterAllDaysList;
+
+  /// No description provided for @waterTodayBadge.
+  ///
+  /// In tr, this message translates to:
+  /// **'BUGÜN'**
+  String get waterTodayBadge;
+
+  /// No description provided for @waterNoEntry.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt yok'**
+  String get waterNoEntry;
+
+  /// No description provided for @weightRecordsList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlar'**
+  String get weightRecordsList;
+
+  /// No description provided for @weightEntriesCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} giriş'**
+  String weightEntriesCount(int n);
+
+  /// No description provided for @historyDaysSuffix.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} gün'**
+  String historyDaysSuffix(int n);
+
+  /// No description provided for @moodGreat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harika'**
+  String get moodGreat;
+
+  /// No description provided for @moodGood.
+  ///
+  /// In tr, this message translates to:
+  /// **'İyi'**
+  String get moodGood;
+
+  /// No description provided for @moodNeutral.
+  ///
+  /// In tr, this message translates to:
+  /// **'Normal'**
+  String get moodNeutral;
+
+  /// No description provided for @moodBad.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zor'**
+  String get moodBad;
+
+  /// No description provided for @moodRough.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok Zor'**
+  String get moodRough;
 }
 
 class _AppLocalizationsDelegate

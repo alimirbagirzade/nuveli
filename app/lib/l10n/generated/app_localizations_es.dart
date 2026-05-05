@@ -1254,4 +1254,500 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get weekdaySun => 'Domingo';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get personaGentle => 'Suave';
+
+  @override
+  String get personaGentleDesc => 'Suave, sin presión, empatía primero';
+
+  @override
+  String get personaGentleSample =>
+      '\"Veo que hoy es difícil. No seas duro contigo.\"';
+
+  @override
+  String get personaFunny => 'Divertido';
+
+  @override
+  String get personaFunnyDesc => 'Ligero, sonriente, equilibrado';
+
+  @override
+  String get personaFunnySample =>
+      '\"Noche de pizza, entendido. La vida es balance — ensalada mañana, felicidad esta noche.\"';
+
+  @override
+  String get personaDirect => 'Directo';
+
+  @override
+  String get personaDirectDesc => 'Corto, claro, feedback realista';
+
+  @override
+  String get personaDirectSample =>
+      '\"Proteína baja hoy. Apunta a 25-30g en la cena.\"';
+
+  @override
+  String get personaCalm => 'Tranquilo';
+
+  @override
+  String get personaCalmDesc => 'Sin juicio, paciente';
+
+  @override
+  String get personaCalmSample =>
+      '\"A veces comemos sin pensar. Lo importante es la conciencia.\"';
+
+  @override
+  String get coachToneQuestion => '¿Cómo debe hablarte tu coach?';
+
+  @override
+  String get coachToneSubtitle => 'Puedes cambiar cuando quieras.';
+
+  @override
+  String get coachToneSaving => 'Guardando...';
+
+  @override
+  String get coachToneSaveError => 'No se pudo guardar. ¿Verifica tu conexión?';
+
+  @override
+  String get coachToneSaveErrorGeneric => 'Error inesperado. ¿Reintentar?';
+
+  @override
+  String waterLastDays(int n) {
+    return 'Últimos $n días';
+  }
+
+  @override
+  String get waterLitresTotal => 'L total';
+
+  @override
+  String get waterToday => 'Hoy';
+
+  @override
+  String get waterAverage => 'Promedio';
+
+  @override
+  String get waterLast7 => 'Últimos 7 días';
+
+  @override
+  String waterGoalMl(int ml) {
+    return 'Objetivo: $ml ml/día';
+  }
+
+  @override
+  String get waterAllDays => 'Todos los días';
+
+  @override
+  String get waterNoRecord => 'Sin registro';
+
+  @override
+  String waterDaysCount(int n) {
+    return '$n días';
+  }
+
+  @override
+  String get weightCurrent => 'Peso actual';
+
+  @override
+  String get weightFirstRecord => 'Primer registro';
+
+  @override
+  String weightTrend(int n) {
+    return 'Tendencia ($n entradas)';
+  }
+
+  @override
+  String get weightRecords => 'Registros';
+
+  @override
+  String weightEntryCount(int n) {
+    return '$n entradas';
+  }
+
+  @override
+  String get monthShortJan => 'Ene';
+
+  @override
+  String get monthShortFeb => 'Feb';
+
+  @override
+  String get monthShortMar => 'Mar';
+
+  @override
+  String get monthShortApr => 'Abr';
+
+  @override
+  String get monthShortMay => 'May';
+
+  @override
+  String get monthShortJun => 'Jun';
+
+  @override
+  String get monthShortJul => 'Jul';
+
+  @override
+  String get monthShortAug => 'Ago';
+
+  @override
+  String get monthShortSep => 'Sep';
+
+  @override
+  String get monthShortOct => 'Oct';
+
+  @override
+  String get monthShortNov => 'Nov';
+
+  @override
+  String get monthShortDec => 'Dic';
+
+  @override
+  String get todayBadge => 'HOY';
+
+  @override
+  String get profileTitle => 'Perfil';
+
+  @override
+  String get profileLoadFailed => 'No se pudo cargar el perfil.';
+
+  @override
+  String get profileAccount => 'Cuenta';
+
+  @override
+  String get profilePersonalInfo => 'Información personal';
+
+  @override
+  String get profilePersonalInfoSub =>
+      'Nombre, objetivos, información corporal';
+
+  @override
+  String get profileGoals => 'Objetivos';
+
+  @override
+  String get profileGoalsSub => 'Tus objetivos de calorías y macros';
+
+  @override
+  String get profileNotifications => 'Notificaciones';
+
+  @override
+  String get profileNotifPrefs => 'Preferencias de notificación';
+
+  @override
+  String get profileNotifPrefsSub => 'Recordatorios y horas silenciosas';
+
+  @override
+  String get profileTheme => 'Tema';
+
+  @override
+  String get profileDarkTheme => 'Tema oscuro';
+
+  @override
+  String get profileDarkThemeSub => 'Activo actualmente (predeterminado)';
+
+  @override
+  String get profilePremium => 'Premium';
+
+  @override
+  String get profilePremiumSub => 'Plan, facturación y funciones';
+
+  @override
+  String get profilePremiumMy => 'Mi suscripción Premium';
+
+  @override
+  String get profileHelpSafety => 'Ayuda y Seguridad';
+
+  @override
+  String get profileSupport => 'Soporte';
+
+  @override
+  String get profileSupportSub => 'Preguntas y comentarios';
+
+  @override
+  String get profileHowAi => 'Cómo funciona la IA';
+
+  @override
+  String get profilePrivacy => 'Privacidad';
+
+  @override
+  String get profileAbout => 'Acerca de Nuveli';
+
+  @override
+  String get profileLogout => 'Cerrar sesión';
+
+  @override
+  String get profileSignOut => 'Cerrar sesión';
+
+  @override
+  String get profileDeleteAccount => 'Eliminar cuenta';
+
+  @override
+  String get profileSignOutConfirm => '¿Seguro que quieres cerrar sesión?';
+
+  @override
+  String get homeGreetingNoonTime => 'Buenas tardes';
+
+  @override
+  String get profileStreakNow => 'Actual';
+
+  @override
+  String get profileStreakLongest => 'Más larga';
+
+  @override
+  String get profileStreakDay => 'día';
+
+  @override
+  String get personalInfoTitle => 'Información personal';
+
+  @override
+  String get personalInfoEdit => 'Editar';
+
+  @override
+  String get personalInfoSaved => 'Información guardada';
+
+  @override
+  String get personalInfoSaveFailed => 'No se pudo guardar';
+
+  @override
+  String get personalInfoLoadFailed => 'No se pudo cargar';
+
+  @override
+  String get personalInfoSecAccount => 'Cuenta';
+
+  @override
+  String get personalInfoSecBody => 'Información corporal';
+
+  @override
+  String get personalInfoSecActivity => 'Actividad';
+
+  @override
+  String get personalInfoName => 'Nombre';
+
+  @override
+  String get personalInfoEmail => 'Correo';
+
+  @override
+  String get personalInfoBirthYear => 'Año de nacimiento';
+
+  @override
+  String get personalInfoGender => 'Género';
+
+  @override
+  String get personalInfoHeight => 'Altura';
+
+  @override
+  String get personalInfoHeightCm => 'Altura (cm)';
+
+  @override
+  String get personalInfoWeight => 'Peso';
+
+  @override
+  String get personalInfoWeightKg => 'Peso (kg)';
+
+  @override
+  String get personalInfoActivityLevel => 'Nivel de actividad diaria';
+
+  @override
+  String get personalInfoActivityLevelLabel => 'Nivel de actividad';
+
+  @override
+  String get personalInfoCancel => 'Cancelar';
+
+  @override
+  String get personalInfoSave => 'Guardar';
+
+  @override
+  String get personalInfoSaving => 'Guardando...';
+
+  @override
+  String get genderFemale => 'Mujer';
+
+  @override
+  String get genderMale => 'Hombre';
+
+  @override
+  String get genderOther => 'Otro';
+
+  @override
+  String get activitySedentary => 'Sedentario';
+
+  @override
+  String get activitySedentaryFull => 'Sedentario (oficina)';
+
+  @override
+  String get activityLight => 'Ligeramente activo';
+
+  @override
+  String get activityLightFull => 'Ligeramente activo (1-3 días)';
+
+  @override
+  String get activityModerate => 'Moderadamente activo';
+
+  @override
+  String get activityModerateFull => 'Moderadamente activo (3-5 días)';
+
+  @override
+  String get activityActive => 'Activo';
+
+  @override
+  String get activityActiveFull => 'Activo (6-7 días)';
+
+  @override
+  String get activityVeryActive => 'Muy activo';
+
+  @override
+  String get activityVeryActiveFull => 'Muy activo (atleta)';
+
+  @override
+  String get goalsTitle => 'Objetivos';
+
+  @override
+  String get goalsUpdated => 'Objetivos actualizados';
+
+  @override
+  String get goalsLoadFailed => 'No se pudo cargar';
+
+  @override
+  String get goalsSaveFailed => 'No se pudo guardar';
+
+  @override
+  String get goalsSecPurpose => 'Propósito';
+
+  @override
+  String get goalsSecDailyCalorie => 'Objetivo calórico diario';
+
+  @override
+  String get goalsSecMacroDist => 'Distribución de macros recomendada';
+
+  @override
+  String get goalsLoseWeight => 'Perder peso';
+
+  @override
+  String get goalsLoseWeightDesc => 'Disminución gradual con déficit calórico';
+
+  @override
+  String get goalsMaintain => 'Mantener peso';
+
+  @override
+  String get goalsMaintainDesc => 'Mantener el peso actual';
+
+  @override
+  String get goalsGainMuscle => 'Ganar músculo';
+
+  @override
+  String get goalsGainMuscleDesc => 'Construir con superávit calórico';
+
+  @override
+  String get goalsMacroNote =>
+      'Esta recomendación se basa en 25% proteína, 50% carbohidratos, 25% grasa. Tu coach puede personalizarlo.';
+
+  @override
+  String get goalsSave => 'Guardar';
+
+  @override
+  String get premiumComingTitle => '¡Premium llega pronto! 🚀';
+
+  @override
+  String get premiumComingDesc =>
+      'Estamos terminando el análisis ilimitado de comidas por IA, coach de voz e insights semanales. Te avisaremos cuando esté listo.';
+
+  @override
+  String get premiumFeatureCharts => 'Gráficos y tendencias avanzados';
+
+  @override
+  String get premiumGotIt => 'Entendido';
+
+  @override
+  String todayMealsCount(int n) {
+    return '$n comidas';
+  }
+
+  @override
+  String get todayMealDeleteTitle => '¿Eliminar comida?';
+
+  @override
+  String todayMealDeleteMessage(String name) {
+    return '\"$name\" será eliminado. Esto no se puede deshacer.';
+  }
+
+  @override
+  String get todayMealDeleteConfirm => 'Eliminar';
+
+  @override
+  String get todayMealDeleteCancel => 'Cancelar';
+
+  @override
+  String get todayMealDeleted => 'Comida eliminada.';
+
+  @override
+  String get todayMealDeleteFailed => 'No se pudo eliminar.';
+
+  @override
+  String get mealTypeBreakfastShort => 'Desayuno';
+
+  @override
+  String get mealTypeLunchShort => 'Almuerzo';
+
+  @override
+  String get mealTypeDinnerShort => 'Cena';
+
+  @override
+  String get mealTypeSnackShort => 'Snack';
+
+  @override
+  String streakLongestNeverActive(int longest) {
+    return 'Racha más larga: $longest días';
+  }
+
+  @override
+  String streakTodayDoneSubtitle(int longest) {
+    return 'Lo lograste hoy · Más larga: $longest días';
+  }
+
+  @override
+  String streakTodayMissedSubtitle(int longest) {
+    return 'No olvides hoy · Más larga: $longest';
+  }
+
+  @override
+  String get waterAllDaysList => 'Todos los días';
+
+  @override
+  String get waterTodayBadge => 'HOY';
+
+  @override
+  String get waterNoEntry => 'Sin registro';
+
+  @override
+  String get weightRecordsList => 'Registros';
+
+  @override
+  String weightEntriesCount(int n) {
+    return '$n entradas';
+  }
+
+  @override
+  String historyDaysSuffix(int n) {
+    return '$n días';
+  }
+
+  @override
+  String get moodGreat => 'Genial';
+
+  @override
+  String get moodGood => 'Bien';
+
+  @override
+  String get moodNeutral => 'Normal';
+
+  @override
+  String get moodBad => 'Difícil';
+
+  @override
+  String get moodRough => 'Muy difícil';
 }

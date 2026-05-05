@@ -442,5 +442,244 @@
         "type": "String"
       }
     }
-  }
+  },
+  "themeSystem": "System",
+  "themeDark": "Dunkel",
+  "themeLight": "Hell",
+  "personaGentle": "Sanft",
+  "personaGentleDesc": "Sanft, kein Druck, Empathie zuerst",
+  "personaGentleSample": "\"Ich sehe, dass heute schwierig ist. Sei nicht streng zu dir selbst.\"",
+  "personaFunny": "Witzig",
+  "personaFunnyDesc": "Leicht, lächelnd, ausgeglichen",
+  "personaFunnySample": "\"Pizza-Abend, verstanden. Das Leben ist Balance — morgen Salat, heute Glück.\"",
+  "personaDirect": "Direkt",
+  "personaDirectDesc": "Kurz, klar, realistisches Feedback",
+  "personaDirectSample": "\"Heute wenig Protein. Ziel: 25-30g zum Abendessen.\"",
+  "personaCalm": "Ruhig",
+  "personaCalmDesc": "Nicht urteilend, geduldig",
+  "personaCalmSample": "\"Manchmal essen wir ohne nachzudenken. Wichtig ist das Bewusstsein.\"",
+  "coachToneQuestion": "Wie soll dein Coach mit dir sprechen?",
+  "coachToneSubtitle": "Du kannst jederzeit ändern.",
+  "coachToneSaving": "Speichern...",
+  "coachToneSaveError": "Konnte nicht speichern. Versuch es erneut?",
+  "coachToneSaveErrorGeneric": "Unerwarteter Fehler. Erneut versuchen?",
+  "waterLastDays": "Letzte {n} Tage",
+  "waterLitresTotal": "L gesamt",
+  "waterToday": "Heute",
+  "waterAverage": "Durchschnitt",
+  "waterLast7": "Letzte 7 Tage",
+  "waterGoalMl": "Ziel: {ml} ml/Tag",
+  "waterAllDays": "Alle Tage",
+  "waterNoRecord": "Kein Eintrag",
+  "waterDaysCount": "{n} Tage",
+  "weightCurrent": "Aktuelles Gewicht",
+  "weightFirstRecord": "Erster Eintrag",
+  "weightTrend": "Trend ({n} Einträge)",
+  "weightRecords": "Einträge",
+  "weightEntryCount": "{n} Einträge",
+  "monthShortJan": "Jan",
+  "monthShortFeb": "Feb",
+  "monthShortMar": "Mär",
+  "monthShortApr": "Apr",
+  "monthShortMay": "Mai",
+  "monthShortJun": "Jun",
+  "monthShortJul": "Jul",
+  "monthShortAug": "Aug",
+  "monthShortSep": "Sep",
+  "monthShortOct": "Okt",
+  "monthShortNov": "Nov",
+  "monthShortDec": "Dez",
+  "todayBadge": "HEUTE",
+  "@waterLastDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterDaysCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterGoalMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightTrend": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightEntryCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileTitle": "Profil",
+  "profileLoadFailed": "Profil konnte nicht geladen werden.",
+  "profileAccount": "Konto",
+  "profilePersonalInfo": "Persönliche Informationen",
+  "profilePersonalInfoSub": "Name, Ziele, Körperdaten",
+  "profileGoals": "Ziele",
+  "profileGoalsSub": "Deine Kalorien- und Makroziele",
+  "profileNotifications": "Benachrichtigungen",
+  "profileNotifPrefs": "Benachrichtigungseinstellungen",
+  "profileNotifPrefsSub": "Erinnerungen und Ruhezeiten",
+  "profileTheme": "Design",
+  "profileDarkTheme": "Dunkles Design",
+  "profileDarkThemeSub": "Derzeit aktiv (Standard)",
+  "profilePremium": "Premium",
+  "profilePremiumSub": "Plan, Abrechnung und Funktionen",
+  "profilePremiumMy": "Mein Premium-Abo",
+  "profileHelpSafety": "Hilfe & Sicherheit",
+  "profileSupport": "Support",
+  "profileSupportSub": "Fragen und Feedback",
+  "profileHowAi": "Wie KI funktioniert",
+  "profilePrivacy": "Datenschutz",
+  "profileAbout": "Über Nuveli",
+  "profileLogout": "Abmelden",
+  "profileSignOut": "Abmelden",
+  "profileDeleteAccount": "Konto löschen",
+  "profileSignOutConfirm": "Möchtest du dich wirklich abmelden?",
+  "homeGreetingNoonTime": "Guten Tag",
+  "profileStreakNow": "Aktuell",
+  "profileStreakLongest": "Längste",
+  "profileStreakDay": "Tag",
+  "personalInfoTitle": "Persönliche Informationen",
+  "personalInfoEdit": "Bearbeiten",
+  "personalInfoSaved": "Informationen gespeichert",
+  "personalInfoSaveFailed": "Konnte nicht gespeichert werden",
+  "personalInfoLoadFailed": "Konnte nicht geladen werden",
+  "personalInfoSecAccount": "Konto",
+  "personalInfoSecBody": "Körperdaten",
+  "personalInfoSecActivity": "Aktivität",
+  "personalInfoName": "Name",
+  "personalInfoEmail": "E-Mail",
+  "personalInfoBirthYear": "Geburtsjahr",
+  "personalInfoGender": "Geschlecht",
+  "personalInfoHeight": "Größe",
+  "personalInfoHeightCm": "Größe (cm)",
+  "personalInfoWeight": "Gewicht",
+  "personalInfoWeightKg": "Gewicht (kg)",
+  "personalInfoActivityLevel": "Tägliches Aktivitätsniveau",
+  "personalInfoActivityLevelLabel": "Aktivitätsniveau",
+  "personalInfoCancel": "Abbrechen",
+  "personalInfoSave": "Speichern",
+  "personalInfoSaving": "Speichern...",
+  "genderFemale": "Weiblich",
+  "genderMale": "Männlich",
+  "genderOther": "Andere",
+  "activitySedentary": "Sitzend",
+  "activitySedentaryFull": "Sitzend (Bürojob)",
+  "activityLight": "Leicht aktiv",
+  "activityLightFull": "Leicht aktiv (1-3 Tage)",
+  "activityModerate": "Mäßig aktiv",
+  "activityModerateFull": "Mäßig aktiv (3-5 Tage)",
+  "activityActive": "Aktiv",
+  "activityActiveFull": "Aktiv (6-7 Tage)",
+  "activityVeryActive": "Sehr aktiv",
+  "activityVeryActiveFull": "Sehr aktiv (Sportler)",
+  "goalsTitle": "Ziele",
+  "goalsUpdated": "Ziele aktualisiert",
+  "goalsLoadFailed": "Konnte nicht geladen werden",
+  "goalsSaveFailed": "Konnte nicht gespeichert werden",
+  "goalsSecPurpose": "Zweck",
+  "goalsSecDailyCalorie": "Tägliches Kalorienziel",
+  "goalsSecMacroDist": "Empfohlene Makro-Verteilung",
+  "goalsLoseWeight": "Abnehmen",
+  "goalsLoseWeightDesc": "Allmähliche Abnahme mit Kaloriendefizit",
+  "goalsMaintain": "Gewicht halten",
+  "goalsMaintainDesc": "Aktuelles Gewicht beibehalten",
+  "goalsGainMuscle": "Muskeln aufbauen",
+  "goalsGainMuscleDesc": "Aufbau mit Kalorienüberschuss",
+  "goalsMacroNote": "Diese Empfehlung basiert auf 25% Protein, 50% Kohlenhydrate, 25% Fett. Dein Coach kann es anpassen.",
+  "goalsSave": "Speichern",
+  "premiumComingTitle": "Premium kommt bald! 🚀",
+  "premiumComingDesc": "Wir arbeiten an unbegrenzten KI-Mahlzeitenanalysen, Sprach-Coach und wöchentlichen Einblicken. Wir benachrichtigen dich, wenn es bereit ist.",
+  "premiumFeatureCharts": "Erweiterte Diagramme und Trends",
+  "premiumGotIt": "Verstanden",
+  "todayMealsCount": "{n} Mahlzeiten",
+  "todayMealDeleteTitle": "Mahlzeit löschen?",
+  "todayMealDeleteMessage": "\"{name}\" wird gelöscht. Dies kann nicht rückgängig gemacht werden.",
+  "todayMealDeleteConfirm": "Löschen",
+  "todayMealDeleteCancel": "Abbrechen",
+  "todayMealDeleted": "Mahlzeit gelöscht.",
+  "todayMealDeleteFailed": "Konnte nicht gelöscht werden.",
+  "mealTypeBreakfastShort": "Frühstück",
+  "mealTypeLunchShort": "Mittagessen",
+  "mealTypeDinnerShort": "Abendessen",
+  "mealTypeSnackShort": "Snack",
+  "@todayMealsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@todayMealDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "streakLongestNeverActive": "Längste Serie: {longest} Tage",
+  "streakTodayDoneSubtitle": "Heute geschafft · Längste: {longest} Tage",
+  "streakTodayMissedSubtitle": "Vergiss heute nicht · Längste: {longest}",
+  "@streakLongestNeverActive": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayDoneSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayMissedSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "waterAllDaysList": "Alle Tage",
+  "waterTodayBadge": "HEUTE",
+  "waterNoEntry": "Kein Eintrag",
+  "weightRecordsList": "Einträge",
+  "weightEntriesCount": "{n} Einträge",
+  "historyDaysSuffix": "{n} Tage",
+  "@weightEntriesCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@historyDaysSuffix": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "moodGreat": "Großartig",
+  "moodGood": "Gut",
+  "moodNeutral": "Okay",
+  "moodBad": "Schwer",
+  "moodRough": "Sehr schwer"
 }

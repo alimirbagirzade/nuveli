@@ -16,6 +16,7 @@ import '../../streak/data/streak_repository.dart';
 import '../data/profile_repository.dart';
 import 'goals_screen.dart';
 import 'personal_info_screen.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Profile screen — user identity (avatar + name) at the top,
 /// settings tiles below in 6 grouped sections.
@@ -32,14 +33,14 @@ class ProfileScreen extends ConsumerWidget {
 
     return AppScaffold(
       appBar: AppBar(
-        title: const Text('Profil'),
+        title: Text(AppLocalizations.of(context)!.profileTitle),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => _ErrorView(
-          message: e is AppError ? e.userMessage : 'Profil yüklenemedi.',
+          message: e is AppError ? e.userMessage : AppLocalizations.of(context)!.profileLoadFailed,
           onRetry: () => ref.invalidate(userProfileProvider),
         ),
         data: (profile) => _ProfileBody(profile: profile),
@@ -67,11 +68,11 @@ class _ProfileBody extends ConsumerWidget {
         const SizedBox(height: 16),
         const _StreakStatsCard(),
         const SizedBox(height: 16),
-        _SectionLabel('Hesap'),
+        _SectionLabel(AppLocalizations.of(context)!.profileAccount),
         _Tile(
           icon: Icons.person_outline,
-          title: 'Kişisel bilgiler',
-          subtitle: 'İsim, hedefler, vücut bilgileri',
+          title: AppLocalizations.of(context)!.profilePersonalInfo,
+          subtitle: AppLocalizations.of(context)!.profilePersonalInfoSub,
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => const PersonalInfoScreen(),
@@ -80,8 +81,8 @@ class _ProfileBody extends ConsumerWidget {
         ),
         _Tile(
           icon: Icons.flag_outlined,
-          title: 'Hedefler',
-          subtitle: 'Kalori ve makro hedefin',
+          title: AppLocalizations.of(context)!.profileGoals,
+          subtitle: AppLocalizations.of(context)!.profileGoalsSub,
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => const GoalsScreen(),
@@ -90,20 +91,20 @@ class _ProfileBody extends ConsumerWidget {
         ),
 
         const SizedBox(height: 16),
-        _SectionLabel('Bildirimler'),
+        _SectionLabel(AppLocalizations.of(context)!.profileNotifications),
         _Tile(
           icon: Icons.notifications_outlined,
-          title: 'Bildirim tercihleri',
-          subtitle: 'Hatırlatmalar ve sessiz saatler',
+          title: AppLocalizations.of(context)!.profileNotifPrefs,
+          subtitle: AppLocalizations.of(context)!.profileNotifPrefsSub,
           onTap: () => context.push(AppRoute.notificationPrefs),
         ),
 
         const SizedBox(height: 16),
-        _SectionLabel('Tema'),
+        _SectionLabel(AppLocalizations.of(context)!.profileTheme),
         _Tile(
           icon: Icons.dark_mode_outlined,
-          title: 'Karanlık tema',
-          subtitle: 'Şu an aktif (varsayılan)',
+          title: AppLocalizations.of(context)!.profileDarkTheme,
+          subtitle: AppLocalizations.of(context)!.profileDarkThemeSub,
           trailing: Switch.adaptive(
             value: true,
             onChanged: (_) => _showComingSoon(context, 'Açık tema yakında'),
@@ -112,50 +113,50 @@ class _ProfileBody extends ConsumerWidget {
         ),
 
         const SizedBox(height: 16),
-        _SectionLabel('Premium'),
+        _SectionLabel(AppLocalizations.of(context)!.profilePremium),
         _Tile(
           icon: Icons.star_outline,
-          title: 'Premium aboneliğim',
-          subtitle: 'Plan, fatura ve özellikler',
+          title: AppLocalizations.of(context)!.profilePremiumMy,
+          subtitle: AppLocalizations.of(context)!.profilePremiumSub,
           onTap: () => context.push(AppRoute.paywall),
           highlight: true,
         ),
 
         const SizedBox(height: 16),
-        _SectionLabel('Yardım & Güvenlik'),
+        _SectionLabel(AppLocalizations.of(context)!.profileHelpSafety),
         _Tile(
           icon: Icons.help_outline,
-          title: 'Destek',
-          subtitle: 'Sorular ve geri bildirim',
+          title: AppLocalizations.of(context)!.profileSupport,
+          subtitle: AppLocalizations.of(context)!.profileSupportSub,
           onTap: () => context.push(AppRoute.support),
         ),
         _Tile(
           icon: Icons.auto_awesome_outlined,
-          title: 'AI nasıl çalışır',
+          title: AppLocalizations.of(context)!.profileHowAi,
           onTap: () => context.push(AppRoute.howAiWorks),
         ),
         _Tile(
           icon: Icons.privacy_tip_outlined,
-          title: 'Gizlilik ve güvenlik',
+          title: AppLocalizations.of(context)!.profilePrivacy,
           onTap: () => context.push(AppRoute.privacySafety),
         ),
         _Tile(
           icon: Icons.info_outline,
-          title: 'Nuveli hakkında',
+          title: AppLocalizations.of(context)!.profileAbout,
           onTap: () => context.push(AppRoute.about),
         ),
 
         const SizedBox(height: 24),
-        _SectionLabel('Çıkış'),
+        _SectionLabel(AppLocalizations.of(context)!.profileLogout),
         _Tile(
           icon: Icons.logout,
-          title: 'Çıkış yap',
+          title: AppLocalizations.of(context)!.profileSignOut,
           color: AppColors.warning,
           onTap: () => _confirmSignOut(context, ref),
         ),
         _Tile(
           icon: Icons.delete_outline,
-          title: 'Hesabı sil',
+          title: AppLocalizations.of(context)!.profileDeleteAccount,
           color: AppColors.error,
           onTap: () => context.push(AppRoute.deleteAccount),
         ),
@@ -175,17 +176,17 @@ class _ProfileBody extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: AppColors.surfaceElevated,
-        title: const Text('Çıkış yap'),
-        content: const Text('Hesabından çıkmak istediğine emin misin?'),
+        title: Text(AppLocalizations.of(context)!.profileSignOut),
+        content: Text(AppLocalizations.of(context)!.profileSignOutConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Vazgeç'),
+            child: Text(AppLocalizations.of(context)!.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             child: Text(
-              'Çıkış yap',
+              AppLocalizations.of(context)!.profileSignOut,
               style: TextStyle(color: AppColors.warning),
             ),
           ),
@@ -362,7 +363,7 @@ class _IdentityHeaderState extends ConsumerState<_IdentityHeader> {
               children: [
                 TextButton(
                   onPressed: () => setState(() => _editingName = false),
-                  child: const Text('Vazgeç'),
+                  child: Text(AppLocalizations.of(context)!.commonCancel),
                 ),
                 const SizedBox(width: 8),
                 FilledButton(
@@ -774,7 +775,7 @@ class _ErrorView extends StatelessWidget {
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.primary,
               ),
-              child: const Text('Tekrar Dene'),
+              child: Text(AppLocalizations.of(context)!.commonRetry),
             ),
           ],
         ),
@@ -816,9 +817,9 @@ class _StreakStatsCard extends ConsumerWidget {
               Expanded(
                 child: _ProfileStatColumn(
                   icon: '🔥',
-                  label: 'Şu an',
+                  label: AppLocalizations.of(context)!.profileStreakNow,
                   value: '${streak.current}',
-                  unit: streak.current == 1 ? 'gün' : 'gün',
+                  unit: AppLocalizations.of(context)!.profileStreakDay,
                   color: streak.current > 0
                       ? const Color(0xFFFF6B35)
                       : AppColors.textTertiary,
@@ -832,9 +833,9 @@ class _StreakStatsCard extends ConsumerWidget {
               Expanded(
                 child: _ProfileStatColumn(
                   icon: '🏆',
-                  label: 'En uzun',
+                  label: AppLocalizations.of(context)!.profileStreakLongest,
                   value: '${streak.longest}',
-                  unit: 'gün',
+                  unit: AppLocalizations.of(context)!.profileStreakDay,
                   color: AppColors.primary,
                 ),
               ),

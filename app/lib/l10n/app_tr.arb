@@ -126,7 +126,7 @@
   "onboardingContinue": "Devam Et",
   "homeTitle": "Ana Sayfa",
   "homeGreetingMorning": "Günaydın",
-  "homeGreetingAfternoon": "İyi günler",
+  "homeGreetingAfternoon": "Tünaydın",
   "homeGreetingEvening": "İyi akşamlar",
   "homeTodayCalories": "Bugünkü kalori",
   "homeRemainingCalories": "Kalan",
@@ -442,5 +442,244 @@
         "type": "String"
       }
     }
-  }
+  },
+  "themeSystem": "Sistem ayarı",
+  "themeDark": "Koyu (Gece)",
+  "themeLight": "Açık (Gündüz)",
+  "personaGentle": "Nazik",
+  "personaGentleDesc": "Yumuşak, baskısız, empati önce",
+  "personaGentleSample": "\"Bugün biraz zor olduğunu görüyorum. Bir öğün eksik kalsa da kendine sert davranma.\"",
+  "personaFunny": "Esprili",
+  "personaFunnyDesc": "Hafif, gülümseten, ciddi anlarda dengeli",
+  "personaFunnySample": "\"Pizza akşamı, anladım. Hayat zaten bir denge işi — yarın salata, bu akşam mutluluk.\"",
+  "personaDirect": "Doğrudan",
+  "personaDirectDesc": "Kısa, net, gerçekçi geri bildirim",
+  "personaDirectSample": "\"Bugün protein az. Akşam yemekte 25-30g hedefle, hafta dengesi tutar.\"",
+  "personaCalm": "Sakin",
+  "personaCalmDesc": "Yargılamayan, sabırlı, ölçülü",
+  "personaCalmSample": "\"Düşünmeden yedik bazen. Önemli olan farkına varmak. Sonraki öğüne odaklanalım.\"",
+  "coachToneQuestion": "Koçun seninle nasıl konuşsun?",
+  "coachToneSubtitle": "İstediğin zaman değiştirebilirsin.",
+  "coachToneSaving": "Kaydediliyor...",
+  "coachToneSaveError": "Kaydedemedim. Bağlantını kontrol edip tekrar dener misin?",
+  "coachToneSaveErrorGeneric": "Beklenmedik bir sorun oldu, tekrar dener misin?",
+  "waterLastDays": "Son {n} gün",
+  "waterLitresTotal": "L toplam",
+  "waterToday": "Bugün",
+  "waterAverage": "Ortalama",
+  "waterLast7": "Son 7 Gün",
+  "waterGoalMl": "Hedef: {ml} ml/gün",
+  "waterAllDays": "Tüm Günler",
+  "waterNoRecord": "Kayıt yok",
+  "waterDaysCount": "{n} gün",
+  "weightCurrent": "Güncel kilo",
+  "weightFirstRecord": "İlk kayıt",
+  "weightTrend": "Trend ({n} kayıt)",
+  "weightRecords": "Kayıtlar",
+  "weightEntryCount": "{n} giriş",
+  "monthShortJan": "Oca",
+  "monthShortFeb": "Şub",
+  "monthShortMar": "Mar",
+  "monthShortApr": "Nis",
+  "monthShortMay": "May",
+  "monthShortJun": "Haz",
+  "monthShortJul": "Tem",
+  "monthShortAug": "Ağu",
+  "monthShortSep": "Eyl",
+  "monthShortOct": "Eki",
+  "monthShortNov": "Kas",
+  "monthShortDec": "Ara",
+  "todayBadge": "BUGÜN",
+  "@waterLastDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterDaysCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterGoalMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightTrend": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightEntryCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileTitle": "Profil",
+  "profileLoadFailed": "Profil yüklenemedi.",
+  "profileAccount": "Hesap",
+  "profilePersonalInfo": "Kişisel bilgiler",
+  "profilePersonalInfoSub": "İsim, hedefler, vücut bilgileri",
+  "profileGoals": "Hedefler",
+  "profileGoalsSub": "Kalori ve makro hedefin",
+  "profileNotifications": "Bildirimler",
+  "profileNotifPrefs": "Bildirim tercihleri",
+  "profileNotifPrefsSub": "Hatırlatmalar ve sessiz saatler",
+  "profileTheme": "Tema",
+  "profileDarkTheme": "Karanlık tema",
+  "profileDarkThemeSub": "Şu an aktif (varsayılan)",
+  "profilePremium": "Premium",
+  "profilePremiumSub": "Plan, fatura ve özellikler",
+  "profilePremiumMy": "Premium aboneliğim",
+  "profileHelpSafety": "Yardım & Güvenlik",
+  "profileSupport": "Destek",
+  "profileSupportSub": "Sorular ve geri bildirim",
+  "profileHowAi": "AI nasıl çalışır",
+  "profilePrivacy": "Gizlilik ve güvenlik",
+  "profileAbout": "Nuveli hakkında",
+  "profileLogout": "Çıkış",
+  "profileSignOut": "Çıkış yap",
+  "profileDeleteAccount": "Hesabı sil",
+  "profileSignOutConfirm": "Hesabından çıkmak istediğine emin misin?",
+  "homeGreetingNoonTime": "Tünaydın",
+  "profileStreakNow": "Şu an",
+  "profileStreakLongest": "En uzun",
+  "profileStreakDay": "gün",
+  "personalInfoTitle": "Kişisel Bilgiler",
+  "personalInfoEdit": "Düzenle",
+  "personalInfoSaved": "Bilgiler kaydedildi",
+  "personalInfoSaveFailed": "Kaydedilemedi",
+  "personalInfoLoadFailed": "Yüklenemedi",
+  "personalInfoSecAccount": "Hesap",
+  "personalInfoSecBody": "Vücut bilgileri",
+  "personalInfoSecActivity": "Aktivite",
+  "personalInfoName": "İsim",
+  "personalInfoEmail": "E-posta",
+  "personalInfoBirthYear": "Doğum yılı",
+  "personalInfoGender": "Cinsiyet",
+  "personalInfoHeight": "Boy",
+  "personalInfoHeightCm": "Boy (cm)",
+  "personalInfoWeight": "Kilo",
+  "personalInfoWeightKg": "Kilo (kg)",
+  "personalInfoActivityLevel": "Günlük aktivite seviyesi",
+  "personalInfoActivityLevelLabel": "Aktivite seviyesi",
+  "personalInfoCancel": "Vazgeç",
+  "personalInfoSave": "Kaydet",
+  "personalInfoSaving": "Kaydediliyor...",
+  "genderFemale": "Kadın",
+  "genderMale": "Erkek",
+  "genderOther": "Diğer",
+  "activitySedentary": "Hareketsiz",
+  "activitySedentaryFull": "Hareketsiz (masa başı)",
+  "activityLight": "Hafif aktif",
+  "activityLightFull": "Hafif aktif (1-3 gün)",
+  "activityModerate": "Orta aktif",
+  "activityModerateFull": "Orta aktif (3-5 gün)",
+  "activityActive": "Aktif",
+  "activityActiveFull": "Aktif (6-7 gün)",
+  "activityVeryActive": "Çok aktif",
+  "activityVeryActiveFull": "Çok aktif (sporcu)",
+  "goalsTitle": "Hedefler",
+  "goalsUpdated": "Hedefler güncellendi",
+  "goalsLoadFailed": "Yüklenemedi",
+  "goalsSaveFailed": "Kaydedilemedi",
+  "goalsSecPurpose": "Amaç",
+  "goalsSecDailyCalorie": "Günlük kalori hedefi",
+  "goalsSecMacroDist": "Önerilen makro dağılımı",
+  "goalsLoseWeight": "Kilo vermek",
+  "goalsLoseWeightDesc": "Kalori açığıyla tedrici düşüş",
+  "goalsMaintain": "Kiloyu korumak",
+  "goalsMaintainDesc": "Mevcut kiloyu sürdürmek",
+  "goalsGainMuscle": "Kas almak",
+  "goalsGainMuscleDesc": "Kalori fazlasıyla yapı kazanmak",
+  "goalsMacroNote": "Bu öneri 25% protein, 50% karbonhidrat, 25% yağ dağılımına göredir. Koçun sana özel olarak ayarlayabilir.",
+  "goalsSave": "Kaydet",
+  "premiumComingTitle": "Premium çok yakında! 🚀",
+  "premiumComingDesc": "Sınırsız AI öğün analizi, sesli koç ve haftalık içgörüler için son hazırlıkları yapıyoruz. Hazır olduğumuzda bildiririz.",
+  "premiumFeatureCharts": "Gelişmiş grafikler ve eğilimler",
+  "premiumGotIt": "Anladım",
+  "todayMealsCount": "{n} öğün",
+  "todayMealDeleteTitle": "Öğünü sil?",
+  "todayMealDeleteMessage": "\"{name}\" silinecek. Bu işlem geri alınamaz.",
+  "todayMealDeleteConfirm": "Sil",
+  "todayMealDeleteCancel": "Vazgeç",
+  "todayMealDeleted": "Öğün silindi.",
+  "todayMealDeleteFailed": "Silinemedi.",
+  "mealTypeBreakfastShort": "Kahvaltı",
+  "mealTypeLunchShort": "Öğle",
+  "mealTypeDinnerShort": "Akşam",
+  "mealTypeSnackShort": "Ara öğün",
+  "@todayMealsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@todayMealDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "streakLongestNeverActive": "En uzun serin: {longest} gün",
+  "streakTodayDoneSubtitle": "Bugün de hallettin · En uzun: {longest} gün",
+  "streakTodayMissedSubtitle": "Bugünü de eklemeyi unutma · En uzun: {longest}",
+  "@streakLongestNeverActive": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayDoneSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayMissedSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "waterAllDaysList": "Tüm Günler",
+  "waterTodayBadge": "BUGÜN",
+  "waterNoEntry": "Kayıt yok",
+  "weightRecordsList": "Kayıtlar",
+  "weightEntriesCount": "{n} giriş",
+  "historyDaysSuffix": "{n} gün",
+  "@weightEntriesCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@historyDaysSuffix": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "moodGreat": "Harika",
+  "moodGood": "İyi",
+  "moodNeutral": "Normal",
+  "moodBad": "Zor",
+  "moodRough": "Çok Zor"
 }

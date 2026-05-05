@@ -442,5 +442,244 @@
         "type": "String"
       }
     }
-  }
+  },
+  "themeSystem": "Système",
+  "themeDark": "Sombre",
+  "themeLight": "Clair",
+  "personaGentle": "Doux",
+  "personaGentleDesc": "Doux, sans pression, empathie d'abord",
+  "personaGentleSample": "\"Je vois qu'aujourd'hui est difficile. Ne sois pas dur avec toi-même.\"",
+  "personaFunny": "Drôle",
+  "personaFunnyDesc": "Léger, souriant, équilibré",
+  "personaFunnySample": "\"Soirée pizza, compris. La vie est équilibre — salade demain, bonheur ce soir.\"",
+  "personaDirect": "Direct",
+  "personaDirectDesc": "Court, clair, feedback réaliste",
+  "personaDirectSample": "\"Protéines basses aujourd'hui. Vise 25-30g au dîner.\"",
+  "personaCalm": "Calme",
+  "personaCalmDesc": "Sans jugement, patient",
+  "personaCalmSample": "\"Parfois on mange sans réfléchir. L'important est la conscience.\"",
+  "coachToneQuestion": "Comment ton coach doit-il te parler?",
+  "coachToneSubtitle": "Tu peux changer à tout moment.",
+  "coachToneSaving": "Enregistrement...",
+  "coachToneSaveError": "Impossible d'enregistrer. Vérifie ta connexion?",
+  "coachToneSaveErrorGeneric": "Erreur inattendue. Réessaie?",
+  "waterLastDays": "{n} derniers jours",
+  "waterLitresTotal": "L total",
+  "waterToday": "Aujourd'hui",
+  "waterAverage": "Moyenne",
+  "waterLast7": "7 derniers jours",
+  "waterGoalMl": "Objectif: {ml} ml/jour",
+  "waterAllDays": "Tous les jours",
+  "waterNoRecord": "Aucun",
+  "waterDaysCount": "{n} jours",
+  "weightCurrent": "Poids actuel",
+  "weightFirstRecord": "Premier enregistrement",
+  "weightTrend": "Tendance ({n} entrées)",
+  "weightRecords": "Enregistrements",
+  "weightEntryCount": "{n} entrées",
+  "monthShortJan": "Jan",
+  "monthShortFeb": "Fév",
+  "monthShortMar": "Mar",
+  "monthShortApr": "Avr",
+  "monthShortMay": "Mai",
+  "monthShortJun": "Juin",
+  "monthShortJul": "Jul",
+  "monthShortAug": "Aoû",
+  "monthShortSep": "Sep",
+  "monthShortOct": "Oct",
+  "monthShortNov": "Nov",
+  "monthShortDec": "Déc",
+  "todayBadge": "AUJOURD'HUI",
+  "@waterLastDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterDaysCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@waterGoalMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightTrend": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@weightEntryCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileTitle": "Profil",
+  "profileLoadFailed": "Impossible de charger le profil.",
+  "profileAccount": "Compte",
+  "profilePersonalInfo": "Informations personnelles",
+  "profilePersonalInfoSub": "Nom, objectifs, informations corporelles",
+  "profileGoals": "Objectifs",
+  "profileGoalsSub": "Tes objectifs caloriques et macros",
+  "profileNotifications": "Notifications",
+  "profileNotifPrefs": "Préférences de notification",
+  "profileNotifPrefsSub": "Rappels et heures de silence",
+  "profileTheme": "Thème",
+  "profileDarkTheme": "Thème sombre",
+  "profileDarkThemeSub": "Actif actuellement (par défaut)",
+  "profilePremium": "Premium",
+  "profilePremiumSub": "Plan, facturation et fonctionnalités",
+  "profilePremiumMy": "Mon abonnement Premium",
+  "profileHelpSafety": "Aide & Sécurité",
+  "profileSupport": "Support",
+  "profileSupportSub": "Questions et retours",
+  "profileHowAi": "Comment fonctionne l'IA",
+  "profilePrivacy": "Confidentialité",
+  "profileAbout": "À propos de Nuveli",
+  "profileLogout": "Déconnexion",
+  "profileSignOut": "Se déconnecter",
+  "profileDeleteAccount": "Supprimer le compte",
+  "profileSignOutConfirm": "Es-tu sûr de vouloir te déconnecter?",
+  "homeGreetingNoonTime": "Bon après-midi",
+  "profileStreakNow": "Actuel",
+  "profileStreakLongest": "Plus longue",
+  "profileStreakDay": "jour",
+  "personalInfoTitle": "Informations personnelles",
+  "personalInfoEdit": "Modifier",
+  "personalInfoSaved": "Informations enregistrées",
+  "personalInfoSaveFailed": "Impossible d'enregistrer",
+  "personalInfoLoadFailed": "Impossible de charger",
+  "personalInfoSecAccount": "Compte",
+  "personalInfoSecBody": "Informations corporelles",
+  "personalInfoSecActivity": "Activité",
+  "personalInfoName": "Nom",
+  "personalInfoEmail": "E-mail",
+  "personalInfoBirthYear": "Année de naissance",
+  "personalInfoGender": "Genre",
+  "personalInfoHeight": "Taille",
+  "personalInfoHeightCm": "Taille (cm)",
+  "personalInfoWeight": "Poids",
+  "personalInfoWeightKg": "Poids (kg)",
+  "personalInfoActivityLevel": "Niveau d'activité quotidien",
+  "personalInfoActivityLevelLabel": "Niveau d'activité",
+  "personalInfoCancel": "Annuler",
+  "personalInfoSave": "Enregistrer",
+  "personalInfoSaving": "Enregistrement...",
+  "genderFemale": "Femme",
+  "genderMale": "Homme",
+  "genderOther": "Autre",
+  "activitySedentary": "Sédentaire",
+  "activitySedentaryFull": "Sédentaire (bureau)",
+  "activityLight": "Légèrement actif",
+  "activityLightFull": "Légèrement actif (1-3 jours)",
+  "activityModerate": "Modérément actif",
+  "activityModerateFull": "Modérément actif (3-5 jours)",
+  "activityActive": "Actif",
+  "activityActiveFull": "Actif (6-7 jours)",
+  "activityVeryActive": "Très actif",
+  "activityVeryActiveFull": "Très actif (athlète)",
+  "goalsTitle": "Objectifs",
+  "goalsUpdated": "Objectifs mis à jour",
+  "goalsLoadFailed": "Impossible de charger",
+  "goalsSaveFailed": "Impossible d'enregistrer",
+  "goalsSecPurpose": "Objectif",
+  "goalsSecDailyCalorie": "Objectif calorique quotidien",
+  "goalsSecMacroDist": "Distribution macro recommandée",
+  "goalsLoseWeight": "Perdre du poids",
+  "goalsLoseWeightDesc": "Diminution graduelle avec déficit calorique",
+  "goalsMaintain": "Maintenir le poids",
+  "goalsMaintainDesc": "Garder le poids actuel",
+  "goalsGainMuscle": "Prendre du muscle",
+  "goalsGainMuscleDesc": "Construire avec excédent calorique",
+  "goalsMacroNote": "Cette recommandation est basée sur 25% protéines, 50% glucides, 25% lipides. Ton coach peut personnaliser.",
+  "goalsSave": "Enregistrer",
+  "premiumComingTitle": "Premium arrive bientôt! 🚀",
+  "premiumComingDesc": "Nous finalisons l'analyse illimitée de repas par IA, le coach vocal et les insights hebdomadaires. Nous t'avertirons quand c'est prêt.",
+  "premiumFeatureCharts": "Graphiques et tendances avancés",
+  "premiumGotIt": "Compris",
+  "todayMealsCount": "{n} repas",
+  "todayMealDeleteTitle": "Supprimer le repas?",
+  "todayMealDeleteMessage": "\"{name}\" sera supprimé. Cette action est irréversible.",
+  "todayMealDeleteConfirm": "Supprimer",
+  "todayMealDeleteCancel": "Annuler",
+  "todayMealDeleted": "Repas supprimé.",
+  "todayMealDeleteFailed": "Impossible de supprimer.",
+  "mealTypeBreakfastShort": "Petit-déj",
+  "mealTypeLunchShort": "Déjeuner",
+  "mealTypeDinnerShort": "Dîner",
+  "mealTypeSnackShort": "Collation",
+  "@todayMealsCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@todayMealDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "streakLongestNeverActive": "Plus longue série: {longest} jours",
+  "streakTodayDoneSubtitle": "Tu l'as fait aujourd'hui · Plus longue: {longest} jours",
+  "streakTodayMissedSubtitle": "N'oublie pas aujourd'hui · Plus longue: {longest}",
+  "@streakLongestNeverActive": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayDoneSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "@streakTodayMissedSubtitle": {
+    "placeholders": {
+      "longest": {
+        "type": "int"
+      }
+    }
+  },
+  "waterAllDaysList": "Tous les jours",
+  "waterTodayBadge": "AUJOURD'HUI",
+  "waterNoEntry": "Aucun",
+  "weightRecordsList": "Enregistrements",
+  "weightEntriesCount": "{n} entrées",
+  "historyDaysSuffix": "{n} jours",
+  "@weightEntriesCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "@historyDaysSuffix": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "moodGreat": "Génial",
+  "moodGood": "Bien",
+  "moodNeutral": "Normal",
+  "moodBad": "Difficile",
+  "moodRough": "Très difficile"
 }
