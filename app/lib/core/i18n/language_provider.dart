@@ -27,7 +27,7 @@ enum AppLanguage {
 }
 
 const List<Locale> kSupportedLocales = [
-  Locale('tr'), Locale('en'), Locale('de'), Locale('fr'), Locale('es'), Locale('ru'),
+  Locale('tr'), Locale('en'), Locale('de'), Locale('fr'), Locale('es'), Locale('ru'), Locale('it'),
 ];
 const Locale kFallbackLocale = Locale('en');
 const String _prefsKey = 'app_language';
