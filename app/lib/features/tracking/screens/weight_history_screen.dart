@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../data/tracking_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Kilo geçmişi: hero kart (güncel + değişim + trend), çizgi grafiği
 /// ve detay listesi.
@@ -18,7 +19,7 @@ class WeightHistoryScreen extends ConsumerWidget {
 
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Kilo Geçmişi', style: AppTextStyles.headingMedium),
+        title: Text(AppLocalizations.of(context)!.weightHistoryTitle, style: AppTextStyles.headingMedium),
         backgroundColor: AppColors.background,
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -28,7 +29,7 @@ class WeightHistoryScreen extends ConsumerWidget {
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
         error: (e, _) => _ErrorView(
-          message: e is AppError ? e.userMessage : 'Veriler yüklenemedi',
+          message: e is AppError ? e.userMessage : AppLocalizations.of(context)!.weeklyChartLoadFailed,
           onRetry: () => ref.invalidate(weightHistoryProvider),
         ),
         data: (entries) {

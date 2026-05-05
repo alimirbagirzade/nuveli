@@ -804,4 +804,449 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get coachSettingsSubtitle => 'İstediğin zaman değiştirebilirsin.';
+
+  @override
+  String get onboardingMoreMeasures => 'Birkaç ölçüm daha';
+
+  @override
+  String get onboardingActivityLevel => 'Aktivite düzeyin';
+
+  @override
+  String get onboardingFirstMeal => 'İlk öğünümü ekleyelim';
+
+  @override
+  String get onboardingGoToHome => 'Ana ekrana geç';
+
+  @override
+  String get onboardingBirthYear => 'Doğum yılı';
+
+  @override
+  String get onboardingGender => 'Cinsiyet';
+
+  @override
+  String get settingsAppearance => 'GÖRÜNÜM';
+
+  @override
+  String get supportTitle => 'Destek';
+
+  @override
+  String get supportEmailSubject => 'Nuveli Destek';
+
+  @override
+  String get howAiTitle => 'AI Nasıl Çalışır';
+
+  @override
+  String get privacyTitle => 'Gizlilik ve Güvenlik';
+
+  @override
+  String get aboutTitle => 'Nuveli Hakkında';
+
+  @override
+  String get coachToneUpdated => 'Koç tonun güncellendi';
+
+  @override
+  String get supportHowHelp => 'Size nasıl yardım edebiliriz?';
+
+  @override
+  String get supportEmailCard => 'E-posta ile ulaş';
+
+  @override
+  String get supportFaq => 'SSS';
+
+  @override
+  String get supportFaqDesc => 'Sıkça sorulan sorular ve cevaplar';
+
+  @override
+  String get aiBlockFood => 'Yemek Tanıma';
+
+  @override
+  String get aiBlockFoodBody =>
+      'Fotoğrafını incelerim ve yaklaşık kalori/besin tahmini yaparım. Bu kesin bir ölçüm değildir — gerekirse düzeltebilirsin.';
+
+  @override
+  String get aiBlockCoach => 'Koç Yanıtları';
+
+  @override
+  String get aiBlockCoachBody =>
+      'Kısa, yargısız ve destekleyici mesajlar üretirim. Tıbbi tavsiye ya da diyet planı sunmam.';
+
+  @override
+  String get aiBlockSafety => 'Güvenlik';
+
+  @override
+  String get aiBlockSafetyBody =>
+      'Riskli durumlarda profesyonel destek kaynaklarını gösteririm. Kriz anında doğrudan sabit güvenlik metni gelir.';
+
+  @override
+  String get aiBlockData => 'Verilerin';
+
+  @override
+  String get aiBlockDataBody =>
+      'Verilerin şifreli iletilir ve sadece sen erişirsin. Ayarlar > Hesabı Sil ile tamamen silebilirsin.';
+
+  @override
+  String get privacyHeading => 'Güvenliğin bizim önceliğimiz';
+
+  @override
+  String get privacyBody =>
+      'Nuveli bir wellness uygulamasıdır. Tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. Zor bir dönemden geçiyorsan lütfen profesyonel destek al.';
+
+  @override
+  String get privacyEmergency => 'Acil Destek';
+
+  @override
+  String get privacyHotline => 'ALO 182 — Psikolojik Destek Hattı (7/24)';
+
+  @override
+  String get privacyPolicyLink => 'Gizlilik Politikası';
+
+  @override
+  String get privacyTermsLink => 'Kullanım Şartları';
+
+  @override
+  String get privacyDownload => 'Verimi İndir';
+
+  @override
+  String get aboutApp => 'Uygulama';
+
+  @override
+  String get aboutLinks => 'Bağlantılar';
+
+  @override
+  String get aboutWebsite => 'Web sitesi';
+
+  @override
+  String get aboutTechnical => 'Teknik';
+
+  @override
+  String get aboutEnv => 'Ortam';
+
+  @override
+  String get aboutCopyright => '© 2026 Nuveli. Tüm hakları saklıdır.';
+
+  @override
+  String get aboutCopied => 'kopyalandı';
+
+  @override
+  String get aboutVersion => 'Sürüm';
+
+  @override
+  String get streakDay => 'gün';
+
+  @override
+  String get streakDays => 'günlük seri';
+
+  @override
+  String get streakLongest => 'En uzun serin';
+
+  @override
+  String get streakTodayDone => 'Bugün de hallettin';
+
+  @override
+  String streakSummary(int current) {
+    return '$current günlük seri';
+  }
+
+  @override
+  String get streakExplanation =>
+      'Streak\'in arka arkaya öğün eklediğin gün sayısıdır.';
+
+  @override
+  String get weeklyTitle => 'Haftalık Özet';
+
+  @override
+  String get weeklyLoadFailed => 'Yüklenemedi';
+
+  @override
+  String get weeklyChartLoadFailed => 'Veriler yüklenemedi';
+
+  @override
+  String get commonRetryLow => 'Tekrar dene';
+
+  @override
+  String get dayMon => 'Pzt';
+
+  @override
+  String get dayTue => 'Sal';
+
+  @override
+  String get dayWed => 'Çar';
+
+  @override
+  String get dayThu => 'Per';
+
+  @override
+  String get dayFri => 'Cum';
+
+  @override
+  String get daySat => 'Cmt';
+
+  @override
+  String get daySun => 'Paz';
+
+  @override
+  String get dayDetailMeals => 'Öğünler';
+
+  @override
+  String get dayDetailMealsLoadFailed => 'Öğünler yüklenemedi';
+
+  @override
+  String get dayDetailNoMeals => 'Bu gün için öğün kaydı yok';
+
+  @override
+  String dayDetailWaterMl(int ml) {
+    return '$ml ml su';
+  }
+
+  @override
+  String get mealTypeBreakfast => 'Kahvaltı';
+
+  @override
+  String get mealTypeLunch => 'Öğle';
+
+  @override
+  String get mealTypeDinner => 'Akşam';
+
+  @override
+  String get mealTypeSnack => 'Atıştırmalık';
+
+  @override
+  String get mealTypeOther => 'Öğün';
+
+  @override
+  String get weeklyMacroDist => 'Makro Dağılımı';
+
+  @override
+  String get weeklyDailyDetail => 'Günlük Detay';
+
+  @override
+  String get weeklyCoachComment => 'KOÇUN YORUMU';
+
+  @override
+  String get weeklyCoachCommentLocked => 'Koçun yorumu';
+
+  @override
+  String get weeklyCoachCommentLockedDesc =>
+      'Premium ile haftalık örüntülerin için kişisel yorum';
+
+  @override
+  String streakLastLog(String date) {
+    return 'Son kayıt: $date';
+  }
+
+  @override
+  String get streakNow => 'Şu an';
+
+  @override
+  String get streakLongestShort => 'En uzun';
+
+  @override
+  String get streakAddMealNow => 'Şimdi Öğün Ekle';
+
+  @override
+  String get streakAtRisk =>
+      'Bugün öğün eklemedin ve akşam oldu. Şimdi bir öğün eklersen serin devam eder; aksi halde yarın sıfırdan başlayacak.';
+
+  @override
+  String get streakNotStarted =>
+      'Streak henüz başlamadı. İlk öğününü ekle ve serin başlasın.';
+
+  @override
+  String get streakTodayLogged =>
+      'Bugünü de hallettin! Yarın da bir öğün eklersen seri devam eder.';
+
+  @override
+  String get streakExplanationDefault =>
+      'Streak\'in arka arkaya öğün eklediğin gün sayısıdır.';
+
+  @override
+  String get weeklyAvgKcal => 'kcal/gün ortalama';
+
+  @override
+  String get weeklyTotal => 'Toplam';
+
+  @override
+  String get weeklyMeals => 'Öğün';
+
+  @override
+  String get weeklyLogged => 'Kayıt';
+
+  @override
+  String get coachChatTitle => 'Koç';
+
+  @override
+  String get coachChatPlaceholder => 'Koçuna bir şey sor...';
+
+  @override
+  String get coachChatSend => 'Gönder';
+
+  @override
+  String get waterHowMuch => 'Ne kadar içtin?';
+
+  @override
+  String get waterHistory => 'Geçmiş';
+
+  @override
+  String get weightInvalid => 'Geçerli bir kilo girin (1-500 kg).';
+
+  @override
+  String get weightKg => 'kg';
+
+  @override
+  String get moodHowToday => 'Bugün nasılsın?';
+
+  @override
+  String get mealCameraNotAvailable =>
+      'Bu özellik gerçek cihazda çalışır. Galeriden seçebilirsin.';
+
+  @override
+  String get mealGallery => 'Galeri';
+
+  @override
+  String weeklyDaysLogged(int n) {
+    return '$n gün kayıt yaptın. İyi bir ilerleme.';
+  }
+
+  @override
+  String get coachWelcome => 'Merhaba! Bugün nasıl hissediyorsun?';
+
+  @override
+  String get coachInputPlaceholder => 'Mesajını yaz...';
+
+  @override
+  String get coachLoadFailed => 'Yüklenemedi.';
+
+  @override
+  String get coachSendFailed => 'Mesaj gönderilemedi.';
+
+  @override
+  String get coachLimitTitle => 'Günlük mesaj limiti doldu';
+
+  @override
+  String coachLimitBody(String reason) {
+    return '$reason\n\nPremium ile sınırsız koç sohbeti + sesli yanıtlara erişebilirsin.';
+  }
+
+  @override
+  String get coachLater => 'Sonra';
+
+  @override
+  String get coachSeePremium => 'Premium\'a bak';
+
+  @override
+  String get coachCrisisTitle => 'Şu an yalnız değilsin';
+
+  @override
+  String get coachDistressTitle => 'Zor bir an geçiriyor olabilirsin';
+
+  @override
+  String get coachCrisisBody =>
+      'Bu konuda seninle olmak istiyoruz ama doğru destek için bir uzmana ulaşman çok önemli.';
+
+  @override
+  String get coachDistressBody =>
+      'Koçun bu tür durumlarda yardımcı olamaz. Seninle ilgilenen birine ulaşmak her zaman bir seçenek.';
+
+  @override
+  String get mealAddTitle => 'Öğün Ekle';
+
+  @override
+  String get mealPhotoOrDesc => 'Fotoğraf veya açıklama';
+
+  @override
+  String get mealNoPhoto => 'Fotoğraf eklenmedi';
+
+  @override
+  String get mealCamera => 'Kamera';
+
+  @override
+  String get mealGalleryBtn => 'Galeri';
+
+  @override
+  String get mealSimulatorWarn =>
+      'Simulator\'de kamera yok. Galeri\'yi kullan.';
+
+  @override
+  String get mealDescHint =>
+      'Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)';
+
+  @override
+  String get mealAnalyze => 'Analiz Et';
+
+  @override
+  String get mealManualEntry => 'Manuel giriş yap';
+
+  @override
+  String get mealAnalyzeFailed => 'Analiz yapılamadı.';
+
+  @override
+  String get mealLimitTitle => 'Günlük limit doldu';
+
+  @override
+  String mealLimitBody(String reason) {
+    return '$reason\n\nPremium ile sınırsız fotoğraf analizi yapabilirsin.';
+  }
+
+  @override
+  String get waterHistoryTitle => 'Su Geçmişi';
+
+  @override
+  String get weightHistoryTitle => 'Kilo Geçmişi';
+
+  @override
+  String get monthJan => 'Ocak';
+
+  @override
+  String get monthFeb => 'Şubat';
+
+  @override
+  String get monthMar => 'Mart';
+
+  @override
+  String get monthApr => 'Nisan';
+
+  @override
+  String get monthMay => 'Mayıs';
+
+  @override
+  String get monthJun => 'Haziran';
+
+  @override
+  String get monthJul => 'Temmuz';
+
+  @override
+  String get monthAug => 'Ağustos';
+
+  @override
+  String get monthSep => 'Eylül';
+
+  @override
+  String get monthOct => 'Ekim';
+
+  @override
+  String get monthNov => 'Kasım';
+
+  @override
+  String get monthDec => 'Aralık';
+
+  @override
+  String get weekdayMon => 'Pazartesi';
+
+  @override
+  String get weekdayTue => 'Salı';
+
+  @override
+  String get weekdayWed => 'Çarşamba';
+
+  @override
+  String get weekdayThu => 'Perşembe';
+
+  @override
+  String get weekdayFri => 'Cuma';
+
+  @override
+  String get weekdaySat => 'Cumartesi';
+
+  @override
+  String get weekdaySun => 'Pazar';
 }

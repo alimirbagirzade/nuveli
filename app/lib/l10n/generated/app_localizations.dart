@@ -1633,6 +1633,840 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İstediğin zaman değiştirebilirsin.'**
   String get coachSettingsSubtitle;
+
+  /// No description provided for @onboardingMoreMeasures.
+  ///
+  /// In tr, this message translates to:
+  /// **'Birkaç ölçüm daha'**
+  String get onboardingMoreMeasures;
+
+  /// No description provided for @onboardingActivityLevel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite düzeyin'**
+  String get onboardingActivityLevel;
+
+  /// No description provided for @onboardingFirstMeal.
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk öğünümü ekleyelim'**
+  String get onboardingFirstMeal;
+
+  /// No description provided for @onboardingGoToHome.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ana ekrana geç'**
+  String get onboardingGoToHome;
+
+  /// No description provided for @onboardingBirthYear.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğum yılı'**
+  String get onboardingBirthYear;
+
+  /// No description provided for @onboardingGender.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cinsiyet'**
+  String get onboardingGender;
+
+  /// No description provided for @settingsAppearance.
+  ///
+  /// In tr, this message translates to:
+  /// **'GÖRÜNÜM'**
+  String get settingsAppearance;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Destek'**
+  String get supportTitle;
+
+  /// No description provided for @supportEmailSubject.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nuveli Destek'**
+  String get supportEmailSubject;
+
+  /// No description provided for @howAiTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'AI Nasıl Çalışır'**
+  String get howAiTitle;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik ve Güvenlik'**
+  String get privacyTitle;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nuveli Hakkında'**
+  String get aboutTitle;
+
+  /// No description provided for @coachToneUpdated.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koç tonun güncellendi'**
+  String get coachToneUpdated;
+
+  /// No description provided for @supportHowHelp.
+  ///
+  /// In tr, this message translates to:
+  /// **'Size nasıl yardım edebiliriz?'**
+  String get supportHowHelp;
+
+  /// No description provided for @supportEmailCard.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta ile ulaş'**
+  String get supportEmailCard;
+
+  /// No description provided for @supportFaq.
+  ///
+  /// In tr, this message translates to:
+  /// **'SSS'**
+  String get supportFaq;
+
+  /// No description provided for @supportFaqDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıkça sorulan sorular ve cevaplar'**
+  String get supportFaqDesc;
+
+  /// No description provided for @aiBlockFood.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemek Tanıma'**
+  String get aiBlockFood;
+
+  /// No description provided for @aiBlockFoodBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğrafını incelerim ve yaklaşık kalori/besin tahmini yaparım. Bu kesin bir ölçüm değildir — gerekirse düzeltebilirsin.'**
+  String get aiBlockFoodBody;
+
+  /// No description provided for @aiBlockCoach.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koç Yanıtları'**
+  String get aiBlockCoach;
+
+  /// No description provided for @aiBlockCoachBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kısa, yargısız ve destekleyici mesajlar üretirim. Tıbbi tavsiye ya da diyet planı sunmam.'**
+  String get aiBlockCoachBody;
+
+  /// No description provided for @aiBlockSafety.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güvenlik'**
+  String get aiBlockSafety;
+
+  /// No description provided for @aiBlockSafetyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Riskli durumlarda profesyonel destek kaynaklarını gösteririm. Kriz anında doğrudan sabit güvenlik metni gelir.'**
+  String get aiBlockSafetyBody;
+
+  /// No description provided for @aiBlockData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Verilerin'**
+  String get aiBlockData;
+
+  /// No description provided for @aiBlockDataBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Verilerin şifreli iletilir ve sadece sen erişirsin. Ayarlar > Hesabı Sil ile tamamen silebilirsin.'**
+  String get aiBlockDataBody;
+
+  /// No description provided for @privacyHeading.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güvenliğin bizim önceliğimiz'**
+  String get privacyHeading;
+
+  /// No description provided for @privacyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nuveli bir wellness uygulamasıdır. Tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. Zor bir dönemden geçiyorsan lütfen profesyonel destek al.'**
+  String get privacyBody;
+
+  /// No description provided for @privacyEmergency.
+  ///
+  /// In tr, this message translates to:
+  /// **'Acil Destek'**
+  String get privacyEmergency;
+
+  /// No description provided for @privacyHotline.
+  ///
+  /// In tr, this message translates to:
+  /// **'ALO 182 — Psikolojik Destek Hattı (7/24)'**
+  String get privacyHotline;
+
+  /// No description provided for @privacyPolicyLink.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik Politikası'**
+  String get privacyPolicyLink;
+
+  /// No description provided for @privacyTermsLink.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanım Şartları'**
+  String get privacyTermsLink;
+
+  /// No description provided for @privacyDownload.
+  ///
+  /// In tr, this message translates to:
+  /// **'Verimi İndir'**
+  String get privacyDownload;
+
+  /// No description provided for @aboutApp.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama'**
+  String get aboutApp;
+
+  /// No description provided for @aboutLinks.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantılar'**
+  String get aboutLinks;
+
+  /// No description provided for @aboutWebsite.
+  ///
+  /// In tr, this message translates to:
+  /// **'Web sitesi'**
+  String get aboutWebsite;
+
+  /// No description provided for @aboutTechnical.
+  ///
+  /// In tr, this message translates to:
+  /// **'Teknik'**
+  String get aboutTechnical;
+
+  /// No description provided for @aboutEnv.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ortam'**
+  String get aboutEnv;
+
+  /// No description provided for @aboutCopyright.
+  ///
+  /// In tr, this message translates to:
+  /// **'© 2026 Nuveli. Tüm hakları saklıdır.'**
+  String get aboutCopyright;
+
+  /// No description provided for @aboutCopied.
+  ///
+  /// In tr, this message translates to:
+  /// **'kopyalandı'**
+  String get aboutCopied;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sürüm'**
+  String get aboutVersion;
+
+  /// No description provided for @streakDay.
+  ///
+  /// In tr, this message translates to:
+  /// **'gün'**
+  String get streakDay;
+
+  /// No description provided for @streakDays.
+  ///
+  /// In tr, this message translates to:
+  /// **'günlük seri'**
+  String get streakDays;
+
+  /// No description provided for @streakLongest.
+  ///
+  /// In tr, this message translates to:
+  /// **'En uzun serin'**
+  String get streakLongest;
+
+  /// No description provided for @streakTodayDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün de hallettin'**
+  String get streakTodayDone;
+
+  /// No description provided for @streakSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'{current} günlük seri'**
+  String streakSummary(int current);
+
+  /// No description provided for @streakExplanation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Streak\'in arka arkaya öğün eklediğin gün sayısıdır.'**
+  String get streakExplanation;
+
+  /// No description provided for @weeklyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık Özet'**
+  String get weeklyTitle;
+
+  /// No description provided for @weeklyLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi'**
+  String get weeklyLoadFailed;
+
+  /// No description provided for @weeklyChartLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veriler yüklenemedi'**
+  String get weeklyChartLoadFailed;
+
+  /// No description provided for @commonRetryLow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar dene'**
+  String get commonRetryLow;
+
+  /// No description provided for @dayMon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pzt'**
+  String get dayMon;
+
+  /// No description provided for @dayTue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sal'**
+  String get dayTue;
+
+  /// No description provided for @dayWed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çar'**
+  String get dayWed;
+
+  /// No description provided for @dayThu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Per'**
+  String get dayThu;
+
+  /// No description provided for @dayFri.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cum'**
+  String get dayFri;
+
+  /// No description provided for @daySat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cmt'**
+  String get daySat;
+
+  /// No description provided for @daySun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paz'**
+  String get daySun;
+
+  /// No description provided for @dayDetailMeals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğünler'**
+  String get dayDetailMeals;
+
+  /// No description provided for @dayDetailMealsLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğünler yüklenemedi'**
+  String get dayDetailMealsLoadFailed;
+
+  /// No description provided for @dayDetailNoMeals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu gün için öğün kaydı yok'**
+  String get dayDetailNoMeals;
+
+  /// No description provided for @dayDetailWaterMl.
+  ///
+  /// In tr, this message translates to:
+  /// **'{ml} ml su'**
+  String dayDetailWaterMl(int ml);
+
+  /// No description provided for @mealTypeBreakfast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kahvaltı'**
+  String get mealTypeBreakfast;
+
+  /// No description provided for @mealTypeLunch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğle'**
+  String get mealTypeLunch;
+
+  /// No description provided for @mealTypeDinner.
+  ///
+  /// In tr, this message translates to:
+  /// **'Akşam'**
+  String get mealTypeDinner;
+
+  /// No description provided for @mealTypeSnack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Atıştırmalık'**
+  String get mealTypeSnack;
+
+  /// No description provided for @mealTypeOther.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün'**
+  String get mealTypeOther;
+
+  /// No description provided for @weeklyMacroDist.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makro Dağılımı'**
+  String get weeklyMacroDist;
+
+  /// No description provided for @weeklyDailyDetail.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük Detay'**
+  String get weeklyDailyDetail;
+
+  /// No description provided for @weeklyCoachComment.
+  ///
+  /// In tr, this message translates to:
+  /// **'KOÇUN YORUMU'**
+  String get weeklyCoachComment;
+
+  /// No description provided for @weeklyCoachCommentLocked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun yorumu'**
+  String get weeklyCoachCommentLocked;
+
+  /// No description provided for @weeklyCoachCommentLockedDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium ile haftalık örüntülerin için kişisel yorum'**
+  String get weeklyCoachCommentLockedDesc;
+
+  /// No description provided for @streakLastLog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son kayıt: {date}'**
+  String streakLastLog(String date);
+
+  /// No description provided for @streakNow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu an'**
+  String get streakNow;
+
+  /// No description provided for @streakLongestShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'En uzun'**
+  String get streakLongestShort;
+
+  /// No description provided for @streakAddMealNow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi Öğün Ekle'**
+  String get streakAddMealNow;
+
+  /// No description provided for @streakAtRisk.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün öğün eklemedin ve akşam oldu. Şimdi bir öğün eklersen serin devam eder; aksi halde yarın sıfırdan başlayacak.'**
+  String get streakAtRisk;
+
+  /// No description provided for @streakNotStarted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Streak henüz başlamadı. İlk öğününü ekle ve serin başlasın.'**
+  String get streakNotStarted;
+
+  /// No description provided for @streakTodayLogged.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünü de hallettin! Yarın da bir öğün eklersen seri devam eder.'**
+  String get streakTodayLogged;
+
+  /// No description provided for @streakExplanationDefault.
+  ///
+  /// In tr, this message translates to:
+  /// **'Streak\'in arka arkaya öğün eklediğin gün sayısıdır.'**
+  String get streakExplanationDefault;
+
+  /// No description provided for @weeklyAvgKcal.
+  ///
+  /// In tr, this message translates to:
+  /// **'kcal/gün ortalama'**
+  String get weeklyAvgKcal;
+
+  /// No description provided for @weeklyTotal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam'**
+  String get weeklyTotal;
+
+  /// No description provided for @weeklyMeals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün'**
+  String get weeklyMeals;
+
+  /// No description provided for @weeklyLogged.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt'**
+  String get weeklyLogged;
+
+  /// No description provided for @coachChatTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koç'**
+  String get coachChatTitle;
+
+  /// No description provided for @coachChatPlaceholder.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçuna bir şey sor...'**
+  String get coachChatPlaceholder;
+
+  /// No description provided for @coachChatSend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönder'**
+  String get coachChatSend;
+
+  /// No description provided for @waterHowMuch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne kadar içtin?'**
+  String get waterHowMuch;
+
+  /// No description provided for @waterHistory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçmiş'**
+  String get waterHistory;
+
+  /// No description provided for @weightInvalid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçerli bir kilo girin (1-500 kg).'**
+  String get weightInvalid;
+
+  /// No description provided for @weightKg.
+  ///
+  /// In tr, this message translates to:
+  /// **'kg'**
+  String get weightKg;
+
+  /// No description provided for @moodHowToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün nasılsın?'**
+  String get moodHowToday;
+
+  /// No description provided for @mealCameraNotAvailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu özellik gerçek cihazda çalışır. Galeriden seçebilirsin.'**
+  String get mealCameraNotAvailable;
+
+  /// No description provided for @mealGallery.
+  ///
+  /// In tr, this message translates to:
+  /// **'Galeri'**
+  String get mealGallery;
+
+  /// No description provided for @weeklyDaysLogged.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} gün kayıt yaptın. İyi bir ilerleme.'**
+  String weeklyDaysLogged(int n);
+
+  /// No description provided for @coachWelcome.
+  ///
+  /// In tr, this message translates to:
+  /// **'Merhaba! Bugün nasıl hissediyorsun?'**
+  String get coachWelcome;
+
+  /// No description provided for @coachInputPlaceholder.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesajını yaz...'**
+  String get coachInputPlaceholder;
+
+  /// No description provided for @coachLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi.'**
+  String get coachLoadFailed;
+
+  /// No description provided for @coachSendFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesaj gönderilemedi.'**
+  String get coachSendFailed;
+
+  /// No description provided for @coachLimitTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük mesaj limiti doldu'**
+  String get coachLimitTitle;
+
+  /// No description provided for @coachLimitBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'{reason}\n\nPremium ile sınırsız koç sohbeti + sesli yanıtlara erişebilirsin.'**
+  String coachLimitBody(String reason);
+
+  /// No description provided for @coachLater.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonra'**
+  String get coachLater;
+
+  /// No description provided for @coachSeePremium.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium\'a bak'**
+  String get coachSeePremium;
+
+  /// No description provided for @coachCrisisTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu an yalnız değilsin'**
+  String get coachCrisisTitle;
+
+  /// No description provided for @coachDistressTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zor bir an geçiriyor olabilirsin'**
+  String get coachDistressTitle;
+
+  /// No description provided for @coachCrisisBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu konuda seninle olmak istiyoruz ama doğru destek için bir uzmana ulaşman çok önemli.'**
+  String get coachCrisisBody;
+
+  /// No description provided for @coachDistressBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun bu tür durumlarda yardımcı olamaz. Seninle ilgilenen birine ulaşmak her zaman bir seçenek.'**
+  String get coachDistressBody;
+
+  /// No description provided for @mealAddTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün Ekle'**
+  String get mealAddTitle;
+
+  /// No description provided for @mealPhotoOrDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf veya açıklama'**
+  String get mealPhotoOrDesc;
+
+  /// No description provided for @mealNoPhoto.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf eklenmedi'**
+  String get mealNoPhoto;
+
+  /// No description provided for @mealCamera.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kamera'**
+  String get mealCamera;
+
+  /// No description provided for @mealGalleryBtn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Galeri'**
+  String get mealGalleryBtn;
+
+  /// No description provided for @mealSimulatorWarn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Simulator\'de kamera yok. Galeri\'yi kullan.'**
+  String get mealSimulatorWarn;
+
+  /// No description provided for @mealDescHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)'**
+  String get mealDescHint;
+
+  /// No description provided for @mealAnalyze.
+  ///
+  /// In tr, this message translates to:
+  /// **'Analiz Et'**
+  String get mealAnalyze;
+
+  /// No description provided for @mealManualEntry.
+  ///
+  /// In tr, this message translates to:
+  /// **'Manuel giriş yap'**
+  String get mealManualEntry;
+
+  /// No description provided for @mealAnalyzeFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Analiz yapılamadı.'**
+  String get mealAnalyzeFailed;
+
+  /// No description provided for @mealLimitTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük limit doldu'**
+  String get mealLimitTitle;
+
+  /// No description provided for @mealLimitBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'{reason}\n\nPremium ile sınırsız fotoğraf analizi yapabilirsin.'**
+  String mealLimitBody(String reason);
+
+  /// No description provided for @waterHistoryTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su Geçmişi'**
+  String get waterHistoryTitle;
+
+  /// No description provided for @weightHistoryTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo Geçmişi'**
+  String get weightHistoryTitle;
+
+  /// No description provided for @monthJan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ocak'**
+  String get monthJan;
+
+  /// No description provided for @monthFeb.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şubat'**
+  String get monthFeb;
+
+  /// No description provided for @monthMar.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mart'**
+  String get monthMar;
+
+  /// No description provided for @monthApr.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nisan'**
+  String get monthApr;
+
+  /// No description provided for @monthMay.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mayıs'**
+  String get monthMay;
+
+  /// No description provided for @monthJun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haziran'**
+  String get monthJun;
+
+  /// No description provided for @monthJul.
+  ///
+  /// In tr, this message translates to:
+  /// **'Temmuz'**
+  String get monthJul;
+
+  /// No description provided for @monthAug.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ağustos'**
+  String get monthAug;
+
+  /// No description provided for @monthSep.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eylül'**
+  String get monthSep;
+
+  /// No description provided for @monthOct.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ekim'**
+  String get monthOct;
+
+  /// No description provided for @monthNov.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kasım'**
+  String get monthNov;
+
+  /// No description provided for @monthDec.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aralık'**
+  String get monthDec;
+
+  /// No description provided for @weekdayMon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazartesi'**
+  String get weekdayMon;
+
+  /// No description provided for @weekdayTue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Salı'**
+  String get weekdayTue;
+
+  /// No description provided for @weekdayWed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çarşamba'**
+  String get weekdayWed;
+
+  /// No description provided for @weekdayThu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Perşembe'**
+  String get weekdayThu;
+
+  /// No description provided for @weekdayFri.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cuma'**
+  String get weekdayFri;
+
+  /// No description provided for @weekdaySat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cumartesi'**
+  String get weekdaySat;
+
+  /// No description provided for @weekdaySun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar'**
+  String get weekdaySun;
 }
 
 class _AppLocalizationsDelegate

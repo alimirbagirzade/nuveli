@@ -13,6 +13,7 @@ import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/skeleton_loader.dart';
 import '../data/coach_repository.dart';
 import '../widgets/coach_message_bubble.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class CoachChatScreen extends ConsumerStatefulWidget {
   const CoachChatScreen({super.key});
@@ -43,7 +44,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
         await _showCoachLimitDialog(e.userMessage);
         return;
       }
-      final msg = e is AppError ? e.userMessage : 'Mesaj gönderilemedi.';
+      final msg = e is AppError ? e.userMessage : AppLocalizations.of(context)!.coachSendFailed;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     } finally {
       if (mounted) setState(() => _sending = false);
@@ -56,7 +57,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
       builder: (ctx) => AlertDialog(
         icon: const Icon(Icons.lock_outline,
             size: 48, color: AppColors.primary),
-        title: const Text('Günlük mesaj limiti doldu'),
+        title: Text(AppLocalizations.of(context)!.coachLimitTitle),
         content: Text(
           '$reason\n\nPremium ile sınırsız koç sohbeti + sesli yanıtlara erişebilirsin.',
           textAlign: TextAlign.center,
@@ -65,11 +66,11 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Sonra'),
+            child: Text(AppLocalizations.of(context)!.coachLater),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Premium\'a bak'),
+            child: Text(AppLocalizations.of(context)!.coachSeePremium),
           ),
         ],
       ),
@@ -103,7 +104,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
         ref.watch(coachChatProvider.notifier).lastRiskMode;
 
     return AppScaffold(
-      appBar: AppBar(title: const Text('Koçun')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.coachChatTitle)),
       body: Column(
         children: [
           if (riskMode == 'crisis' || riskMode == 'distress')
@@ -112,7 +113,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
             child: chatAsync.when(
               loading: () => _CoachChatSkeleton(),
               error: (err, _) {
-                final msg = err is AppError ? err.userMessage : 'Yüklenemedi.';
+                final msg = err is AppError ? err.userMessage : AppLocalizations.of(context)!.coachLoadFailed;
                 return Center(child: Text(msg, style: AppTextStyles.bodySmall));
               },
               data: (messages) {
@@ -121,7 +122,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(32),
                       child: Text(
-                        'Merhaba! Bugün nasıl hissediyorsun?',
+                        AppLocalizations.of(context)!.coachWelcome,
                         style: AppTextStyles.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -170,7 +171,7 @@ class _CoachChatScreenState extends ConsumerState<CoachChatScreen> {
                     minLines: 1,
                     maxLines: 4,
                     enabled: !_sending,
-                    decoration: const InputDecoration(hintText: 'Mesajını yaz...'),
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.coachInputPlaceholder),
                   ),
                 ),
                 IconButton(
@@ -209,13 +210,11 @@ class _SupportBanner extends StatelessWidget {
     final fg = isCrisis ? AppColors.error : AppColors.warning;
 
     final title = isCrisis
-        ? 'Şu an yalnız değilsin'
-        : 'Zor bir an geçiriyor olabilirsin';
+        ? AppLocalizations.of(context)!.coachCrisisTitle
+        : AppLocalizations.of(context)!.coachDistressTitle;
     final body = isCrisis
-        ? 'Bu konuda seninle olmak istiyoruz ama doğru destek için bir uzmana '
-            'ulaşman çok önemli.'
-        : 'Koçun bu tür durumlarda yardımcı olamaz. Seninle ilgilenen birine '
-            'ulaşmak her zaman bir seçenek.';
+        ? AppLocalizations.of(context)!.coachCrisisBody
+        : AppLocalizations.of(context)!.coachDistressBody;
 
     return Container(
       width: double.infinity,

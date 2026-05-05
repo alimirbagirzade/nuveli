@@ -7,6 +7,7 @@ import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../data/progress_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Tap-able 7-day calorie chart shown on the home screen.
 ///
@@ -39,7 +40,7 @@ class WeeklyChart extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Row(
                 children: [
-                  Text('Bu Hafta', style: AppTextStyles.labelMedium),
+                  Text(AppLocalizations.of(context)!.homeThisWeek, style: AppTextStyles.labelMedium),
                   const SizedBox(width: 6),
                   Icon(
                     Icons.chevron_right,
@@ -65,7 +66,7 @@ class WeeklyChart extends ConsumerWidget {
           weeklyAsync.when(
             loading: () => const _ChartSkeleton(),
             error: (e, _) => _ChartError(
-              message: e is AppError ? e.userMessage : 'Veriler yüklenemedi',
+              message: e is AppError ? e.userMessage : AppLocalizations.of(context)!.weeklyChartLoadFailed,
               onRetry: () => ref.invalidate(weeklySummaryProvider),
             ),
             data: (weekly) => _ChartBars(days: weekly.sevenDays),
@@ -264,7 +265,7 @@ class _ChartError extends StatelessWidget {
             ),
             TextButton(
               onPressed: onRetry,
-              child: const Text('Tekrar dene'),
+              child: Text(AppLocalizations.of(context)!.commonRetryLow),
             ),
           ],
         ),

@@ -261,5 +261,186 @@
   "notifLoadFailed": "Yüklenemedi.",
   "coachSettingsTitle": "Koçun",
   "coachSettingsQuestion": "Koçun seninle nasıl konuşsun?",
-  "coachSettingsSubtitle": "İstediğin zaman değiştirebilirsin."
+  "coachSettingsSubtitle": "İstediğin zaman değiştirebilirsin.",
+  "onboardingMoreMeasures": "Birkaç ölçüm daha",
+  "onboardingActivityLevel": "Aktivite düzeyin",
+  "onboardingFirstMeal": "İlk öğünümü ekleyelim",
+  "onboardingGoToHome": "Ana ekrana geç",
+  "onboardingBirthYear": "Doğum yılı",
+  "onboardingGender": "Cinsiyet",
+  "settingsAppearance": "GÖRÜNÜM",
+  "supportTitle": "Destek",
+  "supportEmailSubject": "Nuveli Destek",
+  "howAiTitle": "AI Nasıl Çalışır",
+  "privacyTitle": "Gizlilik ve Güvenlik",
+  "aboutTitle": "Nuveli Hakkında",
+  "coachToneUpdated": "Koç tonun güncellendi",
+  "supportHowHelp": "Size nasıl yardım edebiliriz?",
+  "supportEmailCard": "E-posta ile ulaş",
+  "supportFaq": "SSS",
+  "supportFaqDesc": "Sıkça sorulan sorular ve cevaplar",
+  "aiBlockFood": "Yemek Tanıma",
+  "aiBlockFoodBody": "Fotoğrafını incelerim ve yaklaşık kalori/besin tahmini yaparım. Bu kesin bir ölçüm değildir — gerekirse düzeltebilirsin.",
+  "aiBlockCoach": "Koç Yanıtları",
+  "aiBlockCoachBody": "Kısa, yargısız ve destekleyici mesajlar üretirim. Tıbbi tavsiye ya da diyet planı sunmam.",
+  "aiBlockSafety": "Güvenlik",
+  "aiBlockSafetyBody": "Riskli durumlarda profesyonel destek kaynaklarını gösteririm. Kriz anında doğrudan sabit güvenlik metni gelir.",
+  "aiBlockData": "Verilerin",
+  "aiBlockDataBody": "Verilerin şifreli iletilir ve sadece sen erişirsin. Ayarlar > Hesabı Sil ile tamamen silebilirsin.",
+  "privacyHeading": "Güvenliğin bizim önceliğimiz",
+  "privacyBody": "Nuveli bir wellness uygulamasıdır. Tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. Zor bir dönemden geçiyorsan lütfen profesyonel destek al.",
+  "privacyEmergency": "Acil Destek",
+  "privacyHotline": "ALO 182 — Psikolojik Destek Hattı (7/24)",
+  "privacyPolicyLink": "Gizlilik Politikası",
+  "privacyTermsLink": "Kullanım Şartları",
+  "privacyDownload": "Verimi İndir",
+  "aboutApp": "Uygulama",
+  "aboutLinks": "Bağlantılar",
+  "aboutWebsite": "Web sitesi",
+  "aboutTechnical": "Teknik",
+  "aboutEnv": "Ortam",
+  "aboutCopyright": "© 2026 Nuveli. Tüm hakları saklıdır.",
+  "aboutCopied": "kopyalandı",
+  "aboutVersion": "Sürüm",
+  "streakDay": "gün",
+  "streakDays": "günlük seri",
+  "streakLongest": "En uzun serin",
+  "streakTodayDone": "Bugün de hallettin",
+  "streakSummary": "{current} günlük seri",
+  "streakExplanation": "Streak'in arka arkaya öğün eklediğin gün sayısıdır.",
+  "weeklyTitle": "Haftalık Özet",
+  "weeklyLoadFailed": "Yüklenemedi",
+  "weeklyChartLoadFailed": "Veriler yüklenemedi",
+  "commonRetryLow": "Tekrar dene",
+  "dayMon": "Pzt",
+  "dayTue": "Sal",
+  "dayWed": "Çar",
+  "dayThu": "Per",
+  "dayFri": "Cum",
+  "daySat": "Cmt",
+  "daySun": "Paz",
+  "@streakSummary": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "dayDetailMeals": "Öğünler",
+  "dayDetailMealsLoadFailed": "Öğünler yüklenemedi",
+  "dayDetailNoMeals": "Bu gün için öğün kaydı yok",
+  "dayDetailWaterMl": "{ml} ml su",
+  "mealTypeBreakfast": "Kahvaltı",
+  "mealTypeLunch": "Öğle",
+  "mealTypeDinner": "Akşam",
+  "mealTypeSnack": "Atıştırmalık",
+  "mealTypeOther": "Öğün",
+  "weeklyMacroDist": "Makro Dağılımı",
+  "weeklyDailyDetail": "Günlük Detay",
+  "weeklyCoachComment": "KOÇUN YORUMU",
+  "weeklyCoachCommentLocked": "Koçun yorumu",
+  "weeklyCoachCommentLockedDesc": "Premium ile haftalık örüntülerin için kişisel yorum",
+  "@dayDetailWaterMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "streakLastLog": "Son kayıt: {date}",
+  "streakNow": "Şu an",
+  "streakLongestShort": "En uzun",
+  "streakAddMealNow": "Şimdi Öğün Ekle",
+  "streakAtRisk": "Bugün öğün eklemedin ve akşam oldu. Şimdi bir öğün eklersen serin devam eder; aksi halde yarın sıfırdan başlayacak.",
+  "streakNotStarted": "Streak henüz başlamadı. İlk öğününü ekle ve serin başlasın.",
+  "streakTodayLogged": "Bugünü de hallettin! Yarın da bir öğün eklersen seri devam eder.",
+  "streakExplanationDefault": "Streak'in arka arkaya öğün eklediğin gün sayısıdır.",
+  "weeklyAvgKcal": "kcal/gün ortalama",
+  "weeklyTotal": "Toplam",
+  "weeklyMeals": "Öğün",
+  "weeklyLogged": "Kayıt",
+  "coachChatTitle": "Koç",
+  "coachChatPlaceholder": "Koçuna bir şey sor...",
+  "coachChatSend": "Gönder",
+  "@streakLastLog": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "waterHowMuch": "Ne kadar içtin?",
+  "waterHistory": "Geçmiş",
+  "weightInvalid": "Geçerli bir kilo girin (1-500 kg).",
+  "weightKg": "kg",
+  "moodHowToday": "Bugün nasılsın?",
+  "mealCameraNotAvailable": "Bu özellik gerçek cihazda çalışır. Galeriden seçebilirsin.",
+  "mealGallery": "Galeri",
+  "weeklyDaysLogged": "{n} gün kayıt yaptın. İyi bir ilerleme.",
+  "@weeklyDaysLogged": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coachWelcome": "Merhaba! Bugün nasıl hissediyorsun?",
+  "coachInputPlaceholder": "Mesajını yaz...",
+  "coachLoadFailed": "Yüklenemedi.",
+  "coachSendFailed": "Mesaj gönderilemedi.",
+  "coachLimitTitle": "Günlük mesaj limiti doldu",
+  "coachLimitBody": "{reason}\n\nPremium ile sınırsız koç sohbeti + sesli yanıtlara erişebilirsin.",
+  "coachLater": "Sonra",
+  "coachSeePremium": "Premium'a bak",
+  "coachCrisisTitle": "Şu an yalnız değilsin",
+  "coachDistressTitle": "Zor bir an geçiriyor olabilirsin",
+  "coachCrisisBody": "Bu konuda seninle olmak istiyoruz ama doğru destek için bir uzmana ulaşman çok önemli.",
+  "coachDistressBody": "Koçun bu tür durumlarda yardımcı olamaz. Seninle ilgilenen birine ulaşmak her zaman bir seçenek.",
+  "mealAddTitle": "Öğün Ekle",
+  "mealPhotoOrDesc": "Fotoğraf veya açıklama",
+  "mealNoPhoto": "Fotoğraf eklenmedi",
+  "mealCamera": "Kamera",
+  "mealGalleryBtn": "Galeri",
+  "mealSimulatorWarn": "Simulator'de kamera yok. Galeri'yi kullan.",
+  "mealDescHint": "Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)",
+  "mealAnalyze": "Analiz Et",
+  "mealManualEntry": "Manuel giriş yap",
+  "mealAnalyzeFailed": "Analiz yapılamadı.",
+  "mealLimitTitle": "Günlük limit doldu",
+  "mealLimitBody": "{reason}\n\nPremium ile sınırsız fotoğraf analizi yapabilirsin.",
+  "waterHistoryTitle": "Su Geçmişi",
+  "weightHistoryTitle": "Kilo Geçmişi",
+  "monthJan": "Ocak",
+  "monthFeb": "Şubat",
+  "monthMar": "Mart",
+  "monthApr": "Nisan",
+  "monthMay": "Mayıs",
+  "monthJun": "Haziran",
+  "monthJul": "Temmuz",
+  "monthAug": "Ağustos",
+  "monthSep": "Eylül",
+  "monthOct": "Ekim",
+  "monthNov": "Kasım",
+  "monthDec": "Aralık",
+  "weekdayMon": "Pazartesi",
+  "weekdayTue": "Salı",
+  "weekdayWed": "Çarşamba",
+  "weekdayThu": "Perşembe",
+  "weekdayFri": "Cuma",
+  "weekdaySat": "Cumartesi",
+  "weekdaySun": "Pazar",
+  "@coachLimitBody": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@mealLimitBody": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

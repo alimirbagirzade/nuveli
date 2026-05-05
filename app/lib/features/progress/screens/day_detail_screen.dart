@@ -8,6 +8,7 @@ import '../../../shared/widgets/app_scaffold.dart';
 import '../../meal/data/meal_models.dart';
 import '../../meal/data/meal_repository.dart';
 import '../data/progress_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Day detail — opened when the user taps a bar in the weekly chart.
 /// Shows that day's meals, macro breakdown, and a header summary.
@@ -27,7 +28,7 @@ class DayDetailScreen extends ConsumerWidget {
     final mealsAsync = ref.watch(_mealsForDayProvider(localDay));
 
     return AppScaffold(
-      appBar: AppBar(title: Text(_formatDateTr(localDay))),
+      appBar: AppBar(title: Text(_formatDateLocalized(context, localDay))),
       body: RefreshIndicator(
         color: AppColors.primary,
         onRefresh: () async {
@@ -60,7 +61,7 @@ class DayDetailScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
 
-            Text('Öğünler', style: AppTextStyles.headingSmall),
+            Text(AppLocalizations.of(context)!.dayDetailMeals, style: AppTextStyles.headingSmall),
             const SizedBox(height: 12),
 
             mealsAsync.when(
@@ -71,7 +72,7 @@ class DayDetailScreen extends ConsumerWidget {
                 ),
               ),
               error: (e, _) => _MealsError(
-                message: e is AppError ? e.userMessage : 'Öğünler yüklenemedi',
+                message: e is AppError ? e.userMessage : AppLocalizations.of(context)!.dayDetailMealsLoadFailed,
                 onRetry: () => ref.invalidate(_mealsForDayProvider(localDay)),
               ),
               data: (meals) {
@@ -91,15 +92,17 @@ class DayDetailScreen extends ConsumerWidget {
     );
   }
 
-  /// "2026-04-28" → "28 Nisan 2026, Salı"
-  String _formatDateTr(String iso) {
-    const months = [
-      'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
+  /// "2026-04-28" → "28 April, Tuesday" (locale-aware)
+  String _formatDateLocalized(BuildContext context, String iso) {
+    final l10n = AppLocalizations.of(context)!;
+    final months = [
+      l10n.monthJan, l10n.monthFeb, l10n.monthMar, l10n.monthApr,
+      l10n.monthMay, l10n.monthJun, l10n.monthJul, l10n.monthAug,
+      l10n.monthSep, l10n.monthOct, l10n.monthNov, l10n.monthDec,
     ];
-    const weekdays = [
-      'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe',
-      'Cuma', 'Cumartesi', 'Pazar',
+    final weekdays = [
+      l10n.weekdayMon, l10n.weekdayTue, l10n.weekdayWed, l10n.weekdayThu,
+      l10n.weekdayFri, l10n.weekdaySat, l10n.weekdaySun,
     ];
     try {
       final parts = iso.split('-');
@@ -190,19 +193,19 @@ class _DaySummaryCard extends StatelessWidget {
           Row(
             children: [
               _MacroChip(
-                label: 'Protein',
+                label: AppLocalizations.of(context)!.macroProtein,
                 value: '${day.proteinG.toInt()}g',
                 color: AppColors.success,
               ),
               const SizedBox(width: 8),
               _MacroChip(
-                label: 'Karb',
+                label: AppLocalizations.of(context)!.macroCarb,
                 value: '${day.carbG.toInt()}g',
                 color: AppColors.primary,
               ),
               const SizedBox(width: 8),
               _MacroChip(
-                label: 'Yağ',
+                label: AppLocalizations.of(context)!.macroFat,
                 value: '${day.fatG.toInt()}g',
                 color: AppColors.warning,
               ),
@@ -321,7 +324,7 @@ class _MealRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  _mealTypeLabel(meal.mealType),
+                  _mealTypeLabel(context, meal.mealType),
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.textTertiary,
                   ),
@@ -355,18 +358,18 @@ class _MealRow extends StatelessWidget {
     );
   }
 
-  String _mealTypeLabel(String? type) {
+  String _mealTypeLabel(BuildContext context, String? type) {
     switch (type) {
       case 'breakfast':
-        return 'Kahvaltı';
+        return AppLocalizations.of(context)!.mealTypeBreakfast;
       case 'lunch':
-        return 'Öğle';
+        return AppLocalizations.of(context)!.mealTypeLunch;
       case 'dinner':
-        return 'Akşam';
+        return AppLocalizations.of(context)!.mealTypeDinner;
       case 'snack':
-        return 'Atıştırmalık';
+        return AppLocalizations.of(context)!.mealTypeSnack;
       default:
-        return 'Öğün';
+        return AppLocalizations.of(context)!.mealTypeOther;
     }
   }
 }
@@ -395,7 +398,7 @@ class _EmptyMeals extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Bu gün için öğün kaydı yok',
+            AppLocalizations.of(context)!.dayDetailNoMeals,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary,
             ),
@@ -436,7 +439,7 @@ class _MealsError extends StatelessWidget {
         children: [
           Text(message, style: AppTextStyles.bodyMedium),
           const SizedBox(height: 8),
-          TextButton(onPressed: onRetry, child: const Text('Tekrar dene')),
+          TextButton(onPressed: onRetry, child: Text(AppLocalizations.of(context)!.commonRetryLow)),
         ],
       ),
     );

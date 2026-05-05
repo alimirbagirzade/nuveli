@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/theme/theme_provider.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class ThemeSelectorTile extends ConsumerWidget {
   const ThemeSelectorTile({super.key});
@@ -26,7 +27,7 @@ class ThemeSelectorTile extends ConsumerWidget {
                 children: [
                   Icon(Icons.palette_outlined, size: 18, color: AppColors.textSecondary),
                   const SizedBox(width: 8),
-                  Text('GORUNUM', style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontWeight: FontWeight.w600, letterSpacing: 0.6)),
+                  Text(AppLocalizations.of(context)!.settingsAppearance, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontWeight: FontWeight.w600, letterSpacing: 0.6)),
                 ],
               ),
             ),

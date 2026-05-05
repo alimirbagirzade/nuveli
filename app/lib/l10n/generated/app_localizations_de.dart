@@ -811,4 +811,449 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get coachSettingsSubtitle => 'Du kannst es jederzeit ändern.';
+
+  @override
+  String get onboardingMoreMeasures => 'Noch ein paar Maße';
+
+  @override
+  String get onboardingActivityLevel => 'Dein Aktivitätsniveau';
+
+  @override
+  String get onboardingFirstMeal => 'Erste Mahlzeit hinzufügen';
+
+  @override
+  String get onboardingGoToHome => 'Zum Startbildschirm';
+
+  @override
+  String get onboardingBirthYear => 'Geburtsjahr';
+
+  @override
+  String get onboardingGender => 'Geschlecht';
+
+  @override
+  String get settingsAppearance => 'DARSTELLUNG';
+
+  @override
+  String get supportTitle => 'Support';
+
+  @override
+  String get supportEmailSubject => 'Nuveli Support';
+
+  @override
+  String get howAiTitle => 'Wie KI funktioniert';
+
+  @override
+  String get privacyTitle => 'Datenschutz & Sicherheit';
+
+  @override
+  String get aboutTitle => 'Über Nuveli';
+
+  @override
+  String get coachToneUpdated => 'Coach-Ton aktualisiert';
+
+  @override
+  String get supportHowHelp => 'Wie können wir helfen?';
+
+  @override
+  String get supportEmailCard => 'Per E-Mail kontaktieren';
+
+  @override
+  String get supportFaq => 'FAQ';
+
+  @override
+  String get supportFaqDesc => 'Häufig gestellte Fragen und Antworten';
+
+  @override
+  String get aiBlockFood => 'Lebensmittelerkennung';
+
+  @override
+  String get aiBlockFoodBody =>
+      'Ich analysiere dein Foto und schätze Kalorien. Das ist keine exakte Messung — du kannst bearbeiten.';
+
+  @override
+  String get aiBlockCoach => 'Coach-Antworten';
+
+  @override
+  String get aiBlockCoachBody =>
+      'Kurze, nicht wertende, unterstützende Nachrichten. Keine medizinischen Ratschläge.';
+
+  @override
+  String get aiBlockSafety => 'Sicherheit';
+
+  @override
+  String get aiBlockSafetyBody =>
+      'In Risikosituationen zeige ich Unterstützungsressourcen.';
+
+  @override
+  String get aiBlockData => 'Deine Daten';
+
+  @override
+  String get aiBlockDataBody =>
+      'Deine Daten werden verschlüsselt übertragen und nur du kannst zugreifen.';
+
+  @override
+  String get privacyHeading => 'Deine Sicherheit hat Priorität';
+
+  @override
+  String get privacyBody =>
+      'Nuveli ist eine Wellness-App. Keine medizinische Diagnose oder Diätpläne.';
+
+  @override
+  String get privacyEmergency => 'Notfall-Unterstützung';
+
+  @override
+  String get privacyHotline => 'ALO 182 — Psychologische Hilfe (24/7)';
+
+  @override
+  String get privacyPolicyLink => 'Datenschutzerklärung';
+
+  @override
+  String get privacyTermsLink => 'Nutzungsbedingungen';
+
+  @override
+  String get privacyDownload => 'Meine Daten herunterladen';
+
+  @override
+  String get aboutApp => 'App';
+
+  @override
+  String get aboutLinks => 'Links';
+
+  @override
+  String get aboutWebsite => 'Webseite';
+
+  @override
+  String get aboutTechnical => 'Technisch';
+
+  @override
+  String get aboutEnv => 'Umgebung';
+
+  @override
+  String get aboutCopyright => '© 2026 Nuveli. Alle Rechte vorbehalten.';
+
+  @override
+  String get aboutCopied => 'kopiert';
+
+  @override
+  String get aboutVersion => 'Version';
+
+  @override
+  String get streakDay => 'Tag';
+
+  @override
+  String get streakDays => 'Tage in Folge';
+
+  @override
+  String get streakLongest => 'Längste Serie';
+
+  @override
+  String get streakTodayDone => 'Heute auch geschafft';
+
+  @override
+  String streakSummary(int current) {
+    return '$current Tage in Folge';
+  }
+
+  @override
+  String get streakExplanation =>
+      'Deine Serie zeigt aufeinanderfolgende Tage mit Mahlzeiten.';
+
+  @override
+  String get weeklyTitle => 'Wochenübersicht';
+
+  @override
+  String get weeklyLoadFailed => 'Konnte nicht geladen werden';
+
+  @override
+  String get weeklyChartLoadFailed => 'Daten konnten nicht geladen werden';
+
+  @override
+  String get commonRetryLow => 'Erneut versuchen';
+
+  @override
+  String get dayMon => 'Mo';
+
+  @override
+  String get dayTue => 'Di';
+
+  @override
+  String get dayWed => 'Mi';
+
+  @override
+  String get dayThu => 'Do';
+
+  @override
+  String get dayFri => 'Fr';
+
+  @override
+  String get daySat => 'Sa';
+
+  @override
+  String get daySun => 'So';
+
+  @override
+  String get dayDetailMeals => 'Mahlzeiten';
+
+  @override
+  String get dayDetailMealsLoadFailed =>
+      'Mahlzeiten konnten nicht geladen werden';
+
+  @override
+  String get dayDetailNoMeals => 'Keine Mahlzeiten für diesen Tag';
+
+  @override
+  String dayDetailWaterMl(int ml) {
+    return '$ml ml Wasser';
+  }
+
+  @override
+  String get mealTypeBreakfast => 'Frühstück';
+
+  @override
+  String get mealTypeLunch => 'Mittagessen';
+
+  @override
+  String get mealTypeDinner => 'Abendessen';
+
+  @override
+  String get mealTypeSnack => 'Snack';
+
+  @override
+  String get mealTypeOther => 'Mahlzeit';
+
+  @override
+  String get weeklyMacroDist => 'Makro-Verteilung';
+
+  @override
+  String get weeklyDailyDetail => 'Tägliches Detail';
+
+  @override
+  String get weeklyCoachComment => 'COACH-KOMMENTAR';
+
+  @override
+  String get weeklyCoachCommentLocked => 'Coach-Kommentar';
+
+  @override
+  String get weeklyCoachCommentLockedDesc =>
+      'Wöchentliche Mustererkennung mit Premium';
+
+  @override
+  String streakLastLog(String date) {
+    return 'Letzter Eintrag: $date';
+  }
+
+  @override
+  String get streakNow => 'Aktuell';
+
+  @override
+  String get streakLongestShort => 'Längste';
+
+  @override
+  String get streakAddMealNow => 'Mahlzeit hinzufügen';
+
+  @override
+  String get streakAtRisk =>
+      'Du hast heute noch keine Mahlzeit eingetragen und es ist Abend. Füge jetzt eine hinzu.';
+
+  @override
+  String get streakNotStarted =>
+      'Deine Serie hat noch nicht begonnen. Füge deine erste Mahlzeit hinzu.';
+
+  @override
+  String get streakTodayLogged => 'Heute auch geschafft! Mache morgen weiter.';
+
+  @override
+  String get streakExplanationDefault =>
+      'Deine Serie zeigt aufeinanderfolgende Tage mit Mahlzeiten.';
+
+  @override
+  String get weeklyAvgKcal => 'kcal/Tag Durchschnitt';
+
+  @override
+  String get weeklyTotal => 'Gesamt';
+
+  @override
+  String get weeklyMeals => 'Mahlzeiten';
+
+  @override
+  String get weeklyLogged => 'Eingetragen';
+
+  @override
+  String get coachChatTitle => 'Coach';
+
+  @override
+  String get coachChatPlaceholder => 'Frag deinen Coach...';
+
+  @override
+  String get coachChatSend => 'Senden';
+
+  @override
+  String get waterHowMuch => 'Wie viel hast du getrunken?';
+
+  @override
+  String get waterHistory => 'Verlauf';
+
+  @override
+  String get weightInvalid => 'Gib ein gültiges Gewicht ein (1-500 kg).';
+
+  @override
+  String get weightKg => 'kg';
+
+  @override
+  String get moodHowToday => 'Wie geht\'s dir heute?';
+
+  @override
+  String get mealCameraNotAvailable =>
+      'Funktioniert auf echten Geräten. Wähle aus Galerie.';
+
+  @override
+  String get mealGallery => 'Galerie';
+
+  @override
+  String weeklyDaysLogged(int n) {
+    return '$n Tage eingetragen. Guter Fortschritt.';
+  }
+
+  @override
+  String get coachWelcome => 'Hallo! Wie fühlst du dich heute?';
+
+  @override
+  String get coachInputPlaceholder => 'Nachricht schreiben...';
+
+  @override
+  String get coachLoadFailed => 'Konnte nicht geladen werden.';
+
+  @override
+  String get coachSendFailed => 'Nachricht konnte nicht gesendet werden.';
+
+  @override
+  String get coachLimitTitle => 'Tägliches Nachrichtenlimit erreicht';
+
+  @override
+  String coachLimitBody(String reason) {
+    return '$reason\n\nMit Premium unbegrenzter Coach-Chat + Sprachantworten.';
+  }
+
+  @override
+  String get coachLater => 'Später';
+
+  @override
+  String get coachSeePremium => 'Premium ansehen';
+
+  @override
+  String get coachCrisisTitle => 'Du bist nicht allein';
+
+  @override
+  String get coachDistressTitle => 'Du hast vielleicht einen schweren Moment';
+
+  @override
+  String get coachCrisisBody =>
+      'Wir möchten für dich da sein, aber professionelle Unterstützung ist sehr wichtig.';
+
+  @override
+  String get coachDistressBody =>
+      'Dein Coach kann in solchen Situationen nicht helfen. Sich an jemanden zu wenden, der sich um dich kümmert, ist immer eine Option.';
+
+  @override
+  String get mealAddTitle => 'Mahlzeit hinzufügen';
+
+  @override
+  String get mealPhotoOrDesc => 'Foto oder Beschreibung';
+
+  @override
+  String get mealNoPhoto => 'Kein Foto hinzugefügt';
+
+  @override
+  String get mealCamera => 'Kamera';
+
+  @override
+  String get mealGalleryBtn => 'Galerie';
+
+  @override
+  String get mealSimulatorWarn =>
+      'Keine Kamera im Simulator. Galerie verwenden.';
+
+  @override
+  String get mealDescHint =>
+      'Oder beschreibe die Mahlzeit (z.B. Hähnchenbrust, Reis)';
+
+  @override
+  String get mealAnalyze => 'Analysieren';
+
+  @override
+  String get mealManualEntry => 'Manuelle Eingabe';
+
+  @override
+  String get mealAnalyzeFailed => 'Analyse fehlgeschlagen.';
+
+  @override
+  String get mealLimitTitle => 'Tageslimit erreicht';
+
+  @override
+  String mealLimitBody(String reason) {
+    return '$reason\n\nMit Premium unbegrenzte Fotoanalyse.';
+  }
+
+  @override
+  String get waterHistoryTitle => 'Wasser-Verlauf';
+
+  @override
+  String get weightHistoryTitle => 'Gewichts-Verlauf';
+
+  @override
+  String get monthJan => 'Januar';
+
+  @override
+  String get monthFeb => 'Februar';
+
+  @override
+  String get monthMar => 'März';
+
+  @override
+  String get monthApr => 'April';
+
+  @override
+  String get monthMay => 'Mai';
+
+  @override
+  String get monthJun => 'Juni';
+
+  @override
+  String get monthJul => 'Juli';
+
+  @override
+  String get monthAug => 'August';
+
+  @override
+  String get monthSep => 'September';
+
+  @override
+  String get monthOct => 'Oktober';
+
+  @override
+  String get monthNov => 'November';
+
+  @override
+  String get monthDec => 'Dezember';
+
+  @override
+  String get weekdayMon => 'Montag';
+
+  @override
+  String get weekdayTue => 'Dienstag';
+
+  @override
+  String get weekdayWed => 'Mittwoch';
+
+  @override
+  String get weekdayThu => 'Donnerstag';
+
+  @override
+  String get weekdayFri => 'Freitag';
+
+  @override
+  String get weekdaySat => 'Samstag';
+
+  @override
+  String get weekdaySun => 'Sonntag';
 }

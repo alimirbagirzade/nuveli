@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../data/tracking_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Su geçmişi: hero kart (30 günlük ortalama + bugün), son 7 günün
 /// bar grafiği ve 30 günlük detay listesi.
@@ -22,7 +23,7 @@ class WaterHistoryScreen extends ConsumerWidget {
 
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Su Geçmişi', style: AppTextStyles.headingMedium),
+        title: Text(AppLocalizations.of(context)!.waterHistoryTitle, style: AppTextStyles.headingMedium),
         backgroundColor: AppColors.background,
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -32,7 +33,7 @@ class WaterHistoryScreen extends ConsumerWidget {
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
         error: (e, _) => _ErrorView(
-          message: e is AppError ? e.userMessage : 'Veriler yüklenemedi',
+          message: e is AppError ? e.userMessage : AppLocalizations.of(context)!.weeklyChartLoadFailed,
           onRetry: () => ref.invalidate(waterHistoryProvider),
         ),
         data: (history) {

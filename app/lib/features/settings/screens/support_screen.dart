@@ -5,6 +5,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -14,7 +15,7 @@ class SupportScreen extends StatelessWidget {
       scheme: 'mailto',
       path: AppConfig.supportEmail,
       queryParameters: {
-        'subject': 'Nuveli Destek',
+        'subject': AppLocalizations.of(context)!.supportEmailSubject,
       },
     );
     try {
@@ -36,25 +37,25 @@ class SupportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(title: const Text('Destek')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.supportTitle)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Size nasıl yardım edebiliriz?', style: AppTextStyles.headingMedium),
+            Text(AppLocalizations.of(context)!.supportHowHelp, style: AppTextStyles.headingMedium),
             const SizedBox(height: 20),
             _Card(
               icon: Icons.email_outlined,
-              title: 'E-posta ile ulaş',
+              title: AppLocalizations.of(context)!.supportEmailCard,
               body: AppConfig.supportEmail,
               onTap: () => _launchMailto(context),
             ),
             const SizedBox(height: 12),
             _Card(
               icon: Icons.help_outline,
-              title: 'SSS',
-              body: 'Sıkça sorulan sorular ve cevaplar',
+              title: AppLocalizations.of(context)!.supportFaq,
+              body: AppLocalizations.of(context)!.supportFaqDesc,
               onTap: () {},
             ),
           ],

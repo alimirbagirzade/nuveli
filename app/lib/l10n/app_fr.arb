@@ -261,5 +261,186 @@
   "notifLoadFailed": "Impossible de charger.",
   "coachSettingsTitle": "Ton coach",
   "coachSettingsQuestion": "Comment ton coach devrait te parler?",
-  "coachSettingsSubtitle": "Tu peux changer à tout moment."
+  "coachSettingsSubtitle": "Tu peux changer à tout moment.",
+  "onboardingMoreMeasures": "Quelques mesures de plus",
+  "onboardingActivityLevel": "Ton niveau d'activité",
+  "onboardingFirstMeal": "Ajoutons mon premier repas",
+  "onboardingGoToHome": "Aller à l'accueil",
+  "onboardingBirthYear": "Année de naissance",
+  "onboardingGender": "Genre",
+  "settingsAppearance": "APPARENCE",
+  "supportTitle": "Support",
+  "supportEmailSubject": "Support Nuveli",
+  "howAiTitle": "Comment l'IA fonctionne",
+  "privacyTitle": "Confidentialité et sécurité",
+  "aboutTitle": "À propos de Nuveli",
+  "coachToneUpdated": "Ton du coach mis à jour",
+  "supportHowHelp": "Comment pouvons-nous vous aider?",
+  "supportEmailCard": "Contacter par e-mail",
+  "supportFaq": "FAQ",
+  "supportFaqDesc": "Questions fréquemment posées et réponses",
+  "aiBlockFood": "Reconnaissance alimentaire",
+  "aiBlockFoodBody": "J'analyse ta photo et estime les calories. Ce n'est pas exact — tu peux modifier.",
+  "aiBlockCoach": "Réponses du coach",
+  "aiBlockCoachBody": "Messages courts, sans jugement et encourageants. Pas de conseils médicaux.",
+  "aiBlockSafety": "Sécurité",
+  "aiBlockSafetyBody": "Dans les situations à risque, je montre des ressources de soutien.",
+  "aiBlockData": "Tes données",
+  "aiBlockDataBody": "Tes données sont cryptées et toi seul peux y accéder.",
+  "privacyHeading": "Ta sécurité est notre priorité",
+  "privacyBody": "Nuveli est une application de bien-être. Pas de diagnostic médical.",
+  "privacyEmergency": "Support d'urgence",
+  "privacyHotline": "ALO 182 — Ligne de soutien psychologique (24/7)",
+  "privacyPolicyLink": "Politique de confidentialité",
+  "privacyTermsLink": "Conditions d'utilisation",
+  "privacyDownload": "Télécharger mes données",
+  "aboutApp": "Application",
+  "aboutLinks": "Liens",
+  "aboutWebsite": "Site web",
+  "aboutTechnical": "Technique",
+  "aboutEnv": "Environnement",
+  "aboutCopyright": "© 2026 Nuveli. Tous droits réservés.",
+  "aboutCopied": "copié",
+  "aboutVersion": "Version",
+  "streakDay": "jour",
+  "streakDays": "jours d'affilée",
+  "streakLongest": "Plus longue série",
+  "streakTodayDone": "Tu l'as fait aujourd'hui aussi",
+  "streakSummary": "{current} jours d'affilée",
+  "streakExplanation": "Ta série est le nombre de jours consécutifs avec des repas.",
+  "weeklyTitle": "Résumé hebdomadaire",
+  "weeklyLoadFailed": "Impossible de charger",
+  "weeklyChartLoadFailed": "Impossible de charger les données",
+  "commonRetryLow": "Réessayer",
+  "dayMon": "Lun",
+  "dayTue": "Mar",
+  "dayWed": "Mer",
+  "dayThu": "Jeu",
+  "dayFri": "Ven",
+  "daySat": "Sam",
+  "daySun": "Dim",
+  "@streakSummary": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "dayDetailMeals": "Repas",
+  "dayDetailMealsLoadFailed": "Impossible de charger les repas",
+  "dayDetailNoMeals": "Aucun repas pour ce jour",
+  "dayDetailWaterMl": "{ml} ml eau",
+  "mealTypeBreakfast": "Petit-déjeuner",
+  "mealTypeLunch": "Déjeuner",
+  "mealTypeDinner": "Dîner",
+  "mealTypeSnack": "Collation",
+  "mealTypeOther": "Repas",
+  "weeklyMacroDist": "Distribution des macros",
+  "weeklyDailyDetail": "Détail quotidien",
+  "weeklyCoachComment": "COMMENTAIRE DU COACH",
+  "weeklyCoachCommentLocked": "Commentaire du coach",
+  "weeklyCoachCommentLockedDesc": "Commentaires hebdomadaires avec Premium",
+  "@dayDetailWaterMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "streakLastLog": "Dernier enregistrement: {date}",
+  "streakNow": "Actuel",
+  "streakLongestShort": "Plus longue",
+  "streakAddMealNow": "Ajouter un repas",
+  "streakAtRisk": "Tu n'as pas ajouté de repas aujourd'hui et c'est le soir. Ajoute-en un maintenant.",
+  "streakNotStarted": "Ta série n'a pas encore commencé. Ajoute ton premier repas.",
+  "streakTodayLogged": "Tu l'as fait aujourd'hui aussi! Continue demain.",
+  "streakExplanationDefault": "Ta série est le nombre de jours consécutifs avec des repas.",
+  "weeklyAvgKcal": "kcal/jour moyenne",
+  "weeklyTotal": "Total",
+  "weeklyMeals": "Repas",
+  "weeklyLogged": "Enregistré",
+  "coachChatTitle": "Coach",
+  "coachChatPlaceholder": "Demande à ton coach...",
+  "coachChatSend": "Envoyer",
+  "@streakLastLog": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "waterHowMuch": "Combien as-tu bu?",
+  "waterHistory": "Historique",
+  "weightInvalid": "Entre un poids valide (1-500 kg).",
+  "weightKg": "kg",
+  "moodHowToday": "Comment vas-tu aujourd'hui?",
+  "mealCameraNotAvailable": "Fonctionne sur de vrais appareils. Choisis dans la galerie.",
+  "mealGallery": "Galerie",
+  "weeklyDaysLogged": "Tu as enregistré {n} jours. Bon progrès.",
+  "@weeklyDaysLogged": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coachWelcome": "Salut! Comment te sens-tu aujourd'hui?",
+  "coachInputPlaceholder": "Écris ton message...",
+  "coachLoadFailed": "Impossible de charger.",
+  "coachSendFailed": "Impossible d'envoyer le message.",
+  "coachLimitTitle": "Limite quotidienne atteinte",
+  "coachLimitBody": "{reason}\n\nAvec Premium, chat coach illimité + réponses vocales.",
+  "coachLater": "Plus tard",
+  "coachSeePremium": "Voir Premium",
+  "coachCrisisTitle": "Tu n'es pas seul",
+  "coachDistressTitle": "Tu traverses peut-être un moment difficile",
+  "coachCrisisBody": "Nous voulons être là pour toi, mais contacter un professionnel est très important.",
+  "coachDistressBody": "Ton coach ne peut pas aider dans ces situations. Contacter quelqu'un qui se soucie de toi est toujours une option.",
+  "mealAddTitle": "Ajouter un repas",
+  "mealPhotoOrDesc": "Photo ou description",
+  "mealNoPhoto": "Aucune photo",
+  "mealCamera": "Caméra",
+  "mealGalleryBtn": "Galerie",
+  "mealSimulatorWarn": "Pas de caméra dans le Simulateur. Utilise la Galerie.",
+  "mealDescHint": "Ou décris le repas (ex. poulet, riz, salade)",
+  "mealAnalyze": "Analyser",
+  "mealManualEntry": "Saisie manuelle",
+  "mealAnalyzeFailed": "Analyse impossible.",
+  "mealLimitTitle": "Limite quotidienne atteinte",
+  "mealLimitBody": "{reason}\n\nAvec Premium, analyse photo illimitée.",
+  "waterHistoryTitle": "Historique d'eau",
+  "weightHistoryTitle": "Historique de poids",
+  "monthJan": "Janvier",
+  "monthFeb": "Février",
+  "monthMar": "Mars",
+  "monthApr": "Avril",
+  "monthMay": "Mai",
+  "monthJun": "Juin",
+  "monthJul": "Juillet",
+  "monthAug": "Août",
+  "monthSep": "Septembre",
+  "monthOct": "Octobre",
+  "monthNov": "Novembre",
+  "monthDec": "Décembre",
+  "weekdayMon": "Lundi",
+  "weekdayTue": "Mardi",
+  "weekdayWed": "Mercredi",
+  "weekdayThu": "Jeudi",
+  "weekdayFri": "Vendredi",
+  "weekdaySat": "Samedi",
+  "weekdaySun": "Dimanche",
+  "@coachLimitBody": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@mealLimitBody": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

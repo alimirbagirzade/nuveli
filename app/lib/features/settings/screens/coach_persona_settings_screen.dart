@@ -111,8 +111,8 @@ class _CoachPersonaSettingsScreenState
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Koç tonun güncellendi'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.coachToneUpdated),
           duration: Duration(seconds: 2),
         ),
       );
@@ -139,7 +139,7 @@ class _CoachPersonaSettingsScreenState
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Koçun', style: AppTextStyles.labelMedium),
+        title: Text(AppLocalizations.of(context)!.coachSettingsTitle, style: AppTextStyles.labelMedium),
       ),
       padding: const EdgeInsets.all(24),
       body: _loading

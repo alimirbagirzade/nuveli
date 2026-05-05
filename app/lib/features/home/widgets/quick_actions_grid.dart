@@ -198,7 +198,7 @@ class _WaterSheet extends StatelessWidget {
                   context.push(AppRoute.waterHistory);
                 },
                 icon: const Icon(Icons.bar_chart_rounded, size: 18),
-                label: const Text('Geçmiş'),
+                label: Text(AppLocalizations.of(context)!.waterHistory),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.info,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -208,7 +208,7 @@ class _WaterSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text('Ne kadar içtin?', style: AppTextStyles.bodySmall),
+          Text(AppLocalizations.of(context)!.waterHowMuch, style: AppTextStyles.bodySmall),
           const SizedBox(height: 16),
           Wrap(
             spacing: 10,
@@ -248,7 +248,7 @@ class _WeightSheetState extends State<_WeightSheet> {
     final v = double.tryParse(_ctrl.text.replaceAll(',', '.'));
     if (v == null || v <= 0 || v > 500) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Geçerli bir kilo girin (1-500 kg).')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.weightInvalid)),
       );
       return;
     }
@@ -276,7 +276,7 @@ class _WeightSheetState extends State<_WeightSheet> {
                   context.push(AppRoute.weightHistory);
                 },
                 icon: const Icon(Icons.show_chart_rounded, size: 18),
-                label: const Text('Geçmiş'),
+                label: Text(AppLocalizations.of(context)!.waterHistory),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.accent,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -290,8 +290,8 @@ class _WeightSheetState extends State<_WeightSheet> {
             controller: _ctrl,
             autofocus: true,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(
-              labelText: 'kg',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.weightKg,
               border: OutlineInputBorder(),
             ),
             onSubmitted: (_) => _submit(),
@@ -306,7 +306,7 @@ class _WeightSheetState extends State<_WeightSheet> {
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              child: const Text('Kaydet'),
+              child: Text(AppLocalizations.of(context)!.commonSave),
             ),
           ),
         ],
@@ -332,7 +332,7 @@ class _CheckinSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Bugün nasılsın?', style: AppTextStyles.headingMedium),
+          Text(AppLocalizations.of(context)!.moodHowToday, style: AppTextStyles.headingMedium),
           const SizedBox(height: 8),
           Text(AppLocalizations.of(context)!.homeMoodPickOne, style: AppTextStyles.bodySmall),
           const SizedBox(height: 16),

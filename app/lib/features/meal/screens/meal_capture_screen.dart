@@ -14,6 +14,7 @@ import '../../../core/utils/meal_image_capture.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../data/meal_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class MealCaptureScreen extends ConsumerStatefulWidget {
   const MealCaptureScreen({super.key});
@@ -42,10 +43,10 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Bu ozellik gercek cihazda calisir. Galeriden secebilirsin.'),
+          content: Text(AppLocalizations.of(context)!.mealCameraNotAvailable),
           behavior: SnackBarBehavior.floating,
           action: SnackBarAction(
-            label: 'Galeri',
+            label: AppLocalizations.of(context)!.mealGallery,
             onPressed: _pickFromGallery,
           ),
         ),
@@ -105,7 +106,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
           context: {'has_description': _descCtrl.text.isNotEmpty},
         );
       }
-      final msg = e is AppError ? e.userMessage : 'Analiz yapılamadı.';
+      final msg = e is AppError ? e.userMessage : AppLocalizations.of(context)!.mealAnalyzeFailed;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     } finally {
       if (mounted) setState(() => _analyzing = false);
@@ -122,7 +123,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
       builder: (ctx) => AlertDialog(
         icon: const Icon(Icons.lock_outline,
             size: 48, color: AppColors.primary),
-        title: const Text('Günlük limit doldu'),
+        title: Text(AppLocalizations.of(context)!.mealLimitTitle),
         content: Text(
           '$reason\n\nPremium ile sınırsız fotoğraf analizi yapabilirsin.',
           textAlign: TextAlign.center,
@@ -150,13 +151,13 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(title: const Text('Öğün Ekle')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.mealAddTitle)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Fotoğraf veya açıklama', style: AppTextStyles.headingSmall),
+            Text(AppLocalizations.of(context)!.mealPhotoOrDesc, style: AppTextStyles.headingSmall),
             const SizedBox(height: 16),
             _ImageArea(imagePath: _imagePath),
             const SizedBox(height: 12),
@@ -175,7 +176,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Simulator\'de kamera yok. Galeri\'yi kullan.',
+                        AppLocalizations.of(context)!.mealSimulatorWarn,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textTertiary,
                         ),
@@ -192,7 +193,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
                   child: OutlinedButton.icon(
                     onPressed: _pickFromCamera,
                     icon: const Icon(Icons.camera_alt_outlined),
-                    label: const Text('Kamera'),
+                    label: Text(AppLocalizations.of(context)!.mealCamera),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -200,7 +201,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
                   child: OutlinedButton.icon(
                     onPressed: _pickFromGallery,
                     icon: const Icon(Icons.image_outlined),
-                    label: const Text('Galeri'),
+                    label: Text(AppLocalizations.of(context)!.mealGalleryBtn),
                   ),
                 ),
               ],
@@ -209,13 +210,13 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
             TextField(
               controller: _descCtrl,
               maxLines: 3,
-              decoration: const InputDecoration(
-                hintText: 'Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.mealDescHint,
               ),
             ),
             const Spacer(),
             PrimaryButton(
-              label: 'Analiz Et',
+              label: AppLocalizations.of(context)!.mealAnalyze,
               isLoading: _analyzing,
               onPressed: _analyze,
             ),
@@ -223,7 +224,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
             Center(
               child: TextButton(
                 onPressed: () => context.push(AppRoute.mealManual),
-                child: const Text('Manuel giriş yap'),
+                child: Text(AppLocalizations.of(context)!.mealManualEntry),
               ),
             ),
           ],
@@ -250,10 +251,10 @@ class _ImageArea extends StatelessWidget {
       child: imagePath == null
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.restaurant_outlined, size: 48, color: AppColors.textTertiary),
-                SizedBox(height: 8),
-                Text('Fotoğraf eklenmedi',
+              children: [
+                const Icon(Icons.restaurant_outlined, size: 48, color: AppColors.textTertiary),
+                const SizedBox(height: 8),
+                Text(AppLocalizations.of(context)!.mealNoPhoto,
                     style: TextStyle(color: AppColors.textTertiary, fontSize: 13)),
               ],
             )

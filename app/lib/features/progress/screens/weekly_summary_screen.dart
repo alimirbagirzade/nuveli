@@ -9,6 +9,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../premium/data/premium_service.dart';
 import '../data/progress_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Weekly summary — 7-day report opened from the home chart header.
 ///
@@ -25,7 +26,7 @@ class WeeklySummaryScreen extends ConsumerWidget {
         data: (s) => s.isPremium, orElse: () => false);
 
     return AppScaffold(
-      appBar: AppBar(title: const Text('Haftalık Özet')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.weeklyTitle)),
       body: RefreshIndicator(
         color: AppColors.primary,
         onRefresh: () async {
@@ -35,7 +36,7 @@ class WeeklySummaryScreen extends ConsumerWidget {
         child: weeklyAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => _Error(
-            message: e is AppError ? e.userMessage : 'Yüklenemedi',
+            message: e is AppError ? e.userMessage : AppLocalizations.of(context)!.weeklyLoadFailed,
             onRetry: () => ref.invalidate(weeklySummaryProvider),
           ),
           data: (weekly) => _Body(weekly: weekly, isPremium: isPremium),
@@ -61,11 +62,11 @@ class _Body extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        if (weekly.headline.isNotEmpty)
+        if (weekly.daysLogged > 0)
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: Text(
-              weekly.headline,
+              (AppLocalizations.of(context)!.weeklyDaysLogged(weekly.daysLogged)),
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),
@@ -84,7 +85,7 @@ class _Body extends StatelessWidget {
           const SizedBox(height: 16),
 
         if (hasMacros) ...[
-          Text('Makro Dağılımı', style: AppTextStyles.headingSmall),
+          Text(AppLocalizations.of(context)!.weeklyMacroDist, style: AppTextStyles.headingSmall),
           const SizedBox(height: 12),
           _MacroDistributionCard(
             protein: totalProtein,
@@ -93,7 +94,7 @@ class _Body extends StatelessWidget {
           ),
           const SizedBox(height: 24),
         ],
-        Text('Günlük Detay', style: AppTextStyles.headingSmall),
+        Text(AppLocalizations.of(context)!.weeklyDailyDetail, style: AppTextStyles.headingSmall),
         const SizedBox(height: 12),
         ...weekly.sevenDays.reversed.map((d) => _DayRow(day: d)),
         const SizedBox(height: 32),
@@ -139,7 +140,7 @@ class _AiInsightCard extends StatelessWidget {
                     const Icon(Icons.auto_awesome, color: Colors.white, size: 12),
                     const SizedBox(width: 4),
                     Text(
-                      'KOÇUN YORUMU',
+                      AppLocalizations.of(context)!.weeklyCoachComment,
                       style: AppTextStyles.caption.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
@@ -189,11 +190,11 @@ class _LockedAiInsightCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Koçun yorumu',
+                  Text(AppLocalizations.of(context)!.weeklyCoachCommentLocked,
                       style: AppTextStyles.headingSmall),
                   const SizedBox(height: 2),
                   Text(
-                    'Premium ile haftalık örüntülerin için kişisel yorum',
+                    AppLocalizations.of(context)!.weeklyCoachCommentLockedDesc,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -246,7 +247,7 @@ class _HeroCard extends StatelessWidget {
                 ),
               ),
               Text(
-                ' kcal/gün ortalama',
+                ' ' + AppLocalizations.of(context)!.weeklyAvgKcal,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -257,19 +258,19 @@ class _HeroCard extends StatelessWidget {
           Row(
             children: [
               _MiniStat(
-                  label: 'Toplam',
+                  label: AppLocalizations.of(context)!.weeklyTotal,
                   value: weekly.totalCalories.toString(),
                   unit: 'kcal'),
               const SizedBox(width: 12),
               _MiniStat(
-                  label: 'Öğün',
+                  label: AppLocalizations.of(context)!.weeklyMeals,
                   value: weekly.totalMeals.toString(),
                   unit: ''),
               const SizedBox(width: 12),
               _MiniStat(
-                  label: 'Kayıt',
+                  label: AppLocalizations.of(context)!.weeklyLogged,
                   value: '${weekly.daysLogged}/7',
-                  unit: 'gün'),
+                  unit: AppLocalizations.of(context)!.streakDay),
             ],
           ),
         ],
@@ -373,19 +374,19 @@ class _MacroDistributionCard extends StatelessWidget {
           Row(
             children: [
               _MacroLegend(
-                  label: 'Protein',
+                  label: AppLocalizations.of(context)!.macroProtein,
                   grams: protein.round(),
                   pct: pPct,
                   color: AppColors.success),
               const SizedBox(width: 12),
               _MacroLegend(
-                  label: 'Karb',
+                  label: AppLocalizations.of(context)!.macroCarb,
                   grams: carb.round(),
                   pct: cPct,
                   color: AppColors.primary),
               const SizedBox(width: 12),
               _MacroLegend(
-                  label: 'Yağ',
+                  label: AppLocalizations.of(context)!.macroFat,
                   grams: fat.round(),
                   pct: fPct,
                   color: AppColors.warning),
@@ -447,6 +448,20 @@ class _DayRow extends StatelessWidget {
   final DaySummary day;
   static const _dayLabels = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
 
+  String _translateDayShort(BuildContext context, int idx) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (idx) {
+      case 0: return l10n.dayMon;
+      case 1: return l10n.dayTue;
+      case 2: return l10n.dayWed;
+      case 3: return l10n.dayThu;
+      case 4: return l10n.dayFri;
+      case 5: return l10n.daySat;
+      case 6: return l10n.daySun;
+      default: return '?';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final hasData = day.hasData;
@@ -485,7 +500,7 @@ class _DayRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _dayLabels[day.weekdayIndex],
+                        _translateDayShort(context, day.weekdayIndex),
                         style: AppTextStyles.caption.copyWith(
                           color: isToday
                               ? AppColors.primary

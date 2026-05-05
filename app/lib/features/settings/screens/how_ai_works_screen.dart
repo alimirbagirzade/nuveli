@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class HowAiWorksScreen extends StatelessWidget {
   const HowAiWorksScreen({super.key});
@@ -9,33 +10,29 @@ class HowAiWorksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(title: const Text('AI Nasıl Çalışır')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.howAiTitle)),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
           _Block(
             icon: Icons.camera_alt_outlined,
-            title: 'Yemek Tanıma',
-            body: 'Fotoğrafını incelerim ve yaklaşık kalori/besin tahmini yaparım. '
-                'Bu kesin bir ölçüm değildir — gerekirse düzeltebilirsin.',
+            title: AppLocalizations.of(context)!.aiBlockFood,
+            body: AppLocalizations.of(context)!.aiBlockFoodBody,
           ),
           _Block(
             icon: Icons.auto_awesome,
-            title: 'Koç Yanıtları',
-            body: 'Kısa, yargısız ve destekleyici mesajlar üretirim. '
-                'Tıbbi tavsiye ya da diyet planı sunmam.',
+            title: AppLocalizations.of(context)!.aiBlockCoach,
+            body: AppLocalizations.of(context)!.aiBlockCoachBody,
           ),
           _Block(
             icon: Icons.shield_outlined,
-            title: 'Güvenlik',
-            body: 'Riskli durumlarda profesyonel destek kaynaklarını gösteririm. '
-                'Kriz anında doğrudan sabit güvenlik metni gelir.',
+            title: AppLocalizations.of(context)!.aiBlockSafety,
+            body: AppLocalizations.of(context)!.aiBlockSafetyBody,
           ),
           _Block(
             icon: Icons.lock_outline,
-            title: 'Verilerin',
-            body: 'Verilerin şifreli iletilir ve sadece sen erişirsin. '
-                'Ayarlar > Hesabı Sil ile tamamen silebilirsin.',
+            title: AppLocalizations.of(context)!.aiBlockData,
+            body: AppLocalizations.of(context)!.aiBlockDataBody,
           ),
         ],
       ),

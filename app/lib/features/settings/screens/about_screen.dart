@@ -5,6 +5,7 @@ import '../../../core/config/app_config.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -12,7 +13,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(title: const Text('Nuveli Hakkında')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.aboutTitle)),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
@@ -44,7 +45,7 @@ class AboutScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'Sürüm ${AppConfig.appVersion} (${AppConfig.appBuildNumber})',
+                  '${AppLocalizations.of(context)!.aboutVersion} ${AppConfig.appVersion} (${AppConfig.appBuildNumber})',
                   style: AppTextStyles.bodySmall
                       .copyWith(color: AppColors.textTertiary),
                 ),
@@ -53,7 +54,7 @@ class AboutScreen extends StatelessWidget {
           ),
 
           // Açıklama
-          _section('Uygulama'),
+          _section(AppLocalizations.of(context)!.aboutApp),
           _info(
             'Nuveli wellness odaklı bir kalori takip uygulamasıdır. '
             'AI destekli yemek analizi, kişiselleşen koç ve davranış '
@@ -66,37 +67,37 @@ class AboutScreen extends StatelessWidget {
           ),
 
           const SizedBox(height: 24),
-          _section('Bağlantılar'),
+          _section(AppLocalizations.of(context)!.aboutLinks),
           _linkRow(
-            'Web sitesi',
+            AppLocalizations.of(context)!.aboutWebsite,
             AppConfig.websiteUrl,
             Icons.language_outlined,
           ),
           _linkRow(
-            'Gizlilik Politikası',
+            AppLocalizations.of(context)!.privacyPolicyLink,
             AppConfig.privacyUrl,
             Icons.privacy_tip_outlined,
           ),
           _linkRow(
-            'Kullanım Şartları',
+            AppLocalizations.of(context)!.privacyTermsLink,
             AppConfig.termsUrl,
             Icons.description_outlined,
           ),
           _linkRow(
-            'Destek',
+            AppLocalizations.of(context)!.supportTitle,
             AppConfig.supportEmail,
             Icons.email_outlined,
           ),
 
           const SizedBox(height: 24),
-          _section('Teknik'),
-          _kvRow('Ortam', AppConfig.env),
+          _section(AppLocalizations.of(context)!.aboutTechnical),
+          _kvRow(AppLocalizations.of(context)!.aboutEnv, AppConfig.env),
           _kvRow('Build', AppConfig.appBuildNumber),
 
           const SizedBox(height: 32),
           Center(
             child: Text(
-              '© 2026 Nuveli. Tüm hakları saklıdır.',
+              AppLocalizations.of(context)!.aboutCopyright,
               style: AppTextStyles.caption,
             ),
           ),
@@ -137,7 +138,7 @@ class AboutScreen extends StatelessWidget {
         onTap: () {
           Clipboard.setData(ClipboardData(text: value));
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('$value kopyalandı')),
+            SnackBar(content: Text('$value ${AppLocalizations.of(context)!.aboutCopied}')),
           );
         },
         borderRadius: BorderRadius.circular(8),

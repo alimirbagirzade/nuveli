@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/app_config.dart';
+import '../i18n/language_provider.dart';
 
 /// Nuveli API client. Tüm network istekleri bu provider'dan alınır.
 ///
@@ -18,7 +19,8 @@ final apiClientProvider = Provider<Dio>((ref) {
     connectTimeout: const Duration(seconds: 15),
     receiveTimeout: const Duration(seconds: 60),
     sendTimeout: const Duration(seconds: 30),
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+        'Accept-Language': globalLanguageNotifier.value.locale?.languageCode ?? 'tr','Content-Type': 'application/json'},
   ));
 
   dio.interceptors.add(InterceptorsWrapper(

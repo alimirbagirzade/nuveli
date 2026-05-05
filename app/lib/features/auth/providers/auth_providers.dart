@@ -65,9 +65,11 @@ final signUpActionProvider = Provider<Future<void> Function({
     try {
       await repo.signUp(email: email, password: password);
     } on AuthException catch (e) {
+      print('🔴 [AUTH] AuthException: ${e.message}');
       ref.read(authErrorProvider.notifier).state = _translateAuthError(e.message);
       rethrow;
     } catch (e) {
+      print('🔴 [AUTH-SIGNUP] Generic error: $e');
       ref.read(authErrorProvider.notifier).state = 'Bir sorun olustu. Lutfen tekrar dene.';
       rethrow;
     } finally {
@@ -91,9 +93,11 @@ final signInActionProvider = Provider<Future<void> Function({
       // Bootstrap'i yenile
       ref.invalidate(bootstrapProvider);
     } on AuthException catch (e) {
+      print('🔴 [AUTH] AuthException: ${e.message}');
       ref.read(authErrorProvider.notifier).state = _translateAuthError(e.message);
       rethrow;
     } catch (e) {
+      print('🔴 [AUTH] Generic error: $e');
       ref.read(authErrorProvider.notifier).state = 'Giris basarisiz. Lutfen tekrar dene.';
       rethrow;
     } finally {

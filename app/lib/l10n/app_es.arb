@@ -261,5 +261,186 @@
   "notifLoadFailed": "No se pudo cargar.",
   "coachSettingsTitle": "Tu coach",
   "coachSettingsQuestion": "¿Cómo debería hablarte tu coach?",
-  "coachSettingsSubtitle": "Puedes cambiar en cualquier momento."
+  "coachSettingsSubtitle": "Puedes cambiar en cualquier momento.",
+  "onboardingMoreMeasures": "Unas medidas más",
+  "onboardingActivityLevel": "Tu nivel de actividad",
+  "onboardingFirstMeal": "Añadamos mi primera comida",
+  "onboardingGoToHome": "Ir a la pantalla principal",
+  "onboardingBirthYear": "Año de nacimiento",
+  "onboardingGender": "Género",
+  "settingsAppearance": "APARIENCIA",
+  "supportTitle": "Soporte",
+  "supportEmailSubject": "Soporte Nuveli",
+  "howAiTitle": "Cómo funciona la IA",
+  "privacyTitle": "Privacidad y seguridad",
+  "aboutTitle": "Acerca de Nuveli",
+  "coachToneUpdated": "Tono del coach actualizado",
+  "supportHowHelp": "¿Cómo podemos ayudarte?",
+  "supportEmailCard": "Contactar por correo",
+  "supportFaq": "FAQ",
+  "supportFaqDesc": "Preguntas frecuentes y respuestas",
+  "aiBlockFood": "Reconocimiento de alimentos",
+  "aiBlockFoodBody": "Analizo tu foto y estimo calorías. No es exacto — puedes editar.",
+  "aiBlockCoach": "Respuestas del coach",
+  "aiBlockCoachBody": "Mensajes cortos, sin juicio y de apoyo. Sin consejos médicos.",
+  "aiBlockSafety": "Seguridad",
+  "aiBlockSafetyBody": "En situaciones de riesgo, muestro recursos de apoyo.",
+  "aiBlockData": "Tus datos",
+  "aiBlockDataBody": "Tus datos están cifrados y solo tú accedes.",
+  "privacyHeading": "Tu seguridad es nuestra prioridad",
+  "privacyBody": "Nuveli es una app de bienestar. Sin diagnóstico médico.",
+  "privacyEmergency": "Soporte de emergencia",
+  "privacyHotline": "ALO 182 — Línea de apoyo psicológico (24/7)",
+  "privacyPolicyLink": "Política de privacidad",
+  "privacyTermsLink": "Términos de uso",
+  "privacyDownload": "Descargar mis datos",
+  "aboutApp": "Aplicación",
+  "aboutLinks": "Enlaces",
+  "aboutWebsite": "Sitio web",
+  "aboutTechnical": "Técnico",
+  "aboutEnv": "Entorno",
+  "aboutCopyright": "© 2026 Nuveli. Todos los derechos reservados.",
+  "aboutCopied": "copiado",
+  "aboutVersion": "Versión",
+  "streakDay": "día",
+  "streakDays": "días seguidos",
+  "streakLongest": "Racha más larga",
+  "streakTodayDone": "Hoy también lo lograste",
+  "streakSummary": "{current} días seguidos",
+  "streakExplanation": "Tu racha es el número de días consecutivos con comidas.",
+  "weeklyTitle": "Resumen semanal",
+  "weeklyLoadFailed": "No se pudo cargar",
+  "weeklyChartLoadFailed": "No se pudieron cargar datos",
+  "commonRetryLow": "Reintentar",
+  "dayMon": "Lun",
+  "dayTue": "Mar",
+  "dayWed": "Mié",
+  "dayThu": "Jue",
+  "dayFri": "Vie",
+  "daySat": "Sáb",
+  "daySun": "Dom",
+  "@streakSummary": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "dayDetailMeals": "Comidas",
+  "dayDetailMealsLoadFailed": "No se pudieron cargar comidas",
+  "dayDetailNoMeals": "No hay comidas para este día",
+  "dayDetailWaterMl": "{ml} ml agua",
+  "mealTypeBreakfast": "Desayuno",
+  "mealTypeLunch": "Almuerzo",
+  "mealTypeDinner": "Cena",
+  "mealTypeSnack": "Merienda",
+  "mealTypeOther": "Comida",
+  "weeklyMacroDist": "Distribución de macros",
+  "weeklyDailyDetail": "Detalle diario",
+  "weeklyCoachComment": "COMENTARIO DEL COACH",
+  "weeklyCoachCommentLocked": "Comentario del coach",
+  "weeklyCoachCommentLockedDesc": "Comentarios semanales con Premium",
+  "@dayDetailWaterMl": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "streakLastLog": "Último registro: {date}",
+  "streakNow": "Actual",
+  "streakLongestShort": "Más larga",
+  "streakAddMealNow": "Añadir comida",
+  "streakAtRisk": "No has añadido comida hoy y es de noche. Añade una ahora.",
+  "streakNotStarted": "Tu racha aún no ha comenzado. Añade tu primera comida.",
+  "streakTodayLogged": "¡Hoy también lo lograste! Continúa mañana.",
+  "streakExplanationDefault": "Tu racha es el número de días consecutivos con comidas.",
+  "weeklyAvgKcal": "kcal/día promedio",
+  "weeklyTotal": "Total",
+  "weeklyMeals": "Comidas",
+  "weeklyLogged": "Registrado",
+  "coachChatTitle": "Coach",
+  "coachChatPlaceholder": "Pregunta a tu coach...",
+  "coachChatSend": "Enviar",
+  "@streakLastLog": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "waterHowMuch": "¿Cuánto bebiste?",
+  "waterHistory": "Historial",
+  "weightInvalid": "Ingresa un peso válido (1-500 kg).",
+  "weightKg": "kg",
+  "moodHowToday": "¿Cómo estás hoy?",
+  "mealCameraNotAvailable": "Funciona en dispositivos reales. Elige de la galería.",
+  "mealGallery": "Galería",
+  "weeklyDaysLogged": "Has registrado {n} días. Buen progreso.",
+  "@weeklyDaysLogged": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "coachWelcome": "¡Hola! ¿Cómo te sientes hoy?",
+  "coachInputPlaceholder": "Escribe tu mensaje...",
+  "coachLoadFailed": "No se pudo cargar.",
+  "coachSendFailed": "No se pudo enviar el mensaje.",
+  "coachLimitTitle": "Límite diario alcanzado",
+  "coachLimitBody": "{reason}\n\nCon Premium, chat coach ilimitado + respuestas de voz.",
+  "coachLater": "Después",
+  "coachSeePremium": "Ver Premium",
+  "coachCrisisTitle": "No estás solo",
+  "coachDistressTitle": "Puede que estés pasando un momento difícil",
+  "coachCrisisBody": "Queremos estar ahí para ti, pero contactar a un profesional es muy importante.",
+  "coachDistressBody": "Tu coach no puede ayudar en estas situaciones. Contactar a alguien que se preocupa por ti siempre es una opción.",
+  "mealAddTitle": "Añadir comida",
+  "mealPhotoOrDesc": "Foto o descripción",
+  "mealNoPhoto": "Sin foto",
+  "mealCamera": "Cámara",
+  "mealGalleryBtn": "Galería",
+  "mealSimulatorWarn": "Sin cámara en Simulador. Usa Galería.",
+  "mealDescHint": "O describe la comida (ej. pollo, arroz, ensalada)",
+  "mealAnalyze": "Analizar",
+  "mealManualEntry": "Entrada manual",
+  "mealAnalyzeFailed": "Análisis fallido.",
+  "mealLimitTitle": "Límite diario alcanzado",
+  "mealLimitBody": "{reason}\n\nCon Premium, análisis ilimitado.",
+  "waterHistoryTitle": "Historial de agua",
+  "weightHistoryTitle": "Historial de peso",
+  "monthJan": "Enero",
+  "monthFeb": "Febrero",
+  "monthMar": "Marzo",
+  "monthApr": "Abril",
+  "monthMay": "Mayo",
+  "monthJun": "Junio",
+  "monthJul": "Julio",
+  "monthAug": "Agosto",
+  "monthSep": "Septiembre",
+  "monthOct": "Octubre",
+  "monthNov": "Noviembre",
+  "monthDec": "Diciembre",
+  "weekdayMon": "Lunes",
+  "weekdayTue": "Martes",
+  "weekdayWed": "Miércoles",
+  "weekdayThu": "Jueves",
+  "weekdayFri": "Viernes",
+  "weekdaySat": "Sábado",
+  "weekdaySun": "Domingo",
+  "@coachLimitBody": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@mealLimitBody": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

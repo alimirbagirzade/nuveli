@@ -8,6 +8,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../providers/onboarding_controller.dart';
 
 // ═══════════════════════════════════════════════════════
@@ -28,7 +29,7 @@ class GoalSelectionScreen extends ConsumerWidget {
     ];
 
     return AppScaffold(
-      appBar: AppBar(title: Text('Hedef', style: AppTextStyles.labelMedium)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.onboardingGoalTitle, style: AppTextStyles.labelMedium)),
       padding: const EdgeInsets.all(24),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +53,7 @@ class GoalSelectionScreen extends ConsumerWidget {
               )),
           const Spacer(),
           PrimaryButton(
-            label: 'Devam Et',
+            label: AppLocalizations.of(context)!.onboardingContinue,
             isEnabled: selected != null,
             onPressed: selected == null
                 ? null
@@ -175,14 +176,14 @@ class _ProfileStepOneScreenState extends ConsumerState<ProfileStepOneScreen> {
             controller: _yearCtrl,
             keyboardType: TextInputType.number,
             maxLength: 4,
-            decoration: const InputDecoration(
-              labelText: 'Doğum yılı',
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.onboardingBirthYear,
               counterText: '',
             ),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),
-          Text('Cinsiyet', style: AppTextStyles.labelLarge),
+          Text(AppLocalizations.of(context)!.onboardingGender, style: AppTextStyles.labelLarge),
           const SizedBox(height: 8),
           Wrap(
             spacing: 10,
@@ -201,7 +202,7 @@ class _ProfileStepOneScreenState extends ConsumerState<ProfileStepOneScreen> {
           ),
           const Spacer(),
           PrimaryButton(
-            label: 'Devam Et',
+            label: AppLocalizations.of(context)!.onboardingContinue,
             isEnabled: _valid,
             onPressed: !_valid
                 ? null
@@ -274,14 +275,14 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Birkaç ölçüm daha', style: AppTextStyles.displayMedium),
+          Text(AppLocalizations.of(context)!.onboardingMoreMeasures, style: AppTextStyles.displayMedium),
           const SizedBox(height: 24),
           Row(children: [
             Expanded(
               child: TextField(
                 controller: _heightCtrl,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Boy (cm)'),
+                decoration: InputDecoration(labelText: 'Boy (cm)'),
                 onChanged: (_) => setState(() {}),
               ),
             ),
@@ -290,13 +291,13 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
               child: TextField(
                 controller: _weightCtrl,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Kilo (kg)'),
+                decoration: InputDecoration(labelText: 'Kilo (kg)'),
                 onChanged: (_) => setState(() {}),
               ),
             ),
           ]),
           const SizedBox(height: 20),
-          Text('Aktivite düzeyin', style: AppTextStyles.labelLarge),
+          Text(AppLocalizations.of(context)!.onboardingActivityLevel, style: AppTextStyles.labelLarge),
           const SizedBox(height: 8),
           ...[
             ('sedentary', 'Çok az hareket', 'Masa başı, az yürüyüş'),
@@ -314,7 +315,7 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
               )),
           const SizedBox(height: 8),
           PrimaryButton(
-            label: 'Devam Et',
+            label: AppLocalizations.of(context)!.onboardingContinue,
             isEnabled: _valid,
             onPressed: !_valid
                 ? null
@@ -352,7 +353,7 @@ class CoachSelectionScreen extends ConsumerWidget {
     ];
 
     return AppScaffold(
-      appBar: AppBar(title: Text('Koçun', style: AppTextStyles.labelMedium)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.onboardingCoachTitle, style: AppTextStyles.labelMedium)),
       padding: const EdgeInsets.all(24),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -376,7 +377,7 @@ class CoachSelectionScreen extends ConsumerWidget {
               )),
           const Spacer(),
           PrimaryButton(
-            label: 'Devam Et',
+            label: AppLocalizations.of(context)!.onboardingContinue,
             isEnabled: persona != null,
             onPressed: persona == null
                 ? null
@@ -400,7 +401,7 @@ class NotificationOptInScreen extends ConsumerWidget {
 
     return AppScaffold(
       appBar:
-          AppBar(title: Text('Bildirimler', style: AppTextStyles.labelMedium)),
+          AppBar(title: Text(AppLocalizations.of(context)!.onboardingNotificationTitle, style: AppTextStyles.labelMedium)),
       padding: const EdgeInsets.all(24),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -427,7 +428,7 @@ class NotificationOptInScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           SecondaryButton(
-            label: 'Şimdilik hayır',
+            label: AppLocalizations.of(context)!.onboardingNotificationNo,
             onPressed: () {
               controller.setNotificationPrefs(
                 mealReminders: false,
@@ -557,7 +558,7 @@ class _OnboardingResultScreenState
             const Icon(Icons.cloud_off, size: 64, color: AppColors.error),
             const SizedBox(height: 16),
             Text(
-              'Bir sorun oluştu',
+              AppLocalizations.of(context)!.commonError,
               style: AppTextStyles.displayMedium,
               textAlign: TextAlign.center,
             ),
@@ -570,7 +571,7 @@ class _OnboardingResultScreenState
             ),
             const SizedBox(height: 32),
             PrimaryButton(
-              label: 'Tekrar Dene',
+              label: AppLocalizations.of(context)!.commonRetry,
               onPressed: () {
                 setState(() {
                   _errorMsg = null;
@@ -626,12 +627,12 @@ class _OnboardingResultScreenState
           ),
           const Spacer(),
           PrimaryButton(
-            label: 'İlk öğünümü ekleyelim',
+            label: AppLocalizations.of(context)!.onboardingFirstMeal,
             onPressed: () => context.go(AppRoute.mealCapture),
           ),
           const SizedBox(height: 8),
           SecondaryButton(
-            label: 'Ana ekrana geç',
+            label: AppLocalizations.of(context)!.onboardingGoToHome,
             onPressed: () => context.go(AppRoute.home),
           ),
         ],

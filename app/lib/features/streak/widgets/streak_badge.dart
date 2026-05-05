@@ -6,6 +6,7 @@ import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../data/streak_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Ana ekrana eklenen streak rozeti.
 ///
@@ -124,7 +125,7 @@ class _StreakCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
                             child: Text(
-                              streak.current == 1 ? 'gün' : 'günlük seri',
+                              streak.current == 1 ? AppLocalizations.of(context)!.streakDay : AppLocalizations.of(context)!.streakDays,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 color: Colors.white.withOpacity(0.92),
                                 fontWeight: FontWeight.w600,
@@ -241,7 +242,7 @@ class _StreakDetailsSheet extends StatelessWidget {
                     ),
                     if (streak.lastActiveDay != null)
                       Text(
-                        'Son kayıt: ${_formatDate(streak.lastActiveDay!)}',
+                        'Son kayıt: ${_formatDateLocalized(context, streak.lastActiveDay!)}',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -258,18 +259,18 @@ class _StreakDetailsSheet extends StatelessWidget {
             children: [
               Expanded(
                 child: _StatTile(
-                  label: 'Şu an',
+                  label: AppLocalizations.of(context)!.streakNow,
                   value: '${streak.current}',
-                  unit: 'gün',
+                  unit: AppLocalizations.of(context)!.streakDay,
                   color: AppColors.warning,
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: _StatTile(
-                  label: 'En uzun',
+                  label: AppLocalizations.of(context)!.streakLongestShort,
                   value: '${streak.longest}',
-                  unit: 'gün',
+                  unit: AppLocalizations.of(context)!.streakDay,
                   color: AppColors.primary,
                 ),
               ),
@@ -299,7 +300,7 @@ class _StreakDetailsSheet extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    _explanationText(streak),
+                    _explanationText(context, streak),
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.textSecondary,
                       height: 1.4,
@@ -321,7 +322,7 @@ class _StreakDetailsSheet extends StatelessWidget {
                   context.push(AppRoute.mealCapture);
                 },
                 icon: const Icon(Icons.add_a_photo_outlined),
-                label: const Text('Şimdi Öğün Ekle'),
+                label: Text(AppLocalizations.of(context)!.streakAddMealNow),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
@@ -337,23 +338,25 @@ class _StreakDetailsSheet extends StatelessWidget {
     );
   }
 
-  static String _formatDate(DateTime d) {
-    const months = [
-      '', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
+  static String _formatDateLocalized(BuildContext context, DateTime d) {
+    final l10n = AppLocalizations.of(context)!;
+    final months = [
+      l10n.monthJan, l10n.monthFeb, l10n.monthMar, l10n.monthApr,
+      l10n.monthMay, l10n.monthJun, l10n.monthJul, l10n.monthAug,
+      l10n.monthSep, l10n.monthOct, l10n.monthNov, l10n.monthDec,
     ];
-    return '${d.day} ${months[d.month]} ${d.year}';
+    return '${d.day} ${months[d.month - 1]} ${d.year}';
   }
 
-  static String _explanationText(StreakInfo streak) {
+  static String _explanationText(BuildContext context, StreakInfo streak) {
     if (streak.atRisk) {
-      return 'Bugün öğün eklemedin ve akşam oldu. Şimdi bir öğün eklersen serin devam eder; aksi halde yarın sıfırdan başlayacak.';
+      return AppLocalizations.of(context)!.streakAtRisk;
     }
     if (streak.current == 0) {
-      return 'Streak henüz başlamadı. İlk öğününü ekle ve serin başlasın.';
+      return AppLocalizations.of(context)!.streakNotStarted;
     }
     if (streak.todayLogged) {
-      return 'Bugünü de hallettin! Yarın da bir öğün eklersen seri devam eder.';
+      return AppLocalizations.of(context)!.streakTodayLogged;
     }
     return 'Streak\'in arka arkaya öğün eklediğin gün sayısıdır. Bugün de bir öğün ekleyerek ${streak.current} günlük seriyi ${streak.current + 1} güne çıkarabilirsin.';
   }
