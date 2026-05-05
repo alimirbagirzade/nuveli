@@ -754,4 +754,54 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get homeCravingText =>
       'Bir şeye canın çekiyor mu? 60 saniye dur, derin nefes al.';
+
+  @override
+  String get notifMealReminders => 'Öğün Hatırlatıcıları';
+
+  @override
+  String get notifMealRemindersDesc =>
+      'Kahvaltı, öğle, akşam zamanı nazik hatırlatma';
+
+  @override
+  String get notifCoachNudges => 'Koç Nüdgleri';
+
+  @override
+  String get notifCoachNudgesDesc => 'Kişisel destek ve motivasyon mesajları';
+
+  @override
+  String get notifWeeklySummary => 'Haftalık Özet';
+
+  @override
+  String get notifWeeklySummaryDesc => 'Pazartesi sabahı geçen haftanın özeti';
+
+  @override
+  String get notifQuietHours => 'SESSİZ SAATLER';
+
+  @override
+  String get notifQuietHoursDesc =>
+      'Bu saatler arasında hiçbir bildirim gelmez.';
+
+  @override
+  String get notifQuietStart => 'Başlangıç';
+
+  @override
+  String get notifQuietEnd => 'Bitiş';
+
+  @override
+  String get notifSaved => 'Tercihler kaydedildi.';
+
+  @override
+  String get notifSaveFailed => 'Kaydedilemedi.';
+
+  @override
+  String get notifLoadFailed => 'Yüklenemedi.';
+
+  @override
+  String get coachSettingsTitle => 'Koçun';
+
+  @override
+  String get coachSettingsQuestion => 'Koçun seninle nasıl konuşsun?';
+
+  @override
+  String get coachSettingsSubtitle => 'İstediğin zaman değiştirebilirsin.';
 }

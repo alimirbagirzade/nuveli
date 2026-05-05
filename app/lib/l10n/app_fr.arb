@@ -245,5 +245,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "notifMealReminders": "Rappels de repas",
+  "notifMealRemindersDesc": "Rappel doux au petit-déjeuner, déjeuner, dîner",
+  "notifCoachNudges": "Coups de pouce du coach",
+  "notifCoachNudgesDesc": "Messages de soutien et motivation personnels",
+  "notifWeeklySummary": "Résumé hebdomadaire",
+  "notifWeeklySummaryDesc": "Résumé du lundi matin de la semaine dernière",
+  "notifQuietHours": "HEURES DE SILENCE",
+  "notifQuietHoursDesc": "Aucune notification pendant ces heures.",
+  "notifQuietStart": "Début",
+  "notifQuietEnd": "Fin",
+  "notifSaved": "Préférences enregistrées.",
+  "notifSaveFailed": "Impossible d'enregistrer.",
+  "notifLoadFailed": "Impossible de charger.",
+  "coachSettingsTitle": "Ton coach",
+  "coachSettingsQuestion": "Comment ton coach devrait te parler?",
+  "coachSettingsSubtitle": "Tu peux changer à tout moment."
 }

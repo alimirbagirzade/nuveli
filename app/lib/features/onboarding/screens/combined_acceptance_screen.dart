@@ -11,6 +11,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class CombinedAcceptanceScreen extends StatefulWidget {
   const CombinedAcceptanceScreen({super.key});
@@ -34,9 +35,10 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Bilgilendirme', style: AppTextStyles.labelMedium),
+        title: Text(l10n.acceptanceTitle, style: AppTextStyles.labelMedium),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => context.pop(),
@@ -51,12 +53,12 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
               children: [
                 // Header
                 Text(
-                  'Baslamadan once',
+                  l10n.acceptanceHeader,
                   style: AppTextStyles.displayMedium,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Nuveli\'yi guvenli kullanman icin 4 onemli not. Hepsini onaylaman gerekiyor.',
+                  l10n.acceptanceSubtitle,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -67,10 +69,9 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
                 _buildAcceptanceCard(
                   number: 1,
                   icon: Icons.favorite_outline,
-                  title: 'Nuveli wellness uygulamasidir',
-                  body: 'Nuveli tibbi teshis, tedavi veya klinik diyet plani sunmaz. '
-                      'Ozel saglik durumlarin icin doktorundan destek alman onemli.',
-                  checkboxLabel: 'Anladim. Nuveli doktorumun yerini almaz.',
+                  title: l10n.acceptanceWellnessTitle,
+                  body: l10n.acceptanceWellnessBody,
+                  checkboxLabel: l10n.acceptanceWellnessCheck,
                   isChecked: _wellnessChecked,
                   onChanged: (v) => setState(() => _wellnessChecked = v ?? false),
                 ),
@@ -80,10 +81,9 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
                 _buildAcceptanceCard(
                   number: 2,
                   icon: Icons.auto_awesome_outlined,
-                  title: 'AI tahminleri yaklasiktir',
-                  body: 'Yemek fotograflarindan yaptigimiz kalori ve besin degeri '
-                      'tahminleri yaklasik sonuclardir. Her zaman duzenleyebilirsin.',
-                  checkboxLabel: 'Sonuclarin yaklasik olabilecegini biliyorum.',
+                  title: l10n.acceptanceAiTitle,
+                  body: l10n.acceptanceAiBody,
+                  checkboxLabel: l10n.acceptanceAiCheck,
                   isChecked: _aiEstimatesChecked,
                   onChanged: (v) => setState(() => _aiEstimatesChecked = v ?? false),
                 ),
@@ -93,11 +93,9 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
                 _buildAcceptanceCard(
                   number: 3,
                   icon: Icons.warning_amber_outlined,
-                  title: 'Ozel durumlarda dikkat',
-                  body: 'Hamilelik, emzirme, yeme bozuklugu gecmisi veya kronik '
-                      'hastaligin varsa, kalori onerilerini uygulamadan once saglik '
-                      'uzmanina danis.',
-                  checkboxLabel: 'Ozel durumumda uzmana danisacagim.',
+                  title: l10n.acceptanceSpecialTitle,
+                  body: l10n.acceptanceSpecialBody,
+                  checkboxLabel: l10n.acceptanceSpecialCheck,
                   isChecked: _specialCasesChecked,
                   onChanged: (v) => setState(() => _specialCasesChecked = v ?? false),
                 ),
@@ -107,11 +105,9 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
                 _buildAcceptanceCard(
                   number: 4,
                   icon: Icons.lock_outline,
-                  title: 'Sartlar ve gizlilik',
-                  body: 'Kullanim Sartlari ve Gizlilik Politikasi\'ni okuyup kabul '
-                      'etmelisin. Verilerin guvende tutulur ve ayarlar ekranindan '
-                      'her zaman silebilirsin.',
-                  checkboxLabel: 'Sartlari ve Gizlilik Politikasi\'ni kabul ediyorum.',
+                  title: l10n.acceptanceTermsTitle,
+                  body: l10n.acceptanceTermsBody,
+                  checkboxLabel: l10n.acceptanceTermsCheck,
                   isChecked: _termsChecked,
                   onChanged: (v) => setState(() => _termsChecked = v ?? false),
                 ),
@@ -133,7 +129,7 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
               ),
             ),
             child: PrimaryButton(
-              label: _allChecked ? 'Devam et' : 'Tum kutulari isaretle',
+              label: _allChecked ? l10n.acceptanceContinue : l10n.acceptanceCheckAll,
               onPressed: _allChecked
                   ? () => context.go(AppRoute.onboardingGoal)
                   : null,

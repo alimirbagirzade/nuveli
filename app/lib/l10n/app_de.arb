@@ -245,5 +245,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "notifMealReminders": "Mahlzeiten-Erinnerungen",
+  "notifMealRemindersDesc": "Sanfte Erinnerung zur Frühstücks-, Mittags-, Abendessenszeit",
+  "notifCoachNudges": "Coach-Impulse",
+  "notifCoachNudgesDesc": "Persönliche Unterstützung und Motivationsnachrichten",
+  "notifWeeklySummary": "Wochenübersicht",
+  "notifWeeklySummaryDesc": "Montag morgens Zusammenfassung der letzten Woche",
+  "notifQuietHours": "RUHEZEITEN",
+  "notifQuietHoursDesc": "Während dieser Stunden keine Benachrichtigungen.",
+  "notifQuietStart": "Beginn",
+  "notifQuietEnd": "Ende",
+  "notifSaved": "Einstellungen gespeichert.",
+  "notifSaveFailed": "Konnte nicht gespeichert werden.",
+  "notifLoadFailed": "Konnte nicht geladen werden.",
+  "coachSettingsTitle": "Dein Coach",
+  "coachSettingsQuestion": "Wie soll dein Coach mit dir sprechen?",
+  "coachSettingsSubtitle": "Du kannst es jederzeit ändern."
 }

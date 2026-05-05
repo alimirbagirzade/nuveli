@@ -8,6 +8,7 @@ import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../../../shared/widgets/skeleton_loader.dart';
 import '../providers/settings_providers.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class NotificationPrefsScreen extends ConsumerStatefulWidget {
   const NotificationPrefsScreen({super.key});
@@ -64,12 +65,12 @@ class _NotificationPrefsScreenState
       await ref.read(notificationPrefsControllerProvider.notifier).save();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tercihler kaydedildi.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.notifSaved)),
       );
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMsg = e is AppError ? e.userMessage : 'Kaydedilemedi.';
+        _errorMsg = e is AppError ? e.userMessage : AppLocalizations.of(context)!.notifSaveFailed;
       });
     } finally {
       if (mounted) setState(() => _saving = false);
@@ -82,7 +83,7 @@ class _NotificationPrefsScreenState
     final controller = ref.read(notificationPrefsControllerProvider.notifier);
 
     return AppScaffold(
-      appBar: AppBar(title: const Text('Bildirimler')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.settingsNotifications)),
       body: asyncPrefs.when(
         loading: () => ListView(
           padding: const EdgeInsets.all(16),
@@ -111,7 +112,7 @@ class _NotificationPrefsScreenState
                 const Icon(Icons.cloud_off, size: 48, color: AppColors.error),
                 const SizedBox(height: 12),
                 Text(
-                  err is AppError ? err.userMessage : 'Yüklenemedi.',
+                  err is AppError ? err.userMessage : AppLocalizations.of(context)!.notifLoadFailed,
                   style: AppTextStyles.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -119,7 +120,7 @@ class _NotificationPrefsScreenState
                 OutlinedButton(
                   onPressed: () =>
                       ref.invalidate(notificationPrefsControllerProvider),
-                  child: const Text('Tekrar Dene'),
+                  child: Text(AppLocalizations.of(context)!.commonRetry),
                 ),
               ],
             ),
@@ -133,9 +134,9 @@ class _NotificationPrefsScreenState
                   SwitchListTile(
                     value: prefs.mealReminders,
                     onChanged: controller.setMealReminders,
-                    title: const Text('Öğün Hatırlatıcıları'),
+                    title: Text(AppLocalizations.of(context)!.notifMealReminders),
                     subtitle: Text(
-                      'Kahvaltı, öğle, akşam zamanı nazik hatırlatma',
+                      AppLocalizations.of(context)!.notifMealRemindersDesc,
                       style: AppTextStyles.bodySmall
                           .copyWith(color: AppColors.textSecondary),
                     ),
@@ -143,9 +144,9 @@ class _NotificationPrefsScreenState
                   SwitchListTile(
                     value: prefs.coachNudges,
                     onChanged: controller.setCoachNudges,
-                    title: const Text('Koç Nüdgleri'),
+                    title: Text(AppLocalizations.of(context)!.notifCoachNudges),
                     subtitle: Text(
-                      'Kişisel destek ve motivasyon mesajları',
+                      AppLocalizations.of(context)!.notifCoachNudgesDesc,
                       style: AppTextStyles.bodySmall
                           .copyWith(color: AppColors.textSecondary),
                     ),
@@ -153,9 +154,9 @@ class _NotificationPrefsScreenState
                   SwitchListTile(
                     value: prefs.weeklySummary,
                     onChanged: controller.setWeeklySummary,
-                    title: const Text('Haftalık Özet'),
+                    title: Text(AppLocalizations.of(context)!.notifWeeklySummary),
                     subtitle: Text(
-                      'Pazartesi sabahı geçen haftanın özeti',
+                      AppLocalizations.of(context)!.notifWeeklySummaryDesc,
                       style: AppTextStyles.bodySmall
                           .copyWith(color: AppColors.textSecondary),
                     ),
@@ -164,21 +165,21 @@ class _NotificationPrefsScreenState
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
                     child: Text(
-                      'SESSİZ SAATLER',
+                      AppLocalizations.of(context)!.notifQuietHours,
                       style: AppTextStyles.labelSmall,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      'Bu saatler arasında hiçbir bildirim gelmez.',
+                      AppLocalizations.of(context)!.notifQuietHoursDesc,
                       style: AppTextStyles.bodySmall
                           .copyWith(color: AppColors.textSecondary),
                     ),
                   ),
                   const SizedBox(height: 8),
                   ListTile(
-                    title: const Text('Başlangıç'),
+                    title: Text(AppLocalizations.of(context)!.notifQuietStart),
                     trailing: Text(
                       prefs.quietStart,
                       style: AppTextStyles.bodyMedium.copyWith(
@@ -189,7 +190,7 @@ class _NotificationPrefsScreenState
                     onTap: () => _pickTime(context, true),
                   ),
                   ListTile(
-                    title: const Text('Bitiş'),
+                    title: Text(AppLocalizations.of(context)!.notifQuietEnd),
                     trailing: Text(
                       prefs.quietEnd,
                       style: AppTextStyles.bodyMedium.copyWith(
@@ -229,7 +230,7 @@ class _NotificationPrefsScreenState
               child: SizedBox(
                 width: double.infinity,
                 child: PrimaryButton(
-                  label: 'Kaydet',
+                  label: AppLocalizations.of(context)!.commonSave,
                   isLoading: _saving,
                   onPressed: _saving ? null : _save,
                 ),

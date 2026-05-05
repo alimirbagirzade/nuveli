@@ -759,4 +759,56 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get homeCravingText => 'Gelüste? 60 Sekunden Pause, tief durchatmen.';
+
+  @override
+  String get notifMealReminders => 'Mahlzeiten-Erinnerungen';
+
+  @override
+  String get notifMealRemindersDesc =>
+      'Sanfte Erinnerung zur Frühstücks-, Mittags-, Abendessenszeit';
+
+  @override
+  String get notifCoachNudges => 'Coach-Impulse';
+
+  @override
+  String get notifCoachNudgesDesc =>
+      'Persönliche Unterstützung und Motivationsnachrichten';
+
+  @override
+  String get notifWeeklySummary => 'Wochenübersicht';
+
+  @override
+  String get notifWeeklySummaryDesc =>
+      'Montag morgens Zusammenfassung der letzten Woche';
+
+  @override
+  String get notifQuietHours => 'RUHEZEITEN';
+
+  @override
+  String get notifQuietHoursDesc =>
+      'Während dieser Stunden keine Benachrichtigungen.';
+
+  @override
+  String get notifQuietStart => 'Beginn';
+
+  @override
+  String get notifQuietEnd => 'Ende';
+
+  @override
+  String get notifSaved => 'Einstellungen gespeichert.';
+
+  @override
+  String get notifSaveFailed => 'Konnte nicht gespeichert werden.';
+
+  @override
+  String get notifLoadFailed => 'Konnte nicht geladen werden.';
+
+  @override
+  String get coachSettingsTitle => 'Dein Coach';
+
+  @override
+  String get coachSettingsQuestion => 'Wie soll dein Coach mit dir sprechen?';
+
+  @override
+  String get coachSettingsSubtitle => 'Du kannst es jederzeit ändern.';
 }

@@ -1537,6 +1537,102 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bir şeye canın çekiyor mu? 60 saniye dur, derin nefes al.'**
   String get homeCravingText;
+
+  /// No description provided for @notifMealReminders.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün Hatırlatıcıları'**
+  String get notifMealReminders;
+
+  /// No description provided for @notifMealRemindersDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kahvaltı, öğle, akşam zamanı nazik hatırlatma'**
+  String get notifMealRemindersDesc;
+
+  /// No description provided for @notifCoachNudges.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koç Nüdgleri'**
+  String get notifCoachNudges;
+
+  /// No description provided for @notifCoachNudgesDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kişisel destek ve motivasyon mesajları'**
+  String get notifCoachNudgesDesc;
+
+  /// No description provided for @notifWeeklySummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık Özet'**
+  String get notifWeeklySummary;
+
+  /// No description provided for @notifWeeklySummaryDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazartesi sabahı geçen haftanın özeti'**
+  String get notifWeeklySummaryDesc;
+
+  /// No description provided for @notifQuietHours.
+  ///
+  /// In tr, this message translates to:
+  /// **'SESSİZ SAATLER'**
+  String get notifQuietHours;
+
+  /// No description provided for @notifQuietHoursDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu saatler arasında hiçbir bildirim gelmez.'**
+  String get notifQuietHoursDesc;
+
+  /// No description provided for @notifQuietStart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlangıç'**
+  String get notifQuietStart;
+
+  /// No description provided for @notifQuietEnd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bitiş'**
+  String get notifQuietEnd;
+
+  /// No description provided for @notifSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tercihler kaydedildi.'**
+  String get notifSaved;
+
+  /// No description provided for @notifSaveFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi.'**
+  String get notifSaveFailed;
+
+  /// No description provided for @notifLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi.'**
+  String get notifLoadFailed;
+
+  /// No description provided for @coachSettingsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun'**
+  String get coachSettingsTitle;
+
+  /// No description provided for @coachSettingsQuestion.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun seninle nasıl konuşsun?'**
+  String get coachSettingsQuestion;
+
+  /// No description provided for @coachSettingsSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstediğin zaman değiştirebilirsin.'**
+  String get coachSettingsSubtitle;
 }
 
 class _AppLocalizationsDelegate

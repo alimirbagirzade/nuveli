@@ -16,6 +16,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class CoachPersonaSettingsScreen extends ConsumerStatefulWidget {
   const CoachPersonaSettingsScreen({super.key});

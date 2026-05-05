@@ -245,5 +245,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "notifMealReminders": "Öğün Hatırlatıcıları",
+  "notifMealRemindersDesc": "Kahvaltı, öğle, akşam zamanı nazik hatırlatma",
+  "notifCoachNudges": "Koç Nüdgleri",
+  "notifCoachNudgesDesc": "Kişisel destek ve motivasyon mesajları",
+  "notifWeeklySummary": "Haftalık Özet",
+  "notifWeeklySummaryDesc": "Pazartesi sabahı geçen haftanın özeti",
+  "notifQuietHours": "SESSİZ SAATLER",
+  "notifQuietHoursDesc": "Bu saatler arasında hiçbir bildirim gelmez.",
+  "notifQuietStart": "Başlangıç",
+  "notifQuietEnd": "Bitiş",
+  "notifSaved": "Tercihler kaydedildi.",
+  "notifSaveFailed": "Kaydedilemedi.",
+  "notifLoadFailed": "Yüklenemedi.",
+  "coachSettingsTitle": "Koçun",
+  "coachSettingsQuestion": "Koçun seninle nasıl konuşsun?",
+  "coachSettingsSubtitle": "İstediğin zaman değiştirebilirsin."
 }

@@ -245,5 +245,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "notifMealReminders": "Meal Reminders",
+  "notifMealRemindersDesc": "Gentle reminder at breakfast, lunch, dinner time",
+  "notifCoachNudges": "Coach Nudges",
+  "notifCoachNudgesDesc": "Personal support and motivation messages",
+  "notifWeeklySummary": "Weekly Summary",
+  "notifWeeklySummaryDesc": "Monday morning summary of last week",
+  "notifQuietHours": "QUIET HOURS",
+  "notifQuietHoursDesc": "No notifications during these hours.",
+  "notifQuietStart": "Start",
+  "notifQuietEnd": "End",
+  "notifSaved": "Preferences saved.",
+  "notifSaveFailed": "Could not save.",
+  "notifLoadFailed": "Could not load.",
+  "coachSettingsTitle": "Your Coach",
+  "coachSettingsQuestion": "How should your coach speak to you?",
+  "coachSettingsSubtitle": "You can change anytime."
 }
