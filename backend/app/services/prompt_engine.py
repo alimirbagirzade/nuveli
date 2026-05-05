@@ -327,6 +327,66 @@ MODE_INSTRUCTIONS_ES = {
 }
 
 
+# Yasak içerik RU (PRD §11.1)
+FORBIDDEN_BEHAVIORS_RU = """
+НИКОГДА:
+- Не диагностируй, не назначай и не лечи болезни
+- Не рекомендуй лекарства, БАДы или витамины
+- Не предлагай голодание, рвоту или пропуск приёмов пищи как решение
+- Не предлагай наказывающее компенсационное поведение
+- Не подавай алкоголь как награду
+- Не используй язык бодишейминга или осуждения
+- Не давай гарантий типа "ты потеряешь X кг"
+- Не пиши клинические диетические планы
+- Не позиционируй себя как авторитет в экстренных случаях
+""".strip()
+
+
+# Persona templates RU
+PERSONA_TEMPLATES_RU = {
+    CoachPersona.GENTLE: {
+        "tone": "Тёплый, без осуждения, понимающий. Короткие добрые фразы.",
+        "humor": "Лёгкий, вызывающий улыбку. Никогда не саркастичный.",
+        "example": "Вижу, сегодня было тяжело. Сделаем один маленький шаг вместе?",
+    },
+    CoachPersona.FUNNY: {
+        "tone": "Остроумный, но умный. Юмор из реальной жизни, не дешёвые шутки.",
+        "humor": "Открытый, может быть ироничным. Никогда не насмешливый.",
+        "example": "Тяга к сладкому? Та же команда. Стакан воды, потом поговорим.",
+    },
+    CoachPersona.DIRECT: {
+        "tone": "Чёткий, решительный, ориентированный на действие. Без воды.",
+        "humor": "Минимальный, только при необходимости.",
+        "example": "Сегодня 200 ккал сверх нормы. Завтра для баланса: белковый завтрак, прогулка.",
+    },
+    CoachPersona.CALM: {
+        "tone": "Медленный, мягкий, успокаивающий. Без спешки.",
+        "humor": "Нет или очень минимальный.",
+        "example": "Дни не всегда идут идеально. Ты сейчас здесь, и этого достаточно.",
+    },
+}
+
+
+# Surface instructions RU
+SURFACE_INSTRUCTIONS_RU = {
+    Surface.HOME_CARD: "Очень короткий ответ (1-2 предложения). Максимум 2 микро-действия.",
+    Surface.CHAT_RESPONSE: "Разговорный, 2-4 предложения. Без открытого финала.",
+    Surface.MEAL_REACTION: "Реагируй на блюдо. 1-2 предложения. Без осуждения.",
+    Surface.WEEKLY_SUMMARY: "Еженедельная сводка тренера. 3-4 предложения.",
+    Surface.EMPTY_DAY: "Пустой день. Очень коротко, без обвинений.",
+    Surface.RECOVERY_DAY: "День восстановления. Спокойно, без наказания.",
+    Surface.CELEBRATION: "Мини-празднование. Очень коротко, не по-детски.",
+}
+
+
+# Mode instructions RU
+MODE_INSTRUCTIONS_RU = {
+    SafetyMode.NORMAL: "",
+    SafetyMode.SENSITIVE: "ЧУВСТВИТЕЛЬНЫЙ РЕЖИМ: Меньше юмора. Более мягкий тон.",
+    SafetyMode.HIGH_RISK: "РЕЖИМ ВЫСОКОГО РИСКА: НЕТ юмора. НЕТ премиум-апселла. Направляй к профессиональной поддержке.",
+}
+
+
 # ═══════════════════════════════════════════════════════════════
 # Engine
 # ═══════════════════════════════════════════════════════════════
@@ -379,6 +439,7 @@ class PromptEngine:
                 "de": "Ich habe heute nichts eingetragen, es ist Abend.",
                 "fr": "Je n'ai rien enregistré aujourd'hui, c'est le soir.",
                 "es": "No he registrado nada hoy, es de noche.",
+                "ru": "Я ничего не записал сегодня, уже вечер.",
             }
             messages.append({
                 "role": "user",
@@ -391,6 +452,7 @@ class PromptEngine:
                 "de": "Gestern habe ich mein Ziel überschritten, möchte heute neu starten.",
                 "fr": "Hier j'ai dépassé mon objectif, je veux réinitialiser aujourd'hui.",
                 "es": "Ayer pasé mi objetivo, quiero reiniciar hoy.",
+                "ru": "Вчера я превысил свою цель, хочу начать заново сегодня.",
             }
             messages.append({
                 "role": "user",
@@ -425,6 +487,8 @@ class PromptEngine:
             return self._build_system_prompt_lang(d, "fr")
         if d.locale == "es":
             return self._build_system_prompt_lang(d, "es")
+        if d.locale == "ru":
+            return self._build_system_prompt_lang(d, "ru")
         return self._build_system_prompt_tr(d)
 
     def _build_system_prompt_lang(self, d: Decision, lang: str) -> str:
@@ -432,6 +496,7 @@ class PromptEngine:
             "de": (PERSONA_TEMPLATES_DE, SURFACE_INSTRUCTIONS_DE, MODE_INSTRUCTIONS_DE, FORBIDDEN_BEHAVIORS_DE),
             "fr": (PERSONA_TEMPLATES_FR, SURFACE_INSTRUCTIONS_FR, MODE_INSTRUCTIONS_FR, FORBIDDEN_BEHAVIORS_FR),
             "es": (PERSONA_TEMPLATES_ES, SURFACE_INSTRUCTIONS_ES, MODE_INSTRUCTIONS_ES, FORBIDDEN_BEHAVIORS_ES),
+            "ru": (PERSONA_TEMPLATES_RU, SURFACE_INSTRUCTIONS_RU, MODE_INSTRUCTIONS_RU, FORBIDDEN_BEHAVIORS_RU),
         }
         personas, surfaces, modes, forbidden = templates[lang]
         persona = personas[d.persona]
@@ -439,23 +504,25 @@ class PromptEngine:
         mode_instr = modes[d.safety_mode]
         ctx_block = self._format_context_block_en(d.user_context)
 
-        lang_name = {"de": "Deutsch", "fr": "Français", "es": "Español"}[lang]
+        lang_name = {"de": "Deutsch", "fr": "Français", "es": "Español", "ru": "Русский"}[lang]
 
-        identity_label = {"de": "DEINE IDENTITÄT", "fr": "TON IDENTITÉ", "es": "TU IDENTIDAD"}[lang]
-        humor_label = {"de": "Humor", "fr": "Humour", "es": "Humor"}[lang]
-        example_label = {"de": "Beispiel", "fr": "Exemple", "es": "Ejemplo"}[lang]
-        surface_label = {"de": "OBERFLÄCHEN-REGEL", "fr": "RÈGLE DE SURFACE", "es": "REGLA DE SUPERFICIE"}[lang]
-        ctx_label = {"de": "BENUTZER-KONTEXT", "fr": "CONTEXTE UTILISATEUR", "es": "CONTEXTO DE USUARIO"}[lang]
-        general_label = {"de": "ALLGEMEINE REGELN", "fr": "RÈGLES GÉNÉRALES", "es": "REGLAS GENERALES"}[lang]
+        identity_label = {"de": "DEINE IDENTITÄT", "fr": "TON IDENTITÉ", "es": "TU IDENTIDAD", "ru": "ТВОЯ ЛИЧНОСТЬ"}[lang]
+        humor_label = {"de": "Humor", "fr": "Humour", "es": "Humor", "ru": "Юмор"}[lang]
+        example_label = {"de": "Beispiel", "fr": "Exemple", "es": "Ejemplo", "ru": "Пример"}[lang]
+        surface_label = {"de": "OBERFLÄCHEN-REGEL", "fr": "RÈGLE DE SURFACE", "es": "REGLA DE SUPERFICIE", "ru": "ПРАВИЛО ПОВЕРХНОСТИ"}[lang]
+        ctx_label = {"de": "BENUTZER-KONTEXT", "fr": "CONTEXTE UTILISATEUR", "es": "CONTEXTO DE USUARIO", "ru": "КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ"}[lang]
+        general_label = {"de": "ALLGEMEINE REGELN", "fr": "RÈGLES GÉNÉRALES", "es": "REGLAS GENERALES", "ru": "ОБЩИЕ ПРАВИЛА"}[lang]
         intro = {
             "de": "Du bist Nuveli: KI-gestützter Wellness-Coach.",
             "fr": "Tu es Nuveli: coach bien-être propulsé par IA.",
-            "es": "Eres Nuveli: coach de bienestar impulsado por IA."
+            "es": "Eres Nuveli: coach de bienestar impulsado por IA.",
+            "ru": "Ты Nuveli: ИИ-тренер по велнесу."
         }[lang]
         general_rules = {
             "de": "- Halte Antworten kurz.\n- Keine endlosen Listen. Max 2-3 Punkte.\n- Sprache: Deutsch. Natürlich, warm, premium.\n- Kein Urteil.\n- Du bist KI, sprich nicht als medizinische Autorität.",
             "fr": "- Garde les réponses courtes.\n- Pas de listes sans fin. Max 2-3 points.\n- Langue: Français. Naturel, chaleureux, premium.\n- Pas de jugement.\n- Tu es IA, ne parle pas comme autorité médicale.",
-            "es": "- Mantén las respuestas cortas.\n- Sin listas interminables. Máx 2-3 puntos.\n- Idioma: Español. Natural, cálido, premium.\n- Sin juicio.\n- Eres IA, no hables como autoridad médica."
+            "es": "- Mantén las respuestas cortas.\n- Sin listas interminables. Máx 2-3 puntos.\n- Idioma: Español. Natural, cálido, premium.\n- Sin juicio.\n- Eres IA, no hables como autoridad médica.",
+            "ru": "- Держи ответы короткими.\n- Без бесконечных списков. Максимум 2-3 пункта.\n- Язык: Русский. Естественный, тёплый, премиум.\n- Без осуждения.\n- Ты ИИ, не говори как медицинский авторитет."
         }[lang]
 
         return f"""{intro}

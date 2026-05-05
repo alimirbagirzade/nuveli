@@ -76,7 +76,7 @@ async def coach_respond(
     # Accept-Language header'dan dil kodu cikar (tr-TR -> tr)
     accept_lang = request.headers.get("accept-language", "tr")
     locale_override = accept_lang.split(",")[0].split("-")[0].lower()
-    if locale_override not in ["tr", "en", "de", "fr", "es"]:
+    if locale_override not in ["tr", "en", "de", "fr", "es", "ru"]:
         locale_override = "tr"
 
     response: CoachResponse = await coach.respond(
@@ -173,7 +173,7 @@ async def post_coach_message(
     # Accept-Language header'dan dil kodu cikar (tr-TR -> tr)
     accept_lang = request.headers.get("accept-language", "tr")
     locale_override = accept_lang.split(",")[0].split("-")[0].lower()
-    if locale_override not in ["tr", "en", "de", "fr", "es"]:
+    if locale_override not in ["tr", "en", "de", "fr", "es", "ru"]:
         locale_override = "tr"
 
     surface = Surface.CHAT_RESPONSE
