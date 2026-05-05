@@ -101,7 +101,7 @@ class _HeroCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.18),
+                  color: Colors.white.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -114,7 +114,7 @@ class _HeroCard extends StatelessWidget {
               Text(
                 'Son ${history.days} gün',
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                 ),
               ),
             ],
@@ -136,7 +136,7 @@ class _HeroCard extends StatelessWidget {
                 child: Text(
                   AppLocalizations.of(context)!.waterLitresTotal,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white.withOpacity(0.75),
+                    color: Colors.white.withValues(alpha: 0.75),
                   ),
                 ),
               ),
@@ -181,7 +181,7 @@ class _MiniStat extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.7),
           ),
         ),
         const SizedBox(height: 4),
@@ -282,7 +282,7 @@ class _BarChartCard extends StatelessWidget {
                                           ]
                                         : [
                                             AppColors.info,
-                                            AppColors.info.withOpacity(0.6),
+                                            AppColors.info.withValues(alpha: 0.6),
                                           ],
                                   ),
                                   borderRadius: BorderRadius.circular(6),
@@ -398,7 +398,7 @@ class _DailyRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 6),
               decoration: BoxDecoration(
                 color: isToday
-                    ? AppColors.primary.withOpacity(0.18)
+                    ? AppColors.primary.withValues(alpha: 0.18)
                     : AppColors.surfaceHighlight,
                 borderRadius: BorderRadius.circular(10),
               ),

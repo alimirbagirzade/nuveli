@@ -338,7 +338,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
-                            color: AppColors.accent.withOpacity(0.15),
+                            color: AppColors.accent.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
@@ -381,7 +381,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.error.withOpacity(0.12),
+        color: AppColors.error.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -411,7 +411,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.accent,
           foregroundColor: Colors.white,
-          disabledBackgroundColor: AppColors.accent.withOpacity(0.4),
+          disabledBackgroundColor: AppColors.accent.withValues(alpha: 0.4),
           padding: const EdgeInsets.symmetric(vertical: 18),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

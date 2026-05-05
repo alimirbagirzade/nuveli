@@ -157,7 +157,7 @@ class _MealRow extends StatelessWidget {
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        color: AppColors.error.withOpacity(0.1),
+        color: AppColors.error.withValues(alpha: 0.1),
         child: const Icon(Icons.delete_outline, color: AppColors.error),
       ),
       child: Padding(

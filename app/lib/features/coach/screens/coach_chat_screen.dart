@@ -205,8 +205,8 @@ class _SupportBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bg = isCrisis
-        ? AppColors.error.withOpacity(0.12)
-        : AppColors.warning.withOpacity(0.12);
+        ? AppColors.error.withValues(alpha: 0.12)
+        : AppColors.warning.withValues(alpha: 0.12);
     final fg = isCrisis ? AppColors.error : AppColors.warning;
 
     final title = isCrisis
@@ -223,7 +223,7 @@ class _SupportBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: fg.withOpacity(0.3)),
+        border: Border.all(color: fg.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

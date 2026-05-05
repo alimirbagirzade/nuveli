@@ -41,13 +41,13 @@ class EmptyStateView extends StatelessWidget {
             width: iconSize + 20,
             height: iconSize + 20,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
+              color: AppColors.primary.withValues(alpha: 0.08),
               shape: BoxShape.circle,
             ),
             child: Icon(
               icon,
               size: iconSize,
-              color: AppColors.primary.withOpacity(0.7),
+              color: AppColors.primary.withValues(alpha: 0.7),
             ),
           ),
           SizedBox(height: compact ? 10 : 16),

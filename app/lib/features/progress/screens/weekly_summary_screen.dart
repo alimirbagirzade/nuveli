@@ -116,12 +116,12 @@ class _AiInsightCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.primary.withOpacity(0.15),
+            AppColors.primary.withValues(alpha: 0.15),
             AppColors.surface,
           ],
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +179,7 @@ class _LockedAiInsightCard extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.12),
+                color: AppColors.primary.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(Icons.lock_outline,
@@ -224,12 +224,12 @@ class _HeroCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.primary.withOpacity(0.18),
+            AppColors.primary.withValues(alpha: 0.18),
             AppColors.surface,
           ],
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.primary.withOpacity(0.25)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.25)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -480,7 +480,7 @@ class _DayRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isToday
-              ? AppColors.primary.withOpacity(0.5)
+              ? AppColors.primary.withValues(alpha: 0.5)
               : AppColors.divider,
         ),
       ),
@@ -525,14 +525,14 @@ class _DayRow extends StatelessWidget {
                       value: pct.clamp(0.0, 1.0),
                       minHeight: 8,
                       backgroundColor:
-                          AppColors.textTertiary.withOpacity(0.1),
+                          AppColors.textTertiary.withValues(alpha: 0.1),
                       valueColor: AlwaysStoppedAnimation(
                         pct > 1.0
                             ? AppColors.warning
                             : (hasData
                                 ? AppColors.primary
                                 : AppColors.textTertiary
-                                    .withOpacity(0.3)),
+                                    .withValues(alpha: 0.3)),
                       ),
                     ),
                   ),

@@ -271,7 +271,7 @@ class _IdentityHeaderState extends ConsumerState<_IdentityHeader> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.primary.withOpacity(0.15),
+            AppColors.primary.withValues(alpha: 0.15),
             Colors.transparent,
           ],
         ),
@@ -499,7 +499,7 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: AppColors.textTertiary.withOpacity(0.4),
+                color: AppColors.textTertiary.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -699,7 +699,7 @@ class _Tile extends StatelessWidget {
     final tileColor = color ?? AppColors.textPrimary;
     return Material(
       color: highlight
-          ? AppColors.primary.withOpacity(0.08)
+          ? AppColors.primary.withValues(alpha: 0.08)
           : Colors.transparent,
       child: InkWell(
         onTap: onTap,
@@ -711,7 +711,7 @@ class _Tile extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: (color ?? AppColors.primary).withOpacity(0.15),
+                  color: (color ?? AppColors.primary).withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(icon, size: 20, color: tileColor),

@@ -138,13 +138,13 @@ class _Bar extends StatelessWidget {
     //   normal → primary 70%
     Color barColor;
     if (!hasData) {
-      barColor = AppColors.textTertiary.withOpacity(0.2);
+      barColor = AppColors.textTertiary.withValues(alpha: 0.2);
     } else if (fraction > 1.0) {
       barColor = AppColors.warning;
     } else if (isToday) {
       barColor = AppColors.primary;
     } else {
-      barColor = AppColors.primary.withOpacity(0.7);
+      barColor = AppColors.primary.withValues(alpha: 0.7);
     }
 
     return GestureDetector(
@@ -219,7 +219,7 @@ class _ChartSkeleton extends StatelessWidget {
                   Container(
                     height: h,
                     decoration: BoxDecoration(
-                      color: AppColors.textTertiary.withOpacity(0.1),
+                      color: AppColors.textTertiary.withValues(alpha: 0.1),
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(4),
                       ),
@@ -230,7 +230,7 @@ class _ChartSkeleton extends StatelessWidget {
                     width: 18,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: AppColors.textTertiary.withOpacity(0.1),
+                      color: AppColors.textTertiary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),

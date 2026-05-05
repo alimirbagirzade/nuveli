@@ -35,7 +35,7 @@ class MiniProgressChart extends StatelessWidget {
                         Container(
                           height: 60 * values[i],
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.7),
+                            color: AppColors.primary.withValues(alpha: 0.7),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

@@ -123,7 +123,7 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
               color: AppColors.background,
               border: Border(
                 top: BorderSide(
-                  color: AppColors.textTertiary.withOpacity(0.1),
+                  color: AppColors.textTertiary.withValues(alpha: 0.1),
                   width: 1,
                 ),
               ),
@@ -155,8 +155,8 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isChecked
-              ? AppColors.primary.withOpacity(0.4)
-              : AppColors.textTertiary.withOpacity(0.1),
+              ? AppColors.primary.withValues(alpha: 0.4)
+              : AppColors.textTertiary.withValues(alpha: 0.1),
           width: isChecked ? 1.5 : 1,
         ),
       ),
@@ -172,7 +172,7 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: AppColors.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(icon, color: AppColors.primary, size: 20),

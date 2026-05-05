@@ -84,7 +84,7 @@ class _CoachAvatar extends StatelessWidget {
       width: 28,
       height: 28,
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.15),
+        color: AppColors.primary.withValues(alpha: 0.15),
         shape: BoxShape.circle,
       ),
       child: const Icon(
@@ -209,7 +209,7 @@ class _AudioPlayerButtonState extends State<_AudioPlayerButton> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(

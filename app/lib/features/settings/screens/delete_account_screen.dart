@@ -96,7 +96,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: AppColors.error.withOpacity(0.12),
+                color: AppColors.error.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -191,7 +191,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.error.withOpacity(0.1),
+                  color: AppColors.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(

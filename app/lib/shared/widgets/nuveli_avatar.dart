@@ -49,7 +49,7 @@ class NuveliAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = backgroundColor ?? AppColors.primary.withOpacity(0.15);
+    final bg = backgroundColor ?? AppColors.primary.withValues(alpha: 0.15);
     return Container(
       width: size,
       height: size,
@@ -57,7 +57,7 @@ class NuveliAvatar extends StatelessWidget {
         color: bg,
         shape: BoxShape.circle,
         border: Border.all(
-          color: AppColors.primary.withOpacity(0.3),
+          color: AppColors.primary.withValues(alpha: 0.3),
           width: 2,
         ),
       ),
@@ -77,7 +77,7 @@ class NuveliAvatar extends StatelessWidget {
                       height: size * 0.3,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        color: AppColors.primary.withOpacity(0.5),
+                        color: AppColors.primary.withValues(alpha: 0.5),
                       ),
                     ),
                   );
@@ -97,7 +97,7 @@ class NuveliAvatar extends StatelessWidget {
         child: Icon(
           Icons.person_outline,
           size: size * 0.5,
-          color: AppColors.primary.withOpacity(0.5),
+          color: AppColors.primary.withValues(alpha: 0.5),
         ),
       );
 }

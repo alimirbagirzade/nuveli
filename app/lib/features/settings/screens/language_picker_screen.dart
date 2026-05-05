@@ -36,7 +36,7 @@ class LanguagePickerScreen extends ConsumerWidget {
               border: Border.all(
                 color: isSelected
                     ? AppColors.primary
-                    : AppColors.textTertiary.withOpacity(0.1),
+                    : AppColors.textTertiary.withValues(alpha: 0.1),
                 width: isSelected ? 1.5 : 1,
               ),
             ),

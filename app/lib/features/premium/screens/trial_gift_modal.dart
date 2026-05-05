@@ -85,7 +85,7 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.15),
+                color: AppColors.accent.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -148,7 +148,7 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.error.withOpacity(0.12),
+                  color: AppColors.error.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(

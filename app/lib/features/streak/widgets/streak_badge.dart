@@ -81,7 +81,7 @@ class _StreakCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: glowColor.withOpacity(0.25),
+                  color: glowColor.withValues(alpha: 0.25),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 ),
@@ -96,7 +96,7 @@ class _StreakCard extends StatelessWidget {
                     fontSize: 32,
                     shadows: [
                       Shadow(
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withValues(alpha: 0.2),
                         offset: const Offset(0, 2),
                         blurRadius: 4,
                       ),
@@ -127,7 +127,7 @@ class _StreakCard extends StatelessWidget {
                             child: Text(
                               streak.current == 1 ? AppLocalizations.of(context)!.streakDay : AppLocalizations.of(context)!.streakDays,
                               style: AppTextStyles.bodyMedium.copyWith(
-                                color: Colors.white.withOpacity(0.92),
+                                color: Colors.white.withValues(alpha: 0.92),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -138,7 +138,7 @@ class _StreakCard extends StatelessWidget {
                       Text(
                         _subtitleText(context, streak),
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: Colors.white.withOpacity(0.85),
+                          color: Colors.white.withValues(alpha: 0.85),
                         ),
                       ),
                     ],
@@ -146,7 +146,7 @@ class _StreakCard extends StatelessWidget {
                 ),
                 Icon(
                   Icons.chevron_right_rounded,
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                   size: 24,
                 ),
               ],
@@ -381,7 +381,7 @@ class _StatTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceHighlight,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

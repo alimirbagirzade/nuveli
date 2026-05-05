@@ -73,7 +73,7 @@ class _HeroCard extends StatelessWidget {
     final hasMultipleEntries = entries.length >= 2;
 
     final trendColor = delta == 0 || !hasMultipleEntries
-        ? Colors.white.withOpacity(0.7)
+        ? Colors.white.withValues(alpha: 0.7)
         : (delta < 0 ? AppColors.accentLight : const Color(0xFFFFB570));
     final trendIcon = !hasMultipleEntries
         ? Icons.remove_rounded
@@ -101,7 +101,7 @@ class _HeroCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.18),
+                  color: Colors.white.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -114,7 +114,7 @@ class _HeroCard extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.weightCurrent,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                 ),
               ),
             ],
@@ -136,7 +136,7 @@ class _HeroCard extends StatelessWidget {
                 child: Text(
                   'kg',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white.withOpacity(0.75),
+                    color: Colors.white.withValues(alpha: 0.75),
                   ),
                 ),
               ),
@@ -148,7 +148,7 @@ class _HeroCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.12),
+                    color: Colors.white.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -204,7 +204,7 @@ class _MiniStat extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.caption.copyWith(
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.7),
           ),
         ),
         const SizedBox(height: 4),
@@ -356,7 +356,7 @@ class _LineChartPainter extends CustomPainter {
 
     // Yatay grid çizgileri (3 adet: alt, orta, üst)
     final gridPaint = Paint()
-      ..color = AppColors.divider.withOpacity(0.5)
+      ..color = AppColors.divider.withValues(alpha: 0.5)
       ..strokeWidth = 0.5;
     for (var i = 0; i <= 2; i++) {
       final y = (size.height / 2) * i;
@@ -390,8 +390,8 @@ class _LineChartPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          AppColors.primary.withOpacity(0.35),
-          AppColors.primary.withOpacity(0.0),
+          AppColors.primary.withValues(alpha: 0.35),
+          AppColors.primary.withValues(alpha: 0.0),
         ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.drawPath(fillPath, fillPaint);
@@ -517,7 +517,7 @@ class _EntryRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 6),
               decoration: BoxDecoration(
                 color: isToday
-                    ? AppColors.primary.withOpacity(0.18)
+                    ? AppColors.primary.withValues(alpha: 0.18)
                     : AppColors.surfaceHighlight,
                 borderRadius: BorderRadius.circular(10),
               ),
