@@ -9,7 +9,7 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
-  String get appName => 'Nuveli';
+  String get appName => 'Nuveli App';
 
   @override
   String get appTagline => 'Coach IA Calories';
@@ -260,16 +260,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingDietTitle => 'Régime';
 
   @override
-  String get onboardingDietAllergies => 'Allergies';
+  String get onboardingDietAllergies => 'Allergies alimentaires';
 
   @override
   String get onboardingDietPreference => 'Préférence alimentaire';
 
   @override
-  String get onboardingDietAllergyLactose => 'Lactose';
+  String get onboardingDietAllergyLactose => 'Allergie au lactose';
 
   @override
-  String get onboardingDietAllergyGluten => 'Gluten';
+  String get onboardingDietAllergyGluten => 'Allergie au gluten';
 
   @override
   String get onboardingDietAllergyPeanut => 'Arachide';
@@ -305,7 +305,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingDietPrefPescatarian => 'Pescatarien (poisson seulement)';
 
   @override
-  String get onboardingDietPrefHalal => 'Halal';
+  String get onboardingDietPrefHalal => 'Halal certifié';
 
   @override
   String get onboardingDietPrefKosher => 'Casher';
@@ -337,7 +337,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Léger, souriant, équilibré quand sérieux';
 
   @override
-  String get onboardingCoachDirect => 'Direct';
+  String get onboardingCoachDirect => 'Coach direct';
 
   @override
   String get onboardingCoachDirectDesc => 'Court, clair, retours réalistes';
@@ -362,14 +362,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingCalorieDaily => 'Calories quotidiennes';
 
   @override
-  String get onboardingCalorieKcal => 'kcal';
+  String get onboardingCalorieKcal => 'kilocalories';
 
   @override
   String get onboardingCalorieNote =>
       'Calculé en fonction de l\'activité, l\'objectif et la situation. Révisé chaque mois.';
 
   @override
-  String get onboardingNotificationTitle => 'Notifications';
+  String get onboardingNotificationTitle => 'Mes notifications';
 
   @override
   String get onboardingNotificationQuestion => 'Veux-tu des rappels doux?';
@@ -451,7 +451,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navMeals => 'Repas';
 
   @override
-  String get navCoach => 'Coach';
+  String get navCoach => 'Entraîneur';
 
   @override
   String get navProfile => 'Profil';
@@ -469,7 +469,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsProfile => 'Profil';
 
   @override
-  String get settingsNotifications => 'Notifications';
+  String get settingsNotifications => 'Mes notifications';
 
   @override
   String get settingsLanguage => 'Langue';
@@ -478,19 +478,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLanguageSystem => 'Langue système';
 
   @override
-  String get settingsLanguageTurkish => 'Türkçe';
+  String get settingsLanguageTurkish => 'Turc';
 
   @override
-  String get settingsLanguageEnglish => 'English';
+  String get settingsLanguageEnglish => 'Anglais';
 
   @override
-  String get settingsLanguageGerman => 'Deutsch';
+  String get settingsLanguageGerman => 'Allemand';
 
   @override
-  String get settingsLanguageFrench => 'Français';
+  String get settingsLanguageFrench => '🇫🇷 Français';
 
   @override
-  String get settingsLanguageSpanish => 'Español';
+  String get settingsLanguageSpanish => 'Espagnol';
 
   @override
   String get settingsTheme => 'Thème';
@@ -529,7 +529,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsDeleteAccount => 'Supprimer le compte';
 
   @override
-  String get settingsVersion => 'Version';
+  String get settingsVersion => 'Version de l\'app';
 
   @override
   String get premiumTitle => 'Premium bientôt';
@@ -593,7 +593,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonNo => 'Non';
 
   @override
-  String get commonOk => 'OK';
+  String get commonOk => 'Confirmer';
 
   @override
   String get settingsCoachTone => 'Ton du coach';
@@ -614,7 +614,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsSubscription => 'Abonnement';
 
   @override
-  String get settingsSession => 'Session';
+  String get settingsSession => 'Session active';
 
   @override
   String get settingsDangerZone => 'Zone dangereuse';
@@ -863,7 +863,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get supportEmailCard => 'Contacter par e-mail';
 
   @override
-  String get supportFaq => 'FAQ';
+  String get supportFaq => 'Questions fréquentes';
 
   @override
   String get supportFaqDesc => 'Questions fréquemment posées et réponses';
@@ -941,7 +941,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutCopied => 'copié';
 
   @override
-  String get aboutVersion => 'Version';
+  String get aboutVersion => 'Version de l\'app';
 
   @override
   String get streakDay => 'jour';
@@ -1076,7 +1076,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get weeklyAvgKcal => 'kcal/jour moyenne';
 
   @override
-  String get weeklyTotal => 'Total';
+  String get weeklyTotal => 'Total hebdomadaire';
 
   @override
   String get weeklyMeals => 'Repas';
@@ -1085,7 +1085,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get weeklyLogged => 'Enregistré';
 
   @override
-  String get coachChatTitle => 'Coach';
+  String get coachChatTitle => 'Entraîneur';
 
   @override
   String get coachChatPlaceholder => 'Demande à ton coach...';
@@ -1103,7 +1103,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get weightInvalid => 'Entre un poids valide (1-500 kg).';
 
   @override
-  String get weightKg => 'kg';
+  String get weightKg => 'Kilogrammes';
 
   @override
   String get moodHowToday => 'Comment vas-tu aujourd\'hui?';
@@ -1292,7 +1292,7 @@ class AppLocalizationsFr extends AppLocalizations {
       '\"Soirée pizza, compris. La vie est équilibre — salade demain, bonheur ce soir.\"';
 
   @override
-  String get personaDirect => 'Direct';
+  String get personaDirect => 'Coach direct';
 
   @override
   String get personaDirectDesc => 'Court, clair, feedback réaliste';
@@ -1333,7 +1333,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get waterLitresTotal => 'L total';
+  String get waterLitresTotal => 'L au total';
 
   @override
   String get waterToday => 'Aujourd\'hui';
@@ -1407,10 +1407,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get monthShortSep => 'Sept';
 
   @override
-  String get monthShortOct => 'Oct';
+  String get monthShortOct => 'Octobre';
 
   @override
-  String get monthShortNov => 'Nov';
+  String get monthShortNov => 'Novembre';
 
   @override
   String get monthShortDec => 'Déc';
@@ -1441,7 +1441,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileGoalsSub => 'Tes objectifs caloriques et macros';
 
   @override
-  String get profileNotifications => 'Notifications';
+  String get profileNotifications => 'Mes notifications';
 
   @override
   String get profileNotifPrefs => 'Préférences notifications';

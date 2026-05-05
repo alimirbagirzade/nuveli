@@ -9,7 +9,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appName => 'Nuveli';
+  String get appName => 'Nuveli App';
 
   @override
   String get appTagline => 'ИИ-тренер по калориям';
@@ -474,19 +474,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLanguageSystem => 'Системный язык';
 
   @override
-  String get settingsLanguageTurkish => 'Türkçe';
+  String get settingsLanguageTurkish => 'Турецкий';
 
   @override
-  String get settingsLanguageEnglish => 'English';
+  String get settingsLanguageEnglish => 'Английский';
 
   @override
-  String get settingsLanguageGerman => 'Deutsch';
+  String get settingsLanguageGerman => 'Немецкий';
 
   @override
-  String get settingsLanguageFrench => 'Français';
+  String get settingsLanguageFrench => 'Французский';
 
   @override
-  String get settingsLanguageSpanish => 'Español';
+  String get settingsLanguageSpanish => 'Испанский';
 
   @override
   String get settingsTheme => 'Тема';
@@ -588,7 +588,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonNo => 'Нет';
 
   @override
-  String get commonOk => 'OK';
+  String get commonOk => 'Принять';
 
   @override
   String get settingsCoachTone => 'Тон тренера';

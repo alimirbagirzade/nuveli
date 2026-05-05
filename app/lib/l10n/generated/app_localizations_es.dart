@@ -9,7 +9,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appName => 'Nuveli';
+  String get appName => 'Nuveli App';
 
   @override
   String get appTagline => 'Coach IA Calorías';
@@ -266,7 +266,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingDietAllergyLactose => 'Lactosa';
 
   @override
-  String get onboardingDietAllergyGluten => 'Gluten';
+  String get onboardingDietAllergyGluten => 'Alergia al gluten';
 
   @override
   String get onboardingDietAllergyPeanut => 'Cacahuete';
@@ -302,10 +302,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingDietPrefPescatarian => 'Pescetariano (solo pescado)';
 
   @override
-  String get onboardingDietPrefHalal => 'Halal';
+  String get onboardingDietPrefHalal => 'Halal certificado';
 
   @override
-  String get onboardingDietPrefKosher => 'Kosher';
+  String get onboardingDietPrefKosher => 'Kosher certificado';
 
   @override
   String get onboardingDietPrefOther => 'Otro';
@@ -359,7 +359,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingCalorieDaily => 'Calorías diarias';
 
   @override
-  String get onboardingCalorieKcal => 'kcal';
+  String get onboardingCalorieKcal => 'kilocalorías';
 
   @override
   String get onboardingCalorieNote =>
@@ -448,7 +448,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navMeals => 'Comidas';
 
   @override
-  String get navCoach => 'Coach';
+  String get navCoach => 'Entrenador';
 
   @override
   String get navProfile => 'Perfil';
@@ -475,19 +475,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsLanguageSystem => 'Idioma del sistema';
 
   @override
-  String get settingsLanguageTurkish => 'Türkçe';
+  String get settingsLanguageTurkish => 'Turco';
 
   @override
-  String get settingsLanguageEnglish => 'English';
+  String get settingsLanguageEnglish => 'Inglés';
 
   @override
-  String get settingsLanguageGerman => 'Deutsch';
+  String get settingsLanguageGerman => 'Alemán';
 
   @override
-  String get settingsLanguageFrench => 'Français';
+  String get settingsLanguageFrench => 'Francés';
 
   @override
-  String get settingsLanguageSpanish => 'Español';
+  String get settingsLanguageSpanish => '🇪🇸 Español';
 
   @override
   String get settingsTheme => 'Tema';
@@ -587,10 +587,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonYes => 'Sí';
 
   @override
-  String get commonNo => 'No';
+  String get commonNo => 'No, gracias';
 
   @override
-  String get commonOk => 'OK';
+  String get commonOk => 'Confirmar';
 
   @override
   String get settingsCoachTone => 'Tono del coach';
@@ -740,7 +740,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeMealDinner => 'Cena';
 
   @override
-  String get homeMealSnack => 'Snack';
+  String get homeMealSnack => 'Tentempié';
 
   @override
   String get homeCalorieTarget => 'objetivo';
@@ -859,7 +859,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get supportEmailCard => 'Contactar por correo';
 
   @override
-  String get supportFaq => 'FAQ';
+  String get supportFaq => 'Preguntas frecuentes';
 
   @override
   String get supportFaqDesc => 'Preguntas frecuentes y respuestas';
@@ -914,7 +914,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyDownload => 'Descargar mis datos';
 
   @override
-  String get aboutApp => 'App';
+  String get aboutApp => 'Aplicación';
 
   @override
   String get aboutLinks => 'Enlaces';
@@ -1015,7 +1015,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mealTypeDinner => 'Cena';
 
   @override
-  String get mealTypeSnack => 'Snack';
+  String get mealTypeSnack => 'Tentempié';
 
   @override
   String get mealTypeOther => 'Comida';
@@ -1069,7 +1069,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get weeklyAvgKcal => 'kcal/día promedio';
 
   @override
-  String get weeklyTotal => 'Total';
+  String get weeklyTotal => 'Total semanal';
 
   @override
   String get weeklyMeals => 'Comidas';
@@ -1078,7 +1078,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get weeklyLogged => 'Registrado';
 
   @override
-  String get coachChatTitle => 'Coach';
+  String get coachChatTitle => 'Entrenador';
 
   @override
   String get coachChatPlaceholder => 'Pregunta a tu coach...';
@@ -1096,7 +1096,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get weightInvalid => 'Ingresa un peso válido (1-500 kg).';
 
   @override
-  String get weightKg => 'kg';
+  String get weightKg => 'Kilogramos';
 
   @override
   String get moodHowToday => '¿Cómo estás hoy?';
@@ -1325,7 +1325,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get waterLitresTotal => 'L total';
+  String get waterLitresTotal => 'L en total';
 
   @override
   String get waterToday => 'Hoy';
@@ -1375,34 +1375,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get monthShortJan => 'Ene';
 
   @override
-  String get monthShortFeb => 'Feb';
+  String get monthShortFeb => 'Febrero';
 
   @override
-  String get monthShortMar => 'Mar';
+  String get monthShortMar => 'Marzo';
 
   @override
   String get monthShortApr => 'Abr';
 
   @override
-  String get monthShortMay => 'May';
+  String get monthShortMay => 'Mayo';
 
   @override
-  String get monthShortJun => 'Jun';
+  String get monthShortJun => 'Junio';
 
   @override
-  String get monthShortJul => 'Jul';
+  String get monthShortJul => 'Julio';
 
   @override
   String get monthShortAug => 'Ago';
 
   @override
-  String get monthShortSep => 'Sep';
+  String get monthShortSep => 'Septiembre';
 
   @override
-  String get monthShortOct => 'Oct';
+  String get monthShortOct => 'Octubre';
 
   @override
-  String get monthShortNov => 'Nov';
+  String get monthShortNov => 'Noviembre';
 
   @override
   String get monthShortDec => 'Dic';
@@ -1697,7 +1697,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mealTypeDinnerShort => 'Cena';
 
   @override
-  String get mealTypeSnackShort => 'Snack';
+  String get mealTypeSnackShort => 'Tentempié';
 
   @override
   String streakLongestNeverActive(int longest) {

@@ -9,7 +9,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appName => 'Nuveli';
+  String get appName => 'Nuveli App';
 
   @override
   String get appTagline => 'AI Kalori Koçu';
@@ -259,7 +259,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get onboardingDietAllergyLactose => 'Laktoz';
 
   @override
-  String get onboardingDietAllergyGluten => 'Gluten';
+  String get onboardingDietAllergyGluten => 'Gluten içeren';
 
   @override
   String get onboardingDietAllergyPeanut => 'Yer fıstığı';
@@ -289,7 +289,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get onboardingDietPrefVegetarian => 'Vejetaryen';
 
   @override
-  String get onboardingDietPrefVegan => 'Vegan';
+  String get onboardingDietPrefVegan => 'Vegan beslenme';
 
   @override
   String get onboardingDietPrefPescatarian => 'Peskatarian (sadece balık)';
@@ -351,7 +351,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get onboardingCalorieDaily => 'Günlük kalori';
 
   @override
-  String get onboardingCalorieKcal => 'kcal';
+  String get onboardingCalorieKcal => 'kalori';
 
   @override
   String get onboardingCalorieNote =>
@@ -468,19 +468,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsLanguageSystem => 'Sistem dili';
 
   @override
-  String get settingsLanguageTurkish => 'Türkçe';
+  String get settingsLanguageTurkish => '🇹🇷 Türkçe';
 
   @override
-  String get settingsLanguageEnglish => 'English';
+  String get settingsLanguageEnglish => 'İngilizce';
 
   @override
-  String get settingsLanguageGerman => 'Deutsch';
+  String get settingsLanguageGerman => 'Almanca';
 
   @override
-  String get settingsLanguageFrench => 'Français';
+  String get settingsLanguageFrench => 'Fransızca';
 
   @override
-  String get settingsLanguageSpanish => 'Español';
+  String get settingsLanguageSpanish => 'İspanyolca';
 
   @override
   String get settingsTheme => 'Tema';
@@ -743,7 +743,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get macroProtein => 'Protein';
+  String get macroProtein => 'Proteinler';
 
   @override
   String get macroCarb => 'Karb';
@@ -1090,7 +1090,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get weightInvalid => 'Geçerli bir kilo girin (1-500 kg).';
 
   @override
-  String get weightKg => 'kg';
+  String get weightKg => 'Kilogram';
 
   @override
   String get moodHowToday => 'Bugün nasılsın?';

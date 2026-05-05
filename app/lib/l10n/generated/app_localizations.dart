@@ -111,7 +111,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In tr, this message translates to:
-  /// **'Nuveli'**
+  /// **'Nuveli App'**
   String get appName;
 
   /// No description provided for @appTagline.
@@ -579,7 +579,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingDietAllergyGluten.
   ///
   /// In tr, this message translates to:
-  /// **'Gluten'**
+  /// **'Gluten içeren'**
   String get onboardingDietAllergyGluten;
 
   /// No description provided for @onboardingDietAllergyPeanut.
@@ -639,7 +639,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingDietPrefVegan.
   ///
   /// In tr, this message translates to:
-  /// **'Vegan'**
+  /// **'Vegan beslenme'**
   String get onboardingDietPrefVegan;
 
   /// No description provided for @onboardingDietPrefPescatarian.
@@ -759,7 +759,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingCalorieKcal.
   ///
   /// In tr, this message translates to:
-  /// **'kcal'**
+  /// **'kalori'**
   String get onboardingCalorieKcal;
 
   /// No description provided for @onboardingCalorieNote.
@@ -981,31 +981,31 @@ abstract class AppLocalizations {
   /// No description provided for @settingsLanguageTurkish.
   ///
   /// In tr, this message translates to:
-  /// **'Türkçe'**
+  /// **'🇹🇷 Türkçe'**
   String get settingsLanguageTurkish;
 
   /// No description provided for @settingsLanguageEnglish.
   ///
   /// In tr, this message translates to:
-  /// **'English'**
+  /// **'İngilizce'**
   String get settingsLanguageEnglish;
 
   /// No description provided for @settingsLanguageGerman.
   ///
   /// In tr, this message translates to:
-  /// **'Deutsch'**
+  /// **'Almanca'**
   String get settingsLanguageGerman;
 
   /// No description provided for @settingsLanguageFrench.
   ///
   /// In tr, this message translates to:
-  /// **'Français'**
+  /// **'Fransızca'**
   String get settingsLanguageFrench;
 
   /// No description provided for @settingsLanguageSpanish.
   ///
   /// In tr, this message translates to:
-  /// **'Español'**
+  /// **'İspanyolca'**
   String get settingsLanguageSpanish;
 
   /// No description provided for @settingsTheme.
@@ -1521,7 +1521,7 @@ abstract class AppLocalizations {
   /// No description provided for @macroProtein.
   ///
   /// In tr, this message translates to:
-  /// **'Protein'**
+  /// **'Proteinler'**
   String get macroProtein;
 
   /// No description provided for @macroCarb.
@@ -2175,7 +2175,7 @@ abstract class AppLocalizations {
   /// No description provided for @weightKg.
   ///
   /// In tr, this message translates to:
-  /// **'kg'**
+  /// **'Kilogram'**
   String get weightKg;
 
   /// No description provided for @moodHowToday.
