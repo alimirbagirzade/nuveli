@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 ///
 /// Light tema icin: ColorScheme + Theme.of(context) kullanilir.
 class AppColors {
+  // Loading skeleton / shimmer placeholder
+  static const Color shimmerBase = Color(0xFF143040);
+
   AppColors._();
 
   // ═══════════════════════════════════════════════════════════════
