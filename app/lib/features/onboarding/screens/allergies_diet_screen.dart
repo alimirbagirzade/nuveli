@@ -59,14 +59,14 @@ class _AllergiesDietScreenState extends ConsumerState<AllergiesDietScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Beslenme', style: AppTextStyles.labelMedium),
+        title: const Text('Beslenme', style: AppTextStyles.labelMedium),
       ),
       padding: const EdgeInsets.all(24),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Bilmemiz gereken\nbir şey var mı?',
               style: AppTextStyles.displayMedium,
             ),
@@ -78,7 +78,7 @@ class _AllergiesDietScreenState extends ConsumerState<AllergiesDietScreen> {
             ),
 
             const SizedBox(height: 32),
-            Text('Alerjiler', style: AppTextStyles.headingSmall),
+            const Text('Alerjiler', style: AppTextStyles.headingSmall),
             const SizedBox(height: 12),
 
             Wrap(
@@ -103,7 +103,7 @@ class _AllergiesDietScreenState extends ConsumerState<AllergiesDietScreen> {
             ),
 
             const SizedBox(height: 32),
-            Text('Beslenme tercihi', style: AppTextStyles.headingSmall),
+            const Text('Beslenme tercihi', style: AppTextStyles.headingSmall),
             const SizedBox(height: 12),
 
             ..._diets.map((d) => Padding(

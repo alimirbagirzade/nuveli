@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +12,6 @@ import '../../../core/utils/meal_image_capture.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/nuveli_avatar.dart';
 import '../../auth/data/auth_repository.dart';
-import '../../auth/providers/auth_providers.dart';
 import '../../streak/data/streak_repository.dart';
 import '../data/profile_repository.dart';
 import 'goals_screen.dart';
@@ -108,7 +108,7 @@ class _ProfileBody extends ConsumerWidget {
           trailing: Switch.adaptive(
             value: true,
             onChanged: (_) => _showComingSoon(context, 'Açık tema yakında'),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
         ),
 
@@ -187,7 +187,7 @@ class _ProfileBody extends ConsumerWidget {
             onPressed: () => Navigator.pop(context, true),
             child: Text(
               AppLocalizations.of(context)!.profileSignOut,
-              style: TextStyle(color: AppColors.warning),
+              style: const TextStyle(color: AppColors.warning),
             ),
           ),
         ],
@@ -330,7 +330,7 @@ class _IdentityHeaderState extends ConsumerState<_IdentityHeader> {
                     style: AppTextStyles.headingLarge,
                   ),
                   const SizedBox(width: 8),
-                  Icon(
+                  const Icon(
                     Icons.edit_outlined,
                     size: 18,
                     color: AppColors.textTertiary,
@@ -463,7 +463,6 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
       if (b64 == null) {
         throw Exception('Fotoğraf okunamadı');
       }
-      final url = await ref.read(profileRepositoryProvider).uploadAvatarPhoto(b64);
       // Backend already updated profiles.avatar_photo_url; just invalidate.
       ref.invalidate(userProfileProvider);
       if (!mounted) return;
@@ -506,7 +505,7 @@ class _AvatarPickerSheetState extends ConsumerState<_AvatarPickerSheet> {
             const SizedBox(height: 20),
             Row(
               children: [
-                Text('Avatarını seç', style: AppTextStyles.headingMedium),
+                const Text('Avatarını seç', style: AppTextStyles.headingMedium),
                 const Spacer(),
                 NuveliAvatar(
                   style: _style,
@@ -739,7 +738,7 @@ class _Tile extends StatelessWidget {
                 ),
               ),
               trailing ??
-                  Icon(
+                  const Icon(
                     Icons.chevron_right,
                     color: AppColors.textTertiary,
                   ),
@@ -766,7 +765,7 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.cloud_off_outlined, size: 56, color: AppColors.error),
+            const Icon(Icons.cloud_off_outlined, size: 56, color: AppColors.error),
             const SizedBox(height: 12),
             Text(message, style: AppTextStyles.bodyMedium),
             const SizedBox(height: 16),

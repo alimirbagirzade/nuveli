@@ -247,7 +247,7 @@ class _HeroCard extends StatelessWidget {
                 ),
               ),
               Text(
-                ' ' + AppLocalizations.of(context)!.weeklyAvgKcal,
+                ' ${AppLocalizations.of(context)!.weeklyAvgKcal}',
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -446,7 +446,6 @@ class _MacroLegend extends StatelessWidget {
 class _DayRow extends StatelessWidget {
   const _DayRow({required this.day});
   final DaySummary day;
-  static const _dayLabels = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
 
   String _translateDayShort(BuildContext context, int idx) {
     final l10n = AppLocalizations.of(context)!;

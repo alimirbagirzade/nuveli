@@ -491,7 +491,6 @@ class _EntryRow extends StatelessWidget {
     '', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
     'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
   ];
-  static const _days = ['', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
 
   @override
   Widget build(BuildContext context) {
@@ -626,7 +625,7 @@ class _EmptyView extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.surfaceHighlight,
                 shape: BoxShape.circle,
               ),
@@ -637,7 +636,7 @@ class _EmptyView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text('Henüz kilo kaydı yok', style: AppTextStyles.headingMedium),
+            const Text('Henüz kilo kaydı yok', style: AppTextStyles.headingMedium),
             const SizedBox(height: 8),
             Text(
               'Ana sayfada Kilo butonuna basıp\nilk kaydını oluştur.',

@@ -49,7 +49,7 @@ class CoachCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 14, color: AppColors.textTertiary),
+            const Icon(Icons.arrow_forward_ios, size: 14, color: AppColors.textTertiary),
           ],
         ),
       ),

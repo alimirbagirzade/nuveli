@@ -42,7 +42,7 @@ class WeeklyChart extends ConsumerWidget {
                 children: [
                   Text(AppLocalizations.of(context)!.homeThisWeek, style: AppTextStyles.labelMedium),
                   const SizedBox(width: 6),
-                  Icon(
+                  const Icon(
                     Icons.chevron_right,
                     size: 18,
                     color: AppColors.textTertiary,

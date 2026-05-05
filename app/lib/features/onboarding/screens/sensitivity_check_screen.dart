@@ -77,14 +77,14 @@ class _SensitivityCheckScreenState
 
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Hassasiyet', style: AppTextStyles.labelMedium),
+        title: const Text('Hassasiyet', style: AppTextStyles.labelMedium),
       ),
       padding: const EdgeInsets.all(24),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Sana doğru tonla yardım edebilmemiz için',
               style: AppTextStyles.displayMedium,
             ),
@@ -98,7 +98,7 @@ class _SensitivityCheckScreenState
             const SizedBox(height: 32),
 
             // Soru 1
-            Text(
+            const Text(
               '1. Geçmişte yeme alışkanlıklarınla\nzorlandığın bir dönem oldu mu?',
               style: AppTextStyles.headingMedium,
             ),
@@ -115,7 +115,7 @@ class _SensitivityCheckScreenState
             const SizedBox(height: 32),
 
             // Soru 2
-            Text(
+            const Text(
               '2. Şu an yiyecekle ilişkini\nnasıl tarif edersin?',
               style: AppTextStyles.headingMedium,
             ),

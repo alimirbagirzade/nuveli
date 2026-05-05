@@ -5,6 +5,7 @@
 // Bu ekran sadece notification step'inden gelir; back butonu yok.
 
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,7 +43,7 @@ class _WelcomeSuccessScreenState
       try {
         await controller.submitNotificationPrefs();
       } catch (e) {
-        print('⚠️  Notification prefs failed (devam ediliyor): $e');
+        developer.log('⚠️  Notification prefs failed (devam ediliyor): $e');
       }
       // Onboarding'i tamamlandı işaretle (premium 'free' başlatır)
       await controller.completeOnboarding();
@@ -129,7 +130,7 @@ class _WelcomeSuccessScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'İlk adım fikri',
                   style: AppTextStyles.headingSmall,
                 ),

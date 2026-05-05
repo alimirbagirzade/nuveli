@@ -292,7 +292,7 @@ class _WeightSheetState extends State<_WeightSheet> {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
               labelText: AppLocalizations.of(context)!.weightKg,
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
             ),
             onSubmitted: (_) => _submit(),
           ),

@@ -10,8 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/config/app_config.dart';
 import 'core/notifications/notification_service.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'l10n/generated/app_localizations.dart';
 import 'core/i18n/language_provider.dart';
 
 
@@ -30,7 +28,7 @@ Future<void> main() async {
   try {
     await NotificationService.initialize();
   } catch (e) {
-    print('⚠️  Notification init failed: $e');
+    developer.log('⚠️  Notification init failed: $e');
   }
     // Production config validation (non-fatal warning)
     if (AppConfig.isProduction && !AppConfig.isProductionConfigValid) {

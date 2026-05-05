@@ -36,7 +36,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('Nuveli', style: AppTextStyles.headingLarge),
+                const Text('Nuveli', style: AppTextStyles.headingLarge),
                 const SizedBox(height: 4),
                 Text(
                   'AI Calorie Coach',
@@ -163,7 +163,7 @@ class AboutScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.copy_outlined,
                 size: 14,
                 color: AppColors.textTertiary,

@@ -1,4 +1,5 @@
 /// Meal domain modelleri. Freezed yerine basit sınıflar (MVP için yeterli).
+library;
 
 class MealLog {
   final String id;

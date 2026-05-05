@@ -54,7 +54,7 @@ class LanguagePickerScreen extends ConsumerWidget {
                 ),
               ),
               trailing: isSelected
-                  ? Icon(Icons.check_circle, color: AppColors.primary)
+                  ? const Icon(Icons.check_circle, color: AppColors.primary)
                   : null,
               onTap: () {
                 changeLanguage(lang);

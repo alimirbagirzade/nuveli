@@ -22,13 +22,13 @@ class SupportScreen extends StatelessWidget {
       final launched = await launchUrl(uri);
       if (!launched && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('E-posta: ${AppConfig.supportEmail}')),
+          const SnackBar(content: Text('E-posta: ${AppConfig.supportEmail}')),
         );
       }
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('E-posta: ${AppConfig.supportEmail}')),
+          const SnackBar(content: Text('E-posta: ${AppConfig.supportEmail}')),
         );
       }
     }

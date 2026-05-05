@@ -358,7 +358,7 @@ class _TextField extends StatelessWidget {
           fillColor: AppColors.surface,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: AppColors.divider),
+            borderSide: const BorderSide(color: AppColors.divider),
           ),
         ),
       );
@@ -373,7 +373,7 @@ class _BirthYearPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final years = List<int>.generate(80, (i) => DateTime.now().year - 12 - i);
     return DropdownButtonFormField<int>(
-      value: value,
+      initialValue: value,
       hint: Text(AppLocalizations.of(context)!.personalInfoBirthYear),
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context)!.personalInfoBirthYear,
@@ -381,7 +381,7 @@ class _BirthYearPicker extends StatelessWidget {
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.divider),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
       ),
       items: years
@@ -399,14 +399,14 @@ class _GenderPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context)!.personalInfoGender,
         filled: true,
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.divider),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
       ),
       items: [
@@ -426,14 +426,14 @@ class _ActivityPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context)!.personalInfoActivityLevelLabel,
         filled: true,
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.divider),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
       ),
       items: [

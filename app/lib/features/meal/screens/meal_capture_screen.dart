@@ -37,7 +37,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
         final sizeKb = await MealImageCapture.fileSizeKb(path);
         CrashReporter.log('meal_image_captured: ${sizeKb}KB (camera)');
       }
-    } on CameraUnavailableException catch (e) {
+    } on CameraUnavailableException {
       // Simulator'de kamera yok ya da gerçek cihazda izin verilmedi.
       // Hata göster ve tek dokunuşta galeriye yönlendir.
       if (!mounted) return;
@@ -172,7 +172,7 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.info_outline, size: 16, color: AppColors.textTertiary),
+                    const Icon(Icons.info_outline, size: 16, color: AppColors.textTertiary),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -255,7 +255,7 @@ class _ImageArea extends StatelessWidget {
                 const Icon(Icons.restaurant_outlined, size: 48, color: AppColors.textTertiary),
                 const SizedBox(height: 8),
                 Text(AppLocalizations.of(context)!.mealNoPhoto,
-                    style: TextStyle(color: AppColors.textTertiary, fontSize: 13)),
+                    style: const TextStyle(color: AppColors.textTertiary, fontSize: 13)),
               ],
             )
           : ClipRRect(

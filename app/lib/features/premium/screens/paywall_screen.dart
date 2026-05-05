@@ -192,7 +192,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Daha cok seni\ntaniyan koc.',
           style: AppTextStyles.displayLarge,
         ),
@@ -272,7 +272,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
             const Icon(Icons.cloud_off_outlined,
                 size: 48, color: AppColors.textSecondary),
             const SizedBox(height: 12),
-            Text(
+            const Text(
               'Premium yakinda. Su an seceneklere ulasilamiyor.',
               style: AppTextStyles.bodyMedium,
             ),

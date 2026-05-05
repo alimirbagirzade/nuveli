@@ -231,7 +231,7 @@ class _BarChartCard extends StatelessWidget {
           Text(AppLocalizations.of(context)!.waterLast7, style: AppTextStyles.labelMedium),
           const SizedBox(height: 4),
           Text(
-            'Hedef: ${goalMl} ml/gün',
+            'Hedef: $goalMl ml/gün',
             style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textTertiary,
             ),
@@ -373,7 +373,6 @@ class _DailyRow extends StatelessWidget {
     '', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
     'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
   ];
-  static const _days = ['', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
 
   @override
   Widget build(BuildContext context) {
@@ -501,7 +500,7 @@ class _EmptyView extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.surfaceHighlight,
                 shape: BoxShape.circle,
               ),
@@ -512,7 +511,7 @@ class _EmptyView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text('Henüz su kaydı yok', style: AppTextStyles.headingMedium),
+            const Text('Henüz su kaydı yok', style: AppTextStyles.headingMedium),
             const SizedBox(height: 8),
             Text(
               'Ana sayfada Su butonuna basıp\nilk kaydını oluştur.',

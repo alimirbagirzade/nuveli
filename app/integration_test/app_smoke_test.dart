@@ -33,7 +33,7 @@ void main() {
   group('Theme & basic rendering', () {
     testWidgets('MaterialApp renders without errors', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: Center(
               child: Text('Test'),

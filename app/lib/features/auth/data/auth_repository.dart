@@ -41,7 +41,7 @@ class AuthRepository {
     );
 
     if (response.user == null) {
-      throw AuthException('Kayıt başarısız. Lütfen tekrar dene.');
+      throw const AuthException('Kayıt başarısız. Lütfen tekrar dene.');
     }
 
     return response;
@@ -62,7 +62,7 @@ class AuthRepository {
     );
 
     if (response.user == null) {
-      throw AuthException('Email veya şifre hatalı.');
+      throw const AuthException('Email veya şifre hatalı.');
     }
 
     return response;

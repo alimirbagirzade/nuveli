@@ -113,7 +113,7 @@ class _CoachPersonaSettingsScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context)!.coachToneUpdated),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       Future.delayed(const Duration(milliseconds: 600), () {

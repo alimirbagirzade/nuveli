@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -247,13 +248,13 @@ class _SupportBanner extends StatelessWidget {
           const SizedBox(height: 6),
           Text(body, style: AppTextStyles.bodySmall),
           const SizedBox(height: 10),
-          Row(
+          const Row(
             children: [
               _SupportLink(
                 label: '182 — Aile Danışma',
                 uri: 'tel:182',
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               _SupportLink(
                 label: 'Türk Tabipleri B.',
                 uri: 'https://www.ttb.org.tr/',

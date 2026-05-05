@@ -32,7 +32,7 @@ class _VoiceReplyPlayerState extends State<VoiceReplyPlayer> {
               color: AppColors.primary,
             ),
             const SizedBox(width: 8),
-            Text('Sesli dinle', style: AppTextStyles.labelMedium),
+            const Text('Sesli dinle', style: AppTextStyles.labelMedium),
           ],
         ),
       ),

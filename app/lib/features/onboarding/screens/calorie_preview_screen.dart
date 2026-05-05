@@ -79,7 +79,7 @@ class _CaloriePreviewScreenState
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: AppBar(
-        title: Text('Kalori', style: AppTextStyles.labelMedium),
+        title: const Text('Kalori', style: AppTextStyles.labelMedium),
         automaticallyImplyLeading: false, // back butonu yok, akıştan dönülmez
       ),
       padding: const EdgeInsets.all(24),
@@ -124,7 +124,7 @@ class _CaloriePreviewScreenState
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 16),
-        Text(
+        const Text(
           'Senin için günlük\nhedefin hazır',
           style: AppTextStyles.displayMedium,
         ),
@@ -142,7 +142,7 @@ class _CaloriePreviewScreenState
         Container(
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [

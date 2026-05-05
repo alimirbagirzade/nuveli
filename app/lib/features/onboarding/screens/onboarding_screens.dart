@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,7 +35,7 @@ class GoalSelectionScreen extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Hedefin ne?', style: AppTextStyles.displayMedium),
+          const Text('Hedefin ne?', style: AppTextStyles.displayMedium),
           const SizedBox(height: 8),
           Text(
             'İstediğin zaman değiştirebilirsin.',
@@ -165,12 +166,12 @@ class _ProfileStepOneScreenState extends ConsumerState<ProfileStepOneScreen> {
 
     return AppScaffold(
       appBar:
-          AppBar(title: Text('Profil 1/2', style: AppTextStyles.labelMedium)),
+          AppBar(title: const Text('Profil 1/2', style: AppTextStyles.labelMedium)),
       padding: const EdgeInsets.all(24),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Sen nasıl birisin?', style: AppTextStyles.displayMedium),
+          const Text('Sen nasıl birisin?', style: AppTextStyles.displayMedium),
           const SizedBox(height: 24),
           TextField(
             controller: _yearCtrl,
@@ -270,7 +271,7 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
 
     return AppScaffold(
       appBar:
-          AppBar(title: Text('Profil 2/2', style: AppTextStyles.labelMedium)),
+          AppBar(title: const Text('Profil 2/2', style: AppTextStyles.labelMedium)),
       padding: const EdgeInsets.all(24),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -282,7 +283,7 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
               child: TextField(
                 controller: _heightCtrl,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Boy (cm)'),
+                decoration: const InputDecoration(labelText: 'Boy (cm)'),
                 onChanged: (_) => setState(() {}),
               ),
             ),
@@ -291,7 +292,7 @@ class _ProfileStepTwoScreenState extends ConsumerState<ProfileStepTwoScreen> {
               child: TextField(
                 controller: _weightCtrl,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Kilo (kg)'),
+                decoration: const InputDecoration(labelText: 'Kilo (kg)'),
                 onChanged: (_) => setState(() {}),
               ),
             ),
@@ -358,7 +359,7 @@ class CoachSelectionScreen extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Koçun nasıl konuşsun?', style: AppTextStyles.displayMedium),
+          const Text('Koçun nasıl konuşsun?', style: AppTextStyles.displayMedium),
           const SizedBox(height: 8),
           Text(
             'İstediğin zaman değiştirebilirsin.',
@@ -406,7 +407,7 @@ class NotificationOptInScreen extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Hafif hatırlatmalar ister misin?',
+          const Text('Hafif hatırlatmalar ister misin?',
               style: AppTextStyles.displayMedium),
           const SizedBox(height: 12),
           Text(
@@ -482,7 +483,7 @@ class _OnboardingResultScreenState
       try {
         await controller.submitNotificationPrefs();
       } catch (e) {
-        print('⚠️  Notification prefs submit failed: $e');
+        developer.log('⚠️  Notification prefs submit failed: $e');
       }
 
       // 4. Onboarding'i kapat + bootstrap'i yenile
@@ -593,7 +594,7 @@ class _OnboardingResultScreenState
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 40),
-          Text('Hazırsın 👋', style: AppTextStyles.displayLarge),
+          const Text('Hazırsın 👋', style: AppTextStyles.displayLarge),
           const SizedBox(height: 12),
           Text(
             'Tahmini günlük hedefin:',
@@ -615,12 +616,12 @@ class _OnboardingResultScreenState
                   style: AppTextStyles.displayLarge
                       .copyWith(color: AppColors.primary),
                 ),
-                Text('kcal / gün', style: AppTextStyles.bodyMedium),
+                const Text('kcal / gün', style: AppTextStyles.bodyMedium),
               ],
             ),
           ),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'Bu yaklaşık bir başlangıç noktasıdır. İlerledikçe ayarlanabilir.',
             style: AppTextStyles.bodySmall,
             textAlign: TextAlign.center,

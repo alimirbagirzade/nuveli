@@ -127,7 +127,7 @@ class _EmptyDayScreenState extends ConsumerState<EmptyDayScreen> {
 
             const SizedBox(height: 28),
 
-            Text(
+            const Text(
               'Buradayız.',
               style: AppTextStyles.displayLarge,
               textAlign: TextAlign.center,

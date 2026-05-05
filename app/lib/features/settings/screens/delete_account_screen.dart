@@ -8,7 +8,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_haptics.dart';
 import '../../../shared/widgets/app_scaffold.dart';
-import '../../../shared/widgets/primary_button.dart';
 import '../providers/settings_providers.dart';
 
 class DeleteAccountScreen extends ConsumerStatefulWidget {
@@ -120,7 +119,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
             const SizedBox(height: 20),
 
             // Açıklama
-            Text(
+            const Text(
               'Silinecek veriler:',
               style: AppTextStyles.labelLarge,
             ),
@@ -164,7 +163,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
               onChanged: _deleting
                   ? null
                   : (v) => setState(() => _confirmed = v ?? false),
-              title: Text(
+              title: const Text(
                 'Bu eylemin geri alınamayacağını anladım',
                 style: AppTextStyles.bodyMedium,
               ),
@@ -172,7 +171,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
             const SizedBox(height: 12),
 
             // Metin onayı
-            Text(
+            const Text(
               'Onaylamak için aşağıya SIL yaz',
               style: AppTextStyles.labelMedium,
             ),

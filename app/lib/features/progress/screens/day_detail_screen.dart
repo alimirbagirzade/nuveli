@@ -216,7 +216,7 @@ class _DaySummaryCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Icon(Icons.water_drop_outlined,
+                const Icon(Icons.water_drop_outlined,
                     size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 6),
                 Text(
@@ -302,7 +302,7 @@ class _MealRow extends StatelessWidget {
               color: AppColors.primary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.restaurant_outlined,
               color: AppColors.primary,
               size: 22,
@@ -391,7 +391,7 @@ class _EmptyMeals extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.restaurant_outlined,
             size: 40,
             color: AppColors.textTertiary,

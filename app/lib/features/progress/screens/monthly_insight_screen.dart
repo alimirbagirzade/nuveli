@@ -65,7 +65,7 @@ class _Body extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        Text('Son 30 gün', style: AppTextStyles.bodySmall),
+        const Text('Son 30 gün', style: AppTextStyles.bodySmall),
         const SizedBox(height: 4),
         Text(
           '${monthly.insights.length} önemli örüntü',
@@ -203,7 +203,7 @@ class _LockedAiInsightCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Koçun yorumu',
+                  const Text('Koçun yorumu',
                       style: AppTextStyles.headingSmall),
                   const SizedBox(height: 2),
                   Text(

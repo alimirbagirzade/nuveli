@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,7 +18,6 @@ import '../../features/onboarding/screens/onboarding_screens.dart';
 import '../../features/onboarding/screens/sensitivity_check_screen.dart';
 import '../../features/onboarding/screens/welcome_age_gate_screen.dart';
 import '../../features/onboarding/screens/welcome_success_screen.dart';
-import '../../features/premium/screens/paywall_screen.dart';
 import '../../features/premium/screens/premium_coming_soon_screen.dart';
 import 'page_transitions.dart';
 import '../../features/progress/screens/empty_day_screen.dart';

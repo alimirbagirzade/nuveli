@@ -115,7 +115,7 @@ class _BubbleFooter extends StatelessWidget {
       children: [
         // Fallback rozeti sadece koç mesajlarında
         if (!isUser && message.isFallback) ...[
-          Icon(
+          const Icon(
             Icons.info_outline,
             size: 12,
             color: AppColors.textTertiary,

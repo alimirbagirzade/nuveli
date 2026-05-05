@@ -35,29 +35,29 @@ class AppTheme {
         onSurface: AppColors.textPrimary,
         onError: Colors.white,
       ),
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         centerTitle: true,
         titleTextStyle: AppTextStyles.headingMedium,
-        iconTheme: const IconThemeData(color: AppColors.textPrimary),
+        iconTheme: IconThemeData(color: AppColors.textPrimary),
       ),
       cardTheme: CardThemeData(
         color: AppColors.card,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppColors.divider),
+          side: const BorderSide(color: AppColors.divider),
         ),
       ),
-      dividerTheme: DividerThemeData(
+      dividerTheme: const DividerThemeData(
         color: AppColors.divider,
         thickness: 1,
         space: 1,
       ),
       iconTheme: const IconThemeData(color: AppColors.textPrimary),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
         displayLarge: AppTextStyles.displayLarge,
         displayMedium: AppTextStyles.displayMedium,
         headlineLarge: AppTextStyles.headingLarge,
@@ -82,11 +82,11 @@ class AppTheme {
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.divider),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.divider),
+          borderSide: const BorderSide(color: AppColors.divider),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -118,7 +118,6 @@ class AppTheme {
     const lightSurface = Color(0xFFFFFFFF);     // pure white
     const lightCard = Color(0xFFFFFFFF);
     const lightTextPrimary = Color(0xFF0B2231); // deep ocean
-    const lightTextSecondary = Color(0xFF4A6472);
     const lightTextTertiary = Color(0xFF7A8C97);
     const lightBorder = Color(0xFFCFE7E6);
     const lightPrimary = Color(0xFF0A6C8C);     // deep teal (web primary)

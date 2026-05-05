@@ -25,7 +25,7 @@ class ThemeSelectorTile extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
               child: Row(
                 children: [
-                  Icon(Icons.palette_outlined, size: 18, color: AppColors.textSecondary),
+                  const Icon(Icons.palette_outlined, size: 18, color: AppColors.textSecondary),
                   const SizedBox(width: 8),
                   Text(AppLocalizations.of(context)!.settingsAppearance, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontWeight: FontWeight.w600, letterSpacing: 0.6)),
                 ],
@@ -53,12 +53,12 @@ class ThemeSelectorTile extends ConsumerWidget {
                       Expanded(
                         child: Text(_themeLabel(context, mode), style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary, fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400)),
                       ),
-                      if (isSelected) Icon(Icons.check_circle, color: AppColors.primary, size: 22) else Container(width: 22, height: 22, decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.divider, width: 2))),
+                      if (isSelected) const Icon(Icons.check_circle, color: AppColors.primary, size: 22) else Container(width: 22, height: 22, decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.divider, width: 2))),
                     ],
                   ),
                 ),
               );
-            }).toList(),
+            }),
             const SizedBox(height: 8),
           ],
         ),

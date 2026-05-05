@@ -54,7 +54,7 @@ class _SkeletonBoxState extends State<SkeletonBox>
             gradient: LinearGradient(
               begin: Alignment(t - 1, 0),
               end: Alignment(t + 1, 0),
-              colors: [
+              colors: const [
                 AppColors.surface,
                 AppColors.surfaceElevated,
                 AppColors.surface,
@@ -88,23 +88,23 @@ class SkeletonListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: [
-          const SkeletonBox(width: 36, height: 36, borderRadius: 18),
-          const SizedBox(width: 12),
+          SkeletonBox(width: 36, height: 36, borderRadius: 18),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 SkeletonBox(width: 160, height: 14),
                 SizedBox(height: 6),
                 SkeletonBox(width: 100, height: 11),
               ],
             ),
           ),
-          const SkeletonBox(width: 60, height: 16),
+          SkeletonBox(width: 60, height: 16),
         ],
       ),
     );

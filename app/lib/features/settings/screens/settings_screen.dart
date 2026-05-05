@@ -24,7 +24,7 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         children: [
-          ThemeSelectorTile(),
+          const ThemeSelectorTile(),
           const SizedBox(height: 8),
           // Kullanıcı bilgisi kartı
           if (user != null)
@@ -156,7 +156,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
 
           const SizedBox(height: 20),
-          Center(
+          const Center(
             child: Text(
               'v${AppConfig.appVersion} • ${AppConfig.env}',
               style: AppTextStyles.caption,

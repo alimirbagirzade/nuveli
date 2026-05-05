@@ -245,7 +245,7 @@ class _MealAnalysisResultScreenState
               const SizedBox(height: 20),
 
               // Öğün tipi seçimi
-              Text('Öğün tipi', style: AppTextStyles.labelLarge),
+              const Text('Öğün tipi', style: AppTextStyles.labelLarge),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
@@ -432,7 +432,7 @@ class _LowConfidenceView extends StatelessWidget {
             color: AppColors.warning,
           ),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'Emin olamadık',
             style: AppTextStyles.displayMedium,
             textAlign: TextAlign.center,

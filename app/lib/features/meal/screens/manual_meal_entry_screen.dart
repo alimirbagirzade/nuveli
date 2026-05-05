@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/network/app_error.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../features/home/data/home_repository.dart';
 import '../../../features/streak/data/streak_repository.dart';
@@ -97,7 +96,7 @@ class _ManualMealEntryScreenState extends ConsumerState<ManualMealEntryScreen> {
             ),
             _field(label: 'Yağ (g)', ctrl: _fat, number: true),
             const SizedBox(height: 8),
-            Text('Öğün Tipi', style: AppTextStyles.labelMedium),
+            const Text('Öğün Tipi', style: AppTextStyles.labelMedium),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,

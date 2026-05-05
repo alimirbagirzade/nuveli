@@ -136,7 +136,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     labelText: l10n.loginEmail,
-                    prefixIcon: Icon(Icons.email_outlined),
+                    prefixIcon: const Icon(Icons.email_outlined),
                   ),
                   validator: AppValidators.email,
                 ),

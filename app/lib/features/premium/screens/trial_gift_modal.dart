@@ -95,7 +95,7 @@ class _TrialGiftModalState extends ConsumerState<TrialGiftModal> {
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Sana kucuk bir hediye',
               style: AppTextStyles.headingLarge,
             ),

@@ -64,3 +64,4 @@ _backup/
 *.save
 *.swp
 *~
+_backup_*/

@@ -29,7 +29,7 @@ class _WelcomeAgeGateScreenState extends State<WelcomeAgeGateScreen> {
           const SizedBox(height: 8),
           Text('AI Calorie Coach', style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary)),
           const Spacer(),
-          Text(
+          const Text(
             'Hoş geldin',
             style: AppTextStyles.displayMedium,
           ),
