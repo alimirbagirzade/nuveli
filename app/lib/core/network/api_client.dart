@@ -27,7 +27,6 @@ final apiClientProvider = Provider<Dio>((ref) {
       // Dinamik dil header (her request'te taze okuma)
       final lang = globalLanguageNotifier.value.locale?.languageCode ?? 'tr';
       options.headers['Accept-Language'] = lang;
-      print('🌍 [API] ${options.method} ${options.path} | Accept-Language: $lang | notifier: ${globalLanguageNotifier.value}');
       
       final session = Supabase.instance.client.auth.currentSession;
       if (session != null) {
