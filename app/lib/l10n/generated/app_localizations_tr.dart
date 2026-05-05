@@ -1375,13 +1375,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get monthShortFeb => 'Şub';
 
   @override
-  String get monthShortMar => 'Mar';
+  String get monthShortMar => 'Mart';
 
   @override
   String get monthShortApr => 'Nis';
 
   @override
-  String get monthShortMay => 'May';
+  String get monthShortMay => 'Mayıs';
 
   @override
   String get monthShortJun => 'Haz';

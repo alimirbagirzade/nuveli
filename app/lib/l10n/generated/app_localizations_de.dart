@@ -1381,7 +1381,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get monthShortFeb => 'Feb';
 
   @override
-  String get monthShortMar => 'Mär';
+  String get monthShortMar => 'März';
 
   @override
   String get monthShortApr => 'Apr';
@@ -1390,10 +1390,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get monthShortMay => 'Mai';
 
   @override
-  String get monthShortJun => 'Jun';
+  String get monthShortJun => 'Juni';
 
   @override
-  String get monthShortJul => 'Jul';
+  String get monthShortJul => 'Juli';
 
   @override
   String get monthShortAug => 'Aug';

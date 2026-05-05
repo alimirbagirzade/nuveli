@@ -2691,7 +2691,7 @@ abstract class AppLocalizations {
   /// No description provided for @monthShortMar.
   ///
   /// In tr, this message translates to:
-  /// **'Mar'**
+  /// **'Mart'**
   String get monthShortMar;
 
   /// No description provided for @monthShortApr.
@@ -2703,7 +2703,7 @@ abstract class AppLocalizations {
   /// No description provided for @monthShortMay.
   ///
   /// In tr, this message translates to:
-  /// **'May'**
+  /// **'Mayıs'**
   String get monthShortMay;
 
   /// No description provided for @monthShortJun.
