@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class MiniTaskCard extends StatelessWidget {
   const MiniTaskCard({super.key});
@@ -28,9 +29,9 @@ class MiniTaskCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Bugünkü Mini Hedef', style: AppTextStyles.labelMedium),
+                Text(AppLocalizations.of(context)!.homeMiniGoalTitle, style: AppTextStyles.labelMedium),
                 const SizedBox(height: 2),
-                Text('Bir öğüne protein ekle', style: AppTextStyles.bodyMedium),
+                Text(AppLocalizations.of(context)!.homeMiniGoalDefault, style: AppTextStyles.bodyMedium),
               ],
             ),
           ),

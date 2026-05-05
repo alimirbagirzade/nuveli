@@ -48,28 +48,30 @@ class NuveliApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeProvider);
 
-    final language = ref.watch(languageProvider);
-    
-    return MaterialApp.router(
-      // KEY: locale degisirken tum widget agacini force rebuild
-      // Flutter bug #117210: locale field null'dan non-null'a gectiginde state guncel olmaz
-      key: ValueKey('app_${language.code}'),
-      title: 'Nuveli',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark(),
-      darkTheme: AppTheme.dark(),
-      themeMode: themeMode.materialMode,
-      scrollBehavior: const _AppScrollBehavior(),
-      routerConfig: router,
-      // ─── i18n (5 dil destegi) ───
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: kSupportedLocales,
-      locale: language.locale, // null ise sistem dilini kullanir
+    // ValueListenableBuilder: Riverpod'dan BAGIMSIZ
+    // globalLanguageNotifier ASLA dispose olmaz
+    return ValueListenableBuilder<AppLanguage>(
+      valueListenable: globalLanguageNotifier,
+      builder: (context, language, _) {
+        return MaterialApp.router(
+          key: ValueKey('app_${language.code}'),
+          title: 'Nuveli',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.dark(),
+          darkTheme: AppTheme.dark(),
+          themeMode: themeMode.materialMode,
+          scrollBehavior: const _AppScrollBehavior(),
+          routerConfig: router,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: kSupportedLocales,
+          locale: language.locale,
+        );
+      },
     );
   }
 }

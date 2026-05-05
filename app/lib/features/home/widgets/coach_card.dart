@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class CoachCard extends StatelessWidget {
   const CoachCard({super.key, required this.message, this.onTap});
@@ -42,7 +43,7 @@ class CoachCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Koçun', style: AppTextStyles.caption),
+                  Text(AppLocalizations.of(context)!.homeCoachLabel, style: AppTextStyles.caption),
                   const SizedBox(height: 4),
                   Text(message, style: AppTextStyles.bodyMedium),
                 ],

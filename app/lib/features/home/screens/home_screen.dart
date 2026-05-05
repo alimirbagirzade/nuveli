@@ -22,6 +22,7 @@ import '../widgets/daily_summary_card.dart';
 import '../widgets/mini_task_card.dart';
 import '../widgets/quick_actions_grid.dart';
 import '../widgets/today_meals_list.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -94,7 +95,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: homeAsync.when(
           loading: () => const HomeSkeleton(),
           error: (err, _) {
-            final msg = err is AppError ? err.userMessage : 'Bir şeyler ters gitti';
+            final msg = err is AppError ? err.userMessage : AppLocalizations.of(context)!.homeErrorGeneric;
             return ErrorStateView(
               message: msg,
               onRetry: () => ref.invalidate(homePayloadProvider),
@@ -145,11 +146,12 @@ class _GreetingHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hour = DateTime.now().hour;
+    final l10n = AppLocalizations.of(context)!;
     final greeting = hour < 12
-        ? 'Günaydın'
+        ? l10n.homeGreetingMorning
         : hour < 18
-            ? 'İyi öğleden sonralar'
-            : 'İyi akşamlar';
+            ? l10n.homeGreetingAfternoon
+            : l10n.homeGreetingEvening;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

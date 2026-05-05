@@ -8,6 +8,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/app_validators.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../providers/auth_providers.dart';
 
 /// Kayıt ekranı.
@@ -79,18 +80,18 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     }
   }
 
-  String _strengthLabel(int strength) {
+  String _strengthLabel(int strength, AppLocalizations l10n) {
     switch (strength) {
       case 0:
-        return 'Çok zayıf';
+        return l10n.passwordVeryWeak;
       case 1:
-        return 'Zayıf';
+        return l10n.passwordWeak;
       case 2:
-        return 'Orta';
+        return l10n.passwordMedium;
       case 3:
-        return 'Güçlü';
+        return l10n.passwordStrong;
       default:
-        return 'Çok güçlü';
+        return l10n.passwordVeryStrong;
     }
   }
 
@@ -98,6 +99,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authLoadingProvider);
     final errorMsg = ref.watch(authErrorProvider);
+    final l10n = AppLocalizations.of(context)!;
     final strength = _passwordStrength(_passwordCtrl.text);
 
     return AppScaffold(
@@ -112,13 +114,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               children: [
                 // Header
                 Text(
-                  'Hesap Oluştur',
+                  l10n.signupTitle,
                   style: AppTextStyles.displayMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Nuveli ile sağlıklı beslenme yolculuğuna başla',
+                  l10n.signupSubtitle,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -132,8 +134,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
+                  decoration: InputDecoration(
+                    labelText: l10n.loginEmail,
                     prefixIcon: Icon(Icons.email_outlined),
                   ),
                   validator: AppValidators.email,
@@ -147,7 +149,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   textInputAction: TextInputAction.next,
                   onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(
-                    labelText: 'Şifre',
+                    labelText: l10n.loginPassword,
                     prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -182,7 +184,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        _strengthLabel(strength),
+                        _strengthLabel(strength, l10n),
                         style: AppTextStyles.bodySmall.copyWith(
                           color: _strengthColor(strength),
                         ),
@@ -200,7 +202,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (_) => _handleSignUp(),
                   decoration: InputDecoration(
-                    labelText: 'Şifre Tekrar',
+                    labelText: l10n.loginPasswordRepeat,
                     prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -237,7 +239,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 // Signup button
                 PrimaryButton(
-                  label: 'Kaydol',
+                  label: l10n.signupButton,
                   isLoading: isLoading,
                   onPressed: isLoading ? null : _handleSignUp,
                 ),
@@ -248,7 +250,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Zaten hesabın var mı? ',
+                      '${l10n.signupHasAccount} ',
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -256,7 +258,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     GestureDetector(
                       onTap: () => context.pop(),
                       child: Text(
-                        'Giriş Yap',
+                        l10n.signupLoginLink,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,
@@ -269,7 +271,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 // Terms notice
                 Text(
-                  'Kaydolarak Kullanım Koşulları ve Gizlilik Politikası\'nı kabul etmiş olursun.',
+                  l10n.signupTerms,
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.textTertiary,
                   ),

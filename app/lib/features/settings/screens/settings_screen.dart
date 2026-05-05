@@ -9,6 +9,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../../core/i18n/language_provider.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../widgets/theme_selector_tile.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -16,10 +17,11 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final user = ref.watch(currentUserProvider);
 
     return AppScaffold(
-      appBar: AppBar(title: const Text('Ayarlar')),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         children: [
           ThemeSelectorTile(),
@@ -56,7 +58,7 @@ class SettingsScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Giriş yapan',
+                            l10n.settingsSignedInAs,
                             style: AppTextStyles.bodySmall
                                 .copyWith(color: AppColors.textSecondary),
                           ),
@@ -74,81 +76,81 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
 
-          _section('Hesap'),
+          _section(l10n.settingsAccount),
           _tile(
             context,
             Icons.notifications_outlined,
-            'Bildirimler',
+            l10n.settingsNotifications,
             () => context.push(AppRoute.notificationPrefs),
           ),
           _tile(
             context,
             Icons.psychology_outlined,
-            'Koçun tonu',
+            l10n.settingsCoachTone,
             () => context.push(AppRoute.coachPersonaSettings),
           ),
           // Dil tile - i18n
           Consumer(
             builder: (context, ref, _) {
-              final language = ref.watch(languageProvider);
+              final language = globalLanguageNotifier.value;
               return _tile(
                 context,
                 Icons.language,
-                'Dil / Language',
+                l10n.settingsLanguage,
                 () => context.push(AppRoute.languagePicker),
                 trailing: language.label,
               );
             },
           ),
 
-          _section('Destek ve Güvenlik'),
+          _section(l10n.settingsSupportSecurity),
           _tile(
             context,
             Icons.help_outline,
-            'Destek',
+            l10n.settingsSupport,
             () => context.push(AppRoute.support),
           ),
           _tile(
             context,
             Icons.auto_awesome,
-            'AI nasıl çalışır',
+            l10n.settingsHowAiWorks,
             () => context.push(AppRoute.howAiWorks),
           ),
           _tile(
             context,
             Icons.privacy_tip_outlined,
-            'Gizlilik ve Güvenlik',
+            l10n.settingsPrivacySafety,
             () => context.push(AppRoute.privacySafety),
           ),
           _tile(
             context,
             Icons.info_outline,
-            'Nuveli Hakkında',
+            l10n.settingsAboutNuveli,
             () => context.push(AppRoute.about),
           ),
 
-          _section('Abonelik'),
+          _section(l10n.settingsSubscription),
           _tile(
             context,
             Icons.workspace_premium_outlined,
-            'Premium',
+            l10n.settingsPremium,
             () => _showPremiumComingSoon(context),
-            badge: 'YAKINDA',
+            badge: l10n.settingsPremiumComingSoon,
           ),
 
-          _section('Oturum'),
+          _section(l10n.settingsSession),
           _tile(
             context,
             Icons.logout_outlined,
-            'Çıkış Yap',
+            l10n.settingsLogout,
             () => _handleLogout(context, ref),
           ),
 
-          _section('Tehlikeli Bölge'),
+          _section(l10n.settingsDangerZone),
           _tile(
             context,
             Icons.delete_outline,
-            'Hesabı Sil',
+            l10n.settingsDeleteAccount,
             () => context.push(AppRoute.deleteAccount),
             isDestructive: true,
           ),
@@ -167,19 +169,20 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _handleLogout(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Çıkış yap?'),
-        content: const Text('Tekrar giriş yapmak için email ve şifren gerekecek.'),
+        title: Text(l10n.settingsLogoutTitle),
+        content: Text(l10n.settingsLogoutBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.settingsLogoutCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Çıkış Yap'),
+            child: Text(l10n.settingsLogout),
           ),
         ],
       ),
@@ -196,7 +199,7 @@ class SettingsScreen extends ConsumerWidget {
     } catch (_) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Çıkış yapılamadı.')),
+          SnackBar(content: Text(l10n.settingsLogoutFailed)),
         );
       }
     }
@@ -261,6 +264,7 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _showPremiumComingSoon(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       backgroundColor: AppColors.surface,
@@ -300,7 +304,7 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             // Title
             Text(
-              'Premium çok yakında! 🚀',
+              l10n.premiumModalTitle,
               style: AppTextStyles.headingMedium.copyWith(
                 color: AppColors.textPrimary,
               ),
@@ -309,7 +313,7 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 12),
             // Description
             Text(
-              'Sınırsız AI öğün analizi, gelişmiş koç ve haftalık içgörüler için son hazırlıkları yapıyoruz. Hazır olduğumuzda seninle iletişime geçeceğiz.',
+              l10n.premiumModalBody,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
                 height: 1.5,
@@ -318,11 +322,11 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             // Features list
-            _featureRow(Icons.check_circle_outline, 'Sınırsız AI öğün analizi'),
+            _featureRow(Icons.check_circle_outline, l10n.premiumFeatureUnlimited),
             const SizedBox(height: 8),
-            _featureRow(Icons.check_circle_outline, 'Sesli koç + 3 persona'),
+            _featureRow(Icons.check_circle_outline, l10n.premiumFeatureVoice),
             const SizedBox(height: 8),
-            _featureRow(Icons.check_circle_outline, 'Haftalık + aylık içgörü'),
+            _featureRow(Icons.check_circle_outline, l10n.premiumFeatureInsights),
             const SizedBox(height: 28),
             // OK button
             SizedBox(
@@ -338,7 +342,7 @@ class SettingsScreen extends ConsumerWidget {
                   elevation: 0,
                 ),
                 child: Text(
-                  'Anladım',
+                  l10n.premiumUnderstood,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,

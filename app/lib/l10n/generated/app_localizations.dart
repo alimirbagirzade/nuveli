@@ -1207,6 +1207,336 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Tamam'**
   String get commonOk;
+
+  /// No description provided for @settingsCoachTone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun tonu'**
+  String get settingsCoachTone;
+
+  /// No description provided for @settingsSupportSecurity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Destek ve Güvenlik'**
+  String get settingsSupportSecurity;
+
+  /// No description provided for @settingsHowAiWorks.
+  ///
+  /// In tr, this message translates to:
+  /// **'AI nasıl çalışır'**
+  String get settingsHowAiWorks;
+
+  /// No description provided for @settingsPrivacySafety.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik ve Güvenlik'**
+  String get settingsPrivacySafety;
+
+  /// No description provided for @settingsAboutNuveli.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nuveli Hakkında'**
+  String get settingsAboutNuveli;
+
+  /// No description provided for @settingsSubscription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Abonelik'**
+  String get settingsSubscription;
+
+  /// No description provided for @settingsSession.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturum'**
+  String get settingsSession;
+
+  /// No description provided for @settingsDangerZone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tehlikeli Bölge'**
+  String get settingsDangerZone;
+
+  /// No description provided for @settingsSignedInAs.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş yapan'**
+  String get settingsSignedInAs;
+
+  /// No description provided for @settingsLogoutTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap?'**
+  String get settingsLogoutTitle;
+
+  /// No description provided for @settingsLogoutBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar giriş yapmak için email ve şifren gerekecek.'**
+  String get settingsLogoutBody;
+
+  /// No description provided for @settingsLogoutCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get settingsLogoutCancel;
+
+  /// No description provided for @settingsLogoutFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yapılamadı.'**
+  String get settingsLogoutFailed;
+
+  /// No description provided for @premiumModalTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium çok yakında!'**
+  String get premiumModalTitle;
+
+  /// No description provided for @premiumModalBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sınırsız AI öğün analizi, gelişmiş koç ve haftalık içgörüler için son hazırlıkları yapıyoruz.'**
+  String get premiumModalBody;
+
+  /// No description provided for @premiumFeatureVoice.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sesli koç + 3 persona'**
+  String get premiumFeatureVoice;
+
+  /// No description provided for @premiumFeatureInsights.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık + aylık içgörü'**
+  String get premiumFeatureInsights;
+
+  /// No description provided for @premiumUnderstood.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anladım'**
+  String get premiumUnderstood;
+
+  /// No description provided for @passwordVeryWeak.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok zayıf'**
+  String get passwordVeryWeak;
+
+  /// No description provided for @passwordWeak.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zayıf'**
+  String get passwordWeak;
+
+  /// No description provided for @passwordMedium.
+  ///
+  /// In tr, this message translates to:
+  /// **'Orta'**
+  String get passwordMedium;
+
+  /// No description provided for @passwordStrong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güçlü'**
+  String get passwordStrong;
+
+  /// No description provided for @passwordVeryStrong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok güçlü'**
+  String get passwordVeryStrong;
+
+  /// No description provided for @homeErrorGeneric.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir şeyler ters gitti'**
+  String get homeErrorGeneric;
+
+  /// No description provided for @homeCoachLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun'**
+  String get homeCoachLabel;
+
+  /// No description provided for @homeToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün'**
+  String get homeToday;
+
+  /// No description provided for @homeRemaining.
+  ///
+  /// In tr, this message translates to:
+  /// **'kaldı'**
+  String get homeRemaining;
+
+  /// No description provided for @homeThisWeek.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu Hafta'**
+  String get homeThisWeek;
+
+  /// No description provided for @homeMiniGoalTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünkü Mini Hedef'**
+  String get homeMiniGoalTitle;
+
+  /// No description provided for @homeMiniGoalDefault.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir öğüne protein ekle'**
+  String get homeMiniGoalDefault;
+
+  /// No description provided for @homeAddMealLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün Ekle'**
+  String get homeAddMealLabel;
+
+  /// No description provided for @homeWater.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su'**
+  String get homeWater;
+
+  /// No description provided for @homeWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo'**
+  String get homeWeight;
+
+  /// No description provided for @homeMood.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mod'**
+  String get homeMood;
+
+  /// No description provided for @homeAddWater.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su Ekle'**
+  String get homeAddWater;
+
+  /// No description provided for @homeEnterWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilonu Girin'**
+  String get homeEnterWeight;
+
+  /// No description provided for @homeMoodGreat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harika'**
+  String get homeMoodGreat;
+
+  /// No description provided for @homeMoodGood.
+  ///
+  /// In tr, this message translates to:
+  /// **'İyi'**
+  String get homeMoodGood;
+
+  /// No description provided for @homeMoodNeutral.
+  ///
+  /// In tr, this message translates to:
+  /// **'Normal'**
+  String get homeMoodNeutral;
+
+  /// No description provided for @homeMoodBad.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zor'**
+  String get homeMoodBad;
+
+  /// No description provided for @homeMoodRough.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok Zor'**
+  String get homeMoodRough;
+
+  /// No description provided for @homeMoodPickOne.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir tane seç'**
+  String get homeMoodPickOne;
+
+  /// No description provided for @homeNoMealsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz öğün eklenmedi'**
+  String get homeNoMealsTitle;
+
+  /// No description provided for @homeNoMealsMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk öğününü ekleyerek günü başlat'**
+  String get homeNoMealsMessage;
+
+  /// No description provided for @homeTodayMeals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünkü öğünler'**
+  String get homeTodayMeals;
+
+  /// No description provided for @homeMealBreakfast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kahvaltı'**
+  String get homeMealBreakfast;
+
+  /// No description provided for @homeMealLunch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğle'**
+  String get homeMealLunch;
+
+  /// No description provided for @homeMealDinner.
+  ///
+  /// In tr, this message translates to:
+  /// **'Akşam'**
+  String get homeMealDinner;
+
+  /// No description provided for @homeMealSnack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ara öğün'**
+  String get homeMealSnack;
+
+  /// No description provided for @homeCalorieTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'hedefi'**
+  String get homeCalorieTarget;
+
+  /// No description provided for @homeCalorieTargetLine.
+  ///
+  /// In tr, this message translates to:
+  /// **'/ {target} kcal hedefi'**
+  String homeCalorieTargetLine(int target);
+
+  /// No description provided for @macroProtein.
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein'**
+  String get macroProtein;
+
+  /// No description provided for @macroCarb.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karb'**
+  String get macroCarb;
+
+  /// No description provided for @macroFat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ'**
+  String get macroFat;
+
+  /// No description provided for @homeCravingText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir şeye canın çekiyor mu? 60 saniye dur, derin nefes al.'**
+  String get homeCravingText;
 }
 
 class _AppLocalizationsDelegate

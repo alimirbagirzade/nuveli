@@ -584,4 +584,174 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonOk => 'Tamam';
+
+  @override
+  String get settingsCoachTone => 'Koçun tonu';
+
+  @override
+  String get settingsSupportSecurity => 'Destek ve Güvenlik';
+
+  @override
+  String get settingsHowAiWorks => 'AI nasıl çalışır';
+
+  @override
+  String get settingsPrivacySafety => 'Gizlilik ve Güvenlik';
+
+  @override
+  String get settingsAboutNuveli => 'Nuveli Hakkında';
+
+  @override
+  String get settingsSubscription => 'Abonelik';
+
+  @override
+  String get settingsSession => 'Oturum';
+
+  @override
+  String get settingsDangerZone => 'Tehlikeli Bölge';
+
+  @override
+  String get settingsSignedInAs => 'Giriş yapan';
+
+  @override
+  String get settingsLogoutTitle => 'Çıkış yap?';
+
+  @override
+  String get settingsLogoutBody =>
+      'Tekrar giriş yapmak için email ve şifren gerekecek.';
+
+  @override
+  String get settingsLogoutCancel => 'Vazgeç';
+
+  @override
+  String get settingsLogoutFailed => 'Çıkış yapılamadı.';
+
+  @override
+  String get premiumModalTitle => 'Premium çok yakında!';
+
+  @override
+  String get premiumModalBody =>
+      'Sınırsız AI öğün analizi, gelişmiş koç ve haftalık içgörüler için son hazırlıkları yapıyoruz.';
+
+  @override
+  String get premiumFeatureVoice => 'Sesli koç + 3 persona';
+
+  @override
+  String get premiumFeatureInsights => 'Haftalık + aylık içgörü';
+
+  @override
+  String get premiumUnderstood => 'Anladım';
+
+  @override
+  String get passwordVeryWeak => 'Çok zayıf';
+
+  @override
+  String get passwordWeak => 'Zayıf';
+
+  @override
+  String get passwordMedium => 'Orta';
+
+  @override
+  String get passwordStrong => 'Güçlü';
+
+  @override
+  String get passwordVeryStrong => 'Çok güçlü';
+
+  @override
+  String get homeErrorGeneric => 'Bir şeyler ters gitti';
+
+  @override
+  String get homeCoachLabel => 'Koçun';
+
+  @override
+  String get homeToday => 'Bugün';
+
+  @override
+  String get homeRemaining => 'kaldı';
+
+  @override
+  String get homeThisWeek => 'Bu Hafta';
+
+  @override
+  String get homeMiniGoalTitle => 'Bugünkü Mini Hedef';
+
+  @override
+  String get homeMiniGoalDefault => 'Bir öğüne protein ekle';
+
+  @override
+  String get homeAddMealLabel => 'Öğün Ekle';
+
+  @override
+  String get homeWater => 'Su';
+
+  @override
+  String get homeWeight => 'Kilo';
+
+  @override
+  String get homeMood => 'Mod';
+
+  @override
+  String get homeAddWater => 'Su Ekle';
+
+  @override
+  String get homeEnterWeight => 'Kilonu Girin';
+
+  @override
+  String get homeMoodGreat => 'Harika';
+
+  @override
+  String get homeMoodGood => 'İyi';
+
+  @override
+  String get homeMoodNeutral => 'Normal';
+
+  @override
+  String get homeMoodBad => 'Zor';
+
+  @override
+  String get homeMoodRough => 'Çok Zor';
+
+  @override
+  String get homeMoodPickOne => 'Bir tane seç';
+
+  @override
+  String get homeNoMealsTitle => 'Henüz öğün eklenmedi';
+
+  @override
+  String get homeNoMealsMessage => 'İlk öğününü ekleyerek günü başlat';
+
+  @override
+  String get homeTodayMeals => 'Bugünkü öğünler';
+
+  @override
+  String get homeMealBreakfast => 'Kahvaltı';
+
+  @override
+  String get homeMealLunch => 'Öğle';
+
+  @override
+  String get homeMealDinner => 'Akşam';
+
+  @override
+  String get homeMealSnack => 'Ara öğün';
+
+  @override
+  String get homeCalorieTarget => 'hedefi';
+
+  @override
+  String homeCalorieTargetLine(int target) {
+    return '/ $target kcal hedefi';
+  }
+
+  @override
+  String get macroProtein => 'Protein';
+
+  @override
+  String get macroCarb => 'Karb';
+
+  @override
+  String get macroFat => 'Yağ';
+
+  @override
+  String get homeCravingText =>
+      'Bir şeye canın çekiyor mu? 60 saniye dur, derin nefes al.';
 }

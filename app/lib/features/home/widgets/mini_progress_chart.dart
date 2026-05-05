@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class MiniProgressChart extends StatelessWidget {
   const MiniProgressChart({super.key});
@@ -18,7 +19,7 @@ class MiniProgressChart extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Bu Hafta', style: AppTextStyles.labelMedium),
+          Text(AppLocalizations.of(context)!.homeThisWeek, style: AppTextStyles.labelMedium),
           const SizedBox(height: 12),
           SizedBox(
             height: 80,

@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../tracking/data/tracking_repository.dart';
 import '../data/home_repository.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class QuickActionsGrid extends ConsumerWidget {
   const QuickActionsGrid({super.key});
@@ -18,28 +19,28 @@ class QuickActionsGrid extends ConsumerWidget {
       children: [
         _ActionTile(
           icon: Icons.camera_alt_outlined,
-          label: 'Öğün Ekle',
+          label: AppLocalizations.of(context)!.homeAddMealLabel,
           color: AppColors.primary,
           onTap: () => context.push(AppRoute.mealCapture),
         ),
         const SizedBox(width: 10),
         _ActionTile(
           icon: Icons.water_drop_outlined,
-          label: 'Su',
+          label: AppLocalizations.of(context)!.homeWater,
           color: AppColors.info,
           onTap: () => _showWaterSheet(context, ref),
         ),
         const SizedBox(width: 10),
         _ActionTile(
           icon: Icons.monitor_weight_outlined,
-          label: 'Kilo',
+          label: AppLocalizations.of(context)!.homeWeight,
           color: AppColors.accent,
           onTap: () => _showWeightSheet(context, ref),
         ),
         const SizedBox(width: 10),
         _ActionTile(
           icon: Icons.mood_outlined,
-          label: 'Mod',
+          label: AppLocalizations.of(context)!.homeMood,
           color: AppColors.warning,
           onTap: () => _showCheckinSheet(context, ref),
         ),
@@ -189,7 +190,7 @@ class _WaterSheet extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Su Ekle', style: AppTextStyles.headingMedium),
+              Text(AppLocalizations.of(context)!.homeAddWater, style: AppTextStyles.headingMedium),
               const Spacer(),
               TextButton.icon(
                 onPressed: () {
@@ -267,7 +268,7 @@ class _WeightSheetState extends State<_WeightSheet> {
         children: [
           Row(
             children: [
-              Text('Kilonu Girin', style: AppTextStyles.headingMedium),
+              Text(AppLocalizations.of(context)!.homeEnterWeight, style: AppTextStyles.headingMedium),
               const Spacer(),
               TextButton.icon(
                 onPressed: () {
@@ -333,7 +334,7 @@ class _CheckinSheet extends StatelessWidget {
         children: [
           Text('Bugün nasılsın?', style: AppTextStyles.headingMedium),
           const SizedBox(height: 8),
-          Text('Bir tane seç', style: AppTextStyles.bodySmall),
+          Text(AppLocalizations.of(context)!.homeMoodPickOne, style: AppTextStyles.bodySmall),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -9,6 +9,7 @@ import '../../../shared/widgets/empty_state_view.dart';
 import '../../../shared/widgets/skeleton_loader.dart';
 import '../../meal/data/meal_models.dart';
 import '../../meal/providers/meal_providers.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 /// Home ekranındaki "Bugünkü öğünler" listesi.
 /// Boş gün, loading, error ve dolu durumları yönetir.
@@ -27,9 +28,9 @@ class TodayMealsList extends ConsumerWidget {
           return _buildCard(
             child: EmptyStateView(
               icon: Icons.restaurant_outlined,
-              title: 'Henüz öğün eklenmedi',
-              message: 'İlk öğününü ekleyerek günü başlat',
-              actionLabel: 'Öğün Ekle',
+              title: AppLocalizations.of(context)!.homeNoMealsTitle,
+              message: AppLocalizations.of(context)!.homeNoMealsMessage,
+              actionLabel: AppLocalizations.of(context)!.homeAddMealLabel,
               onAction: () => context.push(AppRoute.mealCapture),
               compact: true,
             ),
@@ -45,7 +46,7 @@ class TodayMealsList extends ConsumerWidget {
                   children: [
                     const Icon(Icons.restaurant_outlined, size: 18),
                     const SizedBox(width: 8),
-                    Text('Bugünkü öğünler',
+                    Text(AppLocalizations.of(context)!.homeTodayMeals,
                         style: AppTextStyles.labelLarge),
                     const Spacer(),
                     Text(

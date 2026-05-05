@@ -14,6 +14,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'core/i18n/language_provider.dart';
 
+
 Future<void> main() async {
   // Tüm initialization VE runApp aynı Zone içinde çalışmalı.
   // Aksi halde Flutter "Zone mismatch" warning verir ve callback'lerde
@@ -22,6 +23,8 @@ Future<void> main() async {
   await runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
+    // Dili ONCEDEN yukle (race condition onleme)
+    await preloadLanguage();
 
   // Notification service'i baslat (hata olursa devam et)
   try {

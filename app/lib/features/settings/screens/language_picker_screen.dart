@@ -17,7 +17,7 @@ class LanguagePickerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final current = ref.watch(languageProvider);
+    final current = globalLanguageNotifier.value;
     final l10n = AppLocalizations.of(context)!;
 
     return AppScaffold(
@@ -57,7 +57,7 @@ class LanguagePickerScreen extends ConsumerWidget {
                   ? Icon(Icons.check_circle, color: AppColors.primary)
                   : null,
               onTap: () {
-                ref.read(languageProvider.notifier).setLanguage(lang);
+                changeLanguage(lang);
               },
             ),
           );

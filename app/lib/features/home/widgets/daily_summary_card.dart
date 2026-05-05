@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class DailySummaryCard extends StatelessWidget {
   const DailySummaryCard({
@@ -39,7 +40,7 @@ class DailySummaryCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Bugün', style: AppTextStyles.labelMedium),
+                  Text(AppLocalizations.of(context)!.homeToday, style: AppTextStyles.labelMedium),
                   const SizedBox(height: 4),
                   Text(
                     '$consumedCalories',
@@ -56,11 +57,11 @@ class DailySummaryCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              _MacroChip(label: 'Protein', value: '${protein.toInt()}g', color: AppColors.accent),
+              _MacroChip(label: AppLocalizations.of(context)!.macroProtein, value: '${protein.toInt()}g', color: AppColors.accent),
               const SizedBox(width: 8),
-              _MacroChip(label: 'Karb', value: '${carb.toInt()}g', color: AppColors.primary),
+              _MacroChip(label: AppLocalizations.of(context)!.macroCarb, value: '${carb.toInt()}g', color: AppColors.primary),
               const SizedBox(width: 8),
-              _MacroChip(label: 'Yağ', value: '${fat.toInt()}g', color: AppColors.warning),
+              _MacroChip(label: AppLocalizations.of(context)!.macroFat, value: '${fat.toInt()}g', color: AppColors.warning),
             ],
           ),
         ],
@@ -96,7 +97,7 @@ class _CircleProgress extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('$remaining', style: AppTextStyles.headingSmall),
-              Text('kaldı', style: AppTextStyles.caption),
+              Text(AppLocalizations.of(context)!.homeRemaining, style: AppTextStyles.caption),
             ],
           ),
         ],

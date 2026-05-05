@@ -594,4 +594,175 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commonOk => 'OK';
+
+  @override
+  String get settingsCoachTone => 'Ton du coach';
+
+  @override
+  String get settingsSupportSecurity => 'Support et sécurité';
+
+  @override
+  String get settingsHowAiWorks => 'Comment l\'IA fonctionne';
+
+  @override
+  String get settingsPrivacySafety => 'Confidentialité et sécurité';
+
+  @override
+  String get settingsAboutNuveli => 'À propos de Nuveli';
+
+  @override
+  String get settingsSubscription => 'Abonnement';
+
+  @override
+  String get settingsSession => 'Session';
+
+  @override
+  String get settingsDangerZone => 'Zone dangereuse';
+
+  @override
+  String get settingsSignedInAs => 'Connecté en tant que';
+
+  @override
+  String get settingsLogoutTitle => 'Se déconnecter?';
+
+  @override
+  String get settingsLogoutBody =>
+      'Tu auras besoin de ton e-mail et mot de passe pour te reconnecter.';
+
+  @override
+  String get settingsLogoutCancel => 'Annuler';
+
+  @override
+  String get settingsLogoutFailed => 'Déconnexion échouée.';
+
+  @override
+  String get premiumModalTitle => 'Premium bientôt!';
+
+  @override
+  String get premiumModalBody =>
+      'Nous préparons l\'analyse illimitée des repas, le coaching avancé et les aperçus hebdomadaires.';
+
+  @override
+  String get premiumFeatureVoice => 'Coach vocal + 3 personas';
+
+  @override
+  String get premiumFeatureInsights => 'Aperçus hebdomadaires + mensuels';
+
+  @override
+  String get premiumUnderstood => 'Compris';
+
+  @override
+  String get passwordVeryWeak => 'Très faible';
+
+  @override
+  String get passwordWeak => 'Faible';
+
+  @override
+  String get passwordMedium => 'Moyen';
+
+  @override
+  String get passwordStrong => 'Fort';
+
+  @override
+  String get passwordVeryStrong => 'Très fort';
+
+  @override
+  String get homeErrorGeneric => 'Quelque chose s\'est mal passé';
+
+  @override
+  String get homeCoachLabel => 'Ton coach';
+
+  @override
+  String get homeToday => 'Aujourd\'hui';
+
+  @override
+  String get homeRemaining => 'restant';
+
+  @override
+  String get homeThisWeek => 'Cette semaine';
+
+  @override
+  String get homeMiniGoalTitle => 'Mini objectif du jour';
+
+  @override
+  String get homeMiniGoalDefault => 'Ajoute des protéines à un repas';
+
+  @override
+  String get homeAddMealLabel => 'Ajouter un repas';
+
+  @override
+  String get homeWater => 'Eau';
+
+  @override
+  String get homeWeight => 'Poids';
+
+  @override
+  String get homeMood => 'Humeur';
+
+  @override
+  String get homeAddWater => 'Ajouter de l\'eau';
+
+  @override
+  String get homeEnterWeight => 'Entrer le poids';
+
+  @override
+  String get homeMoodGreat => 'Super';
+
+  @override
+  String get homeMoodGood => 'Bien';
+
+  @override
+  String get homeMoodNeutral => 'Normal';
+
+  @override
+  String get homeMoodBad => 'Difficile';
+
+  @override
+  String get homeMoodRough => 'Très difficile';
+
+  @override
+  String get homeMoodPickOne => 'Choisis-en un';
+
+  @override
+  String get homeNoMealsTitle => 'Aucun repas ajouté';
+
+  @override
+  String get homeNoMealsMessage =>
+      'Commence la journée en ajoutant ton premier repas';
+
+  @override
+  String get homeTodayMeals => 'Repas d\'aujourd\'hui';
+
+  @override
+  String get homeMealBreakfast => 'Petit-déjeuner';
+
+  @override
+  String get homeMealLunch => 'Déjeuner';
+
+  @override
+  String get homeMealDinner => 'Dîner';
+
+  @override
+  String get homeMealSnack => 'Collation';
+
+  @override
+  String get homeCalorieTarget => 'objectif';
+
+  @override
+  String homeCalorieTargetLine(int target) {
+    return '/ $target kcal objectif';
+  }
+
+  @override
+  String get macroProtein => 'Protéines';
+
+  @override
+  String get macroCarb => 'Glucides';
+
+  @override
+  String get macroFat => 'Lipides';
+
+  @override
+  String get homeCravingText =>
+      'Une envie? Pause 60 secondes, respire profondément.';
 }

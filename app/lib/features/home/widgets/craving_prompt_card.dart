@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 
 class CravingPromptCard extends StatelessWidget {
   const CravingPromptCard({super.key});
@@ -19,7 +20,7 @@ class CravingPromptCard extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Bir şeye canın çekiyor mu? 60 saniye dur, derin nefes al.',
+              AppLocalizations.of(context)!.homeCravingText,
               style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary),
             ),
           ),
