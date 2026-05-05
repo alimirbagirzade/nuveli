@@ -12,7 +12,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appName => 'Nuveli';
 
   @override
-  String get appTagline => 'Coach de Calorías IA';
+  String get appTagline => 'Coach IA Calorías';
 
   @override
   String get loginEmail => 'Correo electrónico';
@@ -523,7 +523,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsLogout => 'Cerrar sesión';
 
   @override
-  String get settingsDeleteAccount => 'Eliminar mi cuenta';
+  String get settingsDeleteAccount => 'Eliminar cuenta';
 
   @override
   String get settingsVersion => 'Versión';
@@ -1179,7 +1179,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mealAnalyze => 'Analizar';
 
   @override
-  String get mealManualEntry => 'Entrada manual';
+  String get mealManualEntry => 'Ingreso manual';
 
   @override
   String get mealAnalyzeFailed => 'Análisis fallido.';
@@ -1460,7 +1460,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profilePremiumMy => 'Mi suscripción Premium';
 
   @override
-  String get profileHelpSafety => 'Ayuda y Seguridad';
+  String get profileHelpSafety => 'Ayuda y seguridad';
 
   @override
   String get profileSupport => 'Soporte';

@@ -516,7 +516,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsLogout => 'Çıkış Yap';
 
   @override
-  String get settingsDeleteAccount => 'Hesabımı Sil';
+  String get settingsDeleteAccount => 'Hesabı sil';
 
   @override
   String get settingsVersion => 'Sürüm';
@@ -1174,7 +1174,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get mealAnalyze => 'Analiz Et';
 
   @override
-  String get mealManualEntry => 'Manuel giriş yap';
+  String get mealManualEntry => 'Elle gir';
 
   @override
   String get mealAnalyzeFailed => 'Analiz yapılamadı.';
@@ -1435,7 +1435,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get profileNotifPrefs => 'Bildirim tercihleri';
 
   @override
-  String get profileNotifPrefsSub => 'Hatırlatmalar ve sessiz saatler';
+  String get profileNotifPrefsSub => 'Hatırlatıcılar ve sessiz saatler';
 
   @override
   String get profileTheme => 'Tema';
@@ -1456,7 +1456,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get profilePremiumMy => 'Premium aboneliğim';
 
   @override
-  String get profileHelpSafety => 'Yardım & Güvenlik';
+  String get profileHelpSafety => 'Yardım ve güvenlik';
 
   @override
   String get profileSupport => 'Destek';

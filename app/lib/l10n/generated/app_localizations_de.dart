@@ -1181,7 +1181,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mealAnalyze => 'Analysieren';
 
   @override
-  String get mealManualEntry => 'Manuelle Eingabe';
+  String get mealManualEntry => 'Manuell eingeben';
 
   @override
   String get mealAnalyzeFailed => 'Analyse fehlgeschlagen.';

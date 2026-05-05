@@ -9,6 +9,7 @@ import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_it.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_tr.dart';
 
@@ -102,6 +103,7 @@ abstract class AppLocalizations {
     Locale('en'),
     Locale('es'),
     Locale('fr'),
+    Locale('it'),
     Locale('ru'),
     Locale('tr')
   ];
@@ -1075,7 +1077,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsDeleteAccount.
   ///
   /// In tr, this message translates to:
-  /// **'Hesabımı Sil'**
+  /// **'Hesabı sil'**
   String get settingsDeleteAccount;
 
   /// No description provided for @settingsVersion.
@@ -2323,7 +2325,7 @@ abstract class AppLocalizations {
   /// No description provided for @mealManualEntry.
   ///
   /// In tr, this message translates to:
-  /// **'Manuel giriş yap'**
+  /// **'Elle gir'**
   String get mealManualEntry;
 
   /// No description provided for @mealAnalyzeFailed.
@@ -2809,7 +2811,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileNotifPrefsSub.
   ///
   /// In tr, this message translates to:
-  /// **'Hatırlatmalar ve sessiz saatler'**
+  /// **'Hatırlatıcılar ve sessiz saatler'**
   String get profileNotifPrefsSub;
 
   /// No description provided for @profileTheme.
@@ -2851,7 +2853,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileHelpSafety.
   ///
   /// In tr, this message translates to:
-  /// **'Yardım & Güvenlik'**
+  /// **'Yardım ve güvenlik'**
   String get profileHelpSafety;
 
   /// No description provided for @profileSupport.
@@ -3416,6 +3418,7 @@ class _AppLocalizationsDelegate
         'en',
         'es',
         'fr',
+        'it',
         'ru',
         'tr'
       ].contains(locale.languageCode);
@@ -3435,6 +3438,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEs();
     case 'fr':
       return AppLocalizationsFr();
+    case 'it':
+      return AppLocalizationsIt();
     case 'ru':
       return AppLocalizationsRu();
     case 'tr':
