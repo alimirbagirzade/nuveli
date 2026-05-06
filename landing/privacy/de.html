@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#062B45">
 <meta name="color-scheme" content="light">
-<title>Kullanım Şartları · Nuveli</title>
-<meta name="description" content="Nuveli kullanım şartları ve hizmet koşulları.">
+<title>Datenschutzerklärung · Nuveli</title>
+<meta name="description" content="Nuveli Datenschutzrichtlinie und Datenschutz. DSGVO und KVKK konform.">
+
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
 /* ============================================
    NUVELI — OCEAN PALETTE (Brief v1.0 — 30 Nisan 2026)
@@ -1066,26 +1069,115 @@ p { margin: 0 0 1rem 0; line-height: 1.65; }
   .mockup-screen { opacity: 1 !important; transform: none !important; }
 }
 
-.legal-hero { background: var(--gradient-hero); padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--border); }
-.legal-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0; color: var(--primary-700); }
-.legal-hero .meta { color: var(--text-tertiary); font-size: 0.95rem; margin-top: 0.5rem; }
-.legal-content { background: var(--white); padding: clamp(3rem, 6vw, 5rem) 0; }
-.legal-content .container-narrow > p, .legal-content .container-narrow > ul { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; }
-.legal-content h2 { font-size: 1.4rem; font-weight: 700; color: var(--primary-700); margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface-deeper); }
-.legal-content ul { padding-left: 1.5rem; margin-bottom: 1rem; }
-.legal-content li { margin-bottom: 0.5rem; color: var(--text-secondary); }
+/* ─── Legal Page (Privacy/Terms) Styles ─── */
+.legal-hero {
+  background: var(--gradient-hero);
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border);
+}
+.legal-hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0;
+  color: var(--primary-700);
+}
+.legal-hero .meta {
+  color: var(--text-tertiary);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+.legal-content {
+  background: var(--white);
+  padding: clamp(3rem, 6vw, 5rem) 0;
+}
+.legal-content .container-narrow > p,
+.legal-content .container-narrow > ul {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.legal-content h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-700);
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--surface-deeper);
+}
+.legal-content ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.legal-content li {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
 .legal-content li::marker { color: var(--accent-aqua); }
 .legal-content strong { color: var(--text-primary); font-weight: 600; }
-.legal-content a { color: var(--primary-600); font-weight: 500; border-bottom: 1px solid var(--border-strong); }
-.legal-content a:hover { color: var(--accent-aqua); border-color: var(--accent-aqua); }
-.legal-warn { background: rgba(184, 121, 17, 0.08); border-left: 4px solid var(--warning); padding: 1rem 1.25rem; border-radius: var(--radius-sm); margin: 1.5rem 0; color: var(--text-primary); }
+.legal-content a {
+  color: var(--primary-600);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-strong);
+}
+.legal-content a:hover {
+  color: var(--accent-aqua);
+  border-color: var(--accent-aqua);
+}
+.legal-warn {
+  background: rgba(184, 121, 17, 0.08);
+  border-left: 4px solid var(--warning);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin: 1.5rem 0;
+  color: var(--text-primary);
+}
 .legal-warn strong { color: var(--warning); }
-.legal-back { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding: 0.5rem 1rem; background: var(--surface-muted); color: var(--primary-600); font-weight: 500; font-size: 0.9rem; border-radius: var(--radius-pill); border: 1px solid var(--border); transition: all 0.2s var(--ease); }
-.legal-back:hover { background: var(--surface-deeper); border-color: var(--primary-600); }
-.legal-langs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; padding: 1rem; background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-md); }
-.legal-langs a { font-size: 0.85rem; padding: 0.4rem 0.85rem; background: var(--white); color: var(--text-secondary); border: 1px solid var(--border); border-radius: var(--radius-pill); font-weight: 500; border-bottom: 1px solid var(--border); }
-.legal-langs a.active { background: var(--gradient-cta); color: var(--white); border-color: var(--primary-600); }
-.legal-langs a:hover:not(.active) { border-color: var(--accent-aqua); color: var(--primary-600); }
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--surface-muted);
+  color: var(--primary-600);
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  transition: all 0.2s var(--ease);
+}
+.legal-back:hover {
+  background: var(--surface-deeper);
+  border-color: var(--primary-600);
+}
+.legal-langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.legal-langs a {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.85rem;
+  background: var(--white);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+.legal-langs a.active {
+  background: var(--gradient-cta);
+  color: var(--white);
+  border-color: var(--primary-600);
+}
+.legal-langs a:hover:not(.active) {
+  border-color: var(--accent-aqua);
+  color: var(--primary-600);
+}
 </style>
 </head>
 <body>
@@ -1098,9 +1190,9 @@ p { margin: 0 0 1rem 0; line-height: 1.65; }
         nuveli
       </a>
       <nav class="site-nav" aria-label="Ana menü">
-        <a href="/">Ana sayfa</a>
-        <a href="/sss.html">SSS</a>
-        <a href="/iletisim.html">İletişim</a>
+        <a href="/">Startseite</a>
+        <a href="/sss.html">FAQ</a>
+        <a href="/iletisim.html">Kontakt</a>
       </nav>
     </div>
   </div>
@@ -1109,46 +1201,63 @@ p { margin: 0 0 1rem 0; line-height: 1.65; }
 <main id="main">
   <section class="legal-hero">
     <div class="container-narrow">
-      <a href="/" class="legal-back">← Ana sayfa</a>
-      <h1>Kullanım Şartları</h1>
-      <p class="meta">Son güncelleme: 6 Mayıs 2026</p>
+      <a href="/" class="legal-back">← Startseite</a>
+      <h1>Datenschutzerklärung</h1>
+      <p class="meta">Letzte Aktualisierung: 6. Mai 2026</p>
     </div>
   </section>
 
   <section class="legal-content">
     <div class="container-narrow">
       <div class="legal-langs">
-    <a href="/terms" class="active">🇹🇷 Türkçe</a>
-    <a href="/terms/en">🇬🇧 English</a>
-    <a href="/terms/de">🇩🇪 Deutsch</a>
-    <a href="/terms/fr">🇫🇷 Français</a>
-    <a href="/terms/es">🇪🇸 Español</a>
-    <a href="/terms/ru">🇷🇺 Русский</a>
-    <a href="/terms/it">🇮🇹 Italiano</a>
+    <a href="/privacy">🇹🇷 Türkçe</a>
+    <a href="/privacy/en">🇬🇧 English</a>
+    <a href="/privacy/de" class="active">🇩🇪 Deutsch</a>
+    <a href="/privacy/fr">🇫🇷 Français</a>
+    <a href="/privacy/es">🇪🇸 Español</a>
+    <a href="/privacy/ru">🇷🇺 Русский</a>
+    <a href="/privacy/it">🇮🇹 Italiano</a>
 </div>
-      <div class="legal-warn"><strong>Önemli:</strong> Nuveli bir wellness uygulamasıdır. Tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. Doktor veya diyetisyen yerine geçmez.</div>
-      <h2>1. Hizmetin Tanımı</h2>
-      <p>Nuveli; fotoğraf tabanlı yemek analizi, AI koç desteği, su ve kilo takibi gibi wellness amaçlı özellikler sunar. AI tahminleri yaklaşık değerlerdir, kesin ölçüm değildir.</p>
-      <h2>2. Yaş Sınırı</h2>
-      <p>Nuveli yalnızca 13 yaş ve üzeri kullanıcılara hizmet verir. 18 yaş altı kullanıcılar veli izni gereklidir. Kayıt sırasında yaş bilgisi alınır.</p>
-      <h2>3. Kullanıcı Sorumlulukları</h2>
+      <p>Bei Nuveli ("wir", "uns", "unser") schätzen wir die Privatsphäre unserer Nutzer ("Sie", "Ihr"). Diese Richtlinie erklärt, welche Daten wir erfassen, wie sie verwendet werden und Ihre Rechte.</p>
+      <h2>1. Daten, die wir erfassen</h2>
       <ul>
-        <li>Kullanıcı, verdiği bilgilerin doğruluğundan sorumludur.</li>
-        <li>Hesap bilgileri kişisele özeldir, başkasıyla paylaşılamaz.</li>
-        <li>Uygulamayı yasadışı amaçlarla kullanamazsınız.</li>
+        <li><strong>Kontoinformationen:</strong> E-Mail, Name (optional).</li>
+        <li><strong>Profildaten:</strong> Alter, Geschlecht, Größe, Gewicht, Aktivitätsniveau, Ziel.</li>
+        <li><strong>Mahlzeiten:</strong> Fotos, Beschreibungen, Kalorien/Nährwerte.</li>
+        <li><strong>Gesundheitsdaten:</strong> Wasser, Gewicht, Stimmung.</li>
+        <li><strong>Gerätedaten:</strong> Push-Token, Gerätetyp, App-Version.</li>
+        <li><strong>Nutzung:</strong> Bildschirmaufrufe, Klicks (anonyme Analyse).</li>
       </ul>
-      <h2>4. Sağlık Uyarısı</h2>
-      <p>Bu uygulama hiçbir sağlık koşulu için teşhis, tedavi veya profesyonel tıbbi tavsiye sağlamaz. Özel durumunuz için (hamilelik, kronik hastalık, yeme bozukluğu geçmişi vb.) bir sağlık uzmanına danışın.</p>
-      <h2>5. Abonelik ve Ödeme</h2>
-      <p>Premium abonelik Apple App Store veya Google Play üzerinden yönetilir. 7 günlük deneme süresi içinde iptal ederseniz ücret tahsil edilmez. İptal işlemi ilgili mağaza üzerinden yapılır.</p>
-      <h2>6. Fikri Mülkiyet</h2>
-      <p>Nuveli uygulaması, markası, tasarımı ve içeriği Nuveli'ye aittir. İzin alınmadan kopyalanamaz.</p>
-      <h2>7. Sorumluluk Sınırı</h2>
-      <p>Nuveli, kullanımdan doğan zararlar için sorumlu tutulamaz. AI tahminlerinin doğruluğu garanti edilmez; kullanıcı kararlarını kendi sorumluluğunda alır.</p>
-      <h2>8. Değişiklikler</h2>
-      <p>Bu şartlar değişirse uygulama içinde bildirim yapılır. Güncel şartları kabul etmeyen kullanıcı hesabını silebilir.</p>
-      <h2>9. İletişim</h2>
-      <p><a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a></p>
+      <h2>2. Verwendung der Daten</h2>
+      <ul>
+        <li>Zum Erstellen von KI-Analysen und Coach-Antworten (an OpenAI API gesendet).</li>
+        <li>Zur Erstellung personalisierter Fortschrittsdiagramme und Einblicke.</li>
+        <li>Zum Versenden von Benachrichtigungen.</li>
+        <li>Zur Verbesserung der Servicequalität und Fehlerbehebung.</li>
+      </ul>
+      <h2>3. Dritte</h2>
+      <ul>
+        <li><strong>Supabase</strong> — Datenspeicherung und Authentifizierung.</li>
+        <li><strong>OpenAI</strong> — Mahlzeitenanalyse und Coach-Antworten (Bilder werden nicht gespeichert).</li>
+        <li><strong>RevenueCat</strong> — Abonnementverwaltung.</li>
+        <li><strong>Firebase</strong> — Push, Analyse, Fehlerberichterstattung.</li>
+      </ul>
+      <h2>4. Speicherdauer</h2>
+      <p>Ihre Daten werden gespeichert, solange Ihr Konto aktiv ist. Wenn Sie Ihr Konto löschen, werden alle persönlichen Daten innerhalb von 30 Tagen dauerhaft gelöscht.</p>
+      <h2>5. Ihre Rechte (DSGVO + KVKK)</h2>
+      <p>In der App über "Einstellungen > Datenschutz & Sicherheit":</p>
+      <ul>
+        <li>Daten herunterladen.</li>
+        <li>Konto und alle Daten löschen.</li>
+        <li>Benachrichtigungs- und Datenfreigabeeinstellungen verwalten.</li>
+        <li>Verarbeitung stoppen.</li>
+      </ul>
+      <h2>6. Sicherheit</h2>
+      <p>Daten werden mit TLS verschlüsselt übertragen. Ihre Gesundheitsinformationen sind nur Ihnen zugänglich. Geschützt durch Supabase Row Level Security (RLS).</p>
+      <h2>7. Datenschutz für Kinder</h2>
+      <p>Nuveli ist nicht für Nutzer unter 13 Jahren bestimmt. Nutzer unter 18 benötigen elterliche Zustimmung. Wir schließen jedes Konto, wenn wir minderjährige Nutzer entdecken.</p>
+      <h2>8. Kontakt</h2>
+      <p>Fragen: <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a></p>
     </div>
   </section>
 </main>
@@ -1161,42 +1270,42 @@ p { margin: 0 0 1rem 0; line-height: 1.65; }
           <img src="/logo.png" alt="" width="32" height="32">
           nuveli
         </a>
-        <p>AI Calorie Coach. Fotoğrafla yemek takibi ve yargısız davranış desteği. 18 yaş ve üzeri için.</p>
+        <p>KI-Kalorien-Coach. Foto-basierte Mahlzeitenverfolgung und urteilsfreie Verhaltensunterstützung. Ab 18 Jahren.</p>
       </div>
       <div>
-        <h4>Yasal</h4>
+        <h4>Rechtliches</h4>
         <ul>
-          <li><a href="/privacy">Gizlilik</a></li>
-          <li><a href="/terms">Şartlar</a></li>
+          <li><a href="/privacy">Datenschutz</a></li>
+          <li><a href="/terms">Bedingungen</a></li>
           <li><a href="/kvkk.html">KVKK</a></li>
         </ul>
       </div>
       <div>
-        <h4>Destek</h4>
+        <h4>Hilfe</h4>
         <ul>
-          <li><a href="mailto:support@nuveli.com.tr">E-posta</a></li>
-          <li><a href="/sss.html">SSS</a></li>
-          <li><a href="/iletisim.html">İletişim</a></li>
+          <li><a href="mailto:support@nuveli.com.tr">E-Mail</a></li>
+          <li><a href="/sss.html">FAQ</a></li>
+          <li><a href="/iletisim.html">Kontakt</a></li>
         </ul>
       </div>
       <div>
-        <h4>Diller</h4>
+        <h4>Sprachen</h4>
         <ul style="display:grid; grid-template-columns:1fr 1fr; gap:.4rem;">
-          <li><a href="/terms">🇹🇷 TR</a></li>
-          <li><a href="/terms/en">🇬🇧 EN</a></li>
-          <li><a href="/terms/de">🇩🇪 DE</a></li>
-          <li><a href="/terms/fr">🇫🇷 FR</a></li>
-          <li><a href="/terms/es">🇪🇸 ES</a></li>
-          <li><a href="/terms/ru">🇷🇺 RU</a></li>
-          <li><a href="/terms/it">🇮🇹 IT</a></li>
+          <li><a href="/privacy">🇹🇷 TR</a></li>
+          <li><a href="/privacy/en">🇬🇧 EN</a></li>
+          <li><a href="/privacy/de">🇩🇪 DE</a></li>
+          <li><a href="/privacy/fr">🇫🇷 FR</a></li>
+          <li><a href="/privacy/es">🇪🇸 ES</a></li>
+          <li><a href="/privacy/ru">🇷🇺 RU</a></li>
+          <li><a href="/privacy/it">🇮🇹 IT</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-disclaimer">
-      <strong>Önemli:</strong> Nuveli bir wellness uygulamasıdır; tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. Kalori ve makro değerleri yaklaşık tahmindir. Özel sağlık durumunuz için lütfen doktorunuza danışın.
+      <strong>Wichtig:</strong> Nuveli ist eine Wellness-App; bietet keine medizinische Diagnose, Behandlung oder klinische Ernährungspläne. Kalorien- und Makrowerte sind ungefähre Schätzungen. Bei spezifischen Gesundheitsfragen konsultieren Sie bitte Ihren Arzt.
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Nuveli · Tüm hakları saklıdır.</span>
+      <span>© 2026 Nuveli · Alle Rechte vorbehalten.</span>
       <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a>
     </div>
   </div>

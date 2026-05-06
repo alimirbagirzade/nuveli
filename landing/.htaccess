@@ -1,0 +1,21 @@
+
+# ─── Nuveli Privacy & Terms URL Rewrites ───
+# /privacy → /privacy/index.html (zaten otomatik)
+# /privacy/en → /privacy/en.html (uzantısız URL)
+
+RewriteEngine On
+
+# Privacy: /privacy/{lang} → /privacy/{lang}.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^privacy/([a-z]{2})/?$ /privacy/$1.html [L]
+
+# Terms: /terms/{lang} → /terms/{lang}.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^terms/([a-z]{2})/?$ /terms/$1.html [L]
+
+# Backward compatibility: eski URL'ler hala çalışsın
+# /gizlilik.html → orijinal halinde
+# /sartlar.html → orijinal halinde
+# (rewrite yapmıyoruz, doğal şekilde çalışıyor)
