@@ -259,7 +259,7 @@ class DecisionEngine:
         - normal: kullanıcı tercihi
         """
         user_choice = CoachPersona(
-            (coach_prefs or {}).get("persona", "gentle")
+            (coach_prefs or {}).get("coach_persona", "gentle")
         )
 
         if safety_mode == SafetyMode.HIGH_RISK:
