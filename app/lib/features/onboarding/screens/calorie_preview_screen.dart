@@ -62,7 +62,8 @@ class _CaloriePreviewScreenState
         _errorMessage = e.userMessage;
         _loading = false;
       });
-    } catch (e) {
+    } catch (e, stack) {
+      debugPrint('🔴 Unknown error in calorie_preview_screen.dart: $e\n$stack');
       if (!mounted) return;
       setState(() {
         _errorMessage = 'Beklenmedik bir sorun oldu, tekrar dener misin?';

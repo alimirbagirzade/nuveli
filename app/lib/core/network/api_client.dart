@@ -16,7 +16,7 @@ import '../i18n/language_provider.dart';
 final apiClientProvider = Provider<Dio>((ref) {
   final dio = Dio(BaseOptions(
     baseUrl: AppConfig.apiBaseUrl,
-    connectTimeout: const Duration(seconds: 15),
+    connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 60),
     sendTimeout: const Duration(seconds: 30),
     headers: const {'Content-Type': 'application/json'},
@@ -34,32 +34,40 @@ final apiClientProvider = Provider<Dio>((ref) {
       }
       return handler.next(options);
     },
-    onError: (e, handler) {
-      // GET request'ler için idempotent retry (1 kez).
+    onError: (e, handler) async {
+      // Cold start retry: Render free tier 30-60s uyanma süresi.
+      // GET için 3 deneme, exponential backoff (1s, 3s, 6s).
       // POST/PUT/DELETE retry edilmez — side effect risk'i.
-      final isRetriable =
-          e.requestOptions.method == 'GET' &&
-              (e.type == DioExceptionType.connectionTimeout ||
-                  e.type == DioExceptionType.connectionError) &&
-              e.requestOptions.extra['retry_attempted'] != true;
+      final method = e.requestOptions.method;
+      final isRetriableType = e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.connectionError ||
+          (e.response?.statusCode == 503) ||
+          (e.response?.statusCode == 504);
+      
+      final isGetOrIdempotent = method == 'GET';
+      final attempt = (e.requestOptions.extra['retry_count'] as int?) ?? 0;
+      const maxAttempts = 3;
 
-      if (isRetriable) {
-        e.requestOptions.extra['retry_attempted'] = true;
-        // 500ms bekle + tekrar dene
-        Future.delayed(const Duration(milliseconds: 500), () async {
-          try {
-            final resp = await dio.fetch(e.requestOptions);
-            handler.resolve(resp);
-          } catch (retryErr) {
-            handler.reject(retryErr is DioException
-                ? retryErr
-                : DioException(
-                    requestOptions: e.requestOptions,
-                    error: retryErr,
-                  ));
-          }
-        });
-        return;
+      if (isGetOrIdempotent && isRetriableType && attempt < maxAttempts) {
+        // Exponential backoff: 1s, 3s, 6s
+        final delay = Duration(seconds: [1, 3, 6][attempt]);
+        e.requestOptions.extra['retry_count'] = attempt + 1;
+        
+        await Future.delayed(delay);
+        try {
+          final resp = await dio.fetch(e.requestOptions);
+          handler.resolve(resp);
+          return;
+        } catch (retryErr) {
+          handler.reject(retryErr is DioException
+              ? retryErr
+              : DioException(
+                  requestOptions: e.requestOptions,
+                  error: retryErr,
+                ));
+          return;
+        }
       }
       return handler.next(e);
     },

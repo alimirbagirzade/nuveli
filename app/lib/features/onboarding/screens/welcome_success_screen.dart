@@ -56,7 +56,8 @@ class _WelcomeSuccessScreenState
         _completing = false;
         _errorMessage = e.userMessage;
       });
-    } catch (e) {
+    } catch (e, stack) {
+      debugPrint('🔴 Unknown error in welcome_success_screen.dart: $e\n$stack');
       if (!mounted) return;
       setState(() {
         _completing = false;

@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/error_state_view.dart';
+import '../../../shared/widgets/cold_start_view.dart';
 import '../../../shared/widgets/nuveli_avatar.dart';
 import '../../../shared/widgets/skeleton_loader.dart';
 import '../../premium/data/premium_service.dart';
@@ -95,6 +96,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: homeAsync.when(
           loading: () => const HomeSkeleton(),
           error: (err, _) {
+            // Cold start (sunucu uyanıyor) için özel widget + auto-retry
+            if (err is ColdStartError) {
+              return ColdStartView(
+                onRetry: () => ref.invalidate(homePayloadProvider),
+              );
+            }
             final msg = err is AppError ? err.userMessage : AppLocalizations.of(context)!.homeErrorGeneric;
             return ErrorStateView(
               message: msg,

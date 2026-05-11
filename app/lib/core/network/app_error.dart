@@ -9,6 +9,7 @@ sealed class AppError {
   String get userMessage => message;
 
   factory AppError.network() => const NetworkError('Bağlantı kurulamadı. Tekrar dene.');
+  factory AppError.coldStart() => const ColdStartError('Sunucu uyanıyor, biraz bekle...');
   factory AppError.auth() => const AuthError('Oturumun süresi doldu.');
   factory AppError.limitExceeded(String msg) => LimitExceededError(msg);
   factory AppError.server() => const ServerError('Bir şeyler ters gitti. Az sonra tekrar dene.');
@@ -16,8 +17,14 @@ sealed class AppError {
 
   /// Dio hatasını AppError'a çevirir.
   static AppError fromDio(DioException e) {
+    // Cold start göstergeleri: connect timeout veya 503/504
     if (e.type == DioExceptionType.connectionTimeout ||
-        e.type == DioExceptionType.receiveTimeout ||
+        e.response?.statusCode == 503 ||
+        e.response?.statusCode == 504) {
+      return AppError.coldStart();
+    }
+    
+    if (e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.connectionError) {
       return AppError.network();
     }
@@ -46,6 +53,10 @@ sealed class AppError {
 class NetworkError extends AppError {
   const NetworkError(super.message);
 }
+class ColdStartError extends AppError {
+  const ColdStartError(super.message);
+}
+
 
 class AuthError extends AppError {
   const AuthError(super.message);
