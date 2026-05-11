@@ -115,7 +115,7 @@ class ProfileService:
         # Premium cache başlat
         self.db.table("premium_status_cache").upsert({
             "user_id": user_id,
-            "tier": "free",
+            "status": "free",
         }, on_conflict="user_id").execute()
         logger.info("onboarding_completed", user_id=user_id)
 
