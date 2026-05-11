@@ -71,3 +71,6 @@ landing.zip
 app/.env.development
 app/.env.staging
 .env.development
+
+# Editor / Claude backup files
+*.backup
