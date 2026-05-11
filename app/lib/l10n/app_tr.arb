@@ -681,5 +681,27 @@
   "moodGood": "İyi",
   "moodNeutral": "Normal",
   "moodBad": "Zor",
-  "moodRough": "Çok Zor"
+  "moodRough": "Çok Zor",
+  "verifyEmailTitle": "E-postanı Doğrula",
+  "verifyEmailSubtitle": "{email} adresine bir doğrulama linki gönderdik. Linke tıkladığında otomatik olarak devam edeceksin.",
+  "@verifyEmailSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyEmailWaitingTitle": "Email bekleniyor...",
+  "verifyEmailWaitingBody": "E-postandaki linke tıklamadan ilerleyemezsin. Spam klasörünü de kontrol et.",
+  "verifyEmailResend": "Tekrar gönder",
+  "verifyEmailResendIn": "Tekrar gönder ({seconds}sn)",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyEmailResent": "Yeni doğrulama emaili gönderildi.",
+  "verifyEmailSignOut": "Farklı email kullan / Çıkış"
 }

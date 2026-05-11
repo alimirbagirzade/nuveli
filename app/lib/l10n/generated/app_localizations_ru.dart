@@ -1753,4 +1753,33 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get moodRough => 'Очень тяжело';
+
+  @override
+  String get verifyEmailTitle => 'Подтверди Email';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return 'Мы отправили ссылку подтверждения на $email. Нажми на ссылку, чтобы продолжить автоматически.';
+  }
+
+  @override
+  String get verifyEmailWaitingTitle => 'Ожидание email...';
+
+  @override
+  String get verifyEmailWaitingBody =>
+      'Ты не можешь продолжить без нажатия на ссылку в письме. Проверь также папку спам.';
+
+  @override
+  String get verifyEmailResend => 'Отправить снова';
+
+  @override
+  String verifyEmailResendIn(String seconds) {
+    return 'Отправить снова ($secondsс)';
+  }
+
+  @override
+  String get verifyEmailResent => 'Новое письмо подтверждения отправлено.';
+
+  @override
+  String get verifyEmailSignOut => 'Другой email / Выйти';
 }

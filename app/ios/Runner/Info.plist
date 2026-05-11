@@ -76,5 +76,18 @@
 		<string>AI koçunla sesli iletişim kurabilmen için mikrofon erişimi gerekiyor.</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
-	</dict>
+		<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.nuveli.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nuveli</string>
+			</array>
+		</dict>
+	</array>
+</dict>
 </plist>

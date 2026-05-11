@@ -12,7 +12,6 @@ import 'core/config/app_config.dart';
 import 'core/notifications/notification_service.dart';
 import 'core/i18n/language_provider.dart';
 
-
 Future<void> main() async {
   // Tüm initialization VE runApp aynı Zone içinde çalışmalı.
   // Aksi halde Flutter "Zone mismatch" warning verir ve callback'lerde
@@ -24,12 +23,12 @@ Future<void> main() async {
     // Dili ONCEDEN yukle (race condition onleme)
     await preloadLanguage();
 
-  // Notification service'i baslat (hata olursa devam et)
-  try {
-    await NotificationService.initialize();
-  } catch (e) {
-    developer.log('⚠️  Notification init failed: $e');
-  }
+    // Notification service'i baslat (hata olursa devam et)
+    try {
+      await NotificationService.initialize();
+    } catch (e) {
+      developer.log('⚠️  Notification init failed: $e');
+    }
     // Production config validation (non-fatal warning)
     if (AppConfig.isProduction && !AppConfig.isProductionConfigValid) {
       developer.log(
@@ -55,8 +54,11 @@ Future<void> main() async {
 
     // Supabase
     await Supabase.initialize(
-      url: AppConfig.supabaseUrl,
-      anonKey: AppConfig.supabaseAnonKey,
+      url: const String.fromEnvironment('SUPABASE_URL'),
+      anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
+      authOptions: const FlutterAuthClientOptions(
+        authFlowType: AuthFlowType.implicit,
+      ),
     );
 
     runApp(const ProviderScope(child: NuveliApp()));

@@ -47,8 +47,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
       if (!mounted) return;
 
-      // Kayıt başarılı → acceptance flow'a yönlendir.
-      context.go(AppRoute.acceptanceAgeGate);
+      // Verify-email ekranı polling için credentials'a ihtiyaç duyuyor.
+      ref.read(pendingSignupCredentialsProvider.notifier).state =
+          PendingSignupCredentials(
+        email: _emailCtrl.text.trim(),
+        password: _passwordCtrl.text,
+      );
+
+      // Kayıt başarılı → email doğrulama ekranına yönlendir.
+      context.go(AppRoute.verifyEmail);
     } catch (_) {
       // Hata auth_providers'da yönetiliyor.
     }

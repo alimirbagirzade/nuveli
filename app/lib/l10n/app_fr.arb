@@ -681,5 +681,13 @@
   "moodGood": "Bien",
   "moodNeutral": "Normal",
   "moodBad": "Difficile",
-  "moodRough": "Très difficile"
+  "moodRough": "Très difficile",
+  "verifyEmailTitle": "Vérifiez Votre Email",
+  "verifyEmailSubtitle": "Nous avons envoyé un lien de vérification à {email}. Tape sur le lien pour continuer automatiquement.",
+  "verifyEmailWaitingTitle": "En attente d'email...",
+  "verifyEmailWaitingBody": "Tu ne peux pas continuer sans cliquer sur le lien dans ton email. Vérifie aussi ton dossier spam.",
+  "verifyEmailResend": "Renvoyer",
+  "verifyEmailResendIn": "Renvoyer ({seconds}s)",
+  "verifyEmailResent": "Nouvel email de vérification envoyé.",
+  "verifyEmailSignOut": "Autre email / Déconnexion"
 }

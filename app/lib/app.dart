@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:app_links/app_links.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,11 +44,60 @@ class _AppScrollBehavior extends MaterialScrollBehavior {
   }
 }
 
-class NuveliApp extends ConsumerWidget {
+class NuveliApp extends ConsumerStatefulWidget {
   const NuveliApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NuveliApp> createState() => _NuveliAppState();
+}
+
+class _NuveliAppState extends ConsumerState<NuveliApp> {
+  late final AppLinks _appLinks;
+  StreamSubscription<Uri>? _linkSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _appLinks = AppLinks();
+    _initDeepLinks();
+  }
+
+  Future<void> _initDeepLinks() async {
+    // Cold start: app kapalıyken link ile açıldıysa
+    try {
+      final initialUri = await _appLinks.getInitialLink();
+      if (initialUri != null) {
+        _handleDeepLink(initialUri);
+      }
+    } catch (e) {
+      debugPrint('Deep link initial error: $e');
+    }
+
+    // Warm start: app açıkken gelen linkler
+    _linkSub = _appLinks.uriLinkStream.listen(
+      _handleDeepLink,
+      onError: (err) => debugPrint('Deep link stream error: $err'),
+    );
+  }
+
+  void _handleDeepLink(Uri uri) {
+    debugPrint('Deep link received: $uri');
+    // nuveli://acceptance/age-gate → /acceptance/age-gate
+    // nuveli:///home → /home
+    final path = uri.path.isNotEmpty ? uri.path : '/${uri.host}';
+    if (path.isEmpty || path == '/') return;
+    final router = ref.read(appRouterProvider);
+    router.go(path);
+  }
+
+  @override
+  void dispose() {
+    _linkSub?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeProvider);
 

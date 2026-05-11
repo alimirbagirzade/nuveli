@@ -19,3 +19,8 @@ RewriteRule ^terms/([a-z]{2})/?$ /terms/$1.html [L]
 # /gizlilik.html → orijinal halinde
 # /sartlar.html → orijinal halinde
 # (rewrite yapmıyoruz, doğal şekilde çalışıyor)
+
+# Auth confirmation page
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^auth/confirmed/?$ /auth/confirmed.html [L]

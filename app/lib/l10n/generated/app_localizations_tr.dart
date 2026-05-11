@@ -1747,4 +1747,33 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get moodRough => 'Çok Zor';
+
+  @override
+  String get verifyEmailTitle => 'E-postanı Doğrula';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return '$email adresine bir doğrulama linki gönderdik. Linke tıkladığında otomatik olarak devam edeceksin.';
+  }
+
+  @override
+  String get verifyEmailWaitingTitle => 'Email bekleniyor...';
+
+  @override
+  String get verifyEmailWaitingBody =>
+      'E-postandaki linke tıklamadan ilerleyemezsin. Spam klasörünü de kontrol et.';
+
+  @override
+  String get verifyEmailResend => 'Tekrar gönder';
+
+  @override
+  String verifyEmailResendIn(String seconds) {
+    return 'Tekrar gönder (${seconds}sn)';
+  }
+
+  @override
+  String get verifyEmailResent => 'Yeni doğrulama emaili gönderildi.';
+
+  @override
+  String get verifyEmailSignOut => 'Farklı email kullan / Çıkış';
 }

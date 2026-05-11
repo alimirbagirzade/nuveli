@@ -1752,4 +1752,33 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get moodRough => 'Sehr schwer';
+
+  @override
+  String get verifyEmailTitle => 'E-Mail Bestätigen';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return 'Wir haben einen Bestätigungslink an $email gesendet. Tippe auf den Link, um automatisch fortzufahren.';
+  }
+
+  @override
+  String get verifyEmailWaitingTitle => 'Warte auf E-Mail...';
+
+  @override
+  String get verifyEmailWaitingBody =>
+      'Du kannst nicht fortfahren, ohne auf den Link in deiner E-Mail zu klicken. Überprüfe auch deinen Spam-Ordner.';
+
+  @override
+  String get verifyEmailResend => 'Erneut senden';
+
+  @override
+  String verifyEmailResendIn(String seconds) {
+    return 'Erneut senden (${seconds}s)';
+  }
+
+  @override
+  String get verifyEmailResent => 'Neue Bestätigungs-E-Mail gesendet.';
+
+  @override
+  String get verifyEmailSignOut => 'Andere E-Mail / Abmelden';
 }

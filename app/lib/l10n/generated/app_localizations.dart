@@ -3401,6 +3401,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Çok Zor'**
   String get moodRough;
+
+  /// No description provided for @verifyEmailTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-postanı Doğrula'**
+  String get verifyEmailTitle;
+
+  /// No description provided for @verifyEmailSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{email} adresine bir doğrulama linki gönderdik. Linke tıkladığında otomatik olarak devam edeceksin.'**
+  String verifyEmailSubtitle(String email);
+
+  /// No description provided for @verifyEmailWaitingTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Email bekleniyor...'**
+  String get verifyEmailWaitingTitle;
+
+  /// No description provided for @verifyEmailWaitingBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-postandaki linke tıklamadan ilerleyemezsin. Spam klasörünü de kontrol et.'**
+  String get verifyEmailWaitingBody;
+
+  /// No description provided for @verifyEmailResend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar gönder'**
+  String get verifyEmailResend;
+
+  /// No description provided for @verifyEmailResendIn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar gönder ({seconds}sn)'**
+  String verifyEmailResendIn(String seconds);
+
+  /// No description provided for @verifyEmailResent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni doğrulama emaili gönderildi.'**
+  String get verifyEmailResent;
+
+  /// No description provided for @verifyEmailSignOut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Farklı email kullan / Çıkış'**
+  String get verifyEmailSignOut;
 }
 
 class _AppLocalizationsDelegate

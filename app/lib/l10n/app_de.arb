@@ -681,5 +681,13 @@
   "moodGood": "Gut",
   "moodNeutral": "Geht so",
   "moodBad": "Schwer",
-  "moodRough": "Sehr schwer"
+  "moodRough": "Sehr schwer",
+  "verifyEmailTitle": "E-Mail Bestätigen",
+  "verifyEmailSubtitle": "Wir haben einen Bestätigungslink an {email} gesendet. Tippe auf den Link, um automatisch fortzufahren.",
+  "verifyEmailWaitingTitle": "Warte auf E-Mail...",
+  "verifyEmailWaitingBody": "Du kannst nicht fortfahren, ohne auf den Link in deiner E-Mail zu klicken. Überprüfe auch deinen Spam-Ordner.",
+  "verifyEmailResend": "Erneut senden",
+  "verifyEmailResendIn": "Erneut senden ({seconds}s)",
+  "verifyEmailResent": "Neue Bestätigungs-E-Mail gesendet.",
+  "verifyEmailSignOut": "Andere E-Mail / Abmelden"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../features/auth/screens/verify_email_screen.dart';
 
 import '../../features/auth/screens/forgot_password_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
@@ -48,6 +49,7 @@ class AppRoute {
   static const splash = '/';
   static const login = '/login';
   static const signUp = '/signup';
+  static const verifyEmail = '/verify-email';
   static const forgotPassword = '/forgot-password';
 
   // Acceptance
@@ -119,6 +121,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       const publicPaths = [
         AppRoute.login,
         AppRoute.signUp,
+        AppRoute.verifyEmail,
         AppRoute.forgotPassword,
         AppRoute.acceptanceAgeGate,
         AppRoute.acceptanceWellnessScope,
@@ -130,6 +133,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // Auth yoksa → login
       if (session == null) return AppRoute.login;
+
+      // Email doğrulanmamışsa → verify-email
+      // (verify-email ekranındaysa zaten yönlendirme yok)
+      final user = session.user;
+      if (user.emailConfirmedAt == null && state.matchedLocation != AppRoute.verifyEmail) {
+        return AppRoute.verifyEmail;
+      }
 
       return null;
     },
@@ -147,6 +157,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.signUp,
         builder: (context, state) => const SignUpScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.verifyEmail,
+        builder: (context, state) => const VerifyEmailScreen(),
       ),
       GoRoute(
         path: AppRoute.forgotPassword,

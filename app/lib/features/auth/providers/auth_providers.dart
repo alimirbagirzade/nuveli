@@ -49,6 +49,17 @@ final authLoadingProvider = StateProvider<bool>((ref) => false);
 /// Auth hata mesajı.
 final authErrorProvider = StateProvider<String?>((ref) => null);
 
+/// Signup sonrası verify-email ekranına email+password taşımak için.
+/// Sadece bellekte tutulur, app restart'ta kaybolur (güvenli).
+class PendingSignupCredentials {
+  final String email;
+  final String password;
+  const PendingSignupCredentials({required this.email, required this.password});
+}
+
+final pendingSignupCredentialsProvider =
+    StateProvider<PendingSignupCredentials?>((ref) => null);
+
 // ---------------------------------------------------------------------------
 // Auth Actions
 // ---------------------------------------------------------------------------

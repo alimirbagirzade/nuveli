@@ -722,5 +722,13 @@
   "mealCaptureGallery": "Галерея",
   "mealCaptureAnalyzing": "Анализ блюда...",
   "mealCaptureAddName": "Название блюда",
-  "mealCaptureCalories": "Калории"
+  "mealCaptureCalories": "Калории",
+  "verifyEmailTitle": "Подтверди Email",
+  "verifyEmailSubtitle": "Мы отправили ссылку подтверждения на {email}. Нажми на ссылку, чтобы продолжить автоматически.",
+  "verifyEmailWaitingTitle": "Ожидание email...",
+  "verifyEmailWaitingBody": "Ты не можешь продолжить без нажатия на ссылку в письме. Проверь также папку спам.",
+  "verifyEmailResend": "Отправить снова",
+  "verifyEmailResendIn": "Отправить снова ({seconds}с)",
+  "verifyEmailResent": "Новое письмо подтверждения отправлено.",
+  "verifyEmailSignOut": "Другой email / Выйти"
 }
