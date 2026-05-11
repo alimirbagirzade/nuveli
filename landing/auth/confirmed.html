@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#062B45">
+<title>E-posta Doğrulandı · Nuveli</title>
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary-700: #062B45;
+  --primary-600: #0A6C8C;
+  --accent-aqua: #14C8D8;
+  --accent-seafoam: #7BE6D5;
+  --surface-soft: #F2FCFB;
+  --surface-muted: #E6F7F6;
+  --white: #FFFFFF;
+  --text-primary: #0B2231;
+  --text-secondary: #4A6472;
+  --success: #1AA38C;
+  --error: #C84D5B;
+  --gradient-hero: linear-gradient(135deg, #F2FCFB 0%, #E6F7F6 42%, #D8F6F5 100%);
+  --gradient-cta: linear-gradient(135deg, #0A6C8C 0%, #0C7AA0 100%);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--gradient-hero);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 48px 32px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(6, 43, 69, 0.12);
+  border: 1px solid #CFE7E6;
+}
+.icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  background: var(--surface-muted);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.icon.success { background: rgba(26, 163, 140, 0.12); color: var(--success); }
+.icon.error { background: rgba(200, 77, 91, 0.12); color: var(--error); }
+.icon.loading {
+  background: rgba(20, 200, 216, 0.1);
+  color: var(--accent-aqua);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
+}
+h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary-700);
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+.btn {
+  display: inline-block;
+  background: var(--gradient-cta);
+  color: var(--white);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(10, 108, 140, 0.28);
+}
+.btn-secondary {
+  background: var(--surface-muted);
+  color: var(--primary-600);
+  margin-left: 8px;
+}
+.btn-secondary:hover { background: var(--surface-soft); }
+.brand {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #E6F7F6;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.brand a {
+  color: var(--primary-600);
+  text-decoration: none;
+  font-weight: 500;
+}
+.debug {
+  margin-top: 16px;
+  padding: 8px 12px;
+  background: var(--surface-muted);
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  word-break: break-all;
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon loading" id="icon">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12a9 9 0 11-6.219-8.56" />
+    </svg>
+  </div>
+  <h1 id="title">Doğrulanıyor...</h1>
+  <p id="body">Lütfen bir an bekleyin, e-postanızı doğruluyoruz.</p>
+  <div id="actions"></div>
+  <div class="debug" id="debug"></div>
+  <div class="brand">
+    <a href="/">nuveli.com.tr</a> · AI Calorie Coach
+  </div>
+</div>
+
+<!-- Supabase JS SDK -->
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SUPABASE_URL = 'https://asicgcnpahdnitzalcva.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzaWNnY25wYWhkbml0emFsY3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTU1NzIsImV4cCI6MjA5MjMzMTU3Mn0.0UX_wdWYSRCG-xULsrKzNwgjIhXJh7pfUygQqjgz-_k';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Dil tespit
+const lang = (navigator.language || 'tr').split('-')[0];
+const isEn = lang.startsWith('en');
+
+const labels = isEn ? {
+  successTitle: '✓ Email Verified!',
+  successBody: 'Your account is active. Return to the Nuveli app — it will continue automatically.',
+  errorTitle: 'Verification Failed',
+  errorBody: 'The link may have expired or is invalid. Request a new verification email from the app.',
+  openApp: 'Open App',
+  home: 'Home'
+} : {
+  successTitle: '✓ E-postan Doğrulandı!',
+  successBody: 'Hesabın aktif. Şimdi Nuveli uygulamasına dön — otomatik olarak devam edecek.',
+  errorTitle: 'Doğrulama Başarısız',
+  errorBody: 'Link süresi dolmuş veya geçersiz olabilir. Uygulamadan yeni bir doğrulama e-postası iste.',
+  openApp: 'Uygulamayı Aç',
+  home: 'Ana Sayfa'
+};
+
+function showSuccess() {
+  document.getElementById('icon').className = 'icon success';
+  document.getElementById('icon').innerHTML = `
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  `;
+  document.getElementById('title').textContent = labels.successTitle;
+  document.getElementById('body').textContent = labels.successBody;
+  document.getElementById('actions').innerHTML = `
+    <a href="nuveli:///acceptance/age-gate" class="btn">${labels.openApp}</a>
+    <a href="/" class="btn btn-secondary">${labels.home}</a>
+  `;
+}
+
+function showError(detail) {
+  document.getElementById('icon').className = 'icon error';
+  document.getElementById('icon').innerHTML = `
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  `;
+  document.getElementById('title').textContent = labels.errorTitle;
+  document.getElementById('body').textContent = labels.errorBody;
+  document.getElementById('actions').innerHTML = `
+    <a href="/" class="btn">${labels.home}</a>
+  `;
+  if (detail) {
+    const dbg = document.getElementById('debug');
+    dbg.style.display = 'block';
+    dbg.textContent = detail;
+  }
+}
+
+// URL'den code/token al
+const urlParams = new URLSearchParams(window.location.search);
+const hashParams = new URLSearchParams(window.location.hash.substring(1));
+
+const code = urlParams.get('code') || hashParams.get('code');
+const token = urlParams.get('token') || hashParams.get('token');
+const tokenHash = urlParams.get('token_hash') || hashParams.get('token_hash');
+const type = urlParams.get('type') || hashParams.get('type') || 'signup';
+const errorParam = urlParams.get('error') || hashParams.get('error');
+const errorDesc = urlParams.get('error_description') || hashParams.get('error_description');
+
+// Hata varsa direkt göster
+if (errorParam) {
+  showError(`${errorParam}: ${errorDesc || ''}`);
+} else if (code) {
+  // PKCE flow: exchangeCodeForSession kullan
+  try {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      console.error('Verification error:', error);
+      showError(error.message);
+    } else {
+      console.log('Verified:', data);
+      showSuccess();
+    }
+  } catch (e) {
+    console.error('Exception:', e);
+    showError(e.message);
+  }
+} else if (tokenHash) {
+  // OTP flow: verifyOtp kullan
+  try {
+    const { data, error } = await supabase.auth.verifyOtp({
+      token_hash: tokenHash,
+      type: type
+    });
+    if (error) {
+      console.error('OTP error:', error);
+      showError(error.message);
+    } else {
+      console.log('Verified:', data);
+      showSuccess();
+    }
+  } catch (e) {
+    console.error('Exception:', e);
+    showError(e.message);
+  }
+} else {
+  showError('No verification code in URL');
+}
+</script>
+
+</body>
+</html>
