@@ -447,7 +447,13 @@ class _LowConfidenceView extends StatelessWidget {
           const SizedBox(height: 32),
           PrimaryButton(
             label: 'Manuel Giriş',
-            onPressed: () => context.go(AppRoute.mealManual),
+            onPressed: () {
+              // Navigator transition tamamlanmadan ikinci geçiş crash yapıyordu.
+              // Post-frame callback ile bekle, sonra geçiş yap.
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (context.mounted) context.go(AppRoute.mealManual);
+              });
+            },
           ),
           const SizedBox(height: 10),
           OutlinedButton(

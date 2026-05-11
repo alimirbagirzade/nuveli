@@ -85,6 +85,14 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
       AnalyticsService.mealAnalyzed(confidence: result.confidence);
 
       if (!mounted) return;
+
+      // AI başarısız olduysa /meal/result ekranını atla, direkt manuel'e geç.
+      // (meal/result ekranı extra serialize edemiyor + Navigator crash yapıyor)
+      if (result.confidence == 'failed') {
+        context.pushReplacement(AppRoute.mealManual);
+        return;
+      }
+
       context.pushReplacement(
         AppRoute.mealResult,
         extra: result,
