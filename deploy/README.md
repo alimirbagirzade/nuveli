@@ -65,7 +65,7 @@ Bu rehber projenin hangi bileşeninin nereye deploy edileceğini ve sırasıyla 
 1. https://render.com → GitHub ile bağlan
 2. **New → Web Service** → `alimirbagirzade/Nuveli` reposunu seç
 3. Ayarlar:
-   - **Name:** `nuveli-api`
+   - **Name:** `nuveli-app`
    - **Root Directory:** `backend`
    - **Runtime:** Python 3
    - **Build Command:** `pip install -r requirements.txt`
@@ -82,12 +82,12 @@ Bu rehber projenin hangi bileşeninin nereye deploy edileceğini ve sırasıyla 
    OPENAI_API_KEY=<senin OpenAI key>
    ```
 5. **Create Web Service**
-6. 5 dakika sonra canlı: `https://nuveli-api.onrender.com`
+6. 5 dakika sonra canlı: `https://nuveli-app.onrender.com`
 
 **Custom domain (`api.nuveli.com.tr`):**
 1. Render dashboard → Settings → Custom Domain
 2. `api.nuveli.com.tr` ekle
-3. cPanel DNS → CNAME record: `api` → `nuveli-api.onrender.com`
+3. cPanel DNS → CNAME record: `api` → `nuveli-app.onrender.com`
 
 ### Alternatif: Railway
 - https://railway.app → aynı süreç

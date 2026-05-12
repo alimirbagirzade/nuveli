@@ -38,7 +38,7 @@ app/lib/features/premium/
 - Offerings:
   - `default` offering içinde `monthly` ve `annual` package
   - Annual package'a 7 günlük free trial intro tanımla
-- Webhook URL: `https://nuveli-api.onrender.com/premium/webhook`
+- Webhook URL: `https://nuveli-app.onrender.com/premium/webhook`
   - Authorization header: `Bearer <REVENUECAT_WEBHOOK_SECRET>`
 
 ### 2. Apple App Store Connect / Google Play Console
@@ -228,7 +228,7 @@ cd backend && /tmp/nuveli_venv/bin/python -m pytest tests/ -v
 
 ```bash
 TOKEN="<JWT>"
-BASE="https://nuveli-api.onrender.com"
+BASE="https://nuveli-app.onrender.com"
 
 # 1. Free user status
 curl -H "Authorization: Bearer $TOKEN" $BASE/premium/status

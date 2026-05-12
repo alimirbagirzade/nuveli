@@ -87,8 +87,12 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
       if (!mounted) return;
 
       // AI başarısız olduysa /meal/result ekranını atla, direkt manuel'e geç.
-      // (meal/result ekranı extra serialize edemiyor + Navigator crash yapıyor)
-      if (result.confidence == 'failed') {
+      // AMA: AI bir öneri döndürdüyse (suggestedName var), result ekranını göster
+      // — kullanıcı 'pilav' yazdı, AI tahmin etti, görsün.
+      final hasAnySuggestion = result.suggestedName != null ||
+          result.suggestedCalories != null;
+
+      if (result.confidence == 'failed' && !hasAnySuggestion) {
         context.pushReplacement(AppRoute.mealManual);
         return;
       }

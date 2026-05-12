@@ -1,6 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/data/auth_repository.dart';
+import '../../coach/data/coach_repository.dart';
+import '../../home/data/home_repository.dart';
+import '../../meal/providers/meal_providers.dart';
+import '../../onboarding/providers/onboarding_controller.dart';
+import '../../premium/data/premium_service.dart';
+import '../../profile/data/profile_repository.dart';
+import '../../progress/data/progress_repository.dart';
+import '../../streak/data/streak_repository.dart';
+import '../../tracking/data/tracking_repository.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/settings_repository.dart';
 
@@ -85,8 +94,20 @@ final deleteAccountActionProvider = Provider<Future<void> Function()>((ref) {
     // 2. Local: Supabase session'ı temizle (zaten sunucuda silindi ama client state)
     await authRepo.signOut();
 
-    // 3. Bootstrap cache'i temizle
+    // 3. TÜM kullanıcıya özel cache'i temizle (state leak fix)
     ref.invalidate(bootstrapProvider);
+    ref.invalidate(homePayloadProvider);
+    ref.invalidate(todayMealsProvider);
+    ref.invalidate(streakProvider);
+    ref.invalidate(weeklySummaryProvider);
+    ref.invalidate(monthlyInsightProvider);
+    ref.invalidate(userProfileProvider);
+    ref.invalidate(coachThreadProvider);
+    ref.invalidate(notificationPrefsProvider);
+    ref.invalidate(waterHistoryProvider);
+    ref.invalidate(weightHistoryProvider);
+    ref.invalidate(premiumStatusProvider);
+    ref.read(onboardingControllerProvider.notifier).reset();
   };
 });
 

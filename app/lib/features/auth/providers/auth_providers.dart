@@ -6,6 +6,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/monitoring/crash_reporter.dart';
 import '../data/auth_repository.dart';
+import '../../../features/coach/data/coach_repository.dart';
+import '../../../features/home/data/home_repository.dart';
+import '../../../features/meal/providers/meal_providers.dart';
+import '../../../features/onboarding/providers/onboarding_controller.dart';
+import '../../../features/premium/data/premium_service.dart';
+import '../../../features/profile/data/profile_repository.dart';
+import '../../../features/progress/data/progress_repository.dart';
+import '../../../features/settings/providers/settings_providers.dart';
+import '../../../features/streak/data/streak_repository.dart';
+import '../../../features/tracking/data/tracking_repository.dart';
 
 /// Kullanıcının mevcut auth durumunu stream olarak sağlar.
 /// Router redirect logic buna bağlıdır.
@@ -118,12 +128,43 @@ final signInActionProvider = Provider<Future<void> Function({
   };
 });
 
+/// Logout veya delete account sonrası TÜM kullanıcıya özel cache'i temizler.
+/// Yeni kullanıcı girince eski hesabın verisi sızmaz.
+final _clearAllUserStateProvider = Provider<void Function()>((ref) {
+  return () {
+    // Bootstrap
+    ref.invalidate(bootstrapProvider);
+    // Home & meals
+    ref.invalidate(homePayloadProvider);
+    ref.invalidate(todayMealsProvider);
+    // Streak
+    ref.invalidate(streakProvider);
+    // Progress
+    ref.invalidate(weeklySummaryProvider);
+    ref.invalidate(monthlyInsightProvider);
+    // Profile
+    ref.invalidate(userProfileProvider);
+    // Coach
+    ref.invalidate(coachThreadProvider);
+    // Notification prefs
+    ref.invalidate(notificationPrefsProvider);
+    // Tracking
+    ref.invalidate(waterHistoryProvider);
+    ref.invalidate(weightHistoryProvider);
+    // Premium status
+    ref.invalidate(premiumStatusProvider);
+    // Onboarding form state — reset notifier
+    ref.read(onboardingControllerProvider.notifier).reset();
+  };
+});
+
 /// Sign out action.
 final signOutActionProvider = Provider<Future<void> Function()>((ref) {
   return () async {
     final repo = ref.read(authRepositoryProvider);
     await repo.signOut();
-    ref.invalidate(bootstrapProvider);
+    // Tüm kullanıcıya özel cache'i temizle (state leak fix)
+    ref.read(_clearAllUserStateProvider)();
   };
 });
 
