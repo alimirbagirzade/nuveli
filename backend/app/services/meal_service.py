@@ -49,6 +49,7 @@ class MealService:
 
         await self._check_and_increment_usage(user_id, "meal_analyses")
 
+        debug_error = None  # Geçici - debug için error response'a eklenir
         try:
             result = await self._call_openai(image_b64, description)
             confidence = result.get("confidence", "medium")
@@ -57,12 +58,13 @@ class MealService:
             error_msg = str(e)
             tb = traceback.format_exc()
             # Render loglarında görünmesi için print kullan
-            print(f"🔴 MEAL ANALYSIS FAILED user_id={user_id}")
-            print(f"🔴 Error: {error_msg}")
-            print(f"🔴 Traceback:\n{tb}")
+            print(f"🔴 MEAL ANALYSIS FAILED user_id={user_id}", flush=True)
+            print(f"🔴 Error: {error_msg}", flush=True)
+            print(f"🔴 Traceback:\n{tb}", flush=True)
             logger.warning("meal_analysis_failed", user_id=user_id, error=error_msg)
             result = {}
             confidence = "failed"
+            debug_error = f"{type(e).__name__}: {error_msg}"
 
         # AI sonucunu değiştirilemez şekilde kaydet
         analysis_row = self.db.table("meal_analysis_results").insert({
@@ -78,11 +80,14 @@ class MealService:
 
         analysis_id = analysis_row.data[0]["id"] if analysis_row.data else None
 
-        return {
+        response = {
             "analysis_id": analysis_id,
             "confidence": confidence,
             "suggestion": result,
         }
+        if debug_error:
+            response["debug_error"] = debug_error
+        return response
 
     async def confirm(self, user_id: str, analysis_id: str, local_day: str, meal_type: str) -> dict:
         """AI analizini olduğu gibi onaylar ve meal_log oluşturur."""
