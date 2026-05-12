@@ -95,7 +95,7 @@ async def premium_webhook(
     RevenueCat webhook endpoint.
 
     RevenueCat dashboard'da konfigure et:
-    - URL: https://nuveli-app.onrender.com/premium/webhook
+    - URL: https://nuveli-api.onrender.com/premium/webhook
     - Authorization header: Bearer <REVENUECAT_WEBHOOK_SECRET>
 
     NOT: RevenueCat HMAC signature kullanmaz, sadece Bearer header.
