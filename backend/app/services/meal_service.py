@@ -53,7 +53,14 @@ class MealService:
             result = await self._call_openai(image_b64, description)
             confidence = result.get("confidence", "medium")
         except Exception as e:
-            logger.warning("meal_analysis_failed", user_id=user_id, error=str(e))
+            import traceback
+            error_msg = str(e)
+            tb = traceback.format_exc()
+            # Render loglarında görünmesi için print kullan
+            print(f"🔴 MEAL ANALYSIS FAILED user_id={user_id}")
+            print(f"🔴 Error: {error_msg}")
+            print(f"🔴 Traceback:\n{tb}")
+            logger.warning("meal_analysis_failed", user_id=user_id, error=error_msg)
             result = {}
             confidence = "failed"
 
