@@ -24,6 +24,7 @@ class Settings(BaseSettings):
 
     # Feature limits (free tier)
     free_meal_analyses_per_day: int = 3
+    free_meal_lookups_per_day: int = 10
     free_coach_messages_per_day: int = 5
 
     @property

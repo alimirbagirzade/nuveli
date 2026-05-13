@@ -77,6 +77,43 @@ class MealService:
             "suggestion": result,
         }
 
+    async def lookup_text(self, user_id: str, text: str) -> dict:
+        """Manuel meal ekranı için: yemek ismi → kalori/makro tahmini.
+        
+        Analyze'dan farkı: DB'ye kaydetmez, sadece prediction döner.
+        Ayrı limit counter: meal_lookups (daha cömert çünkü hafif istek).
+        """
+        from .premium_service import PremiumService
+        premium = await PremiumService(self.db).get_status(user_id)
+        if premium["status"] == "free":
+            current = await self._get_usage(user_id, "meal_lookups")
+            if current >= settings.free_meal_lookups_per_day:
+                raise LimitExceededError(
+                    "meal_lookups",
+                    settings.free_meal_lookups_per_day,
+                )
+
+        await self._check_and_increment_usage(user_id, "meal_lookups")
+
+        try:
+            result = await self._call_openai(None, text)
+            confidence = result.get("confidence", "medium")
+        except Exception as e:
+            logger.warning("meal_lookup_failed", user_id=user_id, error=str(e))
+            return {
+                "name": text,
+                "confidence": "failed",
+            }
+
+        return {
+            "name": result.get("name") or text,
+            "calories": result.get("calories"),
+            "protein_g": result.get("protein_g"),
+            "carb_g": result.get("carb_g"),
+            "fat_g": result.get("fat_g"),
+            "confidence": confidence,
+        }
+
     async def confirm(self, user_id: str, analysis_id: str, local_day: str, meal_type: str) -> dict:
         """AI analizini olduğu gibi onaylar ve meal_log oluşturur."""
         analysis = self.db.table("meal_analysis_results")\
