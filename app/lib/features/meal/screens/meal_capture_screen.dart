@@ -14,6 +14,7 @@ import '../../../core/utils/meal_image_capture.dart';
 import '../../../shared/widgets/app_scaffold.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../data/meal_repository.dart';
+import '../providers/meal_providers.dart';
 import '../../../l10n/generated/app_localizations.dart';
 
 class MealCaptureScreen extends ConsumerStatefulWidget {
@@ -97,10 +98,9 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
         return;
       }
 
-      context.pushReplacement(
-        AppRoute.mealResult,
-        extra: result,
-      );
+      // Result'ı provider'a koy (route extra GoRouter codec uyarısı veriyordu)
+      ref.read(currentMealAnalysisProvider.notifier).state = result;
+      context.pushReplacement(AppRoute.mealResult);
     } catch (e, stack) {
       if (!mounted) return;
       // Günlük analiz limiti aşılmış → paywall'u göster, premium'a yönlendir

@@ -8,7 +8,6 @@ import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/signup_screen.dart';
 import '../../features/coach/screens/coach_chat_screen.dart';
 import '../../features/home/screens/home_screen.dart';
-import '../../features/meal/data/meal_models.dart';
 import '../../features/meal/screens/manual_meal_entry_screen.dart';
 import '../../features/meal/screens/meal_analysis_result_screen.dart';
 import '../../features/meal/screens/meal_capture_screen.dart';
@@ -254,13 +253,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoute.mealResult,
-        pageBuilder: (context, state) {
-          final analysis = state.extra as MealAnalysisResult?;
-          final screen = analysis == null
-              ? const MealCaptureScreen()
-              : MealAnalysisResultScreen(analysis: analysis);
-          return AppPageTransitions.fade(screen);
-        },
+        pageBuilder: (context, state) =>
+            AppPageTransitions.fade(const MealAnalysisResultScreen()),
       ),
 
       // Coach

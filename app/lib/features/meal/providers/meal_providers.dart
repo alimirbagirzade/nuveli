@@ -64,3 +64,8 @@ final deleteMealActionProvider =
     ref.invalidate(streakProvider);
   };
 });
+
+/// Capture ekranından Result ekranına analiz sonucunu taşıyan state.
+/// Route extra yerine kullanılır çünkü GoRouter complex type'ı serialize edemiyor.
+/// Result ekranı bittikten sonra null'a set edilmeli (memory cleanup).
+final currentMealAnalysisProvider = StateProvider<MealAnalysisResult?>((ref) => null);

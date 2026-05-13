@@ -17,11 +17,9 @@ import '../providers/meal_providers.dart';
 
 /// AI analiz sonucu + kullanıcı onayı/düzenlemesi.
 ///
-/// Router `extra` ile [MealAnalysisResult] bekler.
+/// [currentMealAnalysisProvider] üzerinden analizi okur.
 class MealAnalysisResultScreen extends ConsumerStatefulWidget {
-  const MealAnalysisResultScreen({super.key, required this.analysis});
-
-  final MealAnalysisResult analysis;
+  const MealAnalysisResultScreen({super.key});
 
   @override
   ConsumerState<MealAnalysisResultScreen> createState() =>
@@ -42,10 +40,28 @@ class _MealAnalysisResultScreenState
   bool _isSaving = false;
   String? _errorMsg;
 
+  late final MealAnalysisResult _analysis;
+
   @override
   void initState() {
     super.initState();
-    final a = widget.analysis;
+    final fromProvider = ref.read(currentMealAnalysisProvider);
+    if (fromProvider == null) {
+      // Defensive: provider boşsa home'a dön (state lost senaryosu)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) context.go(AppRoute.home);
+      });
+      // Geçici boş data
+      _analysis = const MealAnalysisResult(confidence: 'failed');
+      _nameCtrl = TextEditingController();
+      _caloriesCtrl = TextEditingController();
+      _proteinCtrl = TextEditingController();
+      _carbCtrl = TextEditingController();
+      _fatCtrl = TextEditingController();
+      return;
+    }
+    _analysis = fromProvider;
+    final a = _analysis;
     _nameCtrl = TextEditingController(text: a.suggestedName ?? '');
     _caloriesCtrl =
         TextEditingController(text: a.suggestedCalories?.toString() ?? '');
@@ -80,7 +96,7 @@ class _MealAnalysisResultScreenState
 
   /// "Onayla" — kullanıcı AI önerisini değişiklik yapmadan kabul etti.
   Future<void> _confirmAsIs() async {
-    if (widget.analysis.analysisId == null) {
+    if (_analysis.analysisId == null) {
       _showError('Analiz kaydı bulunamadı.');
       return;
     }
@@ -92,7 +108,7 @@ class _MealAnalysisResultScreenState
 
     try {
       await ref.read(mealRepositoryProvider).confirm(
-            widget.analysis.analysisId!,
+            _analysis.analysisId!,
             _today,
             _mealType,
           );
@@ -110,7 +126,7 @@ class _MealAnalysisResultScreenState
 
   /// "Kaydet" — kullanıcı değerleri düzenledi, edit endpoint'i çağır.
   Future<void> _saveEdited() async {
-    if (widget.analysis.analysisId == null) {
+    if (_analysis.analysisId == null) {
       _showError('Analiz kaydı bulunamadı.');
       return;
     }
@@ -130,7 +146,7 @@ class _MealAnalysisResultScreenState
 
     try {
       await ref.read(mealRepositoryProvider).editAndSave(
-        widget.analysis.analysisId!,
+        _analysis.analysisId!,
         {
           'name': name,
           'calories': cal,
@@ -176,7 +192,7 @@ class _MealAnalysisResultScreenState
 
   @override
   Widget build(BuildContext context) {
-    final a = widget.analysis;
+    final a = _analysis;
 
     // Düşük güven veya tamamen başarısız analiz → manuel girişe yönlendir.
     if (a.isLowConfidence) {
