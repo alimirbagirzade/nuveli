@@ -38,11 +38,6 @@ class ManualRequest(BaseModel):
     meal_type: str = "snack"
 
 
-class LookupRequest(BaseModel):
-    text: str
-
-
-
 @router.post("/analyze")
 async def analyze_meal(body: AnalyzeRequest, user_id: str = Depends(get_current_user)):
     if not body.image_b64 and not body.description:
@@ -52,19 +47,6 @@ async def analyze_meal(body: AnalyzeRequest, user_id: str = Depends(get_current_
         })
     svc = MealService()
     result = await svc.analyze(user_id, body.image_b64, body.description)
-    return ApiResponse.ok(result)
-
-
-@router.post("/lookup-text")
-async def lookup_meal_text(body: LookupRequest, user_id: str = Depends(get_current_user)):
-    """Yemek adından kalori/makro tahmini (DB'ye yazmaz, hafif)."""
-    if not body.text or not body.text.strip():
-        raise HTTPException(400, detail={
-            "code": "VALIDATION_ERROR",
-            "message": "Yemek adı gerekli."
-        })
-    svc = MealService()
-    result = await svc.lookup_text(user_id, body.text.strip())
     return ApiResponse.ok(result)
 
 
