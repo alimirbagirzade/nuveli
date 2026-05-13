@@ -41,7 +41,14 @@ class _CombinedAcceptanceScreenState extends State<CombinedAcceptanceScreen> {
         title: Text(l10n.acceptanceTitle, style: AppTextStyles.labelMedium),
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            // Stack boşsa /login'e döner (GoError 'nothing to pop' fix)
+            if (Navigator.canPop(context)) {
+              context.pop();
+            } else {
+              context.go('/login');
+            }
+          },
         ),
       ),
       padding: EdgeInsets.zero,

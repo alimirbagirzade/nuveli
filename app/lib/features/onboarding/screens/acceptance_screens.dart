@@ -4,6 +4,17 @@ import '../../../core/routing/app_router.dart';
 import '../widgets/acceptance_template.dart';
 
 /// 2/5 — Wellness scope.
+
+// Eğer pop edilebilir bir route varsa pop, yoksa /login'e güvenli yönlendirme.
+// GoRouter root-level go() ile geldiğinde stack boş olabilir, naked pop crash atar.
+void _safeBack(BuildContext context) {
+  if (Navigator.canPop(context)) {
+    context.pop();
+  } else {
+    context.go('/login');
+  }
+}
+
 class WellnessScopeScreen extends StatelessWidget {
   const WellnessScopeScreen({super.key});
 
@@ -16,7 +27,7 @@ class WellnessScopeScreen extends StatelessWidget {
           'Nuveli tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. '
           'Özel sağlık durumların için doktorundan destek alman önemli.',
       checkboxLabel: 'Anladım. Nuveli doktorumun yerini almaz.',
-      onBack: () => context.pop(),
+      onBack: () => _safeBack(context),
       onContinue: () => context.go(AppRoute.acceptanceAiEstimates),
     );
   }
@@ -35,7 +46,7 @@ class AiEstimatesScreen extends StatelessWidget {
           'Yemek fotoğraflarından yaptığımız kalori ve besin değeri tahminleri '
           'yaklaşık sonuçlardır. Her zaman düzenleyebilirsin.',
       checkboxLabel: 'Sonuçların yaklaşık olabileceğini biliyorum.',
-      onBack: () => context.pop(),
+      onBack: () => _safeBack(context),
       onContinue: () => context.go(AppRoute.acceptanceSpecialCases),
     );
   }
@@ -54,7 +65,7 @@ class SpecialCasesScreen extends StatelessWidget {
           'Hamilelik, emzirme, yeme bozukluğu geçmişi veya kronik hastalığın '
           'varsa, kalori önerilerini uygulamadan önce sağlık uzmanına danış.',
       checkboxLabel: 'Özel durumumda uzmana danışacağım.',
-      onBack: () => context.pop(),
+      onBack: () => _safeBack(context),
       onContinue: () => context.go(AppRoute.acceptanceTerms),
     );
   }
@@ -73,7 +84,7 @@ class TermsPrivacyScreen extends StatelessWidget {
           'Kullanım Şartları ve Gizlilik Politikası\'nı okuyup kabul etmelisin. '
           'Verilerin güvende tutulur ve ayarlar ekranından her zaman silebilirsin.',
       checkboxLabel: 'Şartları ve Gizlilik Politikası\'nı kabul ediyorum.',
-      onBack: () => context.pop(),
+      onBack: () => _safeBack(context),
       onContinue: () => context.go(AppRoute.onboardingGoal),
     );
   }
