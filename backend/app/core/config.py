@@ -27,14 +27,14 @@ class Settings(BaseSettings):
 
     # Lifetime premium kullanıcılar (test/admin) — virgülle ayrılmış email listesi
     # Render env: LIFETIME_PREMIUM_EMAILS=email1@x.com,email2@y.com
-    lifetime_premium_emails_raw: str = ""
+    lifetime_premium_emails: str = ""
 
     @property
-    def lifetime_premium_emails(self) -> set[str]:
+    def lifetime_premium_emails_set(self) -> set[str]:
         '''Parsed lifetime premium emails (case-insensitive).'''
         return {
             e.strip().lower()
-            for e in self.lifetime_premium_emails_raw.split(",")
+            for e in self.lifetime_premium_emails.split(",")
             if e.strip()
         }
 

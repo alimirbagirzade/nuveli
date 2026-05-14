@@ -167,11 +167,11 @@ class PremiumService:
     async def get_status(self, user_id: str) -> dict:
         # Lifetime premium allowlist check (env var: LIFETIME_PREMIUM_EMAILS)
         # Bu listedeki email'ler ödeme yapmadan premium gibi davranır.
-        if settings.lifetime_premium_emails:
+        if settings.lifetime_premium_emails_set:
             try:
                 user_resp = self.db.auth.admin.get_user_by_id(user_id)
                 user_email = (user_resp.user.email or "").lower() if user_resp and user_resp.user else None
-                if user_email and user_email in settings.lifetime_premium_emails:
+                if user_email and user_email in settings.lifetime_premium_emails_set:
                     logger.info("Lifetime premium grant: %s", user_email)
                     return {
                         "status": "premium",
