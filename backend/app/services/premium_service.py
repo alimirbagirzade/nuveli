@@ -24,6 +24,8 @@ import logging
 
 from supabase import Client as SupabaseClient
 
+from ..core.config import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -163,6 +165,25 @@ class PremiumService:
     # ───────────────────────────────────────────────────
 
     async def get_status(self, user_id: str) -> dict:
+        # Lifetime premium allowlist check (env var: LIFETIME_PREMIUM_EMAILS)
+        # Bu listedeki email'ler ödeme yapmadan premium gibi davranır.
+        if settings.lifetime_premium_emails:
+            try:
+                user_resp = self.db.auth.admin.get_user_by_id(user_id)
+                user_email = (user_resp.user.email or "").lower() if user_resp and user_resp.user else None
+                if user_email and user_email in settings.lifetime_premium_emails:
+                    logger.info("Lifetime premium grant: %s", user_email)
+                    return {
+                        "status": "premium",
+                        "is_premium": True,
+                        "trial_ends_at": None,
+                        "current_period_end": None,
+                        "active_product_id": None,
+                        "source": "lifetime_grant",
+                    }
+            except Exception as e:
+                logger.warning("Lifetime premium check failed (falling through): %s", e)
+
         try:
             res = (
                 self.db.table("premium_status_cache")

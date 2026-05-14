@@ -24,6 +24,20 @@ class Settings(BaseSettings):
 
     # Feature limits (free tier)
     free_meal_analyses_per_day: int = 3
+
+    # Lifetime premium kullanıcılar (test/admin) — virgülle ayrılmış email listesi
+    # Render env: LIFETIME_PREMIUM_EMAILS=email1@x.com,email2@y.com
+    lifetime_premium_emails_raw: str = ""
+
+    @property
+    def lifetime_premium_emails(self) -> set[str]:
+        '''Parsed lifetime premium emails (case-insensitive).'''
+        return {
+            e.strip().lower()
+            for e in self.lifetime_premium_emails_raw.split(",")
+            if e.strip()
+        }
+
     free_coach_messages_per_day: int = 5
 
     @property
