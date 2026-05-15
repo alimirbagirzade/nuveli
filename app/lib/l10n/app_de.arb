@@ -402,7 +402,7 @@
   "mealCamera": "Kamera",
   "mealGalleryBtn": "Galerie",
   "mealSimulatorWarn": "Keine Kamera im Simulator. Galerie verwenden.",
-  "mealDescHint": "Oder beschreibe die Mahlzeit (z.B. Hähnchenbrust, Reis)",
+  "mealDescHint": "Beschreibe deine Mahlzeit:\n• Was? (z.B. Hähnchenbrust)\n• Wie viel? (z.B. 200g, 1 Portion)\n• Dazu? (z.B. Brot, Reis)",
   "mealAnalyze": "Analysieren",
   "mealManualEntry": "Manuell eingeben",
   "mealAnalyzeFailed": "Analyse fehlgeschlagen.",

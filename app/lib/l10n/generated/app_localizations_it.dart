@@ -1173,7 +1173,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mealDescHint =>
-      'O descrivi il pasto (es. petto di pollo, riso, insalata)';
+      'Descrivi il pasto:\n• Cosa? (es. petto di pollo)\n• Quanto? (es. 200g, 1 porzione)\n• Con? (es. pane, riso)';
 
   @override
   String get mealAnalyze => 'Analizza';

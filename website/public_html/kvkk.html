@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#062B45">
+<title>KVKK Aydınlatma Metni · Nuveli</title>
+<meta name="description" content="6698 sayılı KVKK kapsamında Nuveli aydınlatma metni: veri işleme, aktarımı, haklarınız.">
+<link rel="canonical" href="https://nuveli.com.tr/kvkk.html">
+
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary-700: #062B45;
+  --primary-600: #0A6C8C;
+  --primary-500: #0C7AA0;
+  --accent-aqua: #14C8D8;
+  --accent-seafoam: #7BE6D5;
+  --surface-soft: #F2FCFB;
+  --surface-muted: #E6F7F6;
+  --surface-deeper: #D8F6F5;
+  --white: #FFFFFF;
+  --text-primary: #0B2231;
+  --text-secondary: #4A6472;
+  --text-tertiary: #7A8C97;
+  --border: #CFE7E6;
+  --border-strong: #A8D4D2;
+  --warning: #B87911;
+  --gradient-hero: linear-gradient(135deg, #F2FCFB 0%, #E6F7F6 42%, #D8F6F5 100%);
+  --shadow-sm: 0 2px 8px rgba(6, 43, 69, 0.04);
+  --shadow-card: 0 10px 30px rgba(6, 43, 69, 0.08);
+  --font-h: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-b: "Inter", system-ui, -apple-system, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-b);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  background: var(--surface-soft);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--primary-600); text-decoration: none; transition: color 180ms var(--ease); }
+a:hover { color: var(--primary-700); }
+h1, h2, h3, h4 {
+  font-family: var(--font-h);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.02em;
+}
+.container { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2rem); }
+
+/* Header */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(242, 252, 251, 0.85);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms var(--ease);
+}
+.site-header.is-scrolled { border-bottom-color: var(--border); }
+.site-header__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px; max-width: 1200px; margin: 0 auto;
+  padding: 0 clamp(1.25rem, 3vw, 2rem);
+}
+.site-logo {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-h); font-weight: 700; font-size: 20px;
+  color: var(--primary-700); letter-spacing: -0.02em;
+}
+.site-logo:hover { color: var(--primary-700); }
+.site-logo img { width: 32px; height: 32px; border-radius: 8px; }
+.site-header__back {
+  font-size: 14px; color: var(--text-secondary);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* Hero */
+.page-hero {
+  background: var(--gradient-hero);
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ""; position: absolute;
+  top: -10%; right: -10%; width: 60%; height: 80%;
+  background: radial-gradient(circle, rgba(20, 200, 216, 0.14) 0%, transparent 70%);
+  filter: blur(60px); pointer-events: none;
+}
+.page-hero h1 {
+  font-size: clamp(2rem, 3vw + 1rem, 2.75rem);
+  margin: 0 0 1rem; position: relative; z-index: 1;
+}
+.eyebrow {
+  display: inline-block;
+  font-size: 13px; font-weight: 600;
+  color: var(--primary-500);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.75rem; position: relative; z-index: 1;
+}
+.page-meta {
+  color: var(--text-secondary); font-size: 16px; margin: 0;
+  position: relative; z-index: 1;
+}
+
+/* Content */
+.content { padding: clamp(3rem, 5vw, 5rem) 0; }
+.content p, .content li { color: var(--text-secondary); margin-bottom: 0.75rem; }
+.content strong { color: var(--text-primary); font-weight: 600; }
+.content h2 {
+  font-size: 22px; margin: 2.5rem 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.content h2:first-of-type { margin-top: 0; }
+.content ul { padding-left: 1.5rem; }
+.content ul li { list-style: none; position: relative; padding-left: 0.5rem; }
+.content ul li::before {
+  content: "•";
+  color: var(--accent-aqua);
+  font-weight: bold;
+  position: absolute;
+  left: -1rem;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* Warning box */
+.warn {
+  background: rgba(184, 121, 17, 0.08);
+  border-left: 4px solid var(--warning);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  color: var(--text-primary);
+}
+.warn strong { color: var(--primary-700); }
+
+/* Info card */
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 200ms var(--ease);
+}
+.info-card:hover { border-color: var(--accent-aqua); box-shadow: var(--shadow-card); }
+.info-card h3 {
+  font-family: var(--font-h);
+  font-size: 18px;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+.info-card p { margin: 0; color: var(--text-secondary); }
+.info-card .btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #0A6C8C 0%, #0C7AA0 100%);
+  color: var(--white);
+  border-radius: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 1rem;
+  font-size: 15px;
+  transition: all 180ms var(--ease);
+  box-shadow: 0 8px 24px rgba(10, 108, 140, 0.28);
+}
+.info-card .btn:hover {
+  transform: translateY(-1px) scale(1.02);
+  color: var(--white);
+}
+.info-card.urgent {
+  background: linear-gradient(135deg, var(--surface-muted) 0%, var(--surface-deeper) 100%);
+  border-color: var(--accent-aqua);
+}
+.info-card.urgent .highlight {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-700);
+  margin-top: 0.75rem;
+  font-family: var(--font-h);
+}
+
+/* CTA */
+.cta-banner {
+  background: linear-gradient(135deg, #062B45 0%, #0A6C8C 100%);
+  border-radius: 28px;
+  padding: clamp(2rem, 4vw, 3rem);
+  margin-top: 4rem;
+  text-align: center;
+  color: var(--white);
+  position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ""; position: absolute;
+  top: -50%; right: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(20, 200, 216, 0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-banner > * { position: relative; z-index: 1; }
+.cta-banner h2 {
+  color: var(--white); font-size: 24px; margin-bottom: 0.5rem;
+  border: none; padding: 0;
+}
+.cta-banner p { color: rgba(242, 252, 251, 0.82); margin-bottom: 1.5rem; }
+.cta-banner a {
+  display: inline-block;
+  padding: 14px 28px;
+  background: var(--white);
+  color: var(--primary-700);
+  border-radius: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 180ms var(--ease);
+}
+.cta-banner a:hover {
+  background: var(--accent-seafoam);
+  color: var(--primary-700);
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.site-footer {
+  background: var(--primary-700);
+  color: rgba(242, 252, 251, 0.78);
+  padding: 3rem 0 2rem;
+  margin-top: 4rem;
+}
+.site-footer .container { max-width: 1200px; }
+.site-footer a { color: rgba(242, 252, 251, 0.78); }
+.site-footer a:hover { color: var(--white); }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 640px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+.footer-grid h4 {
+  color: var(--accent-seafoam);
+  font-size: 13px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+.footer-grid ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-grid ul li::before { content: ""; }
+.footer-grid ul a { font-size: 14px; }
+.footer-disclaimer {
+  padding: 1rem 0;
+  border-top: 1px solid rgba(242, 252, 251, 0.12);
+  font-size: 13px;
+  color: rgba(242, 252, 251, 0.68);
+  line-height: 1.65;
+}
+.footer-disclaimer strong { color: var(--accent-seafoam); }
+.footer-bottom {
+  margin-top: 1rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  font-size: 13px; color: rgba(242, 252, 251, 0.5);
+}
+@media (min-width: 640px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+.site-header__nav { display: flex; gap: 24px; align-items: center; }
+.site-header__nav a { color: var(--text, #062B45); text-decoration: none; font-weight: 500; font-size: 15px; transition: color 160ms ease; }
+.site-header__nav a:hover { color: var(--primary-600, #0A6C8C); }
+@media (max-width: 640px) {
+  .site-header__nav { gap: 12px; }
+  .site-header__nav a { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="site-header__inner">
+    <a href="/" class="site-logo">
+      <img src="/logo.png" alt="" width="32" height="32">
+      nuveli
+    </a>
+    <nav class="site-header__nav" aria-label="Ana menü">
+      <a href="/">Ana sayfa</a>
+      <a href="/sss.html">SSS</a>
+      <a href="/iletisim.html">İletişim</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Yasal</span>
+    <h1>KVKK Aydınlatma Metni</h1>
+    <p class="page-meta">Son güncelleme: 19 Nisan 2026</p>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container">
+
+    <p>Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında veri sorumlusu sıfatıyla Nuveli tarafından hazırlanmıştır.</p>
+
+    <h2>1. Veri Sorumlusu</h2>
+    <p>Nuveli uygulaması adına kişisel verileriniz, Ali Mirbagirzade tarafından işlenmektedir. İletişim: <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a></p>
+
+    <h2>2. İşlenen Kişisel Veriler</h2>
+    <ul>
+      <li><strong>Kimlik bilgileri:</strong> E-posta adresi, ad (isteğe bağlı).</li>
+      <li><strong>Sağlık bilgileri:</strong> Boy, kilo, kalori/besin kayıtları, ruh hali, özel durumlar (hamilelik, yeme bozukluğu geçmişi).</li>
+      <li><strong>Kullanım bilgileri:</strong> Uygulama içi etkileşimler, cihaz bilgisi, push token.</li>
+      <li><strong>Görsel veri:</strong> Öğün fotoğrafları (AI analizi için işlenir, kalıcı olarak saklanmaz).</li>
+    </ul>
+
+    <h2>3. İşleme Amaçları ve Hukuki Dayanaklar</h2>
+    <ul>
+      <li><strong>Hizmet sunumu</strong> (KVKK m.5/2-c): Hesap oluşturma, AI analiz, koç desteği, ilerleme takibi.</li>
+      <li><strong>Açık rıza</strong> (KVKK m.6/2): Sağlık verilerinin işlenmesi için onboarding sırasında açık rıza alınır.</li>
+      <li><strong>Meşru menfaat</strong> (KVKK m.5/2-f): Teknik log'lar, hata takibi, hizmet kalitesi.</li>
+    </ul>
+
+    <h2>4. Verilerin Aktarımı</h2>
+    <ul>
+      <li><strong>Supabase (EU):</strong> Veri depolama ve kimlik doğrulama.</li>
+      <li><strong>OpenAI (ABD):</strong> AI analiz ve koç yanıtları. Kişisel tanımlayıcı gönderilmez.</li>
+      <li><strong>RevenueCat (ABD):</strong> Abonelik yönetimi.</li>
+      <li><strong>Firebase (ABD):</strong> Bildirim, analitik, hata raporlama.</li>
+    </ul>
+    <p>Yurt dışı aktarımları açık rıza kapsamında yapılmaktadır.</p>
+
+    <h2>5. Saklama Süresi</h2>
+    <p>Hesabınız aktif olduğu sürece veriler saklanır. Hesap silme talebinden itibaren 30 gün içinde tüm kişisel veriler kalıcı olarak silinir. Yasal zorunluluklar saklıdır.</p>
+
+    <h2>6. Haklarınız (KVKK m.11)</h2>
+    <p>Aşağıdaki haklarınızı uygulama içi "Ayarlar > Gizlilik ve Güvenlik" bölümünden veya <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a> adresine yazarak kullanabilirsiniz:</p>
+    <ul>
+      <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme</li>
+      <li>İşlenmişse buna ilişkin bilgi talep etme</li>
+      <li>İşlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme</li>
+      <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme</li>
+      <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme</li>
+      <li>KVKK m.7 koşulları çerçevesinde silinmesini veya yok edilmesini isteme</li>
+      <li>Yapılan işlemlerin veri aktarılan üçüncü kişilere bildirilmesini isteme</li>
+      <li>İşlenen verilerin analiz edilmesiyle kişinin aleyhine bir sonuç çıkmasına itiraz etme</li>
+      <li>Kanuna aykırı işlenmesi sebebiyle zarara uğranması halinde giderilmesini talep etme</li>
+    </ul>
+
+    <h2>7. Veri Güvenliği</h2>
+    <p>Tüm veriler TLS 1.3 ile şifreli iletilir. Veritabanı erişimi Row Level Security (RLS) ile korunur. Yalnızca siz kendi verilerinize erişebilirsiniz.</p>
+
+    <h2>8. İletişim</h2>
+    <p>Tüm KVKK talepleriniz için: <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a></p>
+    <p>Talepleriniz 30 gün içinde ücretsiz olarak yanıtlanır.</p>
+
+    <div class="cta-banner">
+      <h2>KVKK talebin mi var?</h2>
+      <p>30 gün içinde ücretsiz yanıtlıyoruz.</p>
+      <a href="mailto:support@nuveli.com.tr">Talep gönder</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="site-logo" style="color: rgba(242, 252, 251, 0.92); margin-bottom: 1rem;">
+          <img src="logo.png" alt="" width="32" height="32">
+          nuveli
+        </a>
+        <p style="color: rgba(242, 252, 251, 0.72); font-size: 14px; max-width: 320px; margin: 0;">AI Calorie Coach. Fotoğrafla yemek takibi ve yargısız davranış desteği. 18 yaş ve üzeri için.</p>
+      </div>
+      <div>
+        <h4>Destek</h4>
+        <ul>
+          <li><a href="mailto:support@nuveli.com.tr">E-posta</a></li>
+          <li><a href="/sss.html">SSS</a></li>
+          <li><a href="/iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Yasal</h4>
+        <ul>
+          <li><a href="/gizlilik.html">Gizlilik</a></li>
+          <li><a href="/sartlar.html">Şartlar</a></li>
+          <li><a href="/kvkk.html">KVKK</a></li>
+          <li><a href="/hesap-sil.html">Hesap Sil</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <strong>Önemli:</strong> Nuveli bir wellness uygulamasıdır; tıbbi teşhis, tedavi veya klinik diyet planı sunmaz. Kalori ve makro değerleri yaklaşık tahmindir.
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Nuveli · Tüm hakları saklıdır.</span>
+      <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var header = document.getElementById('siteHeader');
+  if (header) {
+    window.addEventListener('scroll', function() {
+      header.classList.toggle('is-scrolled', window.scrollY > 8);
+    }, { passive: true });
+  }
+</script>
+
+</body>
+</html>

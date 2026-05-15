@@ -1173,7 +1173,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mealDescHint =>
-      'O describe la comida (ej. pollo, arroz, ensalada)';
+      'Describe tu comida:\n• ¿Qué? (ej. pechuga de pollo)\n• ¿Cuánto? (ej. 200g, 1 porción)\n• ¿Con? (ej. pan, arroz)';
 
   @override
   String get mealAnalyze => 'Analizar';

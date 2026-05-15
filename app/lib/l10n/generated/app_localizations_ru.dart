@@ -1175,7 +1175,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mealDescHint =>
-      'Или опишите блюдо (например, куриная грудка, рис, салат)';
+      'Опишите еду:\n• Что? (напр. куриная грудка)\n• Сколько? (напр. 200г, 1 порция)\n• С чем? (напр. хлеб, рис)';
 
   @override
   String get mealAnalyze => 'Анализировать';

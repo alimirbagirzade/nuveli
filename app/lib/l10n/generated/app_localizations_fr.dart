@@ -1180,7 +1180,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Pas de caméra dans le Simulateur. Utilise la Galerie.';
 
   @override
-  String get mealDescHint => 'Ou décris le repas (ex. poulet, riz, salade)';
+  String get mealDescHint =>
+      'Décris ton repas :\n• Quoi ? (ex. blanc de poulet)\n• Combien ? (ex. 200g, 1 portion)\n• Avec ? (ex. pain, riz)';
 
   @override
   String get mealAnalyze => 'Analyser';

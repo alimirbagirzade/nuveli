@@ -402,7 +402,7 @@
   "mealCamera": "Kamera",
   "mealGalleryBtn": "Galeri",
   "mealSimulatorWarn": "Simulator'de kamera yok. Galeri'yi kullan.",
-  "mealDescHint": "Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)",
+  "mealDescHint": "Yemeğini açıkla:\n• Ne? (örn. Adana kebap)\n• Ne kadar? (örn. 200g, 1 porsiyon)\n• Yanında? (örn. lavaş, pilav)",
   "mealAnalyze": "Analiz Et",
   "mealManualEntry": "Elle gir",
   "mealAnalyzeFailed": "Analiz yapılamadı.",

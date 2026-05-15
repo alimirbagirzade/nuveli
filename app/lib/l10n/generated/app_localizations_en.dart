@@ -1165,7 +1165,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mealDescHint =>
-      'Or describe the meal (e.g. chicken breast, rice, salad)';
+      'Describe your meal:\n• What? (e.g. grilled chicken)\n• How much? (e.g. 200g, 1 portion)\n• Sides? (e.g. bread, rice)';
 
   @override
   String get mealAnalyze => 'Analyze';

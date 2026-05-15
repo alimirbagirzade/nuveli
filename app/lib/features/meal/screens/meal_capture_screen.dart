@@ -221,7 +221,8 @@ class _MealCaptureScreenState extends ConsumerState<MealCaptureScreen> {
             const SizedBox(height: 20),
             TextField(
               controller: _descCtrl,
-              maxLines: 3,
+              minLines: 5,
+              maxLines: 8,
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.mealDescHint,
               ),

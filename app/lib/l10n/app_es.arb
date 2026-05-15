@@ -402,7 +402,7 @@
   "mealCamera": "Cámara",
   "mealGalleryBtn": "Galería",
   "mealSimulatorWarn": "Sin cámara en Simulador. Usa Galería.",
-  "mealDescHint": "O describe la comida (ej. pollo, arroz, ensalada)",
+  "mealDescHint": "Describe tu comida:\n• ¿Qué? (ej. pechuga de pollo)\n• ¿Cuánto? (ej. 200g, 1 porción)\n• ¿Con? (ej. pan, arroz)",
   "mealAnalyze": "Analizar",
   "mealManualEntry": "Ingreso manual",
   "mealAnalyzeFailed": "Análisis fallido.",

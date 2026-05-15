@@ -402,7 +402,7 @@
   "mealCamera": "Caméra",
   "mealGalleryBtn": "Galerie",
   "mealSimulatorWarn": "Pas de caméra dans le Simulateur. Utilise la Galerie.",
-  "mealDescHint": "Ou décris le repas (ex. poulet, riz, salade)",
+  "mealDescHint": "Décris ton repas :\n• Quoi ? (ex. blanc de poulet)\n• Combien ? (ex. 200g, 1 portion)\n• Avec ? (ex. pain, riz)",
   "mealAnalyze": "Analyser",
   "mealManualEntry": "Saisie manuelle",
   "mealAnalyzeFailed": "Analyse impossible.",

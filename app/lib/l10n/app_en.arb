@@ -402,7 +402,7 @@
   "mealCamera": "Camera",
   "mealGalleryBtn": "Gallery",
   "mealSimulatorWarn": "No camera in Simulator. Use Gallery.",
-  "mealDescHint": "Or describe the meal (e.g. chicken breast, rice, salad)",
+  "mealDescHint": "Describe your meal:\n• What? (e.g. grilled chicken)\n• How much? (e.g. 200g, 1 portion)\n• Sides? (e.g. bread, rice)",
   "mealAnalyze": "Analyze",
   "mealManualEntry": "Manual entry",
   "mealAnalyzeFailed": "Could not analyze.",

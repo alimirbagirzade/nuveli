@@ -2313,7 +2313,7 @@ abstract class AppLocalizations {
   /// No description provided for @mealDescHint.
   ///
   /// In tr, this message translates to:
-  /// **'Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)'**
+  /// **'Yemeğini açıkla:\n• Ne? (örn. Adana kebap)\n• Ne kadar? (örn. 200g, 1 porsiyon)\n• Yanında? (örn. lavaş, pilav)'**
   String get mealDescHint;
 
   /// No description provided for @mealAnalyze.

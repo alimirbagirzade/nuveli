@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontolöschungsanfrage — Nuveli</title>
+<style>
+  :root {
+    --primary-700: #062B45;
+    --primary-600: #0A6C8C;
+    --accent-aqua: #14C8D8;
+    --bg: #F2FCFB;
+    --text: #062B45;
+    --text-muted: #4A6478;
+    --danger: #DC2626;
+    --font-h: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { margin-bottom: 2rem; text-align: center; }
+  .logo { font-family: var(--font-h); font-size: 1.5rem; font-weight: 700; color: var(--primary-700); text-decoration: none; }
+  h1 { font-family: var(--font-h); font-size: 2rem; color: var(--primary-700); margin: 2rem 0 1rem; }
+  h2 { font-family: var(--font-h); font-size: 1.25rem; color: var(--primary-700); margin: 1.5rem 0 0.5rem; }
+  p { margin-bottom: 1rem; color: var(--text-muted); }
+  ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text-muted); }
+  ul li { margin-bottom: 0.5rem; }
+  .warning {
+    background: #FEF3F2;
+    border-left: 4px solid var(--danger);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+  }
+  .warning strong { color: var(--danger); }
+  .button {
+    display: inline-block;
+    background: var(--danger);
+    color: white;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 1rem 0;
+    transition: opacity 180ms;
+  }
+  .button:hover { opacity: 0.85; }
+  .lang-switch {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #E5EDF3;
+  }
+  .lang-switch a {
+    color: var(--primary-600);
+    text-decoration: none;
+    margin: 0 0.5rem;
+  }
+  .lang-switch a:hover { text-decoration: underline; }
+  footer { text-align: center; margin-top: 3rem; color: var(--text-muted); font-size: 0.875rem; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/" class="logo">Nuveli</a>
+    </header>
+
+    <h1>Kontolöschungsanfrage</h1>
+    <p>Wenn du dein Nuveli-Konto und alle zugehörigen Daten löschen möchtest, gibt es zwei Methoden:</p>
+
+    <h2>1. Innerhalb der App (Empfohlen)</h2>
+    <p>Der schnellste Weg:</p>
+    <ul>
+      <li>Öffne die Nuveli-App</li>
+      <li>Gehe zu <strong>Einstellungen</strong> → <strong>Konto löschen</strong></li>
+      <li>Tippe im Bestätigungsbildschirm auf <strong>"Mein Konto endgültig löschen"</strong></li>
+    </ul>
+    <p>Dein Konto und alle Daten werden <strong>sofort dauerhaft gelöscht</strong>.</p>
+
+    <h2>2. Per E-Mail-Anfrage</h2>
+    <p>Wenn du nicht auf die App zugreifen kannst, sende uns eine E-Mail mit Folgendem:</p>
+    <ul>
+      <li>Deine <strong>registrierte E-Mail-Adresse</strong></li>
+      <li>Betreff: <strong>"Kontolöschungsanfrage"</strong></li>
+      <li>Sende sie von derselben E-Mail-Adresse, mit der das Konto erstellt wurde (zur Verifizierung)</li>
+    </ul>
+    <a href="mailto:support@nuveli.com.tr?subject=Kontol%C3%B6schungsanfrage" class="button">📧 E-Mail-Anfrage senden</a>
+    <p style="font-size: 0.9rem;">Anfragen werden <strong>innerhalb von 3 Werktagen</strong> bearbeitet und du erhältst eine Bestätigungs-E-Mail.</p>
+
+    <h2>Zu löschende Daten</h2>
+    <p>Wenn du dein Konto löschst, werden folgende Daten dauerhaft entfernt:</p>
+    <ul>
+      <li>Deine Kontoinformationen (E-Mail, Profil)</li>
+      <li>Alle Mahlzeitenaufzeichnungen und Analysen</li>
+      <li>Wasser- und Gewichtstracking-Daten</li>
+      <li>KI-Coach-Chatverlauf</li>
+      <li>Geräte-Benachrichtigungs-Tokens</li>
+      <li>Nutzungsstatistiken</li>
+    </ul>
+
+    <div class="warning">
+      <p><strong>⚠️ Unwiderruflicher Vorgang:</strong> Sobald dein Konto gelöscht ist, können die Daten <strong>nicht wiederhergestellt werden</strong>. Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+    </div>
+
+    <h2>Aufbewahrungsfrist</h2>
+    <p>Nach der Kontolöschung:</p>
+    <ul>
+      <li><strong>Anonyme Analysedaten:</strong> Vollständig innerhalb von 90 Tagen gelöscht (DSGVO/KVKK-konform)</li>
+      <li><strong>Gesetzliche Verpflichtungen:</strong> Einige Daten können aus steuerlichen/rechtlichen Gründen (max. 5 Jahre) in anonymer Form aufbewahrt werden</li>
+      <li><strong>Backup-Systeme:</strong> Innerhalb von 30 Tagen aus Backups entfernt</li>
+    </ul>
+
+    <h2>Fragen</h2>
+    <p>Bei Bedenken: <a href="mailto:support@nuveli.com.tr">support@nuveli.com.tr</a></p>
+
+    <div class="lang-switch">
+      <strong>Languages:</strong>
+      <a href="/hesap-sil.html">🇹🇷 TR</a> |
+      <a href="/delete-account/en">🇬🇧 EN</a> |
+      <a href="/delete-account/de">🇩🇪 DE</a> |
+      <a href="/delete-account/fr">🇫🇷 FR</a> |
+      <a href="/delete-account/es">🇪🇸 ES</a> |
+      <a href="/delete-account/it">🇮🇹 IT</a> |
+      <a href="/delete-account/ru">🇷🇺 RU</a>
+    </div>
+
+    <footer>
+      <p>© 2026 Nuveli — <a href="/" style="color: var(--primary-600);">Nuveli</a></p>
+    </footer>
+  </div>
+</body>
+</html>

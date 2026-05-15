@@ -1168,7 +1168,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mealDescHint =>
-      'Veya yemeği yaz (örn. tavuk göğsü, pilav, salata)';
+      'Yemeğini açıkla:\n• Ne? (örn. Adana kebap)\n• Ne kadar? (örn. 200g, 1 porsiyon)\n• Yanında? (örn. lavaş, pilav)';
 
   @override
   String get mealAnalyze => 'Analiz Et';

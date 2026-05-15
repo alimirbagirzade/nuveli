@@ -402,7 +402,7 @@
   "mealCamera": "Fotocamera",
   "mealGalleryBtn": "Galleria",
   "mealSimulatorWarn": "Nessuna fotocamera nel Simulatore. Usa Galleria.",
-  "mealDescHint": "O descrivi il pasto (es. petto di pollo, riso, insalata)",
+  "mealDescHint": "Descrivi il pasto:\n• Cosa? (es. petto di pollo)\n• Quanto? (es. 200g, 1 porzione)\n• Con? (es. pane, riso)",
   "mealAnalyze": "Analizza",
   "mealManualEntry": "Inserisci manualmente",
   "mealAnalyzeFailed": "Impossibile analizzare.",
