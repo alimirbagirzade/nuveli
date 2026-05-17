@@ -84,3 +84,8 @@ nuveli_consolidate.sh
 _backup_consolidate_*.tar.gz
 _archive/
 nuveli_consolidate.sh
+
+# Konsolidasyon backup ve script - 15 May 2026
+_backup_consolidate_*.tar.gz
+_archive/
+nuveli_consolidate.sh
