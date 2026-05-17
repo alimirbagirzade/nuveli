@@ -1,8 +1,8 @@
-/// Porsiyon analizi sonucu: skor (0-100) + ana metin + highlight'lar
+/// Porsiyon analizi: 0-100 skor + ana metin + highlight'lar.
 class PortionInsight {
-  final int score; // 0-100
-  final String mainText; // "Great portion!"
-  final List<String> highlights; // ["High in protein", "Balanced meal"]
+  final int score;
+  final String mainText;
+  final List<String> highlights;
 
   const PortionInsight({
     required this.score,
@@ -10,7 +10,6 @@ class PortionInsight {
     required this.highlights,
   });
 
-  /// Skora göre otomatik metin üret (backend göndermezse fallback)
   static String mainTextFromScore(int score) {
     if (score >= 90) return 'Excellent portion!';
     if (score >= 75) return 'Great portion!';

@@ -1,7 +1,6 @@
 import 'detected_food.dart';
 import 'portion_insight.dart';
 
-/// Tüm scan sonucu — backend response'unun Dart karşılığı
 class ScanResult {
   final List<DetectedFood> foods;
   final int totalCalories;

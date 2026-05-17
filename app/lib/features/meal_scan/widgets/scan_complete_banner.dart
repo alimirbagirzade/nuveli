@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../shared/widgets/nuveli_card.dart';
 
-/// "✓ Scan Complete | 3 foods detected" + sağda "520 kcal | Est. Total"
+import '_glass_card_local.dart';
+
 class ScanCompleteBanner extends StatelessWidget {
   final int foodsDetected;
   final int totalCalories;
@@ -18,70 +15,74 @@ class ScanCompleteBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NuveliCard(
-      padding: const EdgeInsets.all(AppSpacing.md - 2),
+    return GlassCardLocal(
+      padding: const EdgeInsets.all(14),
       child: Row(
         children: [
-          // Sol: check + metinler
           Container(
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: AppColors.primaryCyan.withOpacity(0.15),
+              color: AppColors.primary.withValues(alpha: 0.15),
               shape: BoxShape.circle,
               border: Border.all(
-                color: AppColors.primaryCyan.withOpacity(0.4),
+                color: AppColors.primary.withValues(alpha: 0.4),
                 width: 1,
               ),
             ),
             child: const Icon(
               Icons.check_rounded,
               size: 20,
-              color: AppColors.primaryCyan,
+              color: AppColors.primary,
             ),
           ),
-          const SizedBox(width: AppSpacing.sm + 4),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   'Scan Complete',
-                  style: AppTypography.body.copyWith(
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   '$foodsDetected foods detected',
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.secondaryText,
+                  style: const TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ],
             ),
           ),
-          // Sağ: total kalori
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 '$totalCalories kcal',
-                style: AppTypography.body.copyWith(
+                style: const TextStyle(
+                  fontFamily: 'Inter',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primaryCyan,
+                  color: AppColors.primary,
                 ),
               ),
               const SizedBox(height: 2),
-              Text(
+              const Text(
                 'Est. Total',
-                style: AppTypography.caption.copyWith(
+                style: TextStyle(
+                  fontFamily: 'Inter',
                   fontSize: 11,
-                  color: AppColors.secondaryText,
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],

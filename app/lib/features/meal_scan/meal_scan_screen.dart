@@ -2,12 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_spacing.dart';
-import '../../core/theme/app_typography.dart';
-import '../../shared/widgets/nuveli_background.dart';
-import '../../shared/widgets/nuveli_bottom_nav.dart';
+
 import 'models/scan_result.dart';
 import 'providers/meal_scan_provider.dart';
 import 'widgets/analyze_another_button.dart';
@@ -17,10 +13,12 @@ import 'widgets/portion_insights_card.dart';
 import 'widgets/scan_complete_banner.dart';
 import 'widgets/scan_header.dart';
 
+/// Görsel 2 - AI Meal Scan ekranı.
+///
 /// State makinesi:
 ///   initial   → kamera açık, capture butonu hazır
-///   capturing → fotoğraf çekiliyor (kısa süreli)
-///   analyzing → analiz devam ediyor (mock'ta 2 sn)
+///   capturing → fotoğraf çekiliyor (çok kısa)
+///   analyzing → analiz devam ediyor (mock: 2 sn, real: backend cevabı)
 ///   result    → sonuç gösteriliyor
 ///   error     → hata mesajı + retry
 enum ScanState { initial, capturing, analyzing, result, error }
@@ -58,7 +56,6 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // App background'a giderse kamerayı kapat, geri gelince yeniden aç
     final c = _cameraController;
     if (c == null || !c.value.isInitialized) return;
     if (state == AppLifecycleState.inactive) {
@@ -75,7 +72,6 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
         if (kDebugMode) debugPrint('No cameras available');
         return;
       }
-      // Arka kamera tercih (yemek fotoğrafı)
       final back = cameras.firstWhere(
         (c) => c.lensDirection == CameraLensDirection.back,
         orElse: () => cameras.first,
@@ -97,13 +93,9 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
         _cameraController = controller;
         _cameraReady = true;
       });
-    } catch (e, st) {
-      if (kDebugMode) debugPrint('Camera init error: $e\n$st');
-      if (mounted) {
-        setState(() {
-          _cameraReady = false;
-        });
-      }
+    } catch (e) {
+      if (kDebugMode) debugPrint('Camera init error: $e');
+      if (mounted) setState(() => _cameraReady = false);
     }
   }
 
@@ -114,13 +106,14 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
       final next = !_flashOn;
       await c.setFlashMode(next ? FlashMode.torch : FlashMode.off);
       setState(() => _flashOn = next);
-    } catch (_) {/* sessiz geç */}
+    } catch (_) {/* ignore */}
   }
 
   Future<void> _captureAndAnalyze() async {
     final c = _cameraController;
+
+    // Simulator / no camera fallback
     if (c == null || !c.value.isInitialized) {
-      // Kamera yoksa (örn. simulator) direkt mock analyze
       setState(() => _state = ScanState.analyzing);
       try {
         final result =
@@ -141,7 +134,6 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
     }
 
     setState(() => _state = ScanState.capturing);
-
     try {
       final image = await c.takePicture();
       if (!mounted) return;
@@ -179,11 +171,11 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
   Widget build(BuildContext context) {
     final showingResult = _state == ScanState.result;
 
-    return NuveliBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        extendBody: true,
-        body: SafeArea(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: DecoratedBox(
+        decoration: const BoxDecoration(gradient: AppColors.gradientHero),
+        child: SafeArea(
           bottom: false,
           child: Column(
             children: [
@@ -197,16 +189,11 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
               ),
               if (showingResult) ...[
                 AnalyzeAnotherButton(onPressed: _resetToInitial),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: 16),
               ],
+              const SizedBox(height: 8),
             ],
           ),
-        ),
-        bottomNavigationBar: NuveliBottomNav(
-          currentIndex: 1, // Meals tab seçili
-          onTap: (i) {
-            // Chat 12 navigation'da bağlanacak
-          },
         ),
       ),
     );
@@ -218,7 +205,7 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: 8),
           Stack(
             children: [
               CameraPreviewWithFrame(controller: _cameraController),
@@ -228,20 +215,22 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
                 Positioned.fill(child: _buildErrorOverlay()),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          const SizedBox(height: 24),
           _buildCaptureButton(),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: 12),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               _captureHint(),
               textAlign: TextAlign.center,
-              style: AppTypography.caption.copyWith(
-                color: AppColors.secondaryText,
+              style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 12,
+                color: AppColors.textSecondary,
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -274,14 +263,14 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: AppColors.primaryCyan.withOpacity(busy ? 0.4 : 1.0),
+            color: AppColors.primary.withValues(alpha: busy ? 0.4 : 1.0),
             width: 3,
           ),
           boxShadow: busy
               ? null
               : [
                   BoxShadow(
-                    color: AppColors.primaryCyan.withOpacity(0.4),
+                    color: AppColors.primary.withValues(alpha: 0.4),
                     blurRadius: 24,
                     spreadRadius: 2,
                   ),
@@ -289,17 +278,10 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
         ),
         child: Padding(
           padding: const EdgeInsets.all(6),
-          child: Container(
-            decoration: BoxDecoration(
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.primaryCyan,
-                  AppColors.primaryCyan.withOpacity(0.7),
-                ],
-              ),
+              gradient: AppColors.gradientCta,
             ),
             child: const Icon(
               Icons.camera_alt_rounded,
@@ -313,9 +295,9 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
   }
 
   Widget _buildAnalyzingOverlay() {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.45),
+        color: Colors.black.withValues(alpha: 0.45),
         borderRadius: BorderRadius.circular(20),
       ),
       child: const Center(
@@ -326,7 +308,7 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
               width: 48,
               height: 48,
               child: CircularProgressIndicator(
-                color: AppColors.primaryCyan,
+                color: AppColors.primary,
                 strokeWidth: 3,
               ),
             ),
@@ -334,6 +316,7 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
             Text(
               'Analyzing meal...',
               style: TextStyle(
+                fontFamily: 'Inter',
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -346,9 +329,9 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
   }
 
   Widget _buildErrorOverlay() {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.55),
+        color: Colors.black.withValues(alpha: 0.55),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Center(
@@ -357,19 +340,22 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline,
-                  color: AppColors.danger, size: 40),
+              const Icon(Icons.error_outline, color: AppColors.error, size: 40),
               const SizedBox(height: 12),
               Text(
                 _errorMessage ?? 'Something went wrong',
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white, fontSize: 13),
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  color: Colors.white,
+                  fontSize: 13,
+                ),
               ),
               const SizedBox(height: 16),
               TextButton(
                 onPressed: _resetToInitial,
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.primaryCyan,
+                  foregroundColor: AppColors.primary,
                 ),
                 child: const Text('Try again'),
               ),
@@ -387,12 +373,12 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
     if (result == null) return const SizedBox.shrink();
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Column(
         children: [
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: 8),
           CameraPreviewWithFrame(previewImage: _capturedImage),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -402,9 +388,9 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen>
                   foodsDetected: result.foods.length,
                   totalCalories: result.totalCalories,
                 ),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: 16),
                 DetectedFoodList(foods: result.foods),
-                const SizedBox(height: AppSpacing.md),
+                const SizedBox(height: 16),
                 PortionInsightsCard(insight: result.portionInsight),
               ],
             ),

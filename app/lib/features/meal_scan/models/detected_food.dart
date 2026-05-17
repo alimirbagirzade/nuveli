@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Tek bir tespit edilen yemek (örn: "Grilled Chicken Breast 150g — 250 kcal")
+/// Bir scan sonucunda tespit edilen tek yemek.
 class DetectedFood {
   final String name;
-  final String portion; // "150g", "1/2 cup", "1 cup"
+  final String portion;
   final int calories;
   final double proteinG;
   final double carbsG;
   final double fatG;
-  final IconData icon; // fallback icon (thumbnail için)
+  final IconData icon;
 
   const DetectedFood({
     required this.name,

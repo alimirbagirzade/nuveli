@@ -4,10 +4,7 @@ import '../models/detected_food.dart';
 import '../models/portion_insight.dart';
 import '../models/scan_result.dart';
 
-/// Görsel 2 ile birebir uyumlu mock scan result.
-///
-/// Toplam: 250 + 120 + 150 = 520 kcal ✓
-/// Skor: 85% — "Great portion!"
+/// Görsel 2 birebir mock: 250 + 120 + 150 = 520 kcal, %85 skor.
 ScanResult buildMockScanResult() {
   return ScanResult(
     foods: const [

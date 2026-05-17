@@ -1,45 +1,39 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../shared/widgets/nuveli_card.dart';
-import '../models/portion_insight.dart';
 
-/// "Portion Insights" başlık + 64x64 donut (85%) + ana metin + highlights + chevron
+import '../models/portion_insight.dart';
+import '_glass_card_local.dart';
+
 class PortionInsightsCard extends StatelessWidget {
   final PortionInsight insight;
   final VoidCallback? onTap;
 
-  const PortionInsightsCard({
-    super.key,
-    required this.insight,
-    this.onTap,
-  });
+  const PortionInsightsCard({super.key, required this.insight, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 12),
+        const Padding(
+          padding: EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             'Portion Insights',
-            style: AppTypography.cardTitle.copyWith(
+            style: TextStyle(
+              fontFamily: 'Inter',
               fontSize: 16,
               fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
             ),
           ),
         ),
-        NuveliCard(
+        GlassCardLocal(
           onTap: onTap,
-          padding: const EdgeInsets.all(AppSpacing.md - 2),
+          padding: const EdgeInsets.all(14),
           child: Row(
             children: [
-              // Mini donut
               SizedBox(
                 width: 64,
                 height: 64,
@@ -48,17 +42,17 @@ class PortionInsightsCard extends StatelessWidget {
                   child: Center(
                     child: Text(
                       '${insight.score}%',
-                      style: AppTypography.body.copyWith(
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primaryCyan,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
-              // Metin
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,26 +60,29 @@ class PortionInsightsCard extends StatelessWidget {
                   children: [
                     Text(
                       insight.mainText,
-                      style: AppTypography.body.copyWith(
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       insight.highlights.join(' • '),
-                      style: AppTypography.caption.copyWith(
-                        color: AppColors.secondaryText,
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
                 ),
               ),
-              // Chevron
               Icon(
                 Icons.chevron_right,
                 size: 24,
-                color: AppColors.secondaryText.withOpacity(0.7),
+                color: AppColors.textSecondary.withValues(alpha: 0.7),
               ),
             ],
           ),
@@ -105,16 +102,14 @@ class _MiniDonutPainter extends CustomPainter {
     final center = size.center(Offset.zero);
     final radius = (size.shortestSide - stroke) / 2;
 
-    // Arka plan halkası
     final bgPaint = Paint()
-      ..color = AppColors.primaryCyan.withOpacity(0.15)
+      ..color = AppColors.primary.withValues(alpha: 0.15)
       ..strokeWidth = stroke
       ..style = PaintingStyle.stroke;
     canvas.drawCircle(center, radius, bgPaint);
 
-    // İlerleme arc'ı
     final progressPaint = Paint()
-      ..color = AppColors.primaryCyan
+      ..color = AppColors.primary
       ..strokeWidth = stroke
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

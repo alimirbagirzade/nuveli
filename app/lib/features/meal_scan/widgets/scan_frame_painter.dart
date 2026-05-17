@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/theme/app_colors.dart';
 
 /// Kamera viewfinder üzerine 4 köşeli L-şekli + 3x3 grid çizer.
-/// Görsel 2'deki "scan frame" overlay'i.
 class ScanFramePainter extends CustomPainter {
   final Color cornerColor;
   final double cornerLength;
   final double cornerStroke;
 
   const ScanFramePainter({
-    this.cornerColor = AppColors.primaryCyan,
+    this.cornerColor = AppColors.primary,
     this.cornerLength = 30.0,
     this.cornerStroke = 3.0,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    // === 4 köşeli L ===
     final cornerPaint = Paint()
       ..color = cornerColor
       ..strokeWidth = cornerStroke
@@ -25,8 +22,8 @@ class ScanFramePainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     // Top-left
-    canvas.drawLine(Offset(0, cornerLength), Offset(0, 0), cornerPaint);
-    canvas.drawLine(const Offset(0, 0), Offset(cornerLength, 0), cornerPaint);
+    canvas.drawLine(Offset(0, cornerLength), Offset.zero, cornerPaint);
+    canvas.drawLine(Offset.zero, Offset(cornerLength, 0), cornerPaint);
 
     // Top-right
     canvas.drawLine(
@@ -64,9 +61,9 @@ class ScanFramePainter extends CustomPainter {
       cornerPaint,
     );
 
-    // === 3x3 grid (subtle) ===
+    // 3x3 grid
     final gridPaint = Paint()
-      ..color = Colors.white.withOpacity(0.2)
+      ..color = Colors.white.withValues(alpha: 0.2)
       ..strokeWidth = 0.5;
 
     final w = size.width / 3;

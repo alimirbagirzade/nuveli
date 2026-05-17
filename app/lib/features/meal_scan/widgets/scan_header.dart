@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
 
-/// Üst başlık: ✕ close (sol) + "AI Meal Scan" (orta) + ⚡ flash (sağ)
+/// Üst başlık: ✕ close + "AI Meal Scan" + ⚡ flash
 class ScanHeader extends StatelessWidget {
   final VoidCallback onClose;
   final VoidCallback? onFlashToggle;
@@ -20,33 +17,27 @@ class ScanHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm + 4,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          _IconButton(
-            icon: Icons.close,
-            size: 24,
-            onTap: onClose,
-            tooltip: 'Close',
-          ),
-          Expanded(
+          _IconBtn(icon: Icons.close, size: 24, onTap: onClose),
+          const Expanded(
             child: Text(
               'AI Meal Scan',
               textAlign: TextAlign.center,
-              style: AppTypography.cardTitle.copyWith(
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
               ),
             ),
           ),
-          _IconButton(
+          _IconBtn(
             icon: flashOn ? Icons.flash_on : Icons.flash_off,
             size: 22,
-            color: AppColors.secondaryText,
+            color: AppColors.textSecondary,
             onTap: onFlashToggle,
-            tooltip: 'Toggle flash',
           ),
         ],
       ),
@@ -54,33 +45,29 @@ class ScanHeader extends StatelessWidget {
   }
 }
 
-class _IconButton extends StatelessWidget {
+class _IconBtn extends StatelessWidget {
   final IconData icon;
   final double size;
   final Color? color;
   final VoidCallback? onTap;
-  final String? tooltip;
 
-  const _IconButton({
+  const _IconBtn({
     required this.icon,
     required this.size,
     this.color,
     this.onTap,
-    this.tooltip,
   });
 
   @override
   Widget build(BuildContext context) {
-    final btn = InkResponse(
+    return InkResponse(
       onTap: onTap,
       radius: 24,
       child: SizedBox(
         width: 40,
         height: 40,
-        child: Icon(icon, size: size, color: color ?? Colors.white),
+        child: Icon(icon, size: size, color: color ?? AppColors.textPrimary),
       ),
     );
-    if (tooltip != null) return Tooltip(message: tooltip!, child: btn);
-    return btn;
   }
 }

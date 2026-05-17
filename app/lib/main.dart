@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nuveli/features/dashboard/dashboard_screen.dart';
+import 'package:nuveli/features/meal_scan/meal_scan_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: NuveliApp()));
@@ -14,7 +14,7 @@ class NuveliApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Nuveli',
-      home: const DashboardScreen(),
+      home: const MealScanScreen(),
     );
   }
 }

@@ -2,17 +2,14 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_radius.dart';
+
 import 'scan_frame_painter.dart';
 
-/// Kamera preview'ı (veya çekilmiş fotoğrafı) gösterir + üstüne scan frame
-/// overlay'i çizer. Aspect ratio 1:1 (square).
+/// Square (1:1) kamera preview + scan frame overlay.
+/// Result mode'da çekilmiş fotoğrafı gösterir.
 class CameraPreviewWithFrame extends StatelessWidget {
   final CameraController? controller;
-
-  /// Sonuç görünümünde çekilen fotoğrafı göstermek için.
   final XFile? previewImage;
 
   const CameraPreviewWithFrame({
@@ -28,43 +25,39 @@ class CameraPreviewWithFrame extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.card),
+          borderRadius: BorderRadius.circular(20),
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // Alt katman: kamera veya çekilmiş fotoğraf
               _buildPreviewLayer(),
-
-              // Hafif vignette (kamera viewfinder hissi)
+              // Hafif vignette
               IgnorePointer(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: RadialGradient(
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.25),
+                        Colors.black.withValues(alpha: 0.25),
                       ],
                       stops: const [0.7, 1.0],
                     ),
                   ),
                 ),
               ),
-
-              // Üst katman: scan frame overlay
-              IgnorePointer(
+              // Scan frame
+              const IgnorePointer(
                 child: CustomPaint(
-                  painter: const ScanFramePainter(),
+                  painter: ScanFramePainter(),
                   size: Size.infinite,
                 ),
               ),
-
-              // Cyan border (yumuşak)
+              // Cyan border
               IgnorePointer(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.primaryCyan.withOpacity(0.3),
+                      color: AppColors.primary.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -78,15 +71,10 @@ class CameraPreviewWithFrame extends StatelessWidget {
   }
 
   Widget _buildPreviewLayer() {
-    // Önce sonuç görünümü (çekilmiş foto)
     if (previewImage != null) {
-      return Image.file(
-        File(previewImage!.path),
-        fit: BoxFit.cover,
-      );
+      return Image.file(File(previewImage!.path), fit: BoxFit.cover);
     }
 
-    // Sonra canlı kamera
     final c = controller;
     if (c != null && c.value.isInitialized) {
       return FittedBox(
@@ -99,13 +87,16 @@ class CameraPreviewWithFrame extends StatelessWidget {
       );
     }
 
-    // Fallback: koyu yer tutucu
-    return Container(
-      color: const Color(0xFF0B1A3D),
-      child: const Center(
-        child: CircularProgressIndicator(
-          color: AppColors.primaryCyan,
-          strokeWidth: 2,
+    return const ColoredBox(
+      color: AppColors.surface,
+      child: Center(
+        child: SizedBox(
+          width: 32,
+          height: 32,
+          child: CircularProgressIndicator(
+            color: AppColors.primary,
+            strokeWidth: 2,
+          ),
         ),
       ),
     );
