@@ -65,3 +65,6 @@ _backup/
 *.swp
 *~
 _backup_*/
+
+# Local archive — bugünkü rewrite denemeleri (push edilmiyor)
+_attempt_*/

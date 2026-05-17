@@ -31,3 +31,6 @@ analyzer:
   exclude:
     - "_backup_**"
     - "**/generated/**"
+    - "_attempt_**"
+    - "_backup/**"
+    - "**/*.bak.*"
