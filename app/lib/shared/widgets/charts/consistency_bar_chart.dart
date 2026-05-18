@@ -1,14 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 /// Weekly consistency tracker rendered as 7 vertical pill-shaped bars.
 ///
 /// Used on the Healthy Habits screen ("Weekly Consistency").
 /// Each value is a 0.0–1.0 ratio representing the share of habits
 /// completed that day. The highlighted day (e.g. today) renders with
-/// a brighter cyan gradient.
+/// a brighter aqua gradient.
 class ConsistencyBarChart extends StatelessWidget {
   const ConsistencyBarChart({
     super.key,
@@ -45,9 +45,8 @@ class ConsistencyBarChart extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Text(
                 summaryText!,
-                style: AppTypography.caption.copyWith(
+                style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary,
-                  fontSize: 12,
                 ),
               ),
             ),
@@ -86,14 +85,13 @@ class ConsistencyBarChart extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 6),
                         child: Text(
                           labels[i],
-                          style: AppTypography.caption.copyWith(
+                          style: AppTextStyles.labelSmall.copyWith(
                             color: isHighlight
-                                ? AppColors.primaryCyan
+                                ? AppColors.primary
                                 : AppColors.textSecondary,
-                            fontSize: 11,
                             fontWeight: isHighlight
                                 ? FontWeight.w600
-                                : FontWeight.normal,
+                                : FontWeight.w500,
                           ),
                         ),
                       );
@@ -115,12 +113,12 @@ class ConsistencyBarChart extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: isHighlight
                             ? [
-                                AppColors.cyanGlow,
-                                AppColors.primaryCyan,
+                                AppColors.accent,
+                                AppColors.primary,
                               ]
                             : [
-                                AppColors.primaryCyan.withOpacity(0.7),
-                                AppColors.cyanDark.withOpacity(0.7),
+                                AppColors.primary.withOpacity(0.7),
+                                AppColors.primary600.withOpacity(0.7),
                               ],
                       ),
                       backDrawRodData: BackgroundBarChartRodData(

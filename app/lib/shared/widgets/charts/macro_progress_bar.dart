@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
+
+/// Macro nutrient colors used by [MacroProgressBar] and [MacroDonutChart].
+///
+/// These are kept local (not in AppColors) so the chart layer remains
+/// self-contained. If you later decide to expose them globally, move
+/// them into AppColors and update both files.
+class MacroColors {
+  MacroColors._();
+  static const Color protein = Color(0xFF3DDC97); // green-teal
+  static const Color carbs = Color(0xFF6BCB77);   // green
+  static const Color fat = Color(0xFFFF9F45);     // orange
+}
 
 /// Compact macro nutrient card used on Dashboard and AI Coach screens.
 ///
@@ -15,7 +26,7 @@ import '../../../core/theme/app_spacing.dart';
 ///   current: 95,
 ///   target: 140,
 ///   icon: Icons.fitness_center,
-///   color: AppColors.protein,
+///   color: MacroColors.protein,
 /// )
 /// ```
 class MacroProgressBar extends StatelessWidget {
@@ -47,24 +58,22 @@ class MacroProgressBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 24, color: color),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: 8),
         Text(
           label,
-          style: AppTypography.caption.copyWith(
+          style: AppTextStyles.bodySmall.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 13,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           '${current.toStringAsFixed(0)}$unit / ${target.toStringAsFixed(0)}$unit',
-          style: AppTypography.body.copyWith(
+          style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textPrimary,
-            fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: 8),
         TweenAnimationBuilder<double>(
           tween: Tween(begin: 0, end: progress),
           duration: animDuration,

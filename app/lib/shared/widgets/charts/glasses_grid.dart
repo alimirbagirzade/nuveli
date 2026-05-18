@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 /// Horizontal row of glass icons used on the Water Tracker screen.
 ///
 /// Each glass is a trapezoidal shape (wider at top, slightly tapered).
-/// Filled glasses show a cyan water gradient with a subtle highlight
+/// Filled glasses show an aqua water gradient with a subtle highlight
 /// at the surface; empty glasses show just an outline.
 ///
 /// Tapping any glass invokes [onGlassTap] (typically used to log +1 glass).
@@ -54,13 +53,12 @@ class GlassesGrid extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: 12),
         Text(
           '$filledCount of $totalCount glasses · '
           '${filledLiters.toStringAsFixed(1)} L / ${totalLiters.toStringAsFixed(1)} L',
-          style: AppTypography.caption.copyWith(
+          style: AppTextStyles.bodySmall.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 12,
           ),
         ),
       ],
@@ -90,14 +88,14 @@ class _GlassPainter extends CustomPainter {
       ..close();
 
     if (filled) {
-      // Water fill with cyan gradient.
+      // Water fill with aqua gradient.
       final fillPaint = Paint()
         ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.cyanGlow.withOpacity(0.95),
-            AppColors.primaryCyan,
+            AppColors.accent.withOpacity(0.95),
+            AppColors.primary,
           ],
         ).createShader(Rect.fromLTWH(0, 0, w, h));
       canvas.drawPath(glassPath, fillPaint);

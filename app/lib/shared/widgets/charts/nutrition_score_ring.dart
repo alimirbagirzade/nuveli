@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '_ring_painter.dart';
 
 /// Compact ring chart used on the AI Coach Insights screen.
 ///
 /// Color and label adapt to the score range:
-/// - 90-100: Excellent (success green)
-/// - 80-89:  Great     (success green)
-/// - 70-79:  Good      (primary cyan)
-/// - 60-69:  Fair      (primary cyan)
-/// - <60:    Needs work (warning / danger)
+/// - 90-100: Excellent (success)
+/// - 80-89:  Great     (success)
+/// - 70-79:  Good      (primary)
+/// - 60-69:  Fair      (primary)
+/// - 40-59:  Needs work (warning)
+/// - <40:    Needs work (error)
 class NutritionScoreRing extends StatelessWidget {
   const NutritionScoreRing({
     super.key,
@@ -26,9 +27,9 @@ class NutritionScoreRing extends StatelessWidget {
 
   Color _colorForScore(int s) {
     if (s >= 80) return AppColors.success;
-    if (s >= 60) return AppColors.primaryCyan;
+    if (s >= 60) return AppColors.primary;
     if (s >= 40) return AppColors.warning;
-    return AppColors.danger;
+    return AppColors.error;
   }
 
   String _labelForScore(int s) {
@@ -66,17 +67,16 @@ class NutritionScoreRing extends StatelessWidget {
                 children: [
                   Text(
                     '$clamped',
-                    style: AppTypography.sectionTitle.copyWith(
+                    style: AppTextStyles.displayMedium.copyWith(
                       color: AppColors.textPrimary,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
                       height: 1.0,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     label,
-                    style: AppTypography.caption.copyWith(
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: color,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,

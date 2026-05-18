@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '_ring_painter.dart';
 
 /// Progress ring used on the Water Tracker screen.
@@ -44,7 +43,7 @@ class WaterRingChart extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryCyan.withOpacity(0.4),
+                      color: AppColors.primary.withOpacity(0.4),
                       blurRadius: 24,
                       spreadRadius: 2,
                     ),
@@ -59,7 +58,7 @@ class WaterRingChart extends StatelessWidget {
               return CustomPaint(
                 painter: RingPainter(
                   progress: value,
-                  color: AppColors.primaryCyan,
+                  color: AppColors.primary,
                 ),
                 child: Center(
                   child: Column(
@@ -68,9 +67,10 @@ class WaterRingChart extends StatelessWidget {
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                          style: AppTypography.heroNumber.copyWith(
-                            color: AppColors.textPrimary,
+                          style: AppTextStyles.displayLarge.copyWith(
+                            fontSize: 44,
                             height: 1.0,
+                            color: AppColors.textPrimary,
                           ),
                           children: [
                             TextSpan(
@@ -78,10 +78,9 @@ class WaterRingChart extends StatelessWidget {
                             ),
                             TextSpan(
                               text: '  L',
-                              style: AppTypography.cardTitle.copyWith(
+                              style: AppTextStyles.headingMedium.copyWith(
                                 color: AppColors.textPrimary,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
@@ -90,17 +89,16 @@ class WaterRingChart extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         '/ ${targetLiters.toStringAsFixed(1)} L',
-                        style: AppTypography.caption.copyWith(
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.textSecondary,
-                          fontSize: 13,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.sm),
+                      const SizedBox(height: 8),
                       Text(
                         '$percent%',
-                        style: AppTypography.sectionTitle.copyWith(
-                          color: AppColors.primaryCyan,
-                          fontSize: 28,
+                        style: AppTextStyles.headingLarge.copyWith(
+                          color: AppColors.primary,
+                          fontSize: 26,
                           fontWeight: FontWeight.bold,
                           height: 1.0,
                         ),
@@ -112,12 +110,11 @@ class WaterRingChart extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: 16),
         Text(
           '${remaining.toStringAsFixed(1)} L left to goal',
-          style: AppTypography.caption.copyWith(
+          style: AppTextStyles.bodySmall.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 13,
           ),
         ),
       ],

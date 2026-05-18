@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 /// Vertical bar chart for 7-day calorie history.
 ///
@@ -74,9 +74,8 @@ class WeeklyBarChart extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 6),
                     child: Text(
                       labels[i],
-                      style: AppTypography.caption.copyWith(
+                      style: AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textSecondary,
-                        fontSize: 11,
                       ),
                     ),
                   );
@@ -87,7 +86,7 @@ class WeeklyBarChart extends StatelessWidget {
           barTouchData: BarTouchData(
             enabled: true,
             touchTooltipData: BarTouchTooltipData(
-              getTooltipColor: (group) => AppColors.cardBg,
+              getTooltipColor: (group) => AppColors.surface,
               tooltipRoundedRadius: 8,
               tooltipPadding: const EdgeInsets.symmetric(
                 horizontal: 8,
@@ -96,10 +95,9 @@ class WeeklyBarChart extends StatelessWidget {
               getTooltipItem: (group, gIdx, rod, rIdx) {
                 return BarTooltipItem(
                   rod.toY.toStringAsFixed(0),
-                  AppTypography.caption.copyWith(
+                  AppTextStyles.labelSmall.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w600,
-                    fontSize: 11,
                   ),
                 );
               },
@@ -110,14 +108,14 @@ class WeeklyBarChart extends StatelessWidget {
               if (targetLine != null)
                 HorizontalLine(
                   y: targetLine!,
-                  color: AppColors.primaryCyan.withOpacity(0.5),
+                  color: AppColors.primary.withOpacity(0.5),
                   strokeWidth: 1.5,
                   dashArray: [6, 4],
                 ),
               if (averageLine != null)
                 HorizontalLine(
                   y: averageLine!,
-                  color: AppColors.cyanGlow.withOpacity(0.5),
+                  color: AppColors.accent.withOpacity(0.5),
                   strokeWidth: 1.5,
                   dashArray: [6, 4],
                 ),
@@ -135,13 +133,13 @@ class WeeklyBarChart extends StatelessWidget {
                     topLeft: Radius.circular(6),
                     topRight: Radius.circular(6),
                   ),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      AppColors.cyanGlow,
-                      AppColors.primaryCyan,
-                      AppColors.cyanDark,
+                      AppColors.accent,
+                      AppColors.primary,
+                      AppColors.primary600,
                     ],
                   ),
                 ),

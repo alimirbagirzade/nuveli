@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 /// rounded caps, starting at 12 o'clock and sweeping clockwise.
 ///
 /// The glow effect is intentionally NOT drawn here — parent widgets wrap
-/// this painter in a [Container] with a cyan [BoxShadow] for better
+/// this painter in a [Container] with a [BoxShadow] for better
 /// performance and theming flexibility.
 class RingPainter extends CustomPainter {
   RingPainter({

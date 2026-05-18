@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
+import 'macro_progress_bar.dart' show MacroColors;
 
 /// Donut chart showing macro nutrient breakdown by calorie share.
 ///
@@ -55,19 +55,19 @@ class MacroDonutChart extends StatelessWidget {
                   sections: [
                     PieChartSectionData(
                       value: proteinKcal == 0 ? 1 : proteinKcal,
-                      color: AppColors.protein,
+                      color: MacroColors.protein,
                       radius: size * 0.18,
                       showTitle: false,
                     ),
                     PieChartSectionData(
                       value: carbsKcal == 0 ? 1 : carbsKcal,
-                      color: AppColors.carbs,
+                      color: MacroColors.carbs,
                       radius: size * 0.18,
                       showTitle: false,
                     ),
                     PieChartSectionData(
                       value: fatKcal == 0 ? 1 : fatKcal,
-                      color: AppColors.fat,
+                      color: MacroColors.fat,
                       radius: size * 0.18,
                       showTitle: false,
                     ),
@@ -79,18 +79,16 @@ class MacroDonutChart extends StatelessWidget {
                 children: [
                   Text(
                     totalKcal.toStringAsFixed(0),
-                    style: AppTypography.sectionTitle.copyWith(
+                    style: AppTextStyles.displayMedium.copyWith(
                       color: AppColors.textPrimary,
                       fontSize: 22,
-                      fontWeight: FontWeight.bold,
                       height: 1.0,
                     ),
                   ),
                   Text(
                     'kcal',
-                    style: AppTypography.caption.copyWith(
+                    style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.textSecondary,
-                      fontSize: 11,
                     ),
                   ),
                 ],
@@ -98,28 +96,28 @@ class MacroDonutChart extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: AppSpacing.lg),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _legendItem(
-                AppColors.protein,
+                MacroColors.protein,
                 'Protein',
                 '${proteinGrams.toStringAsFixed(0)}g',
                 '$pPct%',
               ),
               const SizedBox(height: 8),
               _legendItem(
-                AppColors.carbs,
+                MacroColors.carbs,
                 'Carbs',
                 '${carbsGrams.toStringAsFixed(0)}g',
                 '$cPct%',
               ),
               const SizedBox(height: 8),
               _legendItem(
-                AppColors.fat,
+                MacroColors.fat,
                 'Fat',
                 '${fatGrams.toStringAsFixed(0)}g',
                 '$fPct%',
@@ -146,17 +144,15 @@ class MacroDonutChart extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTypography.caption.copyWith(
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textPrimary,
-              fontSize: 13,
             ),
           ),
         ),
         Text(
           '$grams · $pct',
-          style: AppTypography.caption.copyWith(
+          style: AppTextStyles.bodySmall.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 12,
           ),
         ),
       ],

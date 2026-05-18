@@ -1,8 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 /// Single data point on the weight trend chart.
 class WeightDataPoint {
@@ -14,10 +13,10 @@ class WeightDataPoint {
 /// Smooth line chart for weight trend over time (Analytics screen).
 ///
 /// Renders:
-/// - A curved cyan line with gradient fill below
+/// - A curved aqua line with gradient fill below
 /// - Dots only at the first and last data points
 /// - A 3-column summary row beneath the chart: Start | Change | Current
-///   (Change is green for weight loss, warning for gain)
+///   (Change is success-green for weight loss, warning for gain)
 class WeightLineChart extends StatelessWidget {
   const WeightLineChart({
     super.key,
@@ -38,7 +37,7 @@ class WeightLineChart extends StatelessWidget {
         child: Center(
           child: Text(
             'No weight data yet',
-            style: AppTypography.caption.copyWith(
+            style: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textTertiary,
             ),
           ),
@@ -70,9 +69,8 @@ class WeightLineChart extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
               rangeLabel!,
-              style: AppTypography.caption.copyWith(
+              style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondary,
-                fontSize: 12,
               ),
             ),
           ),
@@ -88,15 +86,14 @@ class WeightLineChart extends StatelessWidget {
               lineTouchData: LineTouchData(
                 enabled: true,
                 touchTooltipData: LineTouchTooltipData(
-                  getTooltipColor: (touchedSpot) => AppColors.cardBg,
+                  getTooltipColor: (touchedSpot) => AppColors.surface,
                   tooltipRoundedRadius: 8,
                   getTooltipItems: (spots) => spots.map((s) {
                     return LineTooltipItem(
                       '${s.y.toStringAsFixed(1)} kg',
-                      AppTypography.caption.copyWith(
+                      AppTextStyles.labelSmall.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.w600,
-                        fontSize: 11,
                       ),
                     );
                   }).toList(),
@@ -108,7 +105,7 @@ class WeightLineChart extends StatelessWidget {
                   isCurved: true,
                   curveSmoothness: 0.3,
                   preventCurveOverShooting: true,
-                  color: AppColors.primaryCyan,
+                  color: AppColors.primary,
                   barWidth: 2.5,
                   dotData: FlDotData(
                     show: true,
@@ -117,7 +114,7 @@ class WeightLineChart extends StatelessWidget {
                     getDotPainter: (spot, percent, bar, idx) =>
                         FlDotCirclePainter(
                       radius: 5,
-                      color: AppColors.primaryCyan,
+                      color: AppColors.primary,
                       strokeWidth: 2,
                       strokeColor: Colors.white,
                     ),
@@ -128,8 +125,8 @@ class WeightLineChart extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        AppColors.primaryCyan.withOpacity(0.35),
-                        AppColors.primaryCyan.withOpacity(0.0),
+                        AppColors.primary.withOpacity(0.35),
+                        AppColors.primary.withOpacity(0.0),
                       ],
                     ),
                   ),
@@ -138,7 +135,7 @@ class WeightLineChart extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -168,17 +165,15 @@ class WeightLineChart extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTypography.caption.copyWith(
+          style: AppTextStyles.labelSmall.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 11,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: AppTypography.body.copyWith(
+          style: AppTextStyles.bodyMedium.copyWith(
             color: valueColor,
-            fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
         ),
