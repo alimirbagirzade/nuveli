@@ -5,9 +5,8 @@ import 'habit_reminder.dart';
 
 /// Per-day consistency data for the Weekly Consistency bar chart.
 ///
-/// `dailyConsistency` values are normalized 0.0–1.0 (representing the
-/// fraction of habits completed on that day). `highlightIndex` is the
-/// day to visually emphasize (typically "today").
+/// `dailyConsistency` values are normalized 0.0–1.0.
+/// `highlightIndex` is the day to visually emphasize ("today").
 @immutable
 class WeeklyConsistencyData {
   final List<double> dailyConsistency;
@@ -42,10 +41,6 @@ class WeeklyConsistencyData {
 }
 
 /// Aggregate state for the Healthy Habits screen.
-///
-/// Held inside the `AsyncNotifierProvider`. Frontend reads `completedToday`
-/// and `totalHabits` for the progress bar; the notifier recomputes these
-/// whenever a habit is toggled.
 @immutable
 class HabitsScreenData {
   final int streakDays;

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// Type categorization for habits — used for icon/color defaults and analytics.
+/// Type categorization for habits.
 enum HabitType { meal, hydration, exercise, protein, sleep, custom }
 
 /// Immutable habit entity for the Healthy Habits screen.
-///
-/// Each habit represents a daily check item the user can mark as done.
-/// State is managed via `copyWith` from the `HabitsNotifier` provider.
 @immutable
 class Habit {
   final String id;

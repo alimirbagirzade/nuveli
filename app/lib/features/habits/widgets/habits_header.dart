@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-
 /// Top bar for the Healthy Habits screen.
-///
 /// Layout: [← back] [— Healthy Habits centered —] [⚙️ settings]
 class HabitsHeader extends StatelessWidget {
   final VoidCallback? onBack;
@@ -20,34 +15,31 @@ class HabitsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
       child: Row(
         children: [
-          _IconButton(
+          _CircleIconButton(
             icon: Icons.arrow_back_ios_new_rounded,
-            size: 20,
-            color: AppColors.textPrimary,
+            iconSize: 18,
             onTap: onBack,
             semanticLabel: 'Back',
           ),
-          Expanded(
+          const Expanded(
             child: Center(
               child: Text(
                 'Healthy Habits',
-                style: AppTypography.titleMedium.copyWith(
-                  color: AppColors.textPrimary,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  letterSpacing: 0.2,
                 ),
               ),
             ),
           ),
-          _IconButton(
+          _CircleIconButton(
             icon: Icons.settings_outlined,
-            size: 22,
-            color: AppColors.textSecondary,
+            iconSize: 20,
             onTap: onSettings,
             semanticLabel: 'Settings',
           ),
@@ -57,18 +49,16 @@ class HabitsHeader extends StatelessWidget {
   }
 }
 
-/// Tap-friendly icon button with a 40x40 hit area.
-class _IconButton extends StatelessWidget {
+/// 40x40 round button with subtle glass background.
+class _CircleIconButton extends StatelessWidget {
   final IconData icon;
-  final double size;
-  final Color color;
+  final double iconSize;
   final VoidCallback? onTap;
   final String semanticLabel;
 
-  const _IconButton({
+  const _CircleIconButton({
     required this.icon,
-    required this.size,
-    required this.color,
+    required this.iconSize,
     required this.semanticLabel,
     this.onTap,
   });
@@ -80,11 +70,18 @@ class _IconButton extends StatelessWidget {
       label: semanticLabel,
       child: InkResponse(
         onTap: onTap,
-        radius: 24,
-        child: SizedBox(
+        radius: 26,
+        child: Container(
           width: 40,
           height: 40,
-          child: Center(child: Icon(icon, size: size, color: color)),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white.withOpacity(0.04),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
+          ),
+          child: Center(
+            child: Icon(icon, size: iconSize, color: Colors.white),
+          ),
         ),
       ),
     );

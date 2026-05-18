@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Immutable reminder entity for upcoming push/local notifications.
-///
-/// Used by the `UpcomingRemindersSection`. The `isEnabled` flag drives the
-/// `ReminderToggleTile`'s switch state. Real notification scheduling will be
-/// wired up in Chat 17 — for now this is purely UI state.
+/// Immutable reminder entity for the Upcoming Reminders section.
 @immutable
 class HabitReminder {
   final String id;

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../shared/widgets/habit_check_tile.dart';
-import '../../../shared/widgets/nuveli_card.dart';
 import '../models/habit.dart';
 
-/// Section: "Today's Habits" header + a card containing the 5 habit tiles
-/// separated by hairline dividers.
+const Color _cyan = Color(0xFF00D4FF);
+const Color _cyanGlow = Color(0xFF4DDBFF);
+const Color _secondaryText = Color(0xFFB8C5D6);
+
+/// Section: "Today's Habits" header + a card containing habit tiles.
 class TodaysHabitsSection extends StatelessWidget {
   final List<Habit> habits;
   final void Function(String id, bool value)? onToggle;
@@ -24,41 +22,39 @@ class TodaysHabitsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: AppSpacing.xs),
+        const Padding(
+          padding: EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             "Today's Habits",
-            style: AppTypography.titleSmall.copyWith(
-              color: AppColors.textPrimary,
-              fontWeight: FontWeight.w600,
+            style: TextStyle(
+              color: Colors.white,
               fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.sm + 4),
-        NuveliCard(
-          padding: EdgeInsets.zero,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.04),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
+          ),
           child: Column(
             children: List.generate(habits.length, (i) {
               final habit = habits[i];
               final isLast = i == habits.length - 1;
               return Column(
                 children: [
-                  HabitCheckTile(
-                    icon: habit.icon,
-                    iconColor: habit.iconColor,
-                    title: habit.title,
-                    subtitle: habit.subtitle,
-                    initialChecked: habit.isCompleted,
+                  _HabitTile(
+                    habit: habit,
                     onChanged: (v) => onToggle?.call(habit.id, v),
                   ),
                   if (!isLast)
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Container(
                         height: 1,
-                        color: AppColors.textSecondary.withOpacity(0.10),
+                        color: Colors.white.withOpacity(0.06),
                       ),
                     ),
                 ],
@@ -67,6 +63,112 @@ class TodaysHabitsSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// One habit row: icon + title/subtitle + check toggle (solid cyan when on).
+class _HabitTile extends StatelessWidget {
+  final Habit habit;
+  final ValueChanged<bool>? onChanged;
+
+  const _HabitTile({required this.habit, this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: () => onChanged?.call(!habit.isCompleted),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Row(
+          children: [
+            // Round icon background
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: habit.iconColor.withOpacity(0.15),
+                border: Border.all(
+                  color: habit.iconColor.withOpacity(0.4),
+                  width: 1,
+                ),
+              ),
+              child: Icon(habit.icon, size: 20, color: habit.iconColor),
+            ),
+            const SizedBox(width: 12),
+            // Title + subtitle
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    habit.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    habit.subtitle,
+                    style: const TextStyle(
+                      color: _secondaryText,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            // Animated check circle
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: habit.isCompleted
+                    ? const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [_cyan, _cyanGlow],
+                      )
+                    : null,
+                color: habit.isCompleted ? null : Colors.transparent,
+                border: Border.all(
+                  color: habit.isCompleted
+                      ? Colors.transparent
+                      : Colors.white.withOpacity(0.25),
+                  width: 1.5,
+                ),
+                boxShadow: habit.isCompleted
+                    ? [
+                        BoxShadow(
+                          color: _cyan.withOpacity(0.4),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: habit.isCompleted
+                    ? const Icon(
+                        Icons.check_rounded,
+                        size: 18,
+                        color: Colors.white,
+                        key: ValueKey('checked'),
+                      )
+                    : const SizedBox.shrink(key: ValueKey('unchecked')),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

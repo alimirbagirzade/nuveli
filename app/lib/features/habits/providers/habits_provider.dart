@@ -7,16 +7,14 @@ import '../models/habits_screen_data.dart';
 ///
 /// Mutations:
 ///   - [toggleHabit]: flips a habit's completion → recomputes `completedToday`
-///     so the StreakBanner progress bar updates instantly.
+///     so the streak banner progress bar updates instantly.
 ///   - [toggleReminder]: flips a reminder's enabled flag.
 ///
-/// Backend integration (Chat 14/15) will replace [_loadInitialData] with
-/// a Supabase call to `habit_completions` and `habits` tables.
+/// Backend integration (Chat 14/15) will replace [_loadInitialData] with a
+/// Supabase call to `habit_completions` and `habits` tables.
 class HabitsNotifier extends AsyncNotifier<HabitsScreenData> {
   @override
-  Future<HabitsScreenData> build() async {
-    return _loadInitialData();
-  }
+  Future<HabitsScreenData> build() => _loadInitialData();
 
   Future<HabitsScreenData> _loadInitialData() async {
     // Simulate a brief network/disk fetch so the skeleton state is visible.
@@ -24,14 +22,14 @@ class HabitsNotifier extends AsyncNotifier<HabitsScreenData> {
     return mockHabitsData;
   }
 
-  /// Toggles a habit's completion status and recomputes `completedToday`.
+  /// Toggles a habit's completion and recomputes `completedToday`.
   void toggleHabit(String id, bool value) {
     final current = state.valueOrNull;
     if (current == null) return;
 
-    final updatedHabits = current.todaysHabits.map((h) {
-      return h.id == id ? h.copyWith(isCompleted: value) : h;
-    }).toList();
+    final updatedHabits = current.todaysHabits
+        .map((h) => h.id == id ? h.copyWith(isCompleted: value) : h)
+        .toList();
 
     final completed = updatedHabits.where((h) => h.isCompleted).length;
 
@@ -48,9 +46,9 @@ class HabitsNotifier extends AsyncNotifier<HabitsScreenData> {
     final current = state.valueOrNull;
     if (current == null) return;
 
-    final updatedReminders = current.upcomingReminders.map((r) {
-      return r.id == id ? r.copyWith(isEnabled: value) : r;
-    }).toList();
+    final updatedReminders = current.upcomingReminders
+        .map((r) => r.id == id ? r.copyWith(isEnabled: value) : r)
+        .toList();
 
     state = AsyncValue.data(
       current.copyWith(upcomingReminders: updatedReminders),

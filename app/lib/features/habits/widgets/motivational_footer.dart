@@ -1,88 +1,80 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_radius.dart';
-import '../../../core/theme/app_spacing.dart';
-import '../../../core/theme/app_typography.dart';
-import '../../../shared/widgets/nuveli_card.dart';
+const Color _cyan = Color(0xFF00D4FF);
+const Color _cyanGlow = Color(0xFF4DDBFF);
+const Color _secondaryText = Color(0xFFB8C5D6);
 
 /// Footer card encouraging the user to keep going.
-///
-/// Layout: ⭐ icon (glowing cyan) | "Small actions build lasting results."
-/// + italic secondary subtitle "Keep showing up for yourself."
 class MotivationalFooter extends StatelessWidget {
   const MotivationalFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return NuveliCard(
-      padding: const EdgeInsets.all(AppSpacing.sm + 6),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.04),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.08)),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _GlowingStar(),
-          const SizedBox(width: AppSpacing.sm + 4),
-          Expanded(
+          // Glowing star
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  _cyan.withOpacity(0.25),
+                  _cyan.withOpacity(0.05),
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: _cyan.withOpacity(0.25),
+                  blurRadius: 12,
+                ),
+              ],
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.star_rounded,
+                size: 24,
+                color: _cyanGlow,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Small actions build lasting results.',
-                  style: AppTypography.body.copyWith(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w600,
+                  style: TextStyle(
+                    color: Colors.white,
                     fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.xs),
+                SizedBox(height: 4),
                 Text(
                   'Keep showing up for yourself.',
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.textSecondary,
-                    fontStyle: FontStyle.italic,
+                  style: TextStyle(
+                    color: _secondaryText,
                     fontSize: 12,
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// 36x36 rounded square holding a 22px cyan star with a soft glow.
-class _GlowingStar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 36,
-      height: 36,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.primaryCyan.withOpacity(0.20),
-            AppColors.primaryCyan.withOpacity(0.05),
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primaryCyan.withOpacity(0.25),
-            blurRadius: 14,
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: const Center(
-        child: Icon(
-          Icons.star_rounded,
-          size: 22,
-          color: AppColors.cyanGlow,
-        ),
       ),
     );
   }
