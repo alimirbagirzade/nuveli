@@ -3,60 +3,65 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_text_styles.dart';
+import '../../core/theme/app_radius.dart';
+import '../../core/theme/app_spacing.dart';
 
-/// 4 sekmeli alt navigasyon (Dashboard / Meals / Analytics / Profile).
-///
-/// Frosted glass effect (BackdropFilter + yarı saydam koyu lacivert bg),
-/// üst border 1px rgba(white, 0.1).
-/// Seçili item: cyan; seçili değil: secondary text.
+/// Glass bottom navigation bar with 5 fixed tabs.
 class NuveliBottomNav extends StatelessWidget {
-  final int currentIndex;
-  final ValueChanged<int> onTap;
-
   const NuveliBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
   });
 
-  static const _items = <_NavItemData>[
-    _NavItemData(icon: Icons.bar_chart_rounded, label: 'Dashboard'),
-    _NavItemData(icon: Icons.restaurant_rounded, label: 'Meals'),
-    _NavItemData(icon: Icons.analytics_rounded, label: 'Analytics'),
-    _NavItemData(icon: Icons.person_outline_rounded, label: 'Profile'),
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  static const List<_NavItem> _items = [
+    _NavItem(icon: Icons.home_rounded, label: 'Home'),
+    _NavItem(icon: Icons.camera_alt_rounded, label: 'Scan'),
+    _NavItem(icon: Icons.restaurant_menu_rounded, label: 'Plan'),
+    _NavItem(icon: Icons.person_rounded, label: 'Profile'),
+    _NavItem(icon: Icons.water_drop_rounded, label: 'Water'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
+    final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
+
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(AppRadius.lg),
+        topRight: Radius.circular(AppRadius.lg),
+      ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-        child: Container(
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+        child: DecoratedBox(
           decoration: BoxDecoration(
-            color: const Color(0xFF050A1F).withValues(alpha: 0.8),
-            border: Border(
+            color: AppColors.primaryBackground.withValues(alpha: 0.65),
+            border: const Border(
               top: BorderSide(
-                color: Colors.white.withValues(alpha: 0.08),
-                width: 1,
+                color: AppColors.borderGlass,
+                width: 0.5,
               ),
             ),
           ),
-          child: SafeArea(
-            top: false,
-            child: SizedBox(
-              height: 64,
-              child: Row(
-                children: List.generate(_items.length, (i) {
-                  return Expanded(
-                    child: _NavItem(
-                      data: _items[i],
-                      isActive: i == currentIndex,
-                      onTap: () => onTap(i),
-                    ),
-                  );
-                }),
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: AppSpacing.sm,
+              bottom: bottomInset + AppSpacing.xs,
+              left: AppSpacing.sm,
+              right: AppSpacing.sm,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(_items.length, (i) {
+                return _NavButton(
+                  item: _items[i],
+                  selected: i == currentIndex,
+                  onTap: () => onTap(i),
+                );
+              }),
             ),
           ),
         ),
@@ -65,73 +70,80 @@ class NuveliBottomNav extends StatelessWidget {
   }
 }
 
-class _NavItemData {
+class _NavItem {
+  const _NavItem({required this.icon, required this.label});
   final IconData icon;
   final String label;
-  const _NavItemData({required this.icon, required this.label});
 }
 
-class _NavItem extends StatefulWidget {
-  final _NavItemData data;
-  final bool isActive;
-  final VoidCallback onTap;
-
-  const _NavItem({
-    required this.data,
-    required this.isActive,
+class _NavButton extends StatelessWidget {
+  const _NavButton({
+    required this.item,
+    required this.selected,
     required this.onTap,
   });
 
-  @override
-  State<_NavItem> createState() => _NavItemState();
-}
-
-class _NavItemState extends State<_NavItem> {
-  bool _pressed = false;
+  final _NavItem item;
+  final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.isActive
-        ? AppColors.primary
-        : AppColors.textTertiary;
+    const activeColor = AppColors.primaryCyan;
+    final inactiveColor = Colors.white.withValues(alpha: 0.5);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => setState(() => _pressed = true),
-      onTapUp: (_) => setState(() => _pressed = false),
-      onTapCancel: () => setState(() => _pressed = false),
-      onTap: widget.onTap,
-      child: AnimatedScale(
-        scale: _pressed ? 0.95 : 1.0,
-        duration: const Duration(milliseconds: 150),
-        curve: Curves.easeOut,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              widget.data.icon,
-              size: 24,
-              color: color,
-              shadows: widget.isActive
-                  ? [
-                      Shadow(
-                        color: AppColors.primary.withValues(alpha: 0.5),
-                        blurRadius: 10,
-                      ),
-                    ]
-                  : null,
+    return Expanded(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          splashColor: activeColor.withValues(alpha: 0.15),
+          highlightColor: activeColor.withValues(alpha: 0.05),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            padding: const EdgeInsets.symmetric(
+              vertical: AppSpacing.xs,
+              horizontal: AppSpacing.xs,
             ),
-            const SizedBox(height: 4),
-            Text(
-              widget.data.label,
-              style: AppTextStyles.bodySmall.copyWith(
-                fontSize: 11,
-                fontWeight:
-                    widget.isActive ? FontWeight.w600 : FontWeight.w400,
-                color: color,
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  item.icon,
+                  size: 24,
+                  color: selected ? activeColor : inactiveColor,
+                  shadows: selected
+                      ? [
+                          Shadow(
+                            color: activeColor.withValues(alpha: 0.6),
+                            blurRadius: 14,
+                          ),
+                        ]
+                      : null,
+                ),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 180),
+                  curve: Curves.easeOut,
+                  child: selected
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Text(
+                            item.label,
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: activeColor,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/theme/app_typography.dart';
-import '../../shared/widgets/nuveli_background.dart';
-import '../../shared/widgets/nuveli_bottom_nav.dart';
+import 'package:nuveli/shared/widgets/nuveli_background.dart';
+import 'package:nuveli/shared/widgets/nuveli_bottom_nav.dart';
 import 'providers/profile_provider.dart';
 import 'widgets/daily_calorie_target_card.dart';
 import 'widgets/goals_row.dart';
@@ -23,6 +23,8 @@ import 'widgets/recommendations_section.dart';
 ///   5. RecommendationsSection (personalized tip cards)
 ///   6. NuveliBottomNav (Profile tab selected)
 class GoalsOverviewScreen extends ConsumerWidget {
+  const GoalsOverviewScreen({super.key});
+
   const ProfileScreen({super.key});
 
   @override

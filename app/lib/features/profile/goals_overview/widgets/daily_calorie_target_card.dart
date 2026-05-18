@@ -197,8 +197,8 @@ class _DonutPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
-      ..shader = SweepGradient(
-        colors: const [AppColors.cyanGlow, AppColors.primaryCyan],
+      ..shader = const SweepGradient(
+        colors: [AppColors.cyanGlow, AppColors.primaryCyan],
         startAngle: -math.pi / 2,
         endAngle: math.pi * 2 - math.pi / 2,
       ).createShader(Rect.fromCircle(center: center, radius: radius));
@@ -214,6 +214,5 @@ class _DonutPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _DonutPainter old) =>
-      old.progress != progress;
+  bool shouldRepaint(covariant _DonutPainter old) => old.progress != progress;
 }

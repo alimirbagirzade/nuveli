@@ -279,13 +279,13 @@ class _WidgetsDemoScreenState extends State<WidgetsDemoScreen> {
             // ──────────────────────────────
             _section(
               "9. TimelineEvent — Today's Hydration",
-              NuveliCard(
-                padding: const EdgeInsets.symmetric(
+              const NuveliCard(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppSpacing.md,
                   vertical: AppSpacing.sm,
                 ),
                 child: Column(
-                  children: const [
+                  children: [
                     TimelineEvent(
                       time: '9:00 AM',
                       value: '250 ml',
@@ -323,8 +323,8 @@ class _WidgetsDemoScreenState extends State<WidgetsDemoScreen> {
             // ──────────────────────────────
             _section(
               '10. AchievementBadge (3 yan yana)',
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: AchievementBadge(
                       icon: Icons.local_fire_department_rounded,
@@ -356,8 +356,8 @@ class _WidgetsDemoScreenState extends State<WidgetsDemoScreen> {
             ),
             _section(
               '10b. AchievementBadge (locked state)',
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: AchievementBadge(
                       icon: Icons.workspace_premium_rounded,
@@ -402,8 +402,7 @@ class _WidgetsDemoScreenState extends State<WidgetsDemoScreen> {
                   RecommendationCard(
                     icon: Icons.water_drop_rounded,
                     iconColor: AppColors.primary,
-                    description:
-                        'Stay hydrated! Aim for 2–3L of water daily.',
+                    description: 'Stay hydrated! Aim for 2–3L of water daily.',
                     style: RecommendationCardStyle.simple,
                     onTap: () {},
                   ),

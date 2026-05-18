@@ -12,12 +12,12 @@ class AddFoodButton extends StatelessWidget {
       width: double.infinity,
       child: NuveliButton(
         onPressed: onPressed ??
-            () => debugPrint(
-                'Add Food tapped - Chat 5 will open MealScanScreen'),
-        child: Row(
+            () =>
+                debugPrint('Add Food tapped - Chat 5 will open MealScanScreen'),
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.add, size: 20, color: Colors.white),
             SizedBox(width: 8),
             Text(

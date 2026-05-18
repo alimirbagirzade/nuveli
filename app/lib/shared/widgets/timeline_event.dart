@@ -78,7 +78,7 @@ class TimelineEvent extends StatelessWidget {
                     ),
                   ),
                   if (isCompleted)
-                    Icon(
+                    const Icon(
                       Icons.check_circle_rounded,
                       color: AppColors.primary,
                       size: 18,

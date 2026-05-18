@@ -5,7 +5,6 @@
 // 5 saniyede bir Supabase'den session refresh ederek email_confirmed_at kontrol eder.
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -276,7 +275,8 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                 label: _resendCooldown > 0
                     ? l.verifyEmailResendIn(_resendCooldown.toString())
                     : l.verifyEmailResend,
-                onPressed: (_resendCooldown > 0 || _resending) ? null : _resendEmail,
+                onPressed:
+                    (_resendCooldown > 0 || _resending) ? null : _resendEmail,
                 isLoading: _resending,
               ),
               const SizedBox(height: 12),

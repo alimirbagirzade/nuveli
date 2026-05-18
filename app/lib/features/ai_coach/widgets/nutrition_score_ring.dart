@@ -120,8 +120,8 @@ class _ScoreRingPainter extends CustomPainter {
 
     // Main arc — gradient stroke on top.
     final arcPaint = Paint()
-      ..shader = SweepGradient(
-        colors: const [_cyan, _cyanGlow],
+      ..shader = const SweepGradient(
+        colors: [_cyan, _cyanGlow],
         startAngle: -math.pi / 2,
         endAngle: (3 * math.pi) / 2,
       ).createShader(rect)

@@ -1,11 +1,36 @@
-fastapi==0.115.12
-uvicorn[standard]==0.34.2
-pydantic==2.11.4
-pydantic-settings==2.9.1
-supabase==2.15.2
-httpx==0.28.1
+# =============================================================================
+# Nuveli Backend — Requirements (Chat 11b sonrası)
+#
+# Mevcut requirements.txt'ne EKLENECEK satırlar (yıldız ile işaretli).
+# Hepsini koymak istersen direkt bu dosyayı kullanabilirsin.
+# =============================================================================
+
+# Web
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+
+# Validation
+pydantic==2.9.2
+
+# Auth (Chat 16'da kullanılacak)
 python-jose[cryptography]==3.3.0
-structlog==25.3.0
-python-dotenv==1.1.0
-openai==1.78.0
-google-auth==2.34.0
+
+# HTTP
+httpx==0.27.2
+
+# Database / Auth
+supabase==2.8.1
+
+# AI                                              ⭐ Chat 11b
+openai==1.51.0
+
+# Cron (Render Scheduler kullanılırsa gerekli değil, GH Actions için de yok)
+# apscheduler==3.10.4  # opsiyonel, lokal cron için
+
+# Utility
+python-dotenv==1.0.1
+
+# Test
+pytest==8.3.3
+pytest-asyncio==0.24.0

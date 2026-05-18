@@ -79,9 +79,8 @@ class AICoachScreen extends ConsumerWidget {
                         const SizedBox(height: 28),
                         RecommendedForYouCard(
                           recommendation: data.recommendation,
-                          onApply: () => ref
-                              .read(aiCoachProvider.notifier)
-                              .applyTip(),
+                          onApply: () =>
+                              ref.read(aiCoachProvider.notifier).applyTip(),
                           onSeeDetails: () {
                             // TODO: open details bottom sheet
                           },
@@ -118,12 +117,12 @@ class _CoachBottomNav extends StatelessWidget {
           top: BorderSide(color: Color(0x1AFFFFFF), width: 0.5),
         ),
       ),
-      child: SafeArea(
+      child: const SafeArea(
         top: false,
         child: SizedBox(
           height: 60,
           child: Row(
-            children: const [
+            children: [
               _NavItem(
                 icon: Icons.bar_chart_rounded,
                 label: 'Dashboard',

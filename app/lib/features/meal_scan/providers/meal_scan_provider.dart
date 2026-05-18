@@ -68,6 +68,9 @@ final mealScanProvider =
 class MealScanNotifier extends AsyncNotifier<ScanResult?> {
   @override
   Future<ScanResult?> build() async => null;
+  void reset() {
+    state = const AsyncValue.data(null);
+  }
 
   Future<ScanResult> analyzeImage(XFile image) async {
     state = const AsyncValue.loading();
@@ -133,8 +136,8 @@ class MealScanNotifier extends AsyncNotifier<ScanResult?> {
 
   // ─── Response parsing ────────────────────────────────────────────────────
   ScanResult _parseResponse(Map<String, dynamic> data) {
-    final foodsJson = (data['foods'] as List? ?? const [])
-        .cast<Map<String, dynamic>>();
+    final foodsJson =
+        (data['foods'] as List? ?? const []).cast<Map<String, dynamic>>();
 
     final insightJson =
         data['portion_insight'] as Map<String, dynamic>? ?? const {};

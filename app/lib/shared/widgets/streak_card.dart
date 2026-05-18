@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_radius.dart';
-import '../../core/theme/app_spacing.dart';
-import '../../core/theme/app_text_styles.dart';
 import 'nuveli_card.dart';
 
 enum StreakCardSize { small, large }
@@ -89,7 +85,7 @@ class StreakCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Row(
         children: [
-          _FireGlowIcon(size: 56),
+          const _FireGlowIcon(size: 56),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
