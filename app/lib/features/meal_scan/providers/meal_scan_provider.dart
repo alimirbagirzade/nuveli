@@ -248,6 +248,9 @@ class MealScanException implements Exception {
   final String message;
   final String code;
   const MealScanException(this.message, {this.code = 'unknown'});
+  void reset() {
+    state = const AsyncValue.data(null);
+  }
 
   @override
   String toString() => 'MealScanException($code): $message';
