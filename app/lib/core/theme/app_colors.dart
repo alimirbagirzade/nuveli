@@ -89,6 +89,44 @@ class AppColors {
     colors: [Color(0xFF051824), Color(0xFF0A2A3D), Color(0xFF0F3A52)],
     stops: [0.0, 0.5, 1.0],
   );
+
+  // ═══════════════════════════════════════════════════════════════
+  // CHAT 1-11 BACKWARDS COMPAT ALIASES
+  // (Master plan'a göre yazılmış Chat 4-11 ekranları için)
+  // YENİ İSİMLER — ESKİLERİ BOZMAZ
+  // ═══════════════════════════════════════════════════════════════
+
+  // ─── Cyan paleti (master plan adlandırması) ───
+  static const Color primaryCyan = primary;            // #14C8D8 (aqua)
+  static const Color cyanGlow = Color(0xFF4DDBFF);     // master plan: parlak cyan
+  static const Color cyanDark = primary600;            // #0A6C8C
+
+  // ─── Yüzey / arka plan aliases ───
+  static const Color cardBackground = card;            // #102B3F
+  static const Color primaryBackground = background;   // #051824
+  static const Color bgPrimaryStart = background;      // gradient için
+  static const Color bgPrimaryEnd = Color(0xFF0B1A3D); // master plan: koyu mavi
+
+  // ─── Makro renkleri (master plan adlandırması) ───
+  static const Color macroProtein = Color(0xFF3DDC97); // mint yeşil
+  static const Color macroCarbs = Color(0xFF6BCB77);   // yeşil
+  static const Color macroFat = Color(0xFFFF9F45);     // turuncu
+
+  // ─── Bazı kullanılan kısa isimler ───
+  static const Color proteinColor = macroProtein;
+  static const Color carbsColor = macroCarbs;
+  static const Color fatColor = macroFat;
+
+  // ─── Durum aliases ───
+  static const Color danger = error;                   // #C84D5B
+
+  // ─── Streak (turuncu gradient) ───
+  static const Color streakStart = Color(0xFFFF6B35);
+  static const Color streakEnd = Color(0xFFFF9F45);
+  static const Color streakOrange = streakStart;
+
+  // ─── Glass effect ───
+  static const Color borderGlass = Color(0x1AFFFFFF);  // rgba(255,255,255,0.1)
 }
 
 // ═══════════════════════════════════════════════════════════════
