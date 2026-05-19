@@ -135,12 +135,12 @@ class TodaySummary {
   int get consumedCalories => caloriesConsumed;
   int get dailyCalorieTarget => caloriesTarget;
   int get remainingCalories => caloriesRemaining;
-  int get consumedProteinG => proteinConsumedG;
-  int get consumedCarbsG => carbsConsumedG;
-  int get consumedFatG => fatConsumedG;
-  int get dailyProteinTargetG => 0;
-  int get dailyCarbsTargetG => 0;
-  int get dailyFatTargetG => 0;
+  double get consumedProteinG => proteinConsumedG.toDouble();
+  double get consumedCarbsG => carbsConsumedG.toDouble();
+  double get consumedFatG => fatConsumedG.toDouble();
+  double get dailyProteinTargetG => 0.0;
+  double get dailyCarbsTargetG => 0.0;
+  double get dailyFatTargetG => 0.0;
 }
 
 /// Wrapper for `GET /analytics/dashboard` response — used to derive streak +
