@@ -1,39 +1,48 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../features/profile/models/weight_goal.dart';
+import '../../../features/profile/models/weight_log.dart';
 import '../../../features/profile/models/weight_trend.dart';
 import '../../network/api_client.dart';
 import '../../network/api_endpoints.dart';
 import 'base_repository.dart';
 
-/// Weight tracking — daily logs (write-only here), long-term goal,
-/// smoothed trend.
+/// Weight tracking — daily logs, long-term goal, smoothed trend.
 ///
-/// Read endpoints (`weightGoalProvider`, `weightTrendProvider`) are
-/// wired in `profile_provider.dart` via the legacy `authedDioProvider`.
-/// This repository covers the **mutation side** — adding a log,
-/// upserting a goal — and is consumed by [ProfileActions] in the
-/// provider layer.
+/// `WeightTrend` is what the analytics line-chart consumes: the
+/// backend returns smoothed weekly points so the client doesn't
+/// have to roll its own EWMA.
 ///
-/// Note: `WeightLog` model isn't surfaced as a return type yet because
-/// the corresponding UI (log history list) doesn't exist; when it
-/// lands we'll re-introduce typed list/get methods.
+/// Reads (`weightGoalProvider`, `weightTrendProvider`) are already
+/// wired in `profile_provider.dart`. This repository covers the
+/// **mutation side** — adding a weight log, upserting a goal —
+/// and is consumed by [ProfileActions] in the provider layer.
 class WeightRepository extends BaseRepository {
   WeightRepository(super.apiClient);
 
   // ---------------------------------------------------------------
-  // Logs (write-only)
+  // Logs
   // ---------------------------------------------------------------
 
-  /// Log a weight reading. The response is intentionally untyped
-  /// (Map) until the log-history UI exists — callers just await for
-  /// completion + invalidate the relevant providers.
-  Future<void> addWeightLog({
+  /// Recent weight logs, newest first. `days` caps the lookback
+  /// window (default 56 = ~8 weeks for the analytics chart).
+  Future<List<WeightLog>> getWeightLogs({int days = 56}) async {
+    final response = await apiClient.get<List<dynamic>>(
+      ApiEndpoints.weightLogs,
+      queryParameters: {'days': days},
+    );
+    return response
+        .cast<Map<String, dynamic>>()
+        .map(WeightLog.fromJson)
+        .toList(growable: false);
+  }
+
+  Future<WeightLog> addWeightLog({
     required double kg,
     DateTime? loggedAt,
     String? notes,
   }) async {
-    await apiClient.post<Map<String, dynamic>>(
+    final response = await apiClient.post<Map<String, dynamic>>(
       ApiEndpoints.weightLogs,
       data: {
         'kg': kg,
@@ -41,6 +50,7 @@ class WeightRepository extends BaseRepository {
         if (notes != null) 'notes': notes,
       },
     );
+    return WeightLog.fromJson(response);
   }
 
   Future<void> deleteWeightLog(String id) {
@@ -52,7 +62,8 @@ class WeightRepository extends BaseRepository {
   // ---------------------------------------------------------------
 
   /// Active weight goal, or `null` if the user hasn't set one yet.
-  /// 404 from the backend → `null`.
+  /// 404 from the backend is normalised to `null` here so callers
+  /// don't have to catch `NotFoundException` themselves.
   Future<WeightGoal?> getGoal() async {
     try {
       final response = await apiClient.get<Map<String, dynamic>>(
@@ -67,10 +78,13 @@ class WeightRepository extends BaseRepository {
 
   /// Upsert the user's weight goal. The backend stores at most one
   /// active goal per user; calling this again replaces it.
+  ///
+  /// `direction` matches [WeightGoalDirection] enum values: 'lose',
+  /// 'gain', or 'maintain'.
   Future<WeightGoal> setGoal({
     required double targetKg,
     DateTime? targetDate,
-    required String direction, // 'lose' | 'gain' | 'maintain'
+    required String direction,
   }) async {
     final response = await apiClient.put<Map<String, dynamic>>(
       ApiEndpoints.weightGoal,
@@ -88,7 +102,9 @@ class WeightRepository extends BaseRepository {
   }
 
   // ---------------------------------------------------------------
-  // Trend (also exposed via weightTrendProvider for screens)
+  // Trend (for analytics line chart) — already exposed via
+  // `weightTrendProvider` in profile_provider.dart, but kept here
+  // for the repository's completeness.
   // ---------------------------------------------------------------
 
   Future<WeightTrend> getTrend({int weeks = 8}) async {

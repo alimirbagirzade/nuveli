@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuveli/features/profile/providers/profile_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/network/api_exception.dart';
@@ -56,8 +57,8 @@ class DashboardScreen extends ConsumerWidget {
                         ),
                         data: (summary) => Column(
                           children: [
-                            TodaysSummarySection(summary: summary),
-                            MacrosRow(summary: summary),
+                            TodaysSummarySection(summary: summary.todaySummary),
+                            MacrosRow(summary: summary.todaySummary),
                             WaterQuickCard(
                               consumedMl: summary.consumedWaterMl,
                               targetMl: summary.dailyWaterTargetMl,

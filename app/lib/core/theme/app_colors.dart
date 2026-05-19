@@ -135,6 +135,8 @@ class AppColors {
   // Chat 15 auth ek alias'lar
   static const Color glowCyan = cyanGlow;
   static const Color disabled = Color(0xFF4A5670);
+
+  static const Color streakFire = streakStart;
 }
 
 // ═══════════════════════════════════════════════════════════════
