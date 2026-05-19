@@ -1,294 +1,292 @@
+// ============================================================================
+// signup_screen.dart
+// Email + password + confirm + terms checkbox.
+// Signup başarılıysa email verification ekranına yönlendirir.
+// ============================================================================
+
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_text_styles.dart';
-import '../../../core/utils/app_validators.dart';
-import '../../../shared/widgets/app_scaffold.dart';
-import '../../../shared/widgets/primary_button.dart';
-import '../../../l10n/generated/app_localizations.dart';
-import '../providers/auth_providers.dart';
+import '../../../core/theme/app_typography.dart';
+import '../../../shared/widgets/nuveli_background.dart';
+import '../models/auth_errors.dart';
+import '../providers/auth_provider.dart';
+import '../widgets/auth_link_text.dart';
+import '../widgets/auth_primary_button.dart';
+import '../widgets/auth_social_button.dart';
+import '../widgets/auth_text_field.dart';
+import '../widgets/password_strength_indicator.dart';
+import 'email_verification_screen.dart';
+import 'login_screen.dart';
 
-/// Kayıt ekranı.
-class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({super.key});
+class SignupScreen extends ConsumerStatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailCtrl = TextEditingController();
-  final _passwordCtrl = TextEditingController();
-  final _confirmPasswordCtrl = TextEditingController();
-  bool _obscurePassword = true;
-  bool _obscureConfirm = true;
+  final _emailCtl = TextEditingController();
+  final _passCtl = TextEditingController();
+  final _confirmCtl = TextEditingController();
+  String _liveTypedPass = '';
+  bool _acceptTerms = false;
+  bool _loading = false;
+  bool _appleLoading = false;
+  String? _error;
 
   @override
   void dispose() {
-    _emailCtrl.dispose();
-    _passwordCtrl.dispose();
-    _confirmPasswordCtrl.dispose();
+    _emailCtl.dispose();
+    _passCtl.dispose();
+    _confirmCtl.dispose();
     super.dispose();
   }
 
-  Future<void> _handleSignUp() async {
+  Future<void> _signup() async {
     if (!_formKey.currentState!.validate()) return;
-
+    if (!_acceptTerms) {
+      setState(() => _error = 'Please accept the Terms to continue.');
+      return;
+    }
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
-      final signUp = ref.read(signUpActionProvider);
-      await signUp(
-        email: _emailCtrl.text.trim(),
-        password: _passwordCtrl.text,
-      );
-
+      await ref.read(authProvider.notifier).signUpWithEmail(
+            email: _emailCtl.text.trim(),
+            password: _passCtl.text,
+          );
+      // Email confirmation açıksa → EmailVerificationScreen
+      // Açık değilse → AuthGate Dashboard'a alır
       if (!mounted) return;
-
-      // Verify-email ekranı polling için credentials'a ihtiyaç duyuyor.
-      ref.read(pendingSignupCredentialsProvider.notifier).state =
-          PendingSignupCredentials(
-        email: _emailCtrl.text.trim(),
-        password: _passwordCtrl.text,
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              EmailVerificationScreen(email: _emailCtl.text.trim()),
+        ),
       );
-
-      // Kayıt başarılı → email doğrulama ekranına yönlendir.
-      context.go(AppRoute.verifyEmail);
-    } catch (_) {
-      // Hata auth_providers'da yönetiliyor.
+    } on NuveliAuthException catch (e) {
+      if (mounted) setState(() => _error = e.userMessage);
+    } catch (e) {
+      if (mounted) {
+        setState(() =>
+            _error = NuveliAuthException.fromSupabase(e).userMessage);
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
-  /// Şifre güçlülük hesaplaması (0-4).
-  int _passwordStrength(String password) {
-    int score = 0;
-    if (password.length >= 6) score++;
-    if (password.length >= 10) score++;
-    if (RegExp(r'[A-Z]').hasMatch(password)) score++;
-    if (RegExp(r'[0-9]').hasMatch(password)) score++;
-    if (RegExp(r'[!@#\$%\^&\*]').hasMatch(password)) score++;
-    return score.clamp(0, 4);
-  }
-
-  Color _strengthColor(int strength) {
-    switch (strength) {
-      case 0:
-        return AppColors.error;
-      case 1:
-        return AppColors.error;
-      case 2:
-        return Colors.orange;
-      case 3:
-        return Colors.amber;
-      default:
-        return AppColors.success;
-    }
-  }
-
-  String _strengthLabel(int strength, AppLocalizations l10n) {
-    switch (strength) {
-      case 0:
-        return l10n.passwordVeryWeak;
-      case 1:
-        return l10n.passwordWeak;
-      case 2:
-        return l10n.passwordMedium;
-      case 3:
-        return l10n.passwordStrong;
-      default:
-        return l10n.passwordVeryStrong;
+  Future<void> _signInWithApple() async {
+    setState(() {
+      _appleLoading = true;
+      _error = null;
+    });
+    try {
+      await ref.read(authProvider.notifier).signInWithApple();
+    } on NuveliAuthException catch (e) {
+      if (e.type == AuthErrorType.appleSignInCanceled) return;
+      if (mounted) setState(() => _error = e.userMessage);
+    } finally {
+      if (mounted) setState(() => _appleLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authLoadingProvider);
-    final errorMsg = ref.watch(authErrorProvider);
-    final l10n = AppLocalizations.of(context)!;
-    final strength = _passwordStrength(_passwordCtrl.text);
+    final showApple = Platform.isIOS || Platform.isMacOS;
 
-    return AppScaffold(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Header
-                Text(
-                  l10n.signupTitle,
-                  style: AppTextStyles.displayMedium,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  l10n.signupSubtitle,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 40),
-
-                // Email
-                TextFormField(
-                  controller: _emailCtrl,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    labelText: l10n.loginEmail,
-                    prefixIcon: const Icon(Icons.email_outlined),
-                  ),
-                  validator: AppValidators.email,
-                ),
-                const SizedBox(height: 16),
-
-                // Password
-                TextFormField(
-                  controller: _passwordCtrl,
-                  obscureText: _obscurePassword,
-                  textInputAction: TextInputAction.next,
-                  onChanged: (_) => setState(() {}),
-                  decoration: InputDecoration(
-                    labelText: l10n.loginPassword,
-                    prefixIcon: const Icon(Icons.lock_outlined),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                      ),
-                      onPressed: () =>
-                          setState(() => _obscurePassword = !_obscurePassword),
+    return NuveliBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            onPressed: () => Navigator.maybePop(context),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 16),
+                  Text(
+                    'Create account',
+                    style: AppTypography.heading32Bold.copyWith(
+                      color: Colors.white,
                     ),
-                  ),
-                  validator: AppValidators.password,
-                ),
-                const SizedBox(height: 8),
-
-                // Password strength bar
-                if (_passwordCtrl.text.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: strength / 4,
-                            backgroundColor: AppColors.surface,
-                            valueColor: AlwaysStoppedAnimation(
-                              _strengthColor(strength),
-                            ),
-                            minHeight: 4,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        _strengthLabel(strength, l10n),
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: _strengthColor(strength),
-                        ),
-                      ),
-                    ],
                   ),
                   const SizedBox(height: 8),
-                ],
-                const SizedBox(height: 8),
-
-                // Confirm password
-                TextFormField(
-                  controller: _confirmPasswordCtrl,
-                  obscureText: _obscureConfirm,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (_) => _handleSignUp(),
-                  decoration: InputDecoration(
-                    labelText: l10n.loginPasswordRepeat,
-                    prefixIcon: const Icon(Icons.lock_outlined),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureConfirm
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                      ),
-                      onPressed: () =>
-                          setState(() => _obscureConfirm = !_obscureConfirm),
+                  Text(
+                    "Let's start your nutrition journey",
+                    style: AppTypography.body14.copyWith(
+                      color: AppColors.secondaryText,
                     ),
                   ),
-                  validator: AppValidators.passwordMatch(_passwordCtrl.text),
-                ),
-                const SizedBox(height: 24),
-
-                // Error
-                if (errorMsg != null) ...[
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: AppColors.error.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      errorMsg,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.error,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                  const SizedBox(height: 32),
+                  AuthTextField(
+                    controller: _emailCtl,
+                    label: 'Email',
+                    hint: 'you@example.com',
+                    prefixIcon: Icons.mail_outline,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: AuthValidators.email,
                   ),
                   const SizedBox(height: 16),
-                ],
-
-                // Signup button
-                PrimaryButton(
-                  label: l10n.signupButton,
-                  isLoading: isLoading,
-                  onPressed: isLoading ? null : _handleSignUp,
-                ),
-                const SizedBox(height: 16),
-
-                // Login link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${l10n.signupHasAccount} ',
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => context.pop(),
-                      child: Text(
-                        l10n.signupLoginLink,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                  AuthTextField(
+                    controller: _passCtl,
+                    label: 'Password',
+                    prefixIcon: Icons.lock_outline,
+                    obscureText: true,
+                    validator: AuthValidators.password,
+                    onChanged: (v) => setState(() => _liveTypedPass = v),
+                  ),
+                  PasswordStrengthIndicator(password: _liveTypedPass),
+                  const SizedBox(height: 16),
+                  AuthTextField(
+                    controller: _confirmCtl,
+                    label: 'Confirm password',
+                    prefixIcon: Icons.lock_outline,
+                    obscureText: true,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: _signup,
+                    validator: AuthValidators.confirmPassword(_passCtl),
+                  ),
+                  const SizedBox(height: 20),
+                  _TermsCheckbox(
+                    value: _acceptTerms,
+                    onChanged: (v) =>
+                        setState(() => _acceptTerms = v ?? false),
+                  ),
+                  if (_error != null) ...[
+                    const SizedBox(height: 12),
+                    AuthErrorBanner(
+                      message: _error!,
+                      onDismiss: () => setState(() => _error = null),
                     ),
                   ],
-                ),
-                const SizedBox(height: 12),
-
-                // Terms notice
-                Text(
-                  l10n.signupTerms,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textTertiary,
+                  const SizedBox(height: 24),
+                  AuthPrimaryButton(
+                    label: 'Create account',
+                    isLoading: _loading,
+                    onPressed: _signup,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                  if (showApple) ...[
+                    const SizedBox(height: 24),
+                    const AuthOrDivider(),
+                    const SizedBox(height: 24),
+                    AuthSocialButton(
+                      provider: SocialProvider.apple,
+                      isLoading: _appleLoading,
+                      onPressed: _signInWithApple,
+                    ),
+                  ],
+                  const SizedBox(height: 32),
+                  AuthLinkText(
+                    prefix: 'Already have an account?',
+                    linkText: 'Sign in',
+                    onTap: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const LoginScreen()),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+// ============================================================================
+// Terms checkbox
+// ============================================================================
+
+class _TermsCheckbox extends StatelessWidget {
+  final bool value;
+  final ValueChanged<bool?> onChanged;
+
+  const _TermsCheckbox({required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 24,
+          height: 24,
+          child: Checkbox(
+            value: value,
+            onChanged: onChanged,
+            activeColor: AppColors.primaryCyan,
+            checkColor: Colors.white,
+            side: BorderSide(
+              color: Colors.white.withValues(alpha: 0.4),
+              width: 1.5,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: GestureDetector(
+            onTap: () => onChanged(!value),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'I agree to the ',
+                    style: AppTypography.caption12.copyWith(
+                      color: AppColors.secondaryText,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Terms of Service',
+                    style: AppTypography.caption12.copyWith(
+                      color: AppColors.primaryCyan,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' and ',
+                    style: AppTypography.caption12.copyWith(
+                      color: AppColors.secondaryText,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Privacy Policy',
+                    style: AppTypography.caption12.copyWith(
+                      color: AppColors.primaryCyan,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

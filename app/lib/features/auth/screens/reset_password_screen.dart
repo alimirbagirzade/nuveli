@@ -1,6 +1,8 @@
 // ============================================================================
-// forgot_password_screen.dart
-// Email girip "Send reset link" → Supabase magic link → ResetPasswordScreen
+// reset_password_screen.dart
+// Magic link sonrası user buraya gelir. Yeni password girer → kayıt.
+// Deep link router (go_router Chat 17'de) bu ekrana yönlendirir.
+// Şu an için Supabase onAuthStateChange event'inden manuel açılabilir.
 // ============================================================================
 
 import 'package:flutter/material.dart';
@@ -14,39 +16,41 @@ import '../providers/auth_provider.dart';
 import '../widgets/auth_link_text.dart';
 import '../widgets/auth_primary_button.dart';
 import '../widgets/auth_text_field.dart';
+import '../widgets/password_strength_indicator.dart';
 
-class ForgotPasswordScreen extends ConsumerStatefulWidget {
-  const ForgotPasswordScreen({super.key});
+class ResetPasswordScreen extends ConsumerStatefulWidget {
+  const ResetPasswordScreen({super.key});
 
   @override
-  ConsumerState<ForgotPasswordScreen> createState() =>
-      _ForgotPasswordScreenState();
+  ConsumerState<ResetPasswordScreen> createState() =>
+      _ResetPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
+class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailCtl = TextEditingController();
+  final _passCtl = TextEditingController();
+  final _confirmCtl = TextEditingController();
+  String _liveTypedPass = '';
   bool _loading = false;
-  bool _sent = false;
+  bool _done = false;
   String? _error;
 
   @override
   void dispose() {
-    _emailCtl.dispose();
+    _passCtl.dispose();
+    _confirmCtl.dispose();
     super.dispose();
   }
 
-  Future<void> _send() async {
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() {
       _loading = true;
       _error = null;
     });
     try {
-      await ref
-          .read(authServiceProvider)
-          .sendPasswordResetEmail(_emailCtl.text.trim());
-      if (mounted) setState(() => _sent = true);
+      await ref.read(authServiceProvider).updatePassword(_passCtl.text);
+      if (mounted) setState(() => _done = true);
     } on NuveliAuthException catch (e) {
       if (mounted) setState(() => _error = e.userMessage);
     } catch (e) {
@@ -64,18 +68,10 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     return NuveliBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-            onPressed: () => Navigator.maybePop(context),
-          ),
-        ),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
-            child: _sent ? _SuccessState(email: _emailCtl.text.trim()) : _form(),
+            child: _done ? _success() : _form(),
           ),
         ),
       ),
@@ -88,28 +84,37 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 16),
+          const SizedBox(height: 32),
           Text(
-            'Reset password',
+            'Set new password',
             style: AppTypography.heading32Bold.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
-            "Enter your email and we'll send you a link to reset your password.",
+            'Choose a strong password for your account.',
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
             ),
           ),
           const SizedBox(height: 32),
           AuthTextField(
-            controller: _emailCtl,
-            label: 'Email',
-            hint: 'you@example.com',
-            prefixIcon: Icons.mail_outline,
-            keyboardType: TextInputType.emailAddress,
+            controller: _passCtl,
+            label: 'New password',
+            prefixIcon: Icons.lock_outline,
+            obscureText: true,
+            validator: AuthValidators.password,
+            onChanged: (v) => setState(() => _liveTypedPass = v),
+          ),
+          PasswordStrengthIndicator(password: _liveTypedPass),
+          const SizedBox(height: 16),
+          AuthTextField(
+            controller: _confirmCtl,
+            label: 'Confirm password',
+            prefixIcon: Icons.lock_outline,
+            obscureText: true,
             textInputAction: TextInputAction.done,
-            onSubmitted: _send,
-            validator: AuthValidators.email,
+            onSubmitted: _submit,
+            validator: AuthValidators.confirmPassword(_passCtl),
           ),
           if (_error != null) ...[
             const SizedBox(height: 12),
@@ -120,32 +125,16 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           ],
           const SizedBox(height: 24),
           AuthPrimaryButton(
-            label: 'Send reset link',
+            label: 'Update password',
             isLoading: _loading,
-            onPressed: _send,
-          ),
-          const SizedBox(height: 24),
-          AuthLinkText(
-            prefix: 'Remember your password?',
-            linkText: 'Sign in',
-            onTap: () => Navigator.maybePop(context),
+            onPressed: _submit,
           ),
         ],
       ),
     );
   }
-}
 
-// ============================================================================
-// SUCCESS STATE
-// ============================================================================
-
-class _SuccessState extends StatelessWidget {
-  final String email;
-  const _SuccessState({required this.email});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _success() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -158,27 +147,27 @@ class _SuccessState extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.primaryCyan.withValues(alpha: 0.4),
-                  AppColors.primaryCyan.withValues(alpha: 0.05),
+                  AppColors.success.withValues(alpha: 0.4),
+                  AppColors.success.withValues(alpha: 0.05),
                 ],
               ),
             ),
             child: Icon(
-              Icons.mark_email_read_outlined,
+              Icons.check_circle_outline,
               size: 48,
-              color: AppColors.primaryCyan,
+              color: AppColors.success,
             ),
           ),
         ),
         const SizedBox(height: 32),
         Text(
-          'Check your email',
+          'Password updated',
           textAlign: TextAlign.center,
           style: AppTypography.heading32Bold.copyWith(color: Colors.white),
         ),
         const SizedBox(height: 12),
         Text(
-          "We've sent a password reset link to\n$email",
+          'You can now sign in with your new password.',
           textAlign: TextAlign.center,
           style: AppTypography.body14.copyWith(
             color: AppColors.secondaryText,
@@ -186,8 +175,12 @@ class _SuccessState extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         AuthPrimaryButton(
-          label: 'Back to sign in',
-          onPressed: () => Navigator.maybePop(context),
+          label: 'Continue',
+          onPressed: () {
+            // AuthGate logged-in user'ı otomatik Dashboard'a alır.
+            // Stack'i temizle.
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
         ),
       ],
     );
