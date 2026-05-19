@@ -7,6 +7,7 @@
 // ============================================================================
 
 import 'package:dio/dio.dart';
+import '../../../core/network/api_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../services/profile_service.dart';
@@ -20,7 +21,7 @@ final profileServiceProvider =
     Provider<ProfileService>((ref) => ProfileService());
 
 // Test'te override için
-final dioProvider = Provider<Dio>((ref) => Dio());
+final dioProvider = Provider<Dio>((ref) => ref.watch(apiClientProvider).raw);
 
 // ============================================================================
 // CURRENT USER PROFILE

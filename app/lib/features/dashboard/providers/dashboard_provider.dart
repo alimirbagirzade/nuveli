@@ -1,61 +1,65 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/network/authed_dio_provider.dart';
-import '../models/meal.dart';
-import '../models/today_summary.dart';
+import '../../../core/data/repositories/meals_repository.dart';
+import '../../../core/data/repositories/profile_repository.dart';
+import '../models/dashboard_data.dart';
 
-/// Fetches today's full nutrition summary (calories, macros, water, meal count).
+/// Dashboard provider.
 ///
-/// Backend: `GET /meals/today/summary`
-final dashboardSummaryProvider = FutureProvider<TodaySummary>((ref) async {
-  final dio = ref.read(authedDioProvider);
-  final res = await dio.get('/meals/today/summary');
-  return TodaySummary.fromJson(res.data as Map<String, dynamic>);
-});
-
-/// Fetches today's meals (used in the "Today's meals" list section).
+/// Aggregates three backend endpoints in **one parallel round-trip**:
+///   - `/meals/today/summary`  → consumed + target totals (server-computed)
+///   - `/meals?date=today`     → today's meal list for the timeline
+///   - `/me`                   → profile (only needed if the summary
+///                               endpoint doesn't include the macro targets)
 ///
-/// Backend: `GET /meals?date=YYYY-MM-DD`
-final todayMealsProvider = FutureProvider<List<Meal>>((ref) async {
-  final dio = ref.read(authedDioProvider);
-  final today = DateTime.now().toIso8601String().split('T').first;
-  final res = await dio.get('/meals', queryParameters: {'date': today});
-  final list = (res.data as List?) ?? const [];
-  return list
-      .whereType<Map<String, dynamic>>()
-      .map(Meal.fromJson)
-      .toList()
-    ..sort((a, b) => b.consumedAt.compareTo(a.consumedAt)); // newest first
-});
-
-/// Action provider: log water and invalidate summary so UI updates instantly.
+/// We rely on the backend to compute `targetProteinG / targetCarbsG /
+/// targetFatG` server-side and surface them on [TodaySummary]. If the
+/// backend only returns `dailyCalorieTarget`, derive the macros from
+/// the profile's percentages — see the commented fallback below.
 ///
-/// Usage:
+/// UI usage is unchanged from the mock version:
 /// ```dart
-/// await ref.read(logWaterProvider)(250);
+/// final data = ref.watch(dashboardProvider);
+/// data.when(data: (d) => ..., loading: () => ..., error: ...);
 /// ```
-final logWaterProvider = Provider<Future<void> Function(int amountMl)>((ref) {
-  return (int amountMl) async {
-    final dio = ref.read(authedDioProvider);
-    await dio.post(
-      '/water/logs',
-      data: {
-        'amount_ml': amountMl,
-        'logged_at': DateTime.now().toUtc().toIso8601String(),
-      },
-    );
-    // Refresh summary so water count + percent update immediately.
-    ref.invalidate(dashboardSummaryProvider);
-  };
-});
+///
+/// Refresh after logging a new meal:
+/// ```dart
+/// ref.invalidate(dashboardProvider);
+/// ```
+final dashboardProvider = FutureProvider<DashboardData>((ref) async {
+  final mealsRepo = ref.watch(mealsRepositoryProvider);
 
-/// Convenience: refresh both summary and meals in parallel (used by pull-to-refresh).
-Future<void> refreshDashboard(WidgetRef ref) async {
-  ref.invalidate(dashboardSummaryProvider);
-  ref.invalidate(todayMealsProvider);
-  // Wait for both to complete so RefreshIndicator's spinner stays correct.
-  await Future.wait([
-    ref.read(dashboardSummaryProvider.future),
-    ref.read(todayMealsProvider.future),
-  ]);
-}
+  // Dart 3 record parallel-fetch — both calls fire simultaneously.
+  final (summary, meals) = await (
+    mealsRepo.getTodaysSummary(),
+    mealsRepo.getTodaysMeals(),
+  ).wait;
+
+  return DashboardData(
+    consumedCalories: summary.consumedCalories,
+    targetCalories: summary.targetCalories,
+    macros: MacrosData(
+      proteinCurrent: summary.consumedProteinG,
+      proteinTarget: summary.targetProteinG,
+      carbsCurrent: summary.consumedCarbsG,
+      carbsTarget: summary.targetCarbsG,
+      fatCurrent: summary.consumedFatG,
+      fatTarget: summary.targetFatG,
+    ),
+    todaysMeals: meals,
+  );
+
+  // -----------------------------------------------------------------
+  // Fallback if the backend doesn't compute macro targets server-side.
+  // Uncomment this block and remove the macros lines above to derive
+  // them from the user's profile percentages instead.
+  // -----------------------------------------------------------------
+  //
+  // final profileRepo = ref.watch(profileRepositoryProvider);
+  // final profile = await profileRepo.getCurrentProfile();
+  // final target = summary.targetCalories;
+  // final proteinTargetG = (target * profile.proteinTargetPct / 100) / 4;
+  // final carbsTargetG   = (target * profile.carbsTargetPct   / 100) / 4;
+  // final fatTargetG     = (target * profile.fatTargetPct     / 100) / 9;
+});
