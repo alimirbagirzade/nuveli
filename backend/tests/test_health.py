@@ -1,42 +1,45 @@
 """
-Backend temel endpoint testleri.
-pytest ile çalıştır: pytest tests/
+Smoke tests for meta endpoints (/health, /).
+These verify the app boots and the router graph is wired up.
 """
-import pytest
-from fastapi.testclient import TestClient
-
-
-@pytest.fixture
-def client():
-    """Test client fixture - her testte yeni bir client."""
-    from app.main import app
-    return TestClient(app)
 
 
 def test_health_endpoint(client):
-    """Health endpoint 200 döner ve status: ok içerir."""
     response = client.get("/health")
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ok"
-    assert "timestamp" in data
+    assert "version" in data
+    assert "env" in data
 
 
-def test_cors_headers(client):
-    """CORS header'ları doğru set edilmiş mi?"""
-    response = client.options("/health")
+def test_root_endpoint(client):
+    response = client.get("/")
     assert response.status_code == 200
-    # CORS middleware ekli olmalı
+    data = response.json()
+    assert data["name"]
+    assert data["docs"] == "/docs"
 
 
-def test_404_on_unknown_route(client):
-    """Olmayan endpoint 404 döner."""
-    response = client.get("/this-route-does-not-exist")
-    assert response.status_code == 404
-
-
-def test_docs_available(client):
-    """Swagger docs erişilebilir olmalı."""
+def test_openapi_docs_available(client):
     response = client.get("/docs")
     assert response.status_code == 200
-    assert b"swagger" in response.content.lower()
+
+
+def test_openapi_schema_valid(client):
+    response = client.get("/openapi.json")
+    assert response.status_code == 200
+    schema = response.json()
+    assert schema["info"]["title"]
+    # Ensure all 10 routers are mounted
+    paths = schema["paths"]
+    assert any(p.startswith("/me") for p in paths)
+    assert any(p.startswith("/meals") for p in paths)
+    assert any(p.startswith("/water") for p in paths)
+    assert any(p.startswith("/habits") for p in paths)
+    assert any(p.startswith("/weight") for p in paths)
+    assert any(p.startswith("/meal-plans") for p in paths)
+    assert any(p.startswith("/coach") for p in paths)
+    assert any(p.startswith("/analytics") for p in paths)
+    assert any(p.startswith("/achievements") for p in paths)
+    assert any(p.startswith("/premium") for p in paths)

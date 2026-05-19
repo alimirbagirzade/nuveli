@@ -1,0 +1,114 @@
+# Render.com Blueprint
+# Reference: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: nuveli-api
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: LOG_LEVEL
+        value: INFO
+      - key: CORS_ORIGINS
+        value: "*"
+      # --- Secrets (set manually in Render dashboard, not in this file) ---
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: REVENUECAT_WEBHOOK_SECRET
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+
+  # --- Cron jobs (paid plans only; on free tier run them manually) ---
+  - type: cron
+    name: nuveli-daily-insights
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    schedule: "0 2 * * *"  # 02:00 UTC daily
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m cron.daily_insights_job
+    envVars:
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_URL
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_SERVICE_ROLE_KEY
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_JWT_SECRET
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: OPENAI_API_KEY
+
+  - type: cron
+    name: nuveli-streak-resetter
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    schedule: "0 1 * * *"  # 01:00 UTC daily (before insights)
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m cron.streak_resetter_job
+    envVars:
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_URL
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_SERVICE_ROLE_KEY
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_JWT_SECRET
+
+  - type: cron
+    name: nuveli-achievement-checker
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    schedule: "0 */6 * * *"  # Every 6 hours
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m cron.achievement_checker_job
+    envVars:
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_URL
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_SERVICE_ROLE_KEY
+      - fromService:
+          type: web
+          name: nuveli-api
+          envVarKey: SUPABASE_JWT_SECRET

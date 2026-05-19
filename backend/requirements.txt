@@ -1,36 +1,37 @@
-# =============================================================================
-# Nuveli Backend — Requirements (Chat 11b sonrası)
-#
-# Mevcut requirements.txt'ne EKLENECEK satırlar (yıldız ile işaretli).
-# Hepsini koymak istersen direkt bu dosyayı kullanabilirsin.
-# =============================================================================
+# Nuveli Backend — Pinned Dependencies
+# Python 3.11+ required
 
-# Web
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
+# --- Web framework ---
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
 python-multipart==0.0.9
 
-# Validation
-pydantic==2.9.2
+# --- Validation & settings ---
+pydantic[email]==2.6.1
+pydantic-settings==2.2.1
+email-validator==2.1.0.post1
 
-# Auth (Chat 16'da kullanılacak)
+# --- Auth ---
 python-jose[cryptography]==3.3.0
 
-# HTTP
-httpx==0.27.2
+# --- HTTP ---
+httpx==0.27.0
 
-# Database / Auth
-supabase==2.8.1
+# --- Supabase ---
+supabase==2.4.0
 
-# AI                                              ⭐ Chat 11b
-openai==1.51.0
+# --- AI ---
+openai==1.12.0
 
-# Cron (Render Scheduler kullanılırsa gerekli değil, GH Actions için de yok)
-# apscheduler==3.10.4  # opsiyonel, lokal cron için
+# --- Background / cron ---
+apscheduler==3.10.4
 
-# Utility
+# --- Observability (optional, gated by SENTRY_DSN env var) ---
+sentry-sdk[fastapi]==1.40.6
+
+# --- Env file loading (Pydantic v2 dependency) ---
 python-dotenv==1.0.1
 
-# Test
-pytest==8.3.3
-pytest-asyncio==0.24.0
+# --- Testing ---
+pytest==8.0.1
+pytest-asyncio==0.23.5
