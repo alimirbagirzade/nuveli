@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/network/api_exception.dart';
 import 'providers/dashboard_provider.dart';
+import '../meal_scan/meal_scan_screen.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
 import 'widgets/macros_row.dart';
@@ -87,10 +88,11 @@ class DashboardScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: AddFoodButton(
-                  onPressed: () => _showComingSoon(
+                  onPressed: () => Navigator.push(
                     context,
-                    'AI Meal Scan ships in Chat 5.',
-                  ),
+                    MaterialPageRoute(builder: (_) => const MealScanScreen()),
+  ),
+),
                 ),
               ),
             ],
