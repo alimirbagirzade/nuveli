@@ -2,36 +2,36 @@
 # Python 3.11+ required
 
 # --- Web framework ---
-fastapi==0.110.0
-uvicorn[standard]==0.27.1
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
 python-multipart==0.0.9
 
 # --- Validation & settings ---
-pydantic[email]==2.6.1
-pydantic-settings==2.2.1
-email-validator==2.1.0.post1
+pydantic[email]==2.9.2
+pydantic-settings==2.5.2
+email-validator==2.2.0
 
 # --- Auth ---
 python-jose[cryptography]==3.3.0
 
 # --- HTTP ---
-httpx==0.27.0
+httpx==0.27.2
 
 # --- Supabase ---
-supabase==2.4.0
+supabase==2.8.1
 
 # --- AI ---
-openai==1.12.0
+openai==1.51.0
 
 # --- Background / cron ---
 apscheduler==3.10.4
 
-# --- Observability (optional, gated by SENTRY_DSN env var) ---
-sentry-sdk[fastapi]==1.40.6
+# --- Observability (optional) ---
+sentry-sdk[fastapi]==2.14.0
 
-# --- Env file loading (Pydantic v2 dependency) ---
+# --- Env file loading ---
 python-dotenv==1.0.1
 
 # --- Testing ---
-pytest==8.0.1
-pytest-asyncio==0.23.5
+pytest==8.3.3
+pytest-asyncio==0.24.0
