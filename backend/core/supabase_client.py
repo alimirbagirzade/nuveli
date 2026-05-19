@@ -21,7 +21,7 @@ def get_supabase() -> Client:
     )
 
 
-def init_supabase() -> None:
+async def init_supabase() -> None:
     """Startup health check — verifies Supabase is reachable."""
     client = get_supabase()
     try:
