@@ -1,204 +1,340 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nuveli/core/theme/app_colors.dart';
-import 'package:nuveli/core/theme/app_typography.dart';
-import 'package:nuveli/shared/widgets/nuveli_background.dart';
-import 'package:nuveli/shared/widgets/nuveli_bottom_nav.dart';
 
+import '../../core/network/api_exception.dart';
 import 'providers/dashboard_provider.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
 import 'widgets/macros_row.dart';
 import 'widgets/meals_section.dart';
 import 'widgets/todays_summary_section.dart';
+import 'widgets/water_quick_card.dart';
 
+/// Main Dashboard screen — the home of the app once authenticated.
+///
+/// Layout (top to bottom):
+///   1. Header (date + greeting + avatar)
+///   2. Today's Summary (big calorie ring)
+///   3. Macros row (Protein / Carbs / Fat)
+///   4. Water quick card (+250ml)
+///   5. Today's meals list
+///   6. Add Food CTA (sticky above bottom nav)
+///   + Bottom nav placeholder (real navigation lands in Chat 17)
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dashboardAsync = ref.watch(dashboardProvider);
+    final summaryAsync = ref.watch(dashboardSummaryProvider);
+    final mealsAsync = ref.watch(todayMealsProvider);
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: AppColors.cardBackground,
-      ),
-      child: NuveliBackground(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          extendBody: true,
-          body: SafeArea(
-            bottom: false,
-            child: RefreshIndicator(
-              onRefresh: () async {
-                ref.invalidate(dashboardProvider);
-                await ref.read(dashboardProvider.future);
-              },
-              color: AppColors.primaryCyan,
-              backgroundColor: AppColors.cardBackground,
-              child: dashboardAsync.when(
-                loading: () => const _DashboardSkeleton(),
-                error: (err, _) => _DashboardError(
-                  onRetry: () => ref.invalidate(dashboardProvider),
+    return Scaffold(
+      backgroundColor: const Color(0xFF050A1F),
+      body: _GradientBackground(
+        child: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  color: const Color(0xFF00D4FF),
+                  backgroundColor: const Color(0xFF142346),
+                  onRefresh: () => refreshDashboard(ref),
+                  child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(bottom: 16),
+                    children: [
+                      const DashboardHeader(),
+                      summaryAsync.when(
+                        loading: () => const _DashboardSkeleton(),
+                        error: (e, _) => _ErrorBlock(
+                          message: e is ApiException
+                              ? e.userMessage
+                              : 'Could not load summary.',
+                          onRetry: () =>
+                              ref.invalidate(dashboardSummaryProvider),
+                        ),
+                        data: (summary) => Column(
+                          children: [
+                            TodaysSummarySection(summary: summary),
+                            MacrosRow(summary: summary),
+                            WaterQuickCard(
+                              consumedMl: summary.consumedWaterMl,
+                              targetMl: summary.dailyWaterTargetMl,
+                              onAddWater: (amount) async {
+                                await ref.read(logWaterProvider)(amount);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      mealsAsync.when(
+                        loading: () => const SizedBox.shrink(),
+                        error: (_, __) => const SizedBox.shrink(),
+                        data: (meals) => MealsSection(
+                          meals: meals,
+                          onSeeAll: () => _showComingSoon(
+                            context,
+                            'Full meal history lands in Chat 17 (Navigation).',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                data: (data) => _DashboardContent(data: data),
               ),
-            ),
+              // Sticky CTA above bottom nav
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: AddFoodButton(
+                  onPressed: () => _showComingSoon(
+                    context,
+                    'AI Meal Scan ships in Chat 5.',
+                  ),
+                ),
+              ),
+            ],
           ),
-          bottomNavigationBar: NuveliBottomNav(
-            currentIndex: 0,
-            onTap: (i) => debugPrint(
-              'Bottom nav tapped: index=$i - Chat 12 will wire go_router',
-            ),
-          ),
+        ),
+      ),
+      bottomNavigationBar: _BottomNavPlaceholder(
+        onTap: (label) => _showComingSoon(
+          context,
+          '$label is wired up in Chat 17 (Navigation).',
         ),
       ),
     );
   }
+
+  void _showComingSoon(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: const Color(0xFF142346),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+  }
 }
 
-class _DashboardContent extends StatelessWidget {
-  final DashboardData data;
-  const _DashboardContent({required this.data});
+// ============================================================================
+// Background
+// ============================================================================
+
+class _GradientBackground extends StatelessWidget {
+  final Widget child;
+  const _GradientBackground({required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF050A1F), Color(0xFF0B1A3D)],
+        ),
       ),
-      slivers: [
-        const SliverToBoxAdapter(
-          child: DashboardHeader(userName: 'Alex'),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate([
-              const SizedBox(height: 8),
-              TodaysSummarySection(
-                consumed: data.consumedCalories,
-                target: data.targetCalories,
-              ),
-              const SizedBox(height: 24),
-              MacrosRow(macros: data.macros),
-              const SizedBox(height: 32),
-              MealsSection(
-                meals: data.todaysMeals,
-                onViewAll: () => debugPrint('View all tapped'),
-                onMealTap: (meal) => debugPrint(
-                    'Tapped meal: ${meal.name} (${meal.calories} kcal)'),
-              ),
-              const SizedBox(height: 16),
-              const AddFoodButton(),
-              const SizedBox(height: 100), // bottom nav clearance
-            ]),
-          ),
-        ),
-      ],
+      child: child,
     );
   }
 }
 
-/// Lightweight skeleton (no shimmer dependency needed).
-/// Swap for a `shimmer` version later if the package gets added.
+// ============================================================================
+// Loading skeleton
+// ============================================================================
+
 class _DashboardSkeleton extends StatelessWidget {
   const _DashboardSkeleton();
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+    return Column(
       children: [
-        _bar(width: 180, height: 16),
-        const SizedBox(height: 32),
-        Center(child: _circle(size: 200)),
-        const SizedBox(height: 24),
-        _bar(height: 100),
-        const SizedBox(height: 32),
-        _bar(height: 220),
-        const SizedBox(height: 24),
-        _bar(height: 56),
-      ],
-    );
-  }
-
-  Widget _bar({double? width, required double height}) => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(16),
-        ),
-      );
-
-  Widget _circle({required double size}) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
-          shape: BoxShape.circle,
-        ),
-      );
-}
-
-class _DashboardError extends StatelessWidget {
-  final VoidCallback onRetry;
-  const _DashboardError({required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 100),
-      children: [
-        Icon(
-          Icons.cloud_off_rounded,
-          size: 56,
-          color: AppColors.secondaryText.withOpacity(0.6),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          "Couldn't load dashboard",
-          textAlign: TextAlign.center,
-          style: AppTypography.cardTitle.copyWith(
-            color: AppColors.primaryText,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Pull down to retry or tap below.',
-          textAlign: TextAlign.center,
-          style: AppTypography.body.copyWith(
-            color: AppColors.secondaryText,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 24),
-        Center(
-          child: TextButton(
-            onPressed: onRetry,
-            child: Text(
-              'Retry',
-              style: AppTypography.body.copyWith(
-                color: AppColors.primaryCyan,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+        // Hero card skeleton
+        Container(
+          margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          height: 320,
+          decoration: _skeletonDecoration(),
+          child: const Center(
+            child: SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation(Color(0xFF4DDBFF)),
               ),
             ),
           ),
         ),
+        // Macros skeleton
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: List.generate(
+              3,
+              (i) => Expanded(
+                child: Container(
+                  height: 90,
+                  margin: EdgeInsets.only(left: i == 0 ? 0 : 10),
+                  decoration: _skeletonDecoration(),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Water skeleton
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          height: 64,
+          decoration: _skeletonDecoration(),
+        ),
       ],
+    );
+  }
+
+  BoxDecoration _skeletonDecoration() => BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: const Color(0xFF142346).withOpacity(0.4),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.05),
+          width: 1,
+        ),
+      );
+}
+
+// ============================================================================
+// Error block
+// ============================================================================
+
+class _ErrorBlock extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+  const _ErrorBlock({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: const Color(0xFF142346).withOpacity(0.5),
+        border: Border.all(
+          color: const Color(0xFFFF9F45).withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          const Icon(
+            Icons.cloud_off_outlined,
+            color: Color(0xFFFF9F45),
+            size: 32,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 16),
+          OutlinedButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(Icons.refresh, size: 18),
+            label: const Text('Retry'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: const Color(0xFF4DDBFF),
+              side: BorderSide(color: const Color(0xFF4DDBFF).withOpacity(0.5)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// Bottom nav placeholder (Chat 17 will replace this with the real one)
+// ============================================================================
+
+class _BottomNavPlaceholder extends StatelessWidget {
+  final void Function(String label) onTap;
+  const _BottomNavPlaceholder({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final items = [
+      ('Dashboard', Icons.dashboard_rounded, true),
+      ('Scan', Icons.camera_alt_outlined, false),
+      ('Analytics', Icons.insights_outlined, false),
+      ('Profile', Icons.person_outline, false),
+    ];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF050A1F).withOpacity(0.95),
+        border: Border(
+          top: BorderSide(color: Colors.white.withOpacity(0.05), width: 1),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: items.map((it) {
+              final (label, icon, active) = it;
+              return Expanded(
+                child: InkWell(
+                  onTap: () => onTap(label),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          icon,
+                          color: active
+                              ? const Color(0xFF4DDBFF)
+                              : const Color(0xFF6E7B91),
+                          size: 22,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          label,
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight:
+                                active ? FontWeight.w600 : FontWeight.w500,
+                            color: active
+                                ? const Color(0xFF4DDBFF)
+                                : const Color(0xFF6E7B91),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -119,4 +119,13 @@ class AppTypography {
     height: 1.2,
     color: AppColors.textPrimary,
   );
+
+  // Chat 15 auth ek alias'lar
+  static const TextStyle heading48Bold = heroLarge;
+  static const TextStyle heading32Bold = heroMedium;
+  static const TextStyle heading28 = titleLarge;
+  static const TextStyle body18 = bodyLarge;
+  static const TextStyle body16 = body;
+  static const TextStyle body14 = bodyMedium;
+  static const TextStyle caption12 = caption;
 }

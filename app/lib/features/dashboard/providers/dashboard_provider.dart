@@ -1,40 +1,61 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/mock_meals.dart';
-import '../models/macros_data.dart';
+import '../../../core/network/authed_dio_provider.dart';
 import '../models/meal.dart';
+import '../models/today_summary.dart';
 
-class DashboardData {
-  final double consumedCalories;
-  final double targetCalories;
-  final MacrosData macros;
-  final List<Meal> todaysMeals;
-
-  const DashboardData({
-    required this.consumedCalories,
-    required this.targetCalories,
-    required this.macros,
-    required this.todaysMeals,
-  });
-
-  double get remainingCalories =>
-      (targetCalories - consumedCalories).clamp(0, targetCalories).toDouble();
-
-  /// 0..1
-  double get progress => targetCalories == 0
-      ? 0
-      : (consumedCalories / targetCalories).clamp(0.0, 1.0);
-}
-
-/// Mock data + 600ms fake loading for realistic feel.
-/// Chat 15: Replace body with a call to MealsRepository.
-final dashboardProvider = FutureProvider<DashboardData>((ref) async {
-  await Future.delayed(const Duration(milliseconds: 600));
-
-  return DashboardData(
-    consumedCalories: DashboardMockData.consumedCalories,
-    targetCalories: DashboardMockData.targetCalories,
-    macros: DashboardMockData.macros,
-    todaysMeals: mockTodaysMeals,
-  );
+/// Fetches today's full nutrition summary (calories, macros, water, meal count).
+///
+/// Backend: `GET /meals/today/summary`
+final dashboardSummaryProvider = FutureProvider<TodaySummary>((ref) async {
+  final dio = ref.read(authedDioProvider);
+  final res = await dio.get('/meals/today/summary');
+  return TodaySummary.fromJson(res.data as Map<String, dynamic>);
 });
+
+/// Fetches today's meals (used in the "Today's meals" list section).
+///
+/// Backend: `GET /meals?date=YYYY-MM-DD`
+final todayMealsProvider = FutureProvider<List<Meal>>((ref) async {
+  final dio = ref.read(authedDioProvider);
+  final today = DateTime.now().toIso8601String().split('T').first;
+  final res = await dio.get('/meals', queryParameters: {'date': today});
+  final list = (res.data as List?) ?? const [];
+  return list
+      .whereType<Map<String, dynamic>>()
+      .map(Meal.fromJson)
+      .toList()
+    ..sort((a, b) => b.consumedAt.compareTo(a.consumedAt)); // newest first
+});
+
+/// Action provider: log water and invalidate summary so UI updates instantly.
+///
+/// Usage:
+/// ```dart
+/// await ref.read(logWaterProvider)(250);
+/// ```
+final logWaterProvider = Provider<Future<void> Function(int amountMl)>((ref) {
+  return (int amountMl) async {
+    final dio = ref.read(authedDioProvider);
+    await dio.post(
+      '/water/logs',
+      data: {
+        'amount_ml': amountMl,
+        'logged_at': DateTime.now().toUtc().toIso8601String(),
+      },
+    );
+    // Refresh summary so water count + percent update immediately.
+    ref.invalidate(dashboardSummaryProvider);
+  };
+});
+
+/// Convenience: refresh both summary and meals in parallel (used by pull-to-refresh).
+Future<void> refreshDashboard(WidgetRef ref) async {
+  ref.invalidate(dashboardSummaryProvider);
+  ref.invalidate(todayMealsProvider);
+  // Wait for both to complete so RefreshIndicator's spinner stays correct.
+  await Future.wait([
+    ref.read(dashboardSummaryProvider.future),
+    ref.read(todayMealsProvider.future),
+  ]);
+}

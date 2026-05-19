@@ -1,35 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:nuveli/shared/widgets/nuveli_button.dart';
 
+/// The big "Add Food" call-to-action that sits above the bottom nav.
+/// In Chat 5 this will open the AI Meal Scan flow.
 class AddFoodButton extends StatelessWidget {
-  final VoidCallback? onPressed;
-
-  const AddFoodButton({super.key, this.onPressed});
+  final VoidCallback onPressed;
+  const AddFoodButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: NuveliButton(
-        onPressed: onPressed ??
-            () =>
-                debugPrint('Add Food tapped - Chat 5 will open MealScanScreen'),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.add, size: 20, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Add Food',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-                letterSpacing: 0.2,
+      height: 56,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(28),
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              gradient: const LinearGradient(
+                colors: [Color(0xFF00D4FF), Color(0xFF4DDBFF)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF00D4FF).withOpacity(0.5),
+                  blurRadius: 24,
+                  spreadRadius: -4,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: const Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.add_circle_outline,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Add Food',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

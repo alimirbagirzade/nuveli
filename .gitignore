@@ -99,3 +99,5 @@ chat*_status_report.md
 CHAT*_PROGRESS_NOTE.md
 .DS_Store
 supabase/backup/*.sql
+/_disabled_chat16/
+*.bak
