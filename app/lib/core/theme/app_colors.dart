@@ -15,13 +15,13 @@ class AppColors {
   // ═══════════════════════════════════════════════════════════════
   // CORE BRAND (her temada ayni)
   // ═══════════════════════════════════════════════════════════════
-  static const Color primary = Color(0xFF14C8D8);      // Aqua
+  static const Color primary = Color(0xFF14C8D8); // Aqua
   static const Color primaryLight = Color(0xFF14C8D8);
   static const Color primaryDark = Color(0xFF051824);
   static const Color primary600 = Color(0xFF0A6C8C);
   static const Color primary500 = Color(0xFF0C7AA0);
 
-  static const Color accent = Color(0xFF7BE6D5);       // Seafoam
+  static const Color accent = Color(0xFF7BE6D5); // Seafoam
   static const Color accentLight = Color(0xFF7BE6D5);
   static const Color accentAqua = Color(0xFF14C8D8);
   static const Color accentSeafoam = Color(0xFF7BE6D5);
@@ -89,6 +89,49 @@ class AppColors {
     colors: [Color(0xFF051824), Color(0xFF0A2A3D), Color(0xFF0F3A52)],
     stops: [0.0, 0.5, 1.0],
   );
+
+  // ═══════════════════════════════════════════════════════════════
+  // CHAT 1-11 BACKWARDS COMPAT ALIASES
+  // (Master plan'a göre yazılmış Chat 4-11 ekranları için)
+  // YENİ İSİMLER — ESKİLERİ BOZMAZ
+  // ═══════════════════════════════════════════════════════════════
+
+  // ─── Cyan paleti (master plan adlandırması) ───
+  static const Color primaryCyan = primary; // #14C8D8 (aqua)
+  static const Color cyanGlow = Color(0xFF4DDBFF); // master plan: parlak cyan
+  static const Color cyanDark = primary600; // #0A6C8C
+
+  // ─── Yüzey / arka plan aliases ───
+  static const Color cardBackground = card; // #102B3F
+  static const Color primaryBackground = background; // #051824
+  static const Color bgPrimaryStart = background; // gradient için
+  static const Color bgPrimaryEnd = Color(0xFF0B1A3D); // master plan: koyu mavi
+
+  // ─── Makro renkleri (master plan adlandırması) ───
+  static const Color macroProtein = Color(0xFF3DDC97); // mint yeşil
+  static const Color macroCarbs = Color(0xFF6BCB77); // yeşil
+  static const Color macroFat = Color(0xFFFF9F45); // turuncu
+
+  // ─── Bazı kullanılan kısa isimler ───
+  static const Color proteinColor = macroProtein;
+  static const Color carbsColor = macroCarbs;
+  static const Color fatColor = macroFat;
+
+  // ─── Durum aliases ───
+  static const Color danger = error; // #C84D5B
+
+  // ─── Streak (turuncu gradient) ───
+  static const Color streakStart = Color(0xFFFF6B35);
+  static const Color streakEnd = Color(0xFFFF9F45);
+  static const Color streakOrange = streakStart;
+
+  // ─── Text aliases (eski isimler) ───
+  static const Color primaryText = textPrimary;
+  static const Color secondaryText = textSecondary;
+  static const Color tertiaryText = textTertiary;
+
+  // ─── Glass effect ───
+  static const Color borderGlass = Color(0x1AFFFFFF); // rgba(255,255,255,0.1)
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -105,17 +148,25 @@ class AppColorsTheme {
 
   bool get _isDark => Theme.of(context).brightness == Brightness.dark;
 
-  Color get background => _isDark ? AppColors.background : AppColors.lightBackground;
+  Color get background =>
+      _isDark ? AppColors.background : AppColors.lightBackground;
   Color get surface => _isDark ? AppColors.surface : AppColors.lightSurface;
-  Color get surfaceMuted => _isDark ? AppColors.surfaceMuted : AppColors.lightSurfaceMuted;
+  Color get surfaceMuted =>
+      _isDark ? AppColors.surfaceMuted : AppColors.lightSurfaceMuted;
   Color get card => _isDark ? AppColors.card : AppColors.lightCard;
-  Color get surfaceElevated => _isDark ? AppColors.surfaceElevated : AppColors.lightSurfaceElevated;
-  Color get surfaceHighlight => _isDark ? AppColors.surfaceHighlight : AppColors.lightSurfaceHighlight;
-  Color get textPrimary => _isDark ? AppColors.textPrimary : AppColors.lightTextPrimary;
-  Color get textSecondary => _isDark ? AppColors.textSecondary : AppColors.lightTextSecondary;
-  Color get textTertiary => _isDark ? AppColors.textTertiary : AppColors.lightTextTertiary;
+  Color get surfaceElevated =>
+      _isDark ? AppColors.surfaceElevated : AppColors.lightSurfaceElevated;
+  Color get surfaceHighlight =>
+      _isDark ? AppColors.surfaceHighlight : AppColors.lightSurfaceHighlight;
+  Color get textPrimary =>
+      _isDark ? AppColors.textPrimary : AppColors.lightTextPrimary;
+  Color get textSecondary =>
+      _isDark ? AppColors.textSecondary : AppColors.lightTextSecondary;
+  Color get textTertiary =>
+      _isDark ? AppColors.textTertiary : AppColors.lightTextTertiary;
   Color get border => _isDark ? AppColors.border : AppColors.lightBorder;
-  Color get borderStrong => _isDark ? AppColors.borderStrong : AppColors.lightBorderStrong;
+  Color get borderStrong =>
+      _isDark ? AppColors.borderStrong : AppColors.lightBorderStrong;
   Color get divider => border;
   Color get primary => _isDark ? AppColors.primary : AppColors.lightPrimary;
 }

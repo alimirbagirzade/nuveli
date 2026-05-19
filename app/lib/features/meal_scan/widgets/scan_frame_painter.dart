@@ -25,7 +25,7 @@ class ScanFramePainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     // Top-left
-    canvas.drawLine(Offset(0, cornerLength), Offset(0, 0), cornerPaint);
+    canvas.drawLine(Offset(0, cornerLength), const Offset(0, 0), cornerPaint);
     canvas.drawLine(const Offset(0, 0), Offset(cornerLength, 0), cornerPaint);
 
     // Top-right

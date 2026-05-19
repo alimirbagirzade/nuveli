@@ -89,3 +89,13 @@ nuveli_consolidate.sh
 _backup_consolidate_*.tar.gz
 _archive/
 nuveli_consolidate.sh
+
+# Chat 1 sonrası eklendi — geçici dosyalar repo'ya girmesin
+*.bak
+*.bak2
+**/test_*.dart
+!**/test/**
+chat*_status_report.md
+CHAT*_PROGRESS_NOTE.md
+.DS_Store
+supabase/backup/*.sql

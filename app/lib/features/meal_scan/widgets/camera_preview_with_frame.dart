@@ -51,9 +51,9 @@ class CameraPreviewWithFrame extends StatelessWidget {
               ),
 
               // Üst katman: scan frame overlay
-              IgnorePointer(
+              const IgnorePointer(
                 child: CustomPaint(
-                  painter: const ScanFramePainter(),
+                  painter: ScanFramePainter(),
                   size: Size.infinite,
                 ),
               ),
