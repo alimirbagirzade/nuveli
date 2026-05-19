@@ -26,6 +26,7 @@ class RecommendedAction(BaseModel):
 
 
 class AIInsightResponse(BaseModel):
+model_config = {"protected_namespaces": ()}
     id: Optional[UUID] = None
     user_id: UUID
     insight_date: date
