@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../features/profile/goals_overview/models/user_goals.dart';
+import '../../../features/profile/models/weight_goal.dart';
 import '../../../features/profile/models/weight_log.dart';
 import '../../../features/profile/models/weight_trend.dart';
 import '../../network/api_client.dart';
@@ -10,11 +10,13 @@ import 'base_repository.dart';
 /// Weight tracking — daily logs, long-term goal, smoothed trend.
 ///
 /// `WeightTrend` is what the analytics line-chart consumes: the
-/// backend returns smoothed (EWMA) weekly points to avoid the
-/// daily-fluctuation noise that confuses users about progress.
+/// backend returns smoothed weekly points so the client doesn't
+/// have to roll its own EWMA.
 ///
-/// Note: `WeightGoal` lives in `profile/goals_overview/models/user_goals.dart`
-/// (alongside other goal types defined for the goals-overview UI).
+/// Reads (`weightGoalProvider`, `weightTrendProvider`) are already
+/// wired in `profile_provider.dart`. This repository covers the
+/// **mutation side** — adding a weight log, upserting a goal —
+/// and is consumed by [ProfileActions] in the provider layer.
 class WeightRepository extends BaseRepository {
   WeightRepository(super.apiClient);
 
@@ -35,8 +37,6 @@ class WeightRepository extends BaseRepository {
         .toList(growable: false);
   }
 
-  /// Log a weight reading. `loggedAt` defaults to today on the
-  /// server when omitted; pass it explicitly when back-filling.
   Future<WeightLog> addWeightLog({
     required double kg,
     DateTime? loggedAt,
@@ -71,9 +71,6 @@ class WeightRepository extends BaseRepository {
       );
       return WeightGoal.fromJson(response);
     } on Exception catch (e) {
-      // Bare-string check avoids importing the exception type
-      // ladder and keeps repositories decoupled. Anything else
-      // bubbles up.
       if (e.toString().toLowerCase().contains('not found')) return null;
       rethrow;
     }
@@ -81,17 +78,20 @@ class WeightRepository extends BaseRepository {
 
   /// Upsert the user's weight goal. The backend stores at most one
   /// active goal per user; calling this again replaces it.
+  ///
+  /// `direction` matches [WeightGoalDirection] enum values: 'lose',
+  /// 'gain', or 'maintain'.
   Future<WeightGoal> setGoal({
     required double targetKg,
-    required DateTime targetDate,
-    String? goalType, // 'lose' | 'maintain' | 'gain'
+    DateTime? targetDate,
+    required String direction,
   }) async {
     final response = await apiClient.put<Map<String, dynamic>>(
       ApiEndpoints.weightGoal,
       data: {
         'target_kg': targetKg,
-        'target_date': formatDateOnly(targetDate),
-        if (goalType != null) 'goal_type': goalType,
+        if (targetDate != null) 'target_date': formatDateOnly(targetDate),
+        'direction': direction,
       },
     );
     return WeightGoal.fromJson(response);
@@ -102,10 +102,11 @@ class WeightRepository extends BaseRepository {
   }
 
   // ---------------------------------------------------------------
-  // Trend (for analytics line chart)
+  // Trend (for analytics line chart) — already exposed via
+  // `weightTrendProvider` in profile_provider.dart, but kept here
+  // for the repository's completeness.
   // ---------------------------------------------------------------
 
-  /// Server-smoothed weight trend over the requested window.
   Future<WeightTrend> getTrend({int weeks = 8}) async {
     final response = await apiClient.get<Map<String, dynamic>>(
       ApiEndpoints.weightTrend,

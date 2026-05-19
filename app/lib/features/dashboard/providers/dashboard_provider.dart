@@ -1,65 +1,104 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/data/repositories/meals_repository.dart';
-import '../../../core/data/repositories/profile_repository.dart';
-import '../models/dashboard_data.dart';
+import '../../../core/network/api_client.dart';
+import '../../profile/providers/profile_provider.dart';
+import '../models/meal.dart';
 
-/// Dashboard provider.
+/// Dashboard screen — supporting providers that complement the
+/// already-existing `dashboardSummaryProvider` (defined in
+/// `profile/providers/profile_provider.dart`).
 ///
-/// Aggregates three backend endpoints in **one parallel round-trip**:
-///   - `/meals/today/summary`  → consumed + target totals (server-computed)
-///   - `/meals?date=today`     → today's meal list for the timeline
-///   - `/me`                   → profile (only needed if the summary
-///                               endpoint doesn't include the macro targets)
+/// What lives where:
 ///
-/// We rely on the backend to compute `targetProteinG / targetCarbsG /
-/// targetFatG` server-side and surface them on [TodaySummary]. If the
-/// backend only returns `dailyCalorieTarget`, derive the macros from
-/// the profile's percentages — see the commented fallback below.
+///   - **`dashboardSummaryProvider`** (in `profile_provider.dart`) —
+///     fetches `/analytics/dashboard`, returns the big aggregate
+///     object the screen renders (calorie ring, macros, water totals).
+///     We don't redefine it here; the screen already imports it.
 ///
-/// UI usage is unchanged from the mock version:
-/// ```dart
-/// final data = ref.watch(dashboardProvider);
-/// data.when(data: (d) => ..., loading: () => ..., error: ...);
-/// ```
+///   - **`todayMealsProvider`** (this file) — fetches today's meal
+///     list for the bottom-of-screen meals section.
 ///
-/// Refresh after logging a new meal:
-/// ```dart
-/// ref.invalidate(dashboardProvider);
-/// ```
-final dashboardProvider = FutureProvider<DashboardData>((ref) async {
-  final mealsRepo = ref.watch(mealsRepositoryProvider);
+///   - **`logWaterProvider`** (this file) — returns a callable that
+///     posts a single water log row and refreshes the dashboard
+///     summary so the ring updates.
+///
+///   - **`refreshDashboard(ref)`** (this file) — top-level helper for
+///     pull-to-refresh; invalidates both the summary and the meals
+///     and awaits the re-fetch.
 
-  // Dart 3 record parallel-fetch — both calls fire simultaneously.
-  final (summary, meals) = await (
-    mealsRepo.getTodaysSummary(),
-    mealsRepo.getTodaysMeals(),
-  ).wait;
+// ---------------------------------------------------------------
+// Today's meals
+// ---------------------------------------------------------------
 
-  return DashboardData(
-    consumedCalories: summary.consumedCalories,
-    targetCalories: summary.targetCalories,
-    macros: MacrosData(
-      proteinCurrent: summary.consumedProteinG,
-      proteinTarget: summary.targetProteinG,
-      carbsCurrent: summary.consumedCarbsG,
-      carbsTarget: summary.targetCarbsG,
-      fatCurrent: summary.consumedFatG,
-      fatTarget: summary.targetFatG,
-    ),
-    todaysMeals: meals,
+/// `GET /meals?date=<today>` → list of `Meal` for the meals section.
+///
+/// Uses the same `apiClientProvider` (Dio + auth interceptor) the
+/// repository layer uses, so 401s trigger a transparent refresh and
+/// the device-local "today" matches what the dashboard summary uses.
+final todayMealsProvider = FutureProvider<List<Meal>>((ref) async {
+  final dio = ref.read(apiClientProvider).raw;
+
+  final today = DateTime.now();
+  final dateStr =
+      '${today.year.toString().padLeft(4, '0')}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+
+  final response = await dio.get<dynamic>(
+    '/meals',
+    queryParameters: {'date': dateStr},
   );
 
-  // -----------------------------------------------------------------
-  // Fallback if the backend doesn't compute macro targets server-side.
-  // Uncomment this block and remove the macros lines above to derive
-  // them from the user's profile percentages instead.
-  // -----------------------------------------------------------------
-  //
-  // final profileRepo = ref.watch(profileRepositoryProvider);
-  // final profile = await profileRepo.getCurrentProfile();
-  // final target = summary.targetCalories;
-  // final proteinTargetG = (target * profile.proteinTargetPct / 100) / 4;
-  // final carbsTargetG   = (target * profile.carbsTargetPct   / 100) / 4;
-  // final fatTargetG     = (target * profile.fatTargetPct     / 100) / 9;
+  final raw = response.data;
+  if (raw is! List) return const <Meal>[];
+  return raw
+      .cast<Map<String, dynamic>>()
+      .map(Meal.fromJson)
+      .toList(growable: false);
 });
+
+// ---------------------------------------------------------------
+// Log water (quick-add)
+// ---------------------------------------------------------------
+
+/// Type alias for the water-logging callable.
+typedef LogWaterFn = Future<void> Function(int amountMl);
+
+/// Exposes a `Future<void> Function(int amountMl)` for the +250ml /
+/// +500ml quick-add buttons on the dashboard.
+///
+/// After a successful write we invalidate `dashboardSummaryProvider`
+/// so the calorie/macros/water ring re-fetches the canonical totals
+/// from the backend — no client-side accounting needed.
+final logWaterProvider = Provider<LogWaterFn>((ref) {
+  final dio = ref.read(apiClientProvider).raw;
+
+  return (int amountMl) async {
+    try {
+      await dio.post<dynamic>(
+        '/water/logs',
+        data: {'amount_ml': amountMl},
+      );
+    } on DioException {
+      // Let the screen catch & show a snackbar; do NOT swallow.
+      rethrow;
+    }
+    // Refresh dependent providers so the ring updates.
+    ref.invalidate(dashboardSummaryProvider);
+  };
+});
+
+// ---------------------------------------------------------------
+// Pull-to-refresh
+// ---------------------------------------------------------------
+
+/// Used by `RefreshIndicator.onRefresh` in the dashboard screen.
+/// Invalidates summary + meals in parallel and awaits both fetches.
+Future<void> refreshDashboard(WidgetRef ref) async {
+  ref.invalidate(dashboardSummaryProvider);
+  ref.invalidate(todayMealsProvider);
+
+  await Future.wait<dynamic>([
+    ref.read(dashboardSummaryProvider.future),
+    ref.read(todayMealsProvider.future),
+  ]);
+}
