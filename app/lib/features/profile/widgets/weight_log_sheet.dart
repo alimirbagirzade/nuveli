@@ -8,7 +8,6 @@ import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
 
 import '../providers/profile_actions.dart';
-import '../providers/profile_provider.dart';
 
 /// Bottom sheet: log a new weight measurement.
 ///

@@ -128,4 +128,5 @@ class AppTypography {
   static const TextStyle body16 = body;
   static const TextStyle body14 = bodyMedium;
   static const TextStyle caption12 = caption;
+  static const TextStyle sectionTitle = titleMedium;
 }

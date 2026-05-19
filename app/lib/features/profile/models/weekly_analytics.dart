@@ -130,6 +130,17 @@ class TodaySummary {
   }
 
   int get caloriesRemaining => caloriesTarget - caloriesConsumed;
+
+  // Dashboard alias getters
+  int get consumedCalories => caloriesConsumed;
+  int get dailyCalorieTarget => caloriesTarget;
+  int get remainingCalories => caloriesRemaining;
+  int get consumedProteinG => proteinConsumedG;
+  int get consumedCarbsG => carbsConsumedG;
+  int get consumedFatG => fatConsumedG;
+  int get dailyProteinTargetG => 0;
+  int get dailyCarbsTargetG => 0;
+  int get dailyFatTargetG => 0;
 }
 
 /// Wrapper for `GET /analytics/dashboard` response — used to derive streak +
@@ -148,6 +159,19 @@ class DashboardSummary {
     required this.waterConsumedMl,
     required this.waterTargetMl,
   });
+
+  // Dashboard alias getters
+  int get consumedWaterMl => waterConsumedMl;
+  int get dailyWaterTargetMl => waterTargetMl;
+  int get consumedCalories => todaySummary.caloriesConsumed;
+  int get dailyCalorieTarget => todaySummary.caloriesTarget;
+  int get remainingCalories => todaySummary.caloriesRemaining;
+  int get consumedProteinG => todaySummary.proteinConsumedG;
+  int get consumedCarbsG => todaySummary.carbsConsumedG;
+  int get consumedFatG => todaySummary.fatConsumedG;
+  int get dailyProteinTargetG => 0;
+  int get dailyCarbsTargetG => 0;
+  int get dailyFatTargetG => 0;
 
   factory DashboardSummary.fromJson(Map<String, dynamic> json) {
     return DashboardSummary(
