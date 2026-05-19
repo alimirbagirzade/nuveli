@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 19 Mayıs 2026 (Chat 12 tamamlandı)
+**Son Güncelleme:** 19 Mayıs 2026 (Chat 13 tamamlandı)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -399,19 +399,41 @@ return min(score, 100)
 - `supabase/migrations/000_cleanup_old_schema.sql`
 **Sonuç:** 22 tablo + 6 function + 11 trigger + 27 policy + 24 index + 2 bucket silindi. `auth.users` korundu. Public schema sıfırdan.
 
-#### 🗄️ Chat 13: Supabase Schema & Migrations
-**Çıktılar:** Tüm SQL migrations, RLS policies, indexes
+#### 🗄️ Chat 13: Supabase Schema & Migrations ✅
+**Çıktılar:** 14 migration dosyası, 13 tablo + 2 view + 45 RLS policy + 49 index + 12 trigger + 5 helper function + 5 public seed recipe
+**Tarih:** 2026-05-19
+**Branch:** `feature/chat-13-supabase-schema` (commit `3a90ec8`, merged to main)
+**Üretilen dosyalar:**
+- `supabase/migrations/001_extensions.sql` — uuid-ossp, pgcrypto, pg_trgm
+- `supabase/migrations/002_profiles_table.sql` — user_profiles (chk_macro_pct_sum constraint)
+- `supabase/migrations/003_meals_table.sql` — meals + meal_foods
+- `supabase/migrations/004_water_logs_table.sql` — water_logs + water_reminders
+- `supabase/migrations/005_habits_tables.sql` — habits + habit_completions
+- `supabase/migrations/006_meal_plans_tables.sql` — recipes + meal_plans (GIN index)
+- `supabase/migrations/007_weight_logs_table.sql` — weight_logs + weight_goals (partial unique 1 active)
+- `supabase/migrations/008_ai_insights_table.sql` — ai_insights (JSONB-heavy)
+- `supabase/migrations/009_achievements_table.sql` — user_achievements
+- `supabase/migrations/010_rls_policies.sql` — 45 RLS policy (auth.uid() = user_id pattern)
+- `supabase/migrations/011_views.sql` — dashboard_today + user_7day_summary (security_invoker=true)
+- `supabase/migrations/012_triggers.sql` — 12 trigger + 5 function (updated_at, meal totals, streak, new user, achievement unlock)
+- `supabase/migrations/013_seed_data.sql` — 5 public recipe + backfill loop
+- `supabase/migrations/README.md` — ER diagram + doğrulama sorguları
+
 **Tablolar:**
-- `user_profiles`
-- `meals`
-- `weight_logs`
-- `water_logs`
-- `meal_plans`
-- `recipes`
-- `habits`
-- `habit_completions`
-- `ai_insights`
-- `user_achievements`
+- `user_profiles` — onboarding, hedefler, streak, premium
+- `meals` + `meal_foods` — öğün + içindeki yiyecekler (total_* trigger ile)
+- `water_logs` + `water_reminders` — su tüketim + hatırlatıcılar
+- `habits` + `habit_completions` — alışkanlık + günlük tamamlama (UNIQUE habit+date)
+- `recipes` + `meal_plans` — tarif kütüphanesi + haftalık plan
+- `weight_logs` + `weight_goals` — kilo takibi + aktif hedef
+- `ai_insights` — günlük AI cache (UNIQUE user+date)
+- `user_achievements` — başarımlar
+
+**Production sırasında çözülen bug'lar:**
+- `42P17`: DATE() functional indexler IMMUTABLE değil → B-tree composite (user_id, timestamp DESC) ile değişti
+- `42803`: user_7day_summary scalar subquery GROUP BY ile çakıştı → CTE + LEFT JOIN pattern'ine çevrildi
+
+**Test:** Yeni user signup zinciri doğrulandı (1 profile + 5 habit + 4 achievement otomatik oluşuyor) ✅
 
 #### ⚙️ Chat 14: Backend API (FastAPI)
 **Çıktılar:** Tüm endpoint'ler, OpenAI entegrasyonu, cron jobs
@@ -542,7 +564,7 @@ Başlayalım. Önce yapılacakları özetle, sonra kodlamaya geç.
 
 ### Faz 3: Integration
 - [x] **Chat 12: Supabase Audit & Cleanup ✅** (2026-05-19)
-- [ ] Chat 13: Supabase Schema
+- [x] **Chat 13: Supabase Schema ✅** (2026-05-19)
 - [ ] Chat 14: Backend API
 - [ ] Chat 15: Authentication
 - [ ] Chat 16: State Management & Repository Integration
@@ -626,9 +648,9 @@ apscheduler==3.10.4  # cron jobs
 
 ## 🎬 SONRAKİ ADIM
 
-**Şu an:** Bu master plan oluşturuldu ✅
+**Şu an:** Chat 13 tamamlandı ✅ — Supabase schema production'da, tüm migration'lar GitHub'da.
 
-**Bir sonraki adım:** Yeni bir chat aç ve **Chat 1: Theme & Design System** ile başla.
+**Bir sonraki adım:** Yeni bir chat aç ve **Chat 14: Backend API (FastAPI)** ile devam et.
 
 Açılış mesajı şablonunu kullan, bu master plan'ı project files'a yükle.
 
