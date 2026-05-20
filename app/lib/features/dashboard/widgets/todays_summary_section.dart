@@ -163,10 +163,10 @@ class _RingPainter extends CustomPainter {
 
     // Progress ring with cyan glow
     final progressPaint = Paint()
-      ..shader = SweepGradient(
+      ..shader = const SweepGradient(
         startAngle: -1.5708, // -90 degrees (12 o'clock)
         endAngle: -1.5708 + 6.2832,
-        colors: const [
+        colors: [
           Color(0xFF00D4FF),
           Color(0xFF4DDBFF),
           Color(0xFF00D4FF),

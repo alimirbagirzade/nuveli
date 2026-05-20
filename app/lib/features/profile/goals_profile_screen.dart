@@ -9,7 +9,6 @@ import 'package:nuveli/core/theme/app_typography.dart';
 import 'package:nuveli/shared/widgets/app_error_view.dart';
 
 import 'models/user_profile.dart';
-import 'models/weekly_analytics.dart';
 import 'providers/profile_provider.dart';
 import 'widgets/daily_calorie_target_card.dart';
 import 'widgets/goals_row.dart';

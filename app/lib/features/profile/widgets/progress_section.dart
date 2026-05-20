@@ -69,12 +69,12 @@ class ProgressSection extends StatelessWidget {
             const SizedBox(height: AppSpacing.s12),
             Row(
               children: [
-                _LegendDot(
+                const _LegendDot(
                   color: AppColors.primaryCyan,
                   label: 'Within target',
                 ),
                 const SizedBox(width: AppSpacing.s16),
-                _LegendDot(
+                const _LegendDot(
                   color: AppColors.warning,
                   label: 'Off target',
                 ),

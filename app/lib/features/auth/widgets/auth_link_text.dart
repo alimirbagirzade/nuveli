@@ -78,7 +78,7 @@ class AuthErrorBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: AppColors.danger, size: 18),
+          const Icon(Icons.error_outline, color: AppColors.danger, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -89,7 +89,7 @@ class AuthErrorBanner extends StatelessWidget {
           if (onDismiss != null)
             GestureDetector(
               onTap: onDismiss,
-              child: Icon(
+              child: const Icon(
                 Icons.close,
                 color: AppColors.danger,
                 size: 16,

@@ -11,7 +11,7 @@ void main() {
   group('NuveliAuthException.fromSupabase — AuthException mapping', () {
     test('"Invalid login credentials" → invalidCredentials', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('Invalid login credentials'),
+        const AuthException('Invalid login credentials'),
       );
       expect(out.type, AuthErrorType.invalidCredentials);
       expect(out.userMessage, 'Incorrect email or password.');
@@ -19,14 +19,14 @@ void main() {
 
     test('"Invalid email or password" alt phrasing also maps', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('Invalid email or password'),
+        const AuthException('Invalid email or password'),
       );
       expect(out.type, AuthErrorType.invalidCredentials);
     });
 
     test('"User already registered" → emailAlreadyRegistered', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('User already registered'),
+        const AuthException('User already registered'),
       );
       expect(out.type, AuthErrorType.emailAlreadyRegistered);
       expect(
@@ -37,21 +37,21 @@ void main() {
 
     test('"email_exists" code variant also maps', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('email_exists'),
+        const AuthException('email_exists'),
       );
       expect(out.type, AuthErrorType.emailAlreadyRegistered);
     });
 
     test('"Password should be at least 6 characters" → weakPassword', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('Password should be at least 6 characters'),
+        const AuthException('Password should be at least 6 characters'),
       );
       expect(out.type, AuthErrorType.weakPassword);
     });
 
     test('"Email not confirmed" → emailNotConfirmed', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('Email not confirmed'),
+        const AuthException('Email not confirmed'),
       );
       expect(out.type, AuthErrorType.emailNotConfirmed);
       expect(
@@ -62,21 +62,21 @@ void main() {
 
     test('"User not found" → userNotFound', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('User not found'),
+        const AuthException('User not found'),
       );
       expect(out.type, AuthErrorType.userNotFound);
     });
 
     test('statusCode 429 → rateLimited', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('Too many requests', statusCode: '429'),
+        const AuthException('Too many requests', statusCode: '429'),
       );
       expect(out.type, AuthErrorType.rateLimited);
     });
 
     test('unknown AuthException falls through to unknown type', () {
       final out = NuveliAuthException.fromSupabase(
-        AuthException('Some bizarre new error'),
+        const AuthException('Some bizarre new error'),
       );
       expect(out.type, AuthErrorType.unknown);
       // userMessage should surface the original message in fallback case

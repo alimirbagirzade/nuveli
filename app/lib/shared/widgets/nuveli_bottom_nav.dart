@@ -131,7 +131,7 @@ class _NavButton extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 2),
                           child: Text(
                             item.label,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
                               color: activeColor,

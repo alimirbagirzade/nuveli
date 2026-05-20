@@ -159,7 +159,7 @@ class _Logo extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(
+      child: const Center(
         child: Icon(
           Icons.water_drop_outlined,
           size: 48,

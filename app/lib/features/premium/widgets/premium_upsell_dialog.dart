@@ -115,10 +115,10 @@ class PremiumUpsellDialog extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.check_circle_rounded,
                             size: 18,
-                            color: const Color(0xFF00D4FF),
+                            color: Color(0xFF00D4FF),
                           ),
                           const SizedBox(width: 10),
                           Expanded(

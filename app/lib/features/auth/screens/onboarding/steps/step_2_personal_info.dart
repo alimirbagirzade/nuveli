@@ -52,10 +52,10 @@ class _Step2State extends ConsumerState<Step2PersonalInfo> {
       lastDate: latest,
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
-          colorScheme: ColorScheme.dark(
+          colorScheme: const ColorScheme.dark(
             primary: AppColors.primaryCyan,
             onPrimary: Colors.white,
-            surface: const Color(0xFF142346),
+            surface: Color(0xFF142346),
             onSurface: Colors.white,
           ),
         ),
@@ -221,7 +221,7 @@ class _DateField extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.cake_outlined,
+                const Icon(Icons.cake_outlined,
                     color: AppColors.secondaryText, size: 20),
                 const SizedBox(width: 12),
                 Text(
@@ -237,7 +237,7 @@ class _DateField extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Icon(Icons.calendar_today_outlined,
+                const Icon(Icons.calendar_today_outlined,
                     color: AppColors.tertiaryText, size: 18),
               ],
             ),

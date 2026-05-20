@@ -38,7 +38,7 @@ class AuthPrimaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: disabled
             ? null
-            : LinearGradient(
+            : const LinearGradient(
                 colors: [
                   AppColors.primaryCyan,
                   AppColors.glowCyan,

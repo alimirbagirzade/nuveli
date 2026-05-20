@@ -7,18 +7,18 @@ import 'package:nuveli/shared/widgets/skeleton.dart';
 import 'package:shimmer/shimmer.dart';
 
 void main() {
-  Widget _wrap(Widget child) => MaterialApp(
+  Widget wrap(Widget child) => MaterialApp(
         home: Scaffold(body: Center(child: child)),
       );
 
   group('SkeletonBox', () {
     testWidgets('renders inside a Shimmer wrapper', (tester) async {
-      await tester.pumpWidget(_wrap(const SkeletonBox(width: 100, height: 20)));
+      await tester.pumpWidget(wrap(const SkeletonBox(width: 100, height: 20)));
       expect(find.byType(Shimmer), findsOneWidget);
     });
 
     testWidgets('honours the supplied width + height', (tester) async {
-      await tester.pumpWidget(_wrap(const SkeletonBox(width: 120, height: 32)));
+      await tester.pumpWidget(wrap(const SkeletonBox(width: 120, height: 32)));
       final inner = tester.widget<Container>(
         find.descendant(
           of: find.byType(Shimmer),
@@ -33,7 +33,7 @@ void main() {
     testWidgets('null width is fine inside a Row (does not crash)',
         (tester) async {
       await tester.pumpWidget(
-        _wrap(
+        wrap(
           const SizedBox(
             width: 200,
             child: Row(
@@ -50,7 +50,7 @@ void main() {
 
   group('SkeletonCircle', () {
     testWidgets('is a square SkeletonBox with size/2 radius', (tester) async {
-      await tester.pumpWidget(_wrap(const SkeletonCircle(size: 40)));
+      await tester.pumpWidget(wrap(const SkeletonCircle(size: 40)));
       final inner = tester.widget<Container>(
         find.descendant(
           of: find.byType(Shimmer),

@@ -11,7 +11,6 @@
 // The signed-in branches (Onboarding / Dashboard) need their own
 // provider stacks mocked out and are deferred to a follow-up.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

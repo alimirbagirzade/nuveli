@@ -6,13 +6,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nuveli/features/auth/widgets/auth_link_text.dart';
 
 void main() {
-  Widget _wrap(Widget child) =>
+  Widget wrap(Widget child) =>
       MaterialApp(home: Scaffold(body: child));
 
   group('AuthErrorBanner', () {
     testWidgets('renders the message text + the error icon', (tester) async {
       await tester.pumpWidget(
-        _wrap(const AuthErrorBanner(message: 'Something went wrong.')),
+        wrap(const AuthErrorBanner(message: 'Something went wrong.')),
       );
 
       expect(find.text('Something went wrong.'), findsOneWidget);
@@ -22,7 +22,7 @@ void main() {
     testWidgets('without onDismiss: no close affordance is rendered',
         (tester) async {
       await tester.pumpWidget(
-        _wrap(const AuthErrorBanner(message: 'Read-only error')),
+        wrap(const AuthErrorBanner(message: 'Read-only error')),
       );
 
       // No close icon (Icons.close) when there's no dismiss handler.
@@ -33,7 +33,7 @@ void main() {
         (tester) async {
       var dismissed = 0;
       await tester.pumpWidget(
-        _wrap(
+        wrap(
           AuthErrorBanner(
             message: 'Closeable',
             onDismiss: () => dismissed++,

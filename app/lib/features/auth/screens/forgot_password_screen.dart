@@ -163,7 +163,7 @@ class _SuccessState extends StatelessWidget {
                 ],
               ),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.mark_email_read_outlined,
               size: 48,
               color: AppColors.primaryCyan,

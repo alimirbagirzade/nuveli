@@ -121,7 +121,7 @@ class _SimpleLayout extends StatelessWidget {
         ),
         if (showChevron) ...[
           const SizedBox(width: AppSpacing.sm),
-          Icon(
+          const Icon(
             Icons.chevron_right_rounded,
             size: 20,
             color: AppColors.textTertiary,
