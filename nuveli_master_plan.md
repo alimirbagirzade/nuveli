@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 round 2 final — AppErrorView 3 ekrana yayıldı; 245 tests, 20 PR)
+**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 round 2 — WelcomeScreen silent-drop bug fix + tests; 248 tests, 23 PR)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -874,6 +874,13 @@ apscheduler==3.10.4  # cron jobs
   paywall) now share the same error chrome; remaining inline is the
   `WelcomeScreen(error:)` parameter path in AuthGate, which doesn't
   use AsyncValue.when in the same shape.
+- **Bug surfaced + fixed: WelcomeScreen silent error-drop** (#56, #57):
+  WelcomeScreen had a `final String? error` parameter that AuthGate
+  has been feeding since day one (auth-failure messages), but the
+  widget never actually rendered it — Apple Sign-In cancel, Supabase
+  outage, etc. all silently disappeared. Now renders AuthErrorBanner
+  at the top when error is non-null + non-empty. Locked by 3 tests
+  (banner shown / null hidden / empty-string guard).
 
 **Hâlâ Round 2 backlog'unda:**
 - i18n setup (TR/EN, ARB dosyaları + flutter_localizations delegates).
