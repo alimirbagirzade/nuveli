@@ -350,7 +350,7 @@ class _WaterTarget extends StatelessWidget {
               shape: BoxShape.circle,
               color: AppColors.primaryCyan.withValues(alpha: 0.2),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.water_drop_outlined,
               color: AppColors.primaryCyan,
               size: 22,

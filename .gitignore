@@ -101,3 +101,4 @@ CHAT*_PROGRESS_NOTE.md
 supabase/backup/*.sql
 /_disabled_chat16/
 *.bak
+analyze.txt

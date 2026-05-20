@@ -114,7 +114,7 @@ void main() {
           email: any(named: 'email'),
           password: any(named: 'password'),
         ),
-      ).thenThrow(AuthException('Invalid login credentials'));
+      ).thenThrow(const AuthException('Invalid login credentials'));
 
       expect(
         () => service.signInWithEmail(
@@ -204,7 +204,7 @@ void main() {
           password: any(named: 'password'),
           emailRedirectTo: any(named: 'emailRedirectTo'),
         ),
-      ).thenThrow(AuthException('User already registered'));
+      ).thenThrow(const AuthException('User already registered'));
 
       expect(
         () => service.signUpWithEmail(
@@ -230,7 +230,7 @@ void main() {
     });
 
     test('Supabase error wraps into NuveliAuthException', () async {
-      when(() => mockAuth.signOut()).thenThrow(AuthException('Network down'));
+      when(() => mockAuth.signOut()).thenThrow(const AuthException('Network down'));
 
       expect(
         () => service.signOut(),
@@ -264,7 +264,7 @@ void main() {
           any(),
           redirectTo: any(named: 'redirectTo'),
         ),
-      ).thenThrow(AuthException('Reset failed'));
+      ).thenThrow(const AuthException('Reset failed'));
 
       expect(
         () => service.sendPasswordResetEmail('user@example.com'),
@@ -290,7 +290,7 @@ void main() {
 
     test('Supabase error wraps into NuveliAuthException', () async {
       when(() => mockAuth.updateUser(any())).thenThrow(
-        AuthException('Password should be at least 6 characters'),
+        const AuthException('Password should be at least 6 characters'),
       );
 
       expect(

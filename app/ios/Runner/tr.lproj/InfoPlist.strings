@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "Yemek fotoğraflarını analiz edip kalorileri otomatik tahmin edebilmemiz için kamera erişimi gerekiyor.";
+"NSPhotoLibraryUsageDescription" = "Mevcut yemek fotoğraflarını AI kalori analizi için seçebilmen için galeri erişimi gerekiyor.";
+"NSPhotoLibraryAddUsageDescription" = "Yemek fotoğraflarını galerine geri kaydetmek için izin gerekiyor.";
+"NSMicrophoneUsageDescription" = "AI koçunla sesli iletişim kurabilmen için mikrofon erişimi gerekiyor.";

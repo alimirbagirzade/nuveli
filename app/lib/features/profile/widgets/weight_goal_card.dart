@@ -77,7 +77,7 @@ class WeightGoalCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${_kg(goal.startingWeightKg)}',
+                  _kg(goal.startingWeightKg),
                   style: AppTypography.cardTitle.copyWith(
                     color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,

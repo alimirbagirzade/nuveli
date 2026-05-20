@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "Kamerazugriff erlaubt Nuveli, deine Mahlzeitenfotos zu analysieren und Kalorien automatisch zu schätzen.";
+"NSPhotoLibraryUsageDescription" = "Fotomediathekzugriff erlaubt dir, vorhandene Mahlzeitenfotos für die KI-Kalorienanalyse auszuwählen.";
+"NSPhotoLibraryAddUsageDescription" = "Erlaubnis, deine Mahlzeitenfotos in der Fotomediathek zu speichern.";
+"NSMicrophoneUsageDescription" = "Mikrofonzugriff erlaubt dir, mit deinem KI-Coach per Sprache zu kommunizieren.";

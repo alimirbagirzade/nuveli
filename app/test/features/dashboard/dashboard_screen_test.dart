@@ -36,8 +36,8 @@ AuthUser _fakeUser() => AuthUser(
       createdAt: DateTime(2026, 1, 1),
     );
 
-DashboardSummary _summarySample() => DashboardSummary(
-      todaySummary: const TodaySummary(
+DashboardSummary _summarySample() => const DashboardSummary(
+      todaySummary: TodaySummary(
         caloriesConsumed: 1200,
         caloriesTarget: 2000,
         proteinConsumedG: 80,

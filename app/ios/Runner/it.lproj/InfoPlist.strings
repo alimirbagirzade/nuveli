@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "L'accesso alla fotocamera consente a Nuveli di analizzare le foto dei tuoi pasti e stimare automaticamente le calorie.";
+"NSPhotoLibraryUsageDescription" = "L'accesso alla libreria foto ti consente di selezionare foto di pasti esistenti per l'analisi delle calorie con IA.";
+"NSPhotoLibraryAddUsageDescription" = "Autorizzazione per salvare le foto dei tuoi pasti nella libreria foto.";
+"NSMicrophoneUsageDescription" = "L'accesso al microfono ti consente di parlare con il tuo coach IA tramite voce.";

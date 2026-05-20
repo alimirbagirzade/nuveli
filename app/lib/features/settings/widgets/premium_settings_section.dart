@@ -234,11 +234,11 @@ class _UpgradeTile extends StatelessWidget {
         '/premium',
         arguments: {'source': 'settings'},
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 'Upgrade to Premium',
                 style: TextStyle(
@@ -248,7 +248,7 @@ class _UpgradeTile extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(
+            Icon(
               Icons.arrow_forward_ios_rounded,
               size: 14,
               color: Color(0xFF00D4FF),
@@ -265,11 +265,11 @@ class _ManageSubscriptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _openManageSubscription(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            const Expanded(
+            Expanded(
               child: Text(
                 'Manage Subscription',
                 style: TextStyle(
@@ -279,7 +279,7 @@ class _ManageSubscriptionTile extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(
+            Icon(
               Icons.open_in_new_rounded,
               size: 16,
               color: Color(0xFFB8C5D6),

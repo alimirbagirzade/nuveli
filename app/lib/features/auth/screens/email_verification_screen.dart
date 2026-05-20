@@ -104,7 +104,7 @@ class _EmailVerificationScreenState
                         ],
                       ),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.mark_email_unread_outlined,
                       size: 48,
                       color: AppColors.primaryCyan,
@@ -200,7 +200,7 @@ class _InfoBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.check_circle, color: AppColors.success, size: 18),
+          const Icon(Icons.check_circle, color: AppColors.success, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(

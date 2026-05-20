@@ -225,7 +225,7 @@ class _ChoiceCard extends StatelessWidget {
               ),
             ),
             if (selected)
-              Icon(Icons.check_circle, color: AppColors.primaryCyan, size: 20),
+              const Icon(Icons.check_circle, color: AppColors.primaryCyan, size: 20),
           ],
         ),
       ),

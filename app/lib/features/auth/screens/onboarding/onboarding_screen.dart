@@ -104,18 +104,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           'Sign out?',
           style: TextStyle(color: Colors.white),
         ),
-        content: Text(
+        content: const Text(
           'Your progress will be saved. You can continue setup later.',
           style: TextStyle(color: AppColors.secondaryText),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text('Cancel', style: TextStyle(color: AppColors.secondaryText)),
+            child: const Text('Cancel', style: TextStyle(color: AppColors.secondaryText)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text('Sign out', style: TextStyle(color: AppColors.danger)),
+            child: const Text('Sign out', style: TextStyle(color: AppColors.danger)),
           ),
         ],
       ),

@@ -33,7 +33,7 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not log water. Tap to retry.')),
+          const SnackBar(content: Text('Could not log water. Tap to retry.')),
         );
       }
     } finally {

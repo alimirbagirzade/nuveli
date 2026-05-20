@@ -22,7 +22,7 @@ class PremiumPackageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cyan = const Color(0xFF00D4FF);
+    const cyan = Color(0xFF00D4FF);
     final cardBg = const Color(0xFF142346).withOpacity(0.6);
 
     return GestureDetector(

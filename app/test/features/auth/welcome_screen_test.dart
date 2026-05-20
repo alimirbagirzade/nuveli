@@ -1,7 +1,6 @@
 // Widget tests for WelcomeScreen — the first-launch landing screen
 // that AuthGate routes to whenever the user is signed out.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nuveli/features/auth/screens/welcome_screen.dart';
 import 'package:nuveli/features/auth/widgets/auth_primary_button.dart';

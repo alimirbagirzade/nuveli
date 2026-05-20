@@ -7,7 +7,7 @@ import 'package:nuveli/core/network/app_error.dart';
 import 'package:nuveli/shared/widgets/app_error_view.dart';
 
 void main() {
-  Widget _wrap(AppError error, {VoidCallback? onRetry}) => MaterialApp(
+  Widget wrap(AppError error, {VoidCallback? onRetry}) => MaterialApp(
         home: Scaffold(
           body: AppErrorView(error: error, onRetry: onRetry),
         ),
@@ -28,7 +28,7 @@ void main() {
 
     for (final (error, icon, title) in cases) {
       testWidgets('${error.runtimeType} → $icon + "$title"', (tester) async {
-        await tester.pumpWidget(_wrap(error));
+        await tester.pumpWidget(wrap(error));
         expect(find.byIcon(icon), findsOneWidget);
         expect(find.text(title), findsOneWidget);
       });
@@ -37,7 +37,7 @@ void main() {
 
   group('AppErrorView — retry behaviour', () {
     testWidgets('no retry button when onRetry is null', (tester) async {
-      await tester.pumpWidget(_wrap(AppError.network()));
+      await tester.pumpWidget(wrap(AppError.network()));
       expect(find.text('Tekrar dene'), findsNothing);
       expect(find.byIcon(Icons.refresh), findsNothing);
     });
@@ -46,7 +46,7 @@ void main() {
         (tester) async {
       var taps = 0;
       await tester.pumpWidget(
-        _wrap(AppError.server(), onRetry: () => taps++),
+        wrap(AppError.server(), onRetry: () => taps++),
       );
       final retry = find.text('Tekrar dene');
       expect(retry, findsOneWidget);
@@ -61,14 +61,14 @@ void main() {
     testWidgets('LimitExceededError surfaces the backend message verbatim',
         (tester) async {
       await tester.pumpWidget(
-        _wrap(AppError.limitExceeded('Günde 3 analiz hakkın bitti.')),
+        wrap(AppError.limitExceeded('Günde 3 analiz hakkın bitti.')),
       );
       expect(find.text('Günde 3 analiz hakkın bitti.'), findsOneWidget);
     });
 
     testWidgets('ValidationError uses provided detail message', (tester) async {
       await tester.pumpWidget(
-        _wrap(AppError.validation('value is not a valid email')),
+        wrap(AppError.validation('value is not a valid email')),
       );
       expect(find.text('value is not a valid email'), findsOneWidget);
     });

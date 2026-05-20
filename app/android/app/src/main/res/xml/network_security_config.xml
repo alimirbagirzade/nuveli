@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Nuveli — explicit network security config.
+
+    Defaults on Android 7+ already enforce HTTPS for app traffic, but
+    declaring it removes ambiguity for Play Console review and protects
+    against future Android changes that might loosen defaults.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

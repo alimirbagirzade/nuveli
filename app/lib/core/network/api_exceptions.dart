@@ -26,18 +26,15 @@ class ApiException implements Exception {
 // ----------------------------------------------------------------
 
 class NetworkException extends ApiException {
-  NetworkException([String message = 'No internet connection'])
-      : super(message);
+  NetworkException([super.message = 'No internet connection']);
 }
 
 class TimeoutException extends ApiException {
-  TimeoutException([String message = 'Request timed out'])
-      : super(message);
+  TimeoutException([super.message = 'Request timed out']);
 }
 
 class CancelledException extends ApiException {
-  CancelledException([String message = 'Request cancelled'])
-      : super(message);
+  CancelledException([super.message = 'Request cancelled']);
 }
 
 // ----------------------------------------------------------------
@@ -47,14 +44,14 @@ class CancelledException extends ApiException {
 /// 401 — session is invalid or expired. AuthGate should sign the user out
 /// after the interceptor has already failed to refresh.
 class AuthException extends ApiException {
-  AuthException([String message = 'Not authenticated'])
-      : super(message, statusCode: 401);
+  AuthException([super.message = 'Not authenticated'])
+      : super(statusCode: 401);
 }
 
 /// 403 — token is valid but the resource is not permitted for this user.
 class ForbiddenException extends ApiException {
-  ForbiddenException([String message = 'Access forbidden'])
-      : super(message, statusCode: 403);
+  ForbiddenException([super.message = 'Access forbidden'])
+      : super(statusCode: 403);
 }
 
 // ----------------------------------------------------------------
@@ -62,8 +59,8 @@ class ForbiddenException extends ApiException {
 // ----------------------------------------------------------------
 
 class NotFoundException extends ApiException {
-  NotFoundException([String message = 'Resource not found'])
-      : super(message, statusCode: 404);
+  NotFoundException([super.message = 'Resource not found'])
+      : super(statusCode: 404);
 }
 
 /// 422 — FastAPI Pydantic validation. The `errors` map is the raw
@@ -84,14 +81,14 @@ class ValidationException extends ApiException {
 /// 402 — backend says this feature is premium-only and the current user
 /// has not subscribed. UI should show the paywall.
 class PremiumRequiredException extends ApiException {
-  PremiumRequiredException([String message = 'Premium subscription required'])
-      : super(message, statusCode: 402);
+  PremiumRequiredException([super.message = 'Premium subscription required'])
+      : super(statusCode: 402);
 }
 
 /// 429 — rate limited (e.g. OpenAI cap reached, or backend throttle).
 class RateLimitedException extends ApiException {
-  RateLimitedException([String message = 'Too many requests, try again later'])
-      : super(message, statusCode: 429);
+  RateLimitedException([super.message = 'Too many requests, try again later'])
+      : super(statusCode: 429);
 }
 
 // ----------------------------------------------------------------
@@ -99,11 +96,10 @@ class RateLimitedException extends ApiException {
 // ----------------------------------------------------------------
 
 class ServerException extends ApiException {
-  ServerException([String message = 'Server error, please try again'])
-      : super(message, statusCode: 500);
+  ServerException([super.message = 'Server error, please try again'])
+      : super(statusCode: 500);
 }
 
 class UnknownApiException extends ApiException {
-  UnknownApiException(String message, {int? statusCode})
-      : super(message, statusCode: statusCode);
+  UnknownApiException(super.message, {super.statusCode});
 }
