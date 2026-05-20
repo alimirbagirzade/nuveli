@@ -78,4 +78,38 @@ class CrashReporter {
       await _crashlytics.log(message);
     } catch (_) {}
   }
+
+  /// One-call wiring for global, unhandled errors.
+  ///
+  /// Call this from `main()` AFTER `Firebase.initializeApp()` so both
+  /// FlutterError (UI-thread Flutter framework errors) and the
+  /// PlatformDispatcher async-zone errors get reported.
+  ///
+  /// In debug builds it still just logs — same gate as [report].
+  static void installGlobalHandlers() {
+    FlutterError.onError = (details) {
+      report(
+        details.exception,
+        details.stack,
+        feature: 'flutter',
+        action: 'unhandled',
+        fatal: true,
+        context: {
+          'library': details.library ?? '',
+          'silent': details.silent,
+        },
+      );
+    };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      report(
+        error,
+        stack,
+        feature: 'platform',
+        action: 'async_zone',
+        fatal: true,
+      );
+      // true = swallow so the app doesn't crash on a single async miss.
+      return true;
+    };
+  }
 }

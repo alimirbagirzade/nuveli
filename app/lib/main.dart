@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'package:nuveli/core/monitoring/crash_reporter.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/theme/app_theme.dart';
 import 'package:nuveli/features/auth/screens/auth_gate.dart';
@@ -14,6 +15,13 @@ import 'package:nuveli/features/premium/services/revenue_cat_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Chat 24: Wire global error handlers BEFORE any other init so that
+  // an exception inside dotenv / Supabase init still gets reported.
+  // In debug builds CrashReporter just logs to console; in release
+  // builds it forwards to Firebase Crashlytics.
+  CrashReporter.installGlobalHandlers();
+
   await dotenv.load(fileName: '.env');
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
