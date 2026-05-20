@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nuveli/features/profile/providers/profile_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/network/api_exception.dart';
+import '../../core/network/app_error.dart';
+import '../../shared/widgets/app_error_view.dart';
 import 'providers/dashboard_provider.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
@@ -48,10 +49,8 @@ class DashboardScreen extends ConsumerWidget {
                       const DashboardHeader(),
                       summaryAsync.when(
                         loading: () => const _DashboardSkeleton(),
-                        error: (e, _) => _ErrorBlock(
-                          message: e is ApiException
-                              ? e.userMessage
-                              : 'Could not load summary.',
+                        error: (e, _) => AppErrorView(
+                          error: AppError.from(e),
                           onRetry: () =>
                               ref.invalidate(dashboardSummaryProvider),
                         ),
@@ -206,65 +205,6 @@ class _DashboardSkeleton extends StatelessWidget {
           width: 1,
         ),
       );
-}
-
-// ============================================================================
-// Error block
-// ============================================================================
-
-class _ErrorBlock extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-  const _ErrorBlock({required this.message, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color(0xFF142346).withOpacity(0.5),
-        border: Border.all(
-          color: const Color(0xFFFF9F45).withOpacity(0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        children: [
-          const Icon(
-            Icons.cloud_off_outlined,
-            color: Color(0xFFFF9F45),
-            size: 32,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 16),
-          OutlinedButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(Icons.refresh, size: 18),
-            label: const Text('Retry'),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF4DDBFF),
-              side: BorderSide(color: const Color(0xFF4DDBFF).withOpacity(0.5)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 // ============================================================================

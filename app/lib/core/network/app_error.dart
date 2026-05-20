@@ -19,6 +19,22 @@ sealed class AppError {
   factory AppError.server() => const ServerError('Bir şeyler ters gitti. Az sonra tekrar dene.');
   factory AppError.unknown([String? msg]) => UnknownError(msg ?? 'Beklenmeyen hata.');
 
+  /// Caller-agnostic adapter: any thrown object → AppError.
+  ///
+  /// - Already an AppError → returned unchanged.
+  /// - DioException → routed through [fromDio] so HTTP-aware mapping
+  ///   stays in one place.
+  /// - Anything else → UnknownError carrying the stringified form
+  ///   (rare in production; usually a wrapping bug to investigate).
+  ///
+  /// Use this inside an `AsyncValue.when(error: ...)` block so screens
+  /// don't have to do `e is AppError ? e : ...` themselves.
+  static AppError from(Object e) {
+    if (e is AppError) return e;
+    if (e is DioException) return fromDio(e);
+    return AppError.unknown(e.toString());
+  }
+
   /// Dio hatasını AppError'a çevirir.
   static AppError fromDio(DioException e) {
     // Cold start göstergeleri: connect timeout veya 503/504
