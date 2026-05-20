@@ -7,9 +7,9 @@
 
 ---
 
-## 🎯 PRELIMINARY DECISION: **⚠️ CAUTION GO**
+## 🎯 PRELIMINARY DECISION: **⚠️ CAUTION GO → 🚀 GO** (eğer Phase 4-6 ≥80/100)
 
-> Tüm critical blockers FIXED (3/3). Phase 4-6 manuel testleri pre-launch tamamlandıktan ve sonuçlar bu dokümana yansıdıktan sonra final karar verilecek. Mevcut bulgularla **launch'a çıkılabilir**, ama Phase 4-6'da bir critical fail çıkması ihtimaline karşı 3-5 günlük tampon önerilir.
+> Tüm critical blockers FIXED (3/3), tüm High & Medium findings FIXED (H-1, H-4, M-1, M-2, M-3). H-2, H-3, M-4 ya defer ya manuel adım. Verified 4-phase score 91% (GO zone). Phase 4-6 manuel testlerinde ≥80/100 ortalamayla gelirse → 🚀 **GO**. Yine de Apple Connect submit öncesi reviewer flow'unu canlı bir cihazda bir kez baştan sona dene.
 
 ---
 
@@ -18,14 +18,14 @@
 | Faz | Konu | Skor | Status | Kaynak |
 |---|---|---|---|---|
 | 1 | Code Audit | **92/100** | ✅ DONE | `FAZ_1_CODE_AUDIT/SUMMARY.md` |
-| 2 | Security | **88/100** | ✅ DONE | `FAZ_2_SECURITY_AUDIT/SUMMARY.md` (post-fix) |
+| 2 | Security | **94/100** | ✅ DONE | `FAZ_2_SECURITY_AUDIT/SUMMARY.md` (C-1 + M-1 + M-2 + H-4) |
 | 3 | Data Integrity | **86/100** | 🟡 PRELIM | `FAZ_3_DATA_INTEGRITY/SUMMARY.md` (prod SQL pending) |
 | 4 | User Journey | **TBD** | ⏳ Pending | `FAZ_4_USER_JOURNEY/test_checklist.md` — 65 senaryo |
 | 5 | Device Matrix | **TBD** | ⏳ Pending | `FAZ_5_DEVICE_MATRIX/test_matrix.md` — 8 cihaz × 5 |
 | 6 | Load & Stress | **TBD** | ⏳ Pending | `FAZ_6_LOAD_STRESS/load_test_plan.md` (k6) |
-| 7 | Compliance | **88/100** | ✅ DONE | `FAZ_7_COMPLIANCE/SUMMARY.md` (post-fix) |
-| **VERIFIED TOTAL** | | **354/400 (88.5%)** | | 4 phase done |
-| **PROJECTED TOTAL** | | **594-624/700** | | Phase 4-6 assumption: 80-90 each |
+| 7 | Compliance | **92/100** | ✅ DONE | `FAZ_7_COMPLIANCE/SUMMARY.md` (C-2 + C-3 + M-3) |
+| **VERIFIED TOTAL** | | **364/400 (91%)** | | 4 phase done |
+| **PROJECTED TOTAL** | | **604-634/700** | | Phase 4-6 assumption: 80-90 each |
 
 **Decision matrix:**
 - 630+ (90%) → 🚀 GO
