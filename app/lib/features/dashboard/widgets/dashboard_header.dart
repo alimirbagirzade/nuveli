@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../auth/providers/auth_provider.dart';
 
 /// Top section of the Dashboard: date, greeting, and avatar.
 ///
-/// Reads the user's name straight from Supabase's `user_metadata.full_name`
-/// (set during onboarding in Chat 15). Falls back to email, then "there".
-class DashboardHeader extends StatelessWidget {
+/// Reads the current user identity from [currentAuthUserProvider] (which
+/// in turn is fed by AuthNotifier subscribing to Supabase auth state).
+/// Going through Riverpod instead of `Supabase.instance.client` lets
+/// widget tests inject a fake user via ProviderScope.overrides.
+class DashboardHeader extends ConsumerWidget {
   const DashboardHeader({super.key});
 
   String _greeting() {
@@ -16,9 +20,10 @@ class DashboardHeader extends StatelessWidget {
     return 'Good evening';
   }
 
-  ({String displayName, String initial}) _resolveIdentity() {
-    final user = Supabase.instance.client.auth.currentUser;
-    final fullName = user?.userMetadata?['full_name'] as String?;
+  ({String displayName, String initial}) _resolveIdentity(WidgetRef ref) {
+    final user = ref.watch(currentAuthUserProvider);
+
+    final fullName = user?.displayName;
     final email = user?.email;
 
     String displayName;
@@ -35,9 +40,9 @@ class DashboardHeader extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final dateStr = DateFormat('EEEE, MMMM d').format(DateTime.now());
-    final identity = _resolveIdentity();
+    final identity = _resolveIdentity(ref);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
