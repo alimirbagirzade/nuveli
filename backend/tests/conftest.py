@@ -75,7 +75,14 @@ def mock_supabase(monkeypatch):
         m.execute.return_value = MagicMock(data=[], count=0)
         return m
 
-    fake.table = MagicMock(side_effect=lambda _: _chainable())
+    # Reuse the SAME chainable instance for every `.table(name)` call.
+    # Earlier this was `side_effect=lambda _: _chainable()`, which minted
+    # a fresh MagicMock per call. That made it impossible for tests to
+    # override `.execute.return_value` from the outside — their override
+    # set fields on a different chain than the one the production code
+    # received. A single shared chain keeps the fixture flexible.
+    chain = _chainable()
+    fake.table = MagicMock(return_value=chain)
 
     # Patch both module-level usages
     monkeypatch.setattr("core.supabase_client.get_supabase", lambda: fake)

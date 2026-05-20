@@ -16,40 +16,34 @@ def test_get_me_rejects_invalid_token(client):
     assert response.status_code == 401
 
 
-@pytest.mark.skip(reason="conftest mock_supabase uses side_effect=lambda which mints fresh chainables per call — overriding response shape needs a fixture redesign. Chat 23 follow-up.")
+@pytest.mark.skip(reason="GET /me happy path still trips the first-time-login insert branch even with the conftest fix to a shared chainable — the chain returned at request time isn't the one the test overrides. Suspect: TestClient lifespan or some app-startup path consuming the chain before the test body runs. Tracked for a deeper conftest redesign.")
 def test_get_me_returns_profile(client, auth_headers, mock_supabase, test_user_id):
     """When a profile exists, GET /me returns it."""
     profile_row = {
+        # Shape matches ProfileResponse (models/profile.py).
+        "id": "11111111-2222-3333-4444-555555555555",
         "user_id": test_user_id,
-        "name": "Test User",
+        "full_name": "Test User",
         "sex": "male",
-        "age": 30,
-        "height_cm": 180,
-        "weight_kg": 80,
+        "date_of_birth": "1995-06-15",
+        "height_cm": 180.0,
+        "weight_kg": 80.0,
         "activity_level": "moderate",
-        "dietary_preference": "omnivore",
+        "dietary_preference": "none",
         "weight_goal_direction": "maintain",
         "daily_calorie_target": 2500,
-        "protein_target_g": 156,
-        "carbs_target_g": 281,
-        "fat_target_g": 83,
-        "water_target_ml": 2800,
-        "onboarded": True,
+        "daily_water_target_ml": 2800,
         "is_premium": False,
-        "created_at": "2025-01-01T00:00:00",
-        "updated_at": "2025-01-01T00:00:00",
+        "onboarding_completed": True,
+        "created_at": "2026-01-01T00:00:00Z",
     }
 
-    # The conftest fixture uses `side_effect=lambda _: _chainable()`, so
-    # `mock_supabase.table.return_value` is never actually returned —
-    # each `.table(...)` call mints a fresh chainable. Override the
-    # side_effect with one that yields a chain that returns our row.
-    chain = MagicMock()
-    chain.select.return_value = chain
-    chain.eq.return_value = chain
-    chain.single.return_value = chain
-    chain.execute.return_value = MagicMock(data=profile_row)
-    mock_supabase.table.side_effect = lambda _: chain
+    # mock_supabase.table.return_value is the shared chainable; replace
+    # its .execute attribute with one that returns our row. (Setting
+    # only .return_value didn't take effect — likely because the chain
+    # is mutated/cached between fixture setup and request execution.)
+    chain = mock_supabase.table.return_value
+    chain.execute = MagicMock(return_value=MagicMock(data=profile_row))
 
     response = client.get("/me", headers=auth_headers)
     assert response.status_code == 200
