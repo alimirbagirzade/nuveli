@@ -20,6 +20,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/network/app_error.dart';
+import '../../shared/widgets/app_error_view.dart';
 import 'models/premium_features.dart';
 import 'models/premium_offering.dart';
 import 'models/premium_package.dart';
@@ -84,7 +86,7 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
         child: SafeArea(
           child: offeringsAsync.when(
             loading: _buildLoading,
-            error: (e, _) => _buildError(e.toString()),
+            error: (e, _) => _buildError(e),
             data: (offering) {
               if (offering.isEmpty) {
                 return _buildError(
@@ -123,32 +125,25 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
     );
   }
 
-  Widget _buildError(String message) {
+  /// `errorOrMessage` accepts either an Object/Exception coming out of
+  /// AsyncValue.error, or a plain String for "no packages" style soft
+  /// failures we surface ourselves. Both routes funnel through
+  /// AppErrorView so the icon + title stay consistent.
+  Widget _buildError(Object errorOrMessage) {
+    final error = errorOrMessage is String
+        ? AppError.unknown(errorOrMessage)
+        : AppError.from(errorOrMessage);
+
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.cloud_off_rounded,
-            color: Color(0xFFB8C5D6),
-            size: 48,
+          AppErrorView(
+            error: error,
+            onRetry: () => ref.invalidate(offeringsProvider),
           ),
-          const SizedBox(height: 16),
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Color(0xFFB8C5D6), fontSize: 14),
-          ),
-          const SizedBox(height: 24),
-          TextButton(
-            onPressed: () => ref.invalidate(offeringsProvider),
-            child: const Text(
-              'Try again',
-              style: TextStyle(color: Color(0xFF00D4FF)),
-            ),
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           TextButton(
             onPressed: () => Navigator.of(context).maybePop(),
             child: const Text(
