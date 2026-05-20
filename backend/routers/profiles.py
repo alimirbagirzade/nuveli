@@ -125,11 +125,12 @@ async def onboarding(
     """
     supabase = get_supabase()
     targets = _compute_targets(req)
-    # bmr/tdee are returned to the client for display but the
-    # user_profiles table doesn't have columns for them yet (pending
-    # migration). Strip them from the upsert payload to avoid PGRST204.
-    bmr_value = targets.pop("bmr", None)
-    tdee_value = targets.pop("tdee", None)
+    # Only daily_calorie_target and daily_water_target_ml have columns
+    # in user_profiles right now. bmr/tdee/macro grams are computed and
+    # returned to clients but a schema migration is still pending — strip
+    # them from the upsert payload to avoid PGRST204.
+    for k in ("bmr", "tdee", "protein_target_g", "carbs_target_g", "fat_target_g"):
+        targets.pop(k, None)
 
     profile_data = {
         "user_id": user_id,
