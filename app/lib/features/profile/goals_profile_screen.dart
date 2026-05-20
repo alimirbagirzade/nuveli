@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:nuveli/core/network/app_error.dart';
 import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/shared/widgets/app_error_view.dart';
 
 import 'models/user_profile.dart';
 import 'models/weekly_analytics.dart';
@@ -59,8 +61,8 @@ class GoalsProfileScreen extends ConsumerWidget {
             onRefresh: () => refreshAllProfileData(ref),
             child: profileAsync.when(
               loading: () => const _FullScreenSkeleton(),
-              error: (e, _) => _FullScreenError(
-                error: e,
+              error: (e, _) => AppErrorView(
+                error: AppError.from(e),
                 onRetry: () => ref.invalidate(profileProvider),
               ),
               data: (profile) => _LoadedView(profile: profile),
@@ -239,73 +241,6 @@ class _FullScreenSkeleton extends StatelessWidget {
   }
 }
 
-class _FullScreenError extends StatelessWidget {
-  final Object error;
-  final VoidCallback onRetry;
-
-  const _FullScreenError({required this.error, required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.s32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.danger.withValues(alpha: 0.15),
-              ),
-              alignment: Alignment.center,
-              child: const Icon(
-                Icons.cloud_off_rounded,
-                size: 32,
-                color: AppColors.danger,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.s16),
-            Text(
-              'Couldn\'t load your profile',
-              style: AppTypography.cardTitle.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.s8),
-            Text(
-              'Check your connection and try again.',
-              textAlign: TextAlign.center,
-              style: AppTypography.body.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.s24),
-            ElevatedButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Retry'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryCyan,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.s24,
-                  vertical: AppSpacing.s12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.button),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _InlineError extends StatelessWidget {
   final VoidCallback onRetry;
