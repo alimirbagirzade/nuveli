@@ -17,10 +17,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nuveli/features/auth/models/auth_user.dart';
 import 'package:nuveli/features/auth/providers/auth_provider.dart';
+import 'package:nuveli/features/auth/providers/current_user_provider.dart';
 import 'package:nuveli/features/auth/screens/auth_gate.dart';
+import 'package:nuveli/features/auth/screens/onboarding/onboarding_screen.dart';
 import 'package:nuveli/features/auth/screens/welcome_screen.dart';
 import 'package:nuveli/features/auth/services/apple_signin_service.dart';
 import 'package:nuveli/features/auth/services/auth_service.dart';
+import 'package:nuveli/features/auth/services/profile_service.dart';
 
 import '../../_helpers/widget_test_helpers.dart';
 
@@ -66,9 +69,42 @@ void main() {
         // AuthNotifier.build() resolves to null → AsyncValue.data(null)
       ],
     );
-    // Let the AsyncNotifier future complete.
     await tester.pumpAndSettle();
 
     expect(find.byType(WelcomeScreen), findsOneWidget);
+  });
+
+  testWidgets(
+      'signed in + profile with onboardingCompleted=false → routes to OnboardingScreen',
+      (tester) async {
+    await pumpWithProviders(
+      tester,
+      const AuthGate(),
+      overrides: [
+        authServiceProvider.overrideWithValue(mockAuth),
+        appleSignInServiceProvider.overrideWithValue(mockApple),
+        authProvider.overrideWith(
+          () => _StubAuthNotifier(
+            AsyncValue.data(
+              AuthUser(
+                id: 'u1',
+                email: 'user@example.com',
+                createdAt: DateTime.now(),
+              ),
+            ),
+          ),
+        ),
+        currentUserProfileProvider.overrideWith(
+          (ref) async => UserProfile(
+            id: 'p1',
+            onboardingCompleted: false,
+            createdAt: DateTime.now(),
+          ),
+        ),
+      ],
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(OnboardingScreen), findsOneWidget);
   });
 }
