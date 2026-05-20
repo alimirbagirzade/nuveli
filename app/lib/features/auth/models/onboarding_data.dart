@@ -45,12 +45,21 @@ enum ActivityLevel {
         ActivityLevel.veryActive => 'very_active',
         _ => name,
       };
-  static ActivityLevel? tryFromJson(Object? v) => v == null
-      ? null
-      : ActivityLevel.values.firstWhere(
-          (e) => e.name == v,
-          orElse: () => ActivityLevel.sedentary,
-        );
+
+  /// Reverse of [toJson]. Accepts both wire form (e.g. 'very_active')
+  /// and Dart name form ('veryActive') so cached/legacy payloads still
+  /// parse.
+  static ActivityLevel? tryFromJson(Object? v) {
+    if (v == null) return null;
+    return switch (v) {
+      'very_active' || 'veryActive' => ActivityLevel.veryActive,
+      'sedentary' => ActivityLevel.sedentary,
+      'light' => ActivityLevel.light,
+      'moderate' => ActivityLevel.moderate,
+      'active' => ActivityLevel.active,
+      _ => ActivityLevel.sedentary,
+    };
+  }
 
   String get label => switch (this) {
         ActivityLevel.sedentary => 'Sedentary',
@@ -92,12 +101,20 @@ enum GoalType {
         GoalType.buildMuscle => 'gain',
       };
 
-  static GoalType? tryFromJson(Object? v) => v == null
-      ? null
-      : GoalType.values.firstWhere(
-          (e) => e.name == v,
-          orElse: () => GoalType.maintain,
-        );
+  /// Reverse of [toJson]. Accepts both backend wire form (lose / gain
+  /// / maintain) and the Dart enum names (loseWeight / gainWeight /
+  /// buildMuscle). Backend has no notion of buildMuscle so it can only
+  /// arrive from a locally persisted draft.
+  static GoalType? tryFromJson(Object? v) {
+    if (v == null) return null;
+    return switch (v) {
+      'lose' || 'loseWeight' || 'lose_weight' => GoalType.loseWeight,
+      'gain' || 'gainWeight' || 'gain_weight' => GoalType.gainWeight,
+      'buildMuscle' || 'build_muscle' => GoalType.buildMuscle,
+      'maintain' => GoalType.maintain,
+      _ => GoalType.maintain,
+    };
+  }
 
   String get label => switch (this) {
         GoalType.loseWeight => 'Lose weight',

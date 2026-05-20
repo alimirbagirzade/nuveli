@@ -192,28 +192,60 @@ void main() {
     });
   });
 
-  // Document the known mismatch: backend now responds with newer
-  // keys (full_name, sex, weight_kg, …). The current fromJson does
-  // not read them. When the model is updated, the assertions below
-  // will flip — and that's the signal to revisit this file.
-  group('UserProfile.fromJson — KNOWN follow-up (mismatch with new backend keys)', () {
-    test('backend new-key payload currently DROPS values (display_name vs full_name)', () {
+  group('UserProfile.fromJson — backend (Chat 22+) key shape', () {
+    test('reads new backend keys: full_name / sex / weight_kg / weight_goal_direction', () {
       final newBackendJson = <String, dynamic>{
         'id': 'x',
-        'full_name': 'Ali',       // new key (backend post Chat 22)
-        'sex': 'male',            // was: gender
-        'weight_kg': 75.0,        // was: current_weight_kg
+        'full_name': 'Ali',
+        'sex': 'male',
+        'weight_kg': 75.0,
+        'weight_goal_direction': 'lose',
+        'daily_water_target_ml': 2750,
+        'protein_target_g': 156,
         'created_at': '2026-01-01T00:00:00Z',
       };
 
       final profile = UserProfile.fromJson(newBackendJson);
 
-      // Until UserProfile.fromJson is refactored, these arrive as null.
-      // When that PR lands, flip these expectations and remove the
-      // legacy-key tests above.
-      expect(profile.displayName, isNull, reason: 'TODO: read full_name');
-      expect(profile.gender, isNull, reason: 'TODO: read sex');
-      expect(profile.currentWeightKg, isNull, reason: 'TODO: read weight_kg');
+      expect(profile.displayName, 'Ali');
+      expect(profile.gender, Gender.male);
+      expect(profile.currentWeightKg, 75.0);
+      expect(profile.goalType, GoalType.loseWeight);
+      expect(profile.dailyWaterMl, 2750);
+      expect(profile.proteinPercent, 156);
+    });
+
+    test('legacy keys still parse (back-compat with cached payloads)', () {
+      final legacyJson = <String, dynamic>{
+        'id': 'x',
+        'display_name': 'Ali',
+        'gender': 'male',
+        'current_weight_kg': 75.0,
+        'goal_type': 'loseWeight',
+        'daily_water_ml': 2500,
+        'protein_percent': 30,
+        'created_at': '2026-01-01T00:00:00Z',
+      };
+
+      final profile = UserProfile.fromJson(legacyJson);
+
+      expect(profile.displayName, 'Ali');
+      expect(profile.gender, Gender.male);
+      expect(profile.currentWeightKg, 75.0);
+      expect(profile.goalType, GoalType.loseWeight);
+      expect(profile.dailyWaterMl, 2500);
+      expect(profile.proteinPercent, 30);
+    });
+
+    test('new key wins when both new + legacy are present', () {
+      final mixed = <String, dynamic>{
+        'id': 'x',
+        'full_name': 'New name',
+        'display_name': 'Old name',
+        'created_at': '2026-01-01T00:00:00Z',
+      };
+      final profile = UserProfile.fromJson(mixed);
+      expect(profile.displayName, 'New name');
     });
   });
 }
