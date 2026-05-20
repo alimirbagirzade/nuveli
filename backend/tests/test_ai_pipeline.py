@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pytest
 pytest.skip("Targets a backend layout (app/ package, decision_engine, checkin_service, premium_service, schemas/) that doesn't exist in the current backend yet. Chat 23 follow-up: either align backend to this design or rewrite these tests to the current structure.", allow_module_level=True)
 
@@ -11,7 +12,6 @@ Yeni servislerin temel akışlarını doğrular.
     cd backend && pytest tests/test_ai_pipeline.py -v
 """
 
-from __future__ import annotations
 import pytest
 from unittest.mock import AsyncMock, MagicMock
 from dataclasses import asdict
