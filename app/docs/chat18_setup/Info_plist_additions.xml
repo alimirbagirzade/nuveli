@@ -1,0 +1,39 @@
+<!--
+  ios/Runner/Info.plist — Chat 18 eklemeleri
+
+  Mevcut <dict>...</dict> içine aşağıdaki anahtarları ekle.
+  Zaten varsa atla.
+-->
+
+<!-- UIBackgroundModes: notification arrived while backgrounded işlemek için
+     (FCM yapacaksak şart, sadece local için zorunlu değil ama mantıklı) -->
+<key>UIBackgroundModes</key>
+<array>
+    <string>fetch</string>
+    <string>remote-notification</string>
+</array>
+
+<!--
+  iOS 15+ Critical Alerts veya Time-Sensitive: ek entitlement gerek YOK,
+  sadece InterruptionLevel.timeSensitive yeterli (notification_service.dart
+  zaten ayarlıyor).
+
+  Foreground notification gösterimi: FLN 17+ otomatik handle eder,
+  ekstra plist key gerekmez.
+
+  iOS 12 ve öncesi için (UNUserNotificationCenter API) ek hiçbir şey gerek yok —
+  flutter_local_notifications zaten yönetiyor.
+-->
+
+<!--
+  ÖNEMLİ NOT:
+  iOS'ta notification permission açıklaması için PLIST'e key EKLEMEZSİN.
+  Apple permission dialog'unu otomatik gösterir. Buna karşılık BildirimUsageDescription
+  diye bir key YOKTUR — bazı dökümanlar yanlış gösteriyor. Sadece request çağırınca
+  sistem dialog'u açılır.
+
+  Buna karşılık microphone, camera vs. kullanıyorsan o ayrı:
+  <key>NSCameraUsageDescription</key>      → Camera kullanımı için (Chat 5 — meal scan)
+  <key>NSPhotoLibraryUsageDescription</key> → Galeri için
+  <key>NSHealthShareUsageDescription</key>  → HealthKit için (Chat 10)
+-->

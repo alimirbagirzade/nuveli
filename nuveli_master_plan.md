@@ -572,7 +572,7 @@ Başlayalım. Önce yapılacakları özetle, sonra kodlamaya geç.
 - [ ] Chat 18: Notifications
 
 ### Faz 4: Release
-- [ ] Chat 19: RevenueCat & Premium
+- [x] **Chat 19: RevenueCat & Premium ✅** (2026-05-20)
 - [ ] Chat 20: App Store Submission
 
 ---
