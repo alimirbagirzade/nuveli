@@ -60,6 +60,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
+                // Surfaces the optional `error` parameter that AuthGate
+                // passes when authProvider lands in AsyncValue.error.
+                // Previously the parameter existed but was silently
+                // dropped — the user just saw the welcome screen with
+                // no hint of what failed.
+                if (widget.error != null && widget.error!.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  AuthErrorBanner(message: widget.error!),
+                ],
                 const Spacer(flex: 2),
                 FadeTransition(
                   opacity: _fade,
