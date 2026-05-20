@@ -245,18 +245,31 @@ class OnboardingData {
         if (fatPercent != null) 'fat_percent': fatPercent,
       };
 
+  /// Reads both the Chat 22-aligned backend payload (`full_name`, `sex`,
+  /// `weight_kg`, `weight_goal_direction`, …) AND the older draft format
+  /// (`display_name`, `gender`, `current_weight_kg`, `goal_type`, …) so
+  /// that cached SharedPreferences blobs from earlier builds still
+  /// parse. Symmetric with [toJson], which emits the new keys.
   factory OnboardingData.fromJson(Map<String, dynamic> json) => OnboardingData(
-        displayName: json['display_name'] as String?,
+        displayName:
+            (json['full_name'] ?? json['display_name']) as String?,
         dateOfBirth: _parseDate(json['date_of_birth']),
-        gender: Gender.tryFromJson(json['gender']),
+        gender: Gender.tryFromJson(json['sex'] ?? json['gender']),
         heightCm: (json['height_cm'] as num?)?.toDouble(),
-        currentWeightKg: (json['current_weight_kg'] as num?)?.toDouble(),
-        activityLevel: ActivityLevel.tryFromJson(json['activity_level']),
-        goalType: GoalType.tryFromJson(json['goal_type']),
+        currentWeightKg:
+            ((json['weight_kg'] ?? json['current_weight_kg']) as num?)
+                ?.toDouble(),
+        activityLevel:
+            ActivityLevel.tryFromJson(json['activity_level']),
+        goalType: GoalType.tryFromJson(
+          json['weight_goal_direction'] ?? json['goal_type'],
+        ),
         targetWeightKg: (json['target_weight_kg'] as num?)?.toDouble(),
         targetDate: _parseDate(json['target_date']),
         dailyCalorieTarget: json['daily_calorie_target'] as int?,
-        dailyWaterMl: json['daily_water_ml'] as int?,
+        dailyWaterMl:
+            (json['daily_water_target_ml'] ?? json['daily_water_ml'])
+                as int?,
         proteinPercent: json['protein_percent'] as int?,
         carbsPercent: json['carbs_percent'] as int?,
         fatPercent: json['fat_percent'] as int?,
