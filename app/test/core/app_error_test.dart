@@ -73,5 +73,68 @@ void main() {
         'Günde en fazla 3 analiz yapabilirsin.',
       );
     });
+
+    // ----- New (Chat 24) error categories -----
+    test('403 → ForbiddenError', () {
+      final e = errorResponse(
+        statusCode: 403,
+        code: 'FORBIDDEN',
+        message: 'Yetkisiz işlem',
+      );
+      expect(AppError.fromDio(e), isA<ForbiddenError>());
+    });
+
+    test('404 → NotFoundError', () {
+      final e = errorResponse(
+        statusCode: 404,
+        code: 'NOT_FOUND',
+        message: 'Bulunamadı',
+      );
+      expect(AppError.fromDio(e), isA<NotFoundError>());
+    });
+
+    test('422 with standard error envelope → ValidationError (uses body msg)', () {
+      final e = errorResponse(
+        statusCode: 422,
+        code: 'VALIDATION_FAILED',
+        message: 'Email geçersiz',
+      );
+      final result = AppError.fromDio(e);
+      expect(result, isA<ValidationError>());
+      expect(result.userMessage, 'Email geçersiz');
+    });
+
+    test('422 with FastAPI {detail: [{msg: ...}]} also resolves to ValidationError', () {
+      // FastAPI default validation body shape — surfaces the first
+      // detail.msg as the user message.
+      final e = DioException(
+        requestOptions: RequestOptions(path: '/x'),
+        response: Response(
+          requestOptions: RequestOptions(path: '/x'),
+          statusCode: 422,
+          data: {
+            'detail': [
+              {
+                'loc': ['body', 'email'],
+                'msg': 'value is not a valid email',
+                'type': 'value_error.email',
+              }
+            ],
+          },
+        ),
+        type: DioExceptionType.badResponse,
+      );
+      final result = AppError.fromDio(e);
+      expect(result, isA<ValidationError>());
+      expect(result.userMessage, 'value is not a valid email');
+    });
+
+    test('sendTimeout also maps to NetworkError', () {
+      final e = DioException(
+        requestOptions: RequestOptions(path: '/'),
+        type: DioExceptionType.sendTimeout,
+      );
+      expect(AppError.fromDio(e), isA<NetworkError>());
+    });
   });
 }
