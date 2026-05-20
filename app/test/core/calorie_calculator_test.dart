@@ -182,4 +182,145 @@ void main() {
       expect(target, 1600);
     });
   });
+
+  group('CalorieCalculator.calculateDailyWater', () {
+    test('70 kg → 2450 ml (70 × 35 = 2450, already a multiple of 50)', () {
+      expect(CalorieCalculator.calculateDailyWater(70), 2450);
+    });
+
+    test('80 kg → 2800 ml', () {
+      expect(CalorieCalculator.calculateDailyWater(80), 2800);
+    });
+
+    test('rounds to the nearest 50 ml', () {
+      // 73 × 35 = 2555 → nearest multiple of 50 is 2550.
+      expect(CalorieCalculator.calculateDailyWater(73), 2550);
+      // 76 × 35 = 2660 → rounds to 2650.
+      expect(CalorieCalculator.calculateDailyWater(76), 2650);
+    });
+  });
+
+  group('CalorieCalculator.calculateMacroSplit', () {
+    test('lose → protein-heavy (35/40/25)', () {
+      final s = CalorieCalculator.calculateMacroSplit(GoalType.loseWeight);
+      expect(s.protein, 35);
+      expect(s.carbs, 40);
+      expect(s.fat, 25);
+    });
+
+    test('maintain → 25/45/30', () {
+      final s = CalorieCalculator.calculateMacroSplit(GoalType.maintain);
+      expect(s.protein, 25);
+      expect(s.carbs, 45);
+      expect(s.fat, 30);
+    });
+
+    test('gainWeight → 25/50/25', () {
+      final s = CalorieCalculator.calculateMacroSplit(GoalType.gainWeight);
+      expect(s.protein, 25);
+      expect(s.carbs, 50);
+      expect(s.fat, 25);
+    });
+
+    test('buildMuscle → protein-heavy lean bulk (30/45/25)', () {
+      final s = CalorieCalculator.calculateMacroSplit(GoalType.buildMuscle);
+      expect(s.protein, 30);
+      expect(s.carbs, 45);
+      expect(s.fat, 25);
+    });
+
+    test('macro percentages always sum to 100', () {
+      for (final g in GoalType.values) {
+        final s = CalorieCalculator.calculateMacroSplit(g);
+        expect(
+          s.protein + s.carbs + s.fat,
+          100,
+          reason: 'split for $g should sum to 100',
+        );
+      }
+    });
+  });
+
+  group('CalorieCalculator.gramsFromPercent', () {
+    test('protein/carbs at 4 kcal/g, fat at 9 kcal/g', () {
+      final g = CalorieCalculator.gramsFromPercent(
+        calories: 2000,
+        proteinPercent: 25,
+        carbsPercent: 45,
+        fatPercent: 30,
+      );
+      // protein: 2000 * 0.25 / 4 = 125
+      // carbs:   2000 * 0.45 / 4 = 225
+      // fat:     2000 * 0.30 / 9 = 66.67 → 67
+      expect(g.protein, 125);
+      expect(g.carbs, 225);
+      expect(g.fat, 67);
+    });
+
+    test('rounds each macro to nearest gram independently', () {
+      final g = CalorieCalculator.gramsFromPercent(
+        calories: 2046,
+        proteinPercent: 35,
+        carbsPercent: 40,
+        fatPercent: 25,
+      );
+      // protein: 2046 * 0.35 / 4 = 179.025 → 179
+      // carbs:   2046 * 0.40 / 4 = 204.6   → 205
+      // fat:     2046 * 0.25 / 9 = 56.83   → 57
+      expect(g.protein, 179);
+      expect(g.carbs, 205);
+      expect(g.fat, 57);
+    });
+  });
+
+  group('CalorieCalculator.fromOnboarding', () {
+    test('null when isReadyForCalculation is false', () {
+      // No dob / gender / heightCm / weightKg / activityLevel / goalType.
+      const empty = OnboardingData();
+      expect(CalorieCalculator.fromOnboarding(empty), isNull);
+    });
+
+    test('null when a required field is still missing', () {
+      // All but goalType set.
+      final partial = const OnboardingData().copyWith(
+        dateOfBirth: DateTime(1995, 6, 15),
+        gender: Gender.male,
+        heightCm: 178,
+        currentWeightKg: 75,
+        activityLevel: ActivityLevel.moderate,
+        // goalType omitted on purpose
+      );
+      expect(CalorieCalculator.fromOnboarding(partial), isNull);
+    });
+
+    test('full happy path: produces a coherent CalorieCalculation', () {
+      final data = const OnboardingData().copyWith(
+        dateOfBirth: DateTime(1995, 6, 15),
+        gender: Gender.male,
+        heightCm: 178,
+        currentWeightKg: 75,
+        activityLevel: ActivityLevel.moderate,
+        goalType: GoalType.maintain,
+      );
+      final calc = CalorieCalculator.fromOnboarding(data)!;
+
+      // bmr/tdee positive
+      expect(calc.bmr, greaterThan(0));
+      expect(calc.tdee, greaterThan(calc.bmr));
+      // Maintain → calorie target ≈ TDEE (rounded)
+      expect(calc.dailyCalorieTarget, calc.tdee.round());
+      // Water target is a multiple of 50.
+      expect(calc.dailyWaterMl % 50, 0);
+      // Macro grams sum back to (~) the calorie target (allow rounding drift).
+      final reconstructed = calc.proteinGrams * 4 + calc.carbsGrams * 4 + calc.fatGrams * 9;
+      expect(
+        (reconstructed - calc.dailyCalorieTarget).abs(),
+        lessThanOrEqualTo(10),
+      );
+      // Macro percentages reflect the maintain split.
+      expect(calc.proteinPercent, 25);
+      expect(calc.carbsPercent, 45);
+      expect(calc.fatPercent, 30);
+    });
+  });
 }
