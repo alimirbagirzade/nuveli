@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 round 2 — A11y, haptic, cleanup + extra test coverage; 245 frontend tests)
+**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 round 2 final — AppErrorView 3 ekrana yayıldı; 245 tests, 20 PR)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -845,7 +845,7 @@ apscheduler==3.10.4  # cron jobs
 **Şu an:** Chat 24 — Polish round 1 + round 2 in progress (11 PR merged total).
 224 frontend + 32 backend tests still green.
 
-**Round 2 additions (PR #45 → #51, 17 Chat 24 PRs total):**
+**Round 2 additions (PR #45 → #54, 20 Chat 24 PRs total):**
 - PrimaryButton + AuthPrimaryButton wrapped in Semantics(label, button,
   enabled, hint) with excludeSemantics — VoiceOver/TalkBack now read
   out the right label + busy state. App Store reviewer-friendly.
@@ -866,6 +866,14 @@ apscheduler==3.10.4  # cron jobs
   silently dropped fields. fromJson now reads new + legacy keys
   symmetrically; locked by 10 new model tests (copyWith, readiness
   flags, wire shape, round-trip).
+- **AppErrorView spread to two more screens** (#53, #54):
+  goals_profile_screen lost its hand-rolled `_FullScreenError`
+  (cloud_off + hardcoded "Couldn't load your profile" + Retry),
+  premium_paywall_screen swapped its bespoke error column for
+  AppErrorView + Close button. Three screens (dashboard, profile,
+  paywall) now share the same error chrome; remaining inline is the
+  `WelcomeScreen(error:)` parameter path in AuthGate, which doesn't
+  use AsyncValue.when in the same shape.
 
 **Hâlâ Round 2 backlog'unda:**
 - i18n setup (TR/EN, ARB dosyaları + flutter_localizations delegates).
