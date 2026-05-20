@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -45,6 +46,21 @@ final authedDioProvider = Provider<Dio>((ref) {
       },
     ),
   );
+
+  // Same Dio logging story as ApiClient + ProfileService: in debug
+  // builds we want every authed request/response visible in flutter
+  // run logs. Release builds (kDebugMode == false) stay quiet.
+  if (kDebugMode) {
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      request: false,
+      requestHeader: false,
+      responseHeader: false,
+      error: true,
+      logPrint: (msg) => debugPrint('[AuthedDio] $msg'),
+    ));
+  }
 
   return dio;
 });

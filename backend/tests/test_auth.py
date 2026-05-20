@@ -131,3 +131,92 @@ def test_wrong_audience_rejected(client):
         headers={"Authorization": f"Bearer {token}"},
     )
     assert response.status_code == 401
+
+
+# ---------------------------------------------------------------------------
+# ES256 / JWKS branch — when Supabase rotates to asymmetric keys, tokens
+# arrive signed with EC P-256. The verifier fetches public JWKs from the
+# project's /.well-known/jwks.json. We bypass the live fetch by seeding
+# the in-process _jwks_cache directly with a public key we generated.
+# ---------------------------------------------------------------------------
+
+
+def _generate_es256_keypair_and_jwk(kid: str):
+    """Return (private_key_pem, jwk_dict) for ES256 signing tests."""
+    from cryptography.hazmat.primitives.asymmetric import ec
+    from cryptography.hazmat.primitives import serialization
+    from jose.utils import base64url_encode
+
+    private_key = ec.generate_private_key(ec.SECP256R1())
+    private_pem = private_key.private_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption(),
+    ).decode()
+
+    public_numbers = private_key.public_key().public_numbers()
+    jwk = {
+        "kty": "EC",
+        "crv": "P-256",
+        "kid": kid,
+        "x": base64url_encode(public_numbers.x.to_bytes(32, "big")).decode(),
+        "y": base64url_encode(public_numbers.y.to_bytes(32, "big")).decode(),
+        "use": "sig",
+        "alg": "ES256",
+    }
+    return private_pem, jwk
+
+
+def test_es256_valid_token_accepted_via_jwks_cache(client):
+    """ES256 path: token signed with EC private key; matching public
+    JWK in `_jwks_cache` lets verification succeed."""
+    from core.auth import _jwks_cache
+
+    kid = "test-es256-kid"
+    private_pem, jwk = _generate_es256_keypair_and_jwk(kid)
+
+    _jwks_cache[kid] = jwk
+    try:
+        token = jwt.encode(
+            _valid_payload(),
+            private_pem,
+            algorithm="ES256",
+            headers={"kid": kid},
+        )
+
+        with pytest.raises(IndexError):
+            # auth passes → handler hits the empty mocked Supabase chain.
+            client.get(
+                "/me",
+                headers={"Authorization": f"Bearer {token}"},
+            )
+    finally:
+        _jwks_cache.pop(kid, None)
+
+
+def test_es256_unknown_kid_rejected(client, monkeypatch):
+    """ES256 token with a kid that's not in the JWKS cache must 401.
+    Stub _refresh_jwks to a no-op so the verifier can't repopulate
+    the cache out from under us."""
+    from core import auth as auth_module
+
+    auth_module._jwks_cache.clear()
+
+    async def _no_op_refresh():
+        return None
+
+    monkeypatch.setattr(auth_module, "_refresh_jwks", _no_op_refresh)
+
+    private_pem, _ = _generate_es256_keypair_and_jwk("ignored")
+    token = jwt.encode(
+        _valid_payload(),
+        private_pem,
+        algorithm="ES256",
+        headers={"kid": "definitely-not-in-jwks-12345"},
+    )
+
+    response = client.get(
+        "/me",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 401
