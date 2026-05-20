@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 19 Mayıs 2026 (Chat 13 tamamlandı)
+**Son Güncelleme:** 20 Mayıs 2026 (Chat 22 tamamlandı — Smoke Test SUCCESS)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -646,12 +646,70 @@ apscheduler==3.10.4  # cron jobs
 
 ---
 
+## 📋 CHAT 14–22 KAPANIŞ ÖZETİ (20 Mayıs 2026)
+
+### Tamamlananlar
+- **Chat 14:** Backend FastAPI iskeleti — Render'a deploy, `/health`, `/me` endpoint'leri
+- **Chat 15:** Onboarding flow (5-step) + `OnboardingData` modeli + `CalorieCalculator`
+- **Chat 16:** Repository integration (frontend ↔ backend wiring)
+- **Chat 17:** *(routing — `_disabled_chat17_routing/`'de, henüz merge edilmedi)*
+- **Chat 18:** Local notifications (FCM + flutter_local_notifications)
+- **Chat 19:** Premium tier + RevenueCat entegrasyonu
+- **Chat 20:** Launch submission docs (34 MD dosya)
+- **Chat 21:** Project audit & cleanup
+  - `flutter analyze` errors: **10071 → 0**
+  - `analysis_options.yaml` exclude listesi (disabled/snippet/docs)
+  - `macros_row.dart` int→num fix
+- **Chat 22:** Integration & Smoke Test ✅
+  - Signup → Onboarding → Dashboard akışı uçtan uca yeşil
+  - **7 PR merge** edildi (#14, #15, #17, #18, #19 + Supabase SQL migration)
+
+### Chat 22'nin Asıl Teknik Kazanımları
+1. **Dual-algorithm JWT verifier** (`backend/core/auth.py`):
+   - Supabase rotated to ES256 (asymmetric keys)
+   - Backend JWKS endpoint'inden public key fetch + cache
+   - HS256 + ES256/RS256 dual support
+2. **`user_profiles` Supabase migration:**
+   - 5 RENAME: `display_name→full_name`, `gender→sex`, `current_weight_kg→weight_kg`, `goal_type→weight_goal_direction`, `language→locale`
+   - 6 ADD COLUMN: `dietary_preference`, `bmr`, `tdee`, `protein_target_g`, `carbs_target_g`, `fat_target_g`
+   - `weight_goal_direction` CHECK constraint güncellendi (`lose|maintain|gain`)
+3. **Frontend payload alignment** (`OnboardingData.toJson`):
+   - Key names backend'e uyarlandı
+   - `GoalType.toJson`: `loseWeight→lose`, `gainWeight→gain`, `buildMuscle→gain`
+   - `ActivityLevel.toJson`: `veryActive→very_active`
+4. **AuthGate wire-up:** Real `DashboardScreen` (was `_DashboardPlaceholder`)
+5. **`ProfileService` Dio logger** — debug build'lerde `[ProfileService]` prefix'li request/response logları
+
+### Chat 22'den Devralınan Technical Debt (Chat 23+ için)
+- **`profiles` vs `user_profiles` dilemma:** `weight_logs` ve `weight_goals` foreign key'leri `profiles` tablosuna işaret ediyor, ama backend `user_profiles`'a yazıyor. Şu an try/except ile yutuluyor — gerçek fix migration gerektirir.
+- **`bmr`, `tdee`, `protein_target_g`, `carbs_target_g`, `fat_target_g` upsert disabled:** Kolonlar artık var ama backend `_compute_targets` return'undan pop ediyor. Pop'u kaldır, response'ta da görünsün.
+- **Email validator regex `+` aliasları reddediyor** (`auth_text_field.dart` `AuthValidators.email`).
+- **3 ayrı Dio instance:** `ApiClient` (LogInterceptor + AuthInterceptor), `authedDioProvider` (manual token), `ProfileService._buildDio()` (manual options). `ApiClient`'a konsolide et.
+- **Debug `[Onboarding]` print'leri** `onboarding_screen.dart` `_completeOnboarding`'de — Chat 23 sonrası temizle.
+- **`api_client.dart.bak`** dosyası — temizlik.
+- **Chat 17 routing** hâlâ disabled — `go_router` dependency'de ama kullanılmıyor.
+
+### Production State (20 Mayıs 2026)
+- **Backend:** `https://nuveli-api.onrender.com` (Render, free tier, dual-alg JWT live)
+- **Supabase:** `asicgcnpahdnitzalcva.supabase.co` (Frankfurt, ES256 asymmetric keys, user_profiles schema aligned)
+- **iOS Build:** `flutter build ios --debug --no-codesign` ✓ Built
+- **Smoke test user:** `ambz@yandex.com` (verified, profile complete, dashboard rendering)
+
+---
+
 ## 🎬 SONRAKİ ADIM
 
-**Şu an:** Chat 13 tamamlandı ✅ — Supabase schema production'da, tüm migration'lar GitHub'da.
+**Şu an:** Chat 22 tamamlandı ✅ — End-to-end auth + onboarding + dashboard akışı çalışıyor.
 
-**Bir sonraki adım:** Yeni bir chat aç ve **Chat 14: Backend API (FastAPI)** ile devam et.
+**Bir sonraki adım:** Yeni bir Claude chat aç ve **Chat 23: Testing Suite** ile devam et.
 
-Açılış mesajı şablonunu kullan, bu master plan'ı project files'a yükle.
+`docs/sprints/chat23_testing.md` dosyasını project files'a yükle — Claude doğrudan Chat 23 hazırlık paketini görür.
+
+Chat 23 kapsam özeti:
+- Unit tests (BMR/TDEE, validators, auth service, models)
+- Widget tests (login/signup screens, dashboard, common widgets)
+- Integration tests (auth flow, meal logging)
+- Backend tests (pytest, FastAPI test client)
+- CI/CD (GitHub Actions)
 
 Başarılar! 🚀
