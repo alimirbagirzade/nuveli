@@ -385,18 +385,19 @@ Environment variables Render dashboard'da manuel girilir. API key ile de set edi
 
 ## 9. Mevcut Değerler (Production)
 
-**Not:** Güvenlik için sadece ilk birkaç karakter gösterilmiş. Tam değerleri 1Password/Bitwarden'da sakla.
+**TÜM gerçek değerler 1Password'da** (`Nuveli` vault). Bu repo'da plain text **YOK**. Dashboard'lardan da çekilebilir:
 
-```
-SUPABASE_URL=https://asicgcnpahdnitzalcva.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzaWNnY25wYWhkbml0emFsY3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTU1NzIsImV4cCI6MjA5MjMzMTU3Mn0.0UX_wdWYSRCG-xULsrKzNwgjIhXJh7pfUygQqjgz-_k
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJI... (tam key → 1Password)
-SUPABASE_JWT_SECRET=792108ee-5129-4431-88a9-c4f5e80d0ed1
-OPENAI_API_KEY=sk-proj-XaNCM... (tam key → 1Password)
-RENDER_API_KEY=rnd_LBbvjP8zosPVPGismbg2iM2Qwiap
-```
+| Env Var | Nereden alınır |
+|---------|----------------|
+| `SUPABASE_URL` | Supabase Dashboard → Settings → API → Project URL |
+| `SUPABASE_ANON_KEY` | Supabase Dashboard → Settings → API Keys → Publishable |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase Dashboard → Settings → API Keys → Secret (admin-only) |
+| `SUPABASE_JWT_SECRET` | Supabase Dashboard → Settings → JWT Keys → Legacy HS256 (only if HS256 fallback needed) |
+| `OPENAI_API_KEY` | platform.openai.com → API Keys |
+| `RENDER_API_KEY` | dashboard.render.com → Account Settings → API Keys |
+| RevenueCat | RevenueCat dashboard'dan platform-specific |
 
-**RevenueCat key'leri henüz yok** — hesap oluşturulup app eklenince buraya eklenecek.
+⚠️ **Asla bu dosyaya plain secret yazma.** Repo public; herhangi bir tam key burada görünürse derhal rotate gerekli.
 
 ---
 
