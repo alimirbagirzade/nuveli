@@ -66,10 +66,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Future<void> _completeOnboarding() async {
     final data = ref.read(onboardingDataProvider);
-    debugPrint('[Onboarding] Complete Setup tapped');
-    debugPrint('[Onboarding] isComplete=${data.isComplete} | data=${data.toJson()}');
     if (!data.isComplete) {
-      debugPrint('[Onboarding] Validation FAILED → submitError set, returning');
       setState(() => _submitError = 'Please complete all steps before continuing.');
       return;
     }
@@ -79,9 +76,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     });
     try {
       final profileService = ref.read(profileServiceProvider);
-      debugPrint('[Onboarding] Calling profileService.completeOnboarding...');
       await profileService.completeOnboarding(data);
-      debugPrint('[Onboarding] POST success → invalidating currentUserProfileProvider');
 
       // Cache invalidate → AuthGate Dashboard'a yönlendirir.
       ref.invalidate(currentUserProfileProvider);
@@ -89,16 +84,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       // Draft temizle
       await ref.read(onboardingDataProvider.notifier).reset();
     } on ProfileServiceException catch (e) {
-      debugPrint('[Onboarding] ProfileServiceException: ${e.message} (status=${e.statusCode})');
       if (mounted) setState(() => _submitError = e.message);
-    } catch (e) {
-      debugPrint('[Onboarding] Unknown exception: ${e.runtimeType} - $e');
+    } catch (_) {
       if (mounted) {
         setState(() =>
             _submitError = 'Could not save your profile. Please try again.');
       }
     } finally {
-      debugPrint('[Onboarding] _completeOnboarding finally');
       if (mounted) setState(() => _submitting = false);
     }
   }
