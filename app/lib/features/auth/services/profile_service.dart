@@ -10,6 +10,7 @@
 // ============================================================================
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -103,12 +104,21 @@ class ProfileService {
   static Dio _buildDio() {
     final baseUrl = dotenv.env['API_BASE_URL'] ??
         'https://nuveli-api.onrender.com';
-    return Dio(BaseOptions(
+    final dio = Dio(BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 30),
       headers: {'Content-Type': 'application/json'},
     ));
+    if (kDebugMode) {
+      dio.interceptors.add(LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        error: true,
+        logPrint: (msg) => debugPrint('[ProfileService] $msg'),
+      ));
+    }
+    return dio;
   }
 
   String _token() {

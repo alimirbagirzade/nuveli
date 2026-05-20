@@ -17,8 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/nuveli_background.dart';
-// TODO Chat 4: DashboardScreen import — şu an placeholder kullanıyoruz.
-// import '../../dashboard/screens/dashboard_screen.dart';
+import '../../dashboard/dashboard_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/current_user_provider.dart';
 import 'onboarding/onboarding_screen.dart';
@@ -56,7 +55,7 @@ class AuthGate extends ConsumerWidget {
               return const OnboardingScreen();
             }
             // 4. Ana app
-            return const _DashboardPlaceholder();
+            return const DashboardScreen();
           },
         );
       },
@@ -118,9 +117,7 @@ class _SplashScreen extends StatelessWidget {
 
 // ============================================================================
 // DASHBOARD PLACEHOLDER
-// Chat 4'te asıl DashboardScreen ile değiştirilecek.
-// Şimdilik sadece "Onboarding tamamlandı, dashboard burada olacak" diyen
-// bir placeholder + sign out butonu (test için).
+// TODO Chat 22 sonrası: ölü kod, silinebilir (artık DashboardScreen kullanılıyor).
 // ============================================================================
 
 class _DashboardPlaceholder extends ConsumerWidget {
