@@ -155,23 +155,21 @@ async def onboarding(
         .execute()
     )
 
-    # Initial weight log
+    # Initial weight log (column names follow current schema, not migration draft)
     supabase.table("weight_logs").insert({
         "user_id": user_id,
         "weight_kg": req.weight_kg,
-        "logged_at": datetime.utcnow().isoformat(),
-        "note": "Onboarding",
+        "local_day": date.today().isoformat(),
     }).execute()
 
     # Initial weight goal if target provided
     if req.target_weight_kg:
         supabase.table("weight_goals").insert({
             "user_id": user_id,
-            "target_kg": req.target_weight_kg,
+            "start_weight_kg": req.weight_kg,
+            "target_weight_kg": req.target_weight_kg,
             "target_date": req.target_date.isoformat() if req.target_date else None,
-            "direction": req.weight_goal_direction,
-            "starting_weight_kg": req.weight_kg,
-            "status": "active",
+            "is_active": True,
         }).execute()
 
     logger.info(f"Onboarding complete for user {user_id}: targets={targets}")
