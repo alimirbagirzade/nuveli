@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/network/app_error.dart';
 import '../../shared/widgets/app_error_view.dart';
+import '../../shared/widgets/skeleton.dart';
 import 'providers/dashboard_provider.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
@@ -152,59 +153,35 @@ class _DashboardSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        // Hero card skeleton
-        Container(
-          margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-          height: 320,
-          decoration: _skeletonDecoration(),
-          child: const Center(
-            child: SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation(Color(0xFF4DDBFF)),
-              ),
-            ),
-          ),
-        ),
-        // Macros skeleton
+        // Hero (calorie ring) — tall card.
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+          child: SkeletonBox(height: 320, borderRadius: 16),
+        ),
+        // Macros row — 3 equal placeholders.
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Row(
-            children: List.generate(
-              3,
-              (i) => Expanded(
-                child: Container(
-                  height: 90,
-                  margin: EdgeInsets.only(left: i == 0 ? 0 : 10),
-                  decoration: _skeletonDecoration(),
-                ),
-              ),
-            ),
+            children: [
+              Expanded(child: SkeletonBox(height: 90, borderRadius: 16)),
+              SizedBox(width: 10),
+              Expanded(child: SkeletonBox(height: 90, borderRadius: 16)),
+              SizedBox(width: 10),
+              Expanded(child: SkeletonBox(height: 90, borderRadius: 16)),
+            ],
           ),
         ),
-        const SizedBox(height: 16),
-        // Water skeleton
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          height: 64,
-          decoration: _skeletonDecoration(),
+        SizedBox(height: 16),
+        // Water quick card row.
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: SkeletonBox(height: 64, borderRadius: 16),
         ),
       ],
     );
   }
-
-  BoxDecoration _skeletonDecoration() => BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color(0xFF142346).withOpacity(0.4),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.05),
-          width: 1,
-        ),
-      );
 }
 
 // ============================================================================
