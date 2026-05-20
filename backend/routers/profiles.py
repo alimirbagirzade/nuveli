@@ -125,6 +125,11 @@ async def onboarding(
     """
     supabase = get_supabase()
     targets = _compute_targets(req)
+    # bmr/tdee are returned to the client for display but the
+    # user_profiles table doesn't have columns for them yet (pending
+    # migration). Strip them from the upsert payload to avoid PGRST204.
+    bmr_value = targets.pop("bmr", None)
+    tdee_value = targets.pop("tdee", None)
 
     profile_data = {
         "user_id": user_id,
