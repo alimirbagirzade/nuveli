@@ -25,6 +25,10 @@ class _FakeSession extends Fake implements Session {
   String get accessToken => 'fake-access-token';
 }
 
+class _FakeUserResponse extends Fake implements UserResponse {}
+
+class _FakeResendResponse extends Fake implements ResendResponse {}
+
 void main() {
   late _MockSupabaseClient mockClient;
   late _MockGoTrueClient mockAuth;
@@ -250,6 +254,79 @@ void main() {
         () => mockAuth.resetPasswordForEmail(
           'user@example.com',
           redirectTo: 'com.nuveli.app://reset-password',
+        ),
+      ).called(1);
+    });
+
+    test('Supabase error wraps into NuveliAuthException', () async {
+      when(
+        () => mockAuth.resetPasswordForEmail(
+          any(),
+          redirectTo: any(named: 'redirectTo'),
+        ),
+      ).thenThrow(AuthException('Reset failed'));
+
+      expect(
+        () => service.sendPasswordResetEmail('user@example.com'),
+        throwsA(isA<NuveliAuthException>()),
+      );
+    });
+  });
+
+  group('AuthService.updatePassword', () {
+    setUpAll(() {
+      registerFallbackValue(UserAttributes(password: 'placeholder'));
+    });
+
+    test('happy path forwards the new password to Supabase', () async {
+      when(() => mockAuth.updateUser(any())).thenAnswer(
+        (_) async => _FakeUserResponse(),
+      );
+
+      await expectLater(service.updatePassword('newPass123'), completes);
+
+      verify(() => mockAuth.updateUser(any())).called(1);
+    });
+
+    test('Supabase error wraps into NuveliAuthException', () async {
+      when(() => mockAuth.updateUser(any())).thenThrow(
+        AuthException('Password should be at least 6 characters'),
+      );
+
+      expect(
+        () => service.updatePassword('short'),
+        throwsA(
+          isA<NuveliAuthException>().having(
+            (e) => e.type,
+            'type',
+            AuthErrorType.weakPassword,
+          ),
+        ),
+      );
+    });
+  });
+
+  group('AuthService.resendVerificationEmail', () {
+    setUpAll(() {
+      registerFallbackValue(OtpType.signup);
+    });
+
+    test('calls Supabase resend with signup OTP + trimmed email', () async {
+      when(
+        () => mockAuth.resend(
+          type: any(named: 'type'),
+          email: any(named: 'email'),
+          emailRedirectTo: any(named: 'emailRedirectTo'),
+        ),
+      ).thenAnswer((_) async => _FakeResendResponse());
+
+      await service.resendVerificationEmail('  user@example.com  ');
+
+      verify(
+        () => mockAuth.resend(
+          type: OtpType.signup,
+          email: 'user@example.com',
+          emailRedirectTo: 'com.nuveli.app://email-confirmed',
         ),
       ).called(1);
     });
