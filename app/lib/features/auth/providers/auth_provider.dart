@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
+import '../../../core/monitoring/crash_reporter.dart';
 import '../models/auth_errors.dart';
 import '../models/auth_user.dart';
 import '../services/apple_signin_service.dart';
@@ -46,6 +47,9 @@ class AuthNotifier extends AsyncNotifier<AuthUser?> {
       state = AsyncValue.data(
         user == null ? null : AuthUser.fromSupabase(user),
       );
+      // Crashlytics user identifier — release-only, debug build is a
+      // no-op. Lets every subsequent crash report carry the user_id.
+      CrashReporter.setUser(user?.id);
     });
 
     // Build temizliği
@@ -55,6 +59,7 @@ class AuthNotifier extends AsyncNotifier<AuthUser?> {
 
     // İlk değer
     final user = _authService.currentUser;
+    CrashReporter.setUser(user?.id);
     return user == null ? null : AuthUser.fromSupabase(user);
   }
 
