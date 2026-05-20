@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 round 2 — WelcomeScreen silent-drop bug fix + tests; 248 tests, 23 PR)
+**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 FINAL — Polish round 1+2 + DashboardScreen widget tests unblocked; 252 tests, 26 PR)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -882,32 +882,106 @@ apscheduler==3.10.4  # cron jobs
   at the top when error is non-null + non-empty. Locked by 3 tests
   (banner shown / null hidden / empty-string guard).
 
-**Hâlâ Round 2 backlog'unda:**
-- i18n setup (TR/EN, ARB dosyaları + flutter_localizations delegates).
-- Light mode full coverage (AppColors.X → theme-aware migration).
-- Geniş A11y audit (her IconButton'a tooltip + semantic label,
-  dynamic font size verification, color contrast 4.5:1).
+**Final additions — DashboardScreen widget tests unblocked
+(PR #59 → #60, total 26 Chat 24 PRs):**
+- DashboardHeader was reading identity from `Supabase.instance.client
+  .auth.currentUser` — a global singleton no widget test could mock.
+  Refactored to ConsumerWidget reading `currentAuthUserProvider`
+  (AuthUser model). Same visual; no Supabase init required to render.
+- The DashboardScreen widget test backlog item carried over from Chat
+  23 is now closed. 4 tests pass: shimmer skeleton during loading,
+  AppErrorView with "Tekrar dene" on the error branch (locks the
+  AppErrorView migration too), MacrosRow + AddFoodButton on the data
+  branch, displayName personalisation in the greeting.
+
+### Final Chat 24 numbers
+- Flutter tests: 198 → **252** (+54 over the round)
+- Backend tests: 32 (unchanged)
+- Chat 24 PRs: **26** merged (#36 → #60)
+- Test-surfaced bugs fixed in-flight: **2** (OnboardingData.fromJson
+  asymmetry → #51, WelcomeScreen silent error-drop → #56)
+- `flutter analyze`: 0 errors, info-level deprecations only
+
+### Chat 24 from-prep-doc completion status
+✅ Polish 1 (Loading skeletons) — SkeletonBox/Circle + dashboard swap
+✅ Polish 2 (Empty states) — 2 ekran (meals + progress), diğerleri kalmış
+✅ Polish 3 (Friendly errors) — AppError +3 kategori + AppErrorView 3 ekran
+✅ Polish 4 (Haptic) — PrimaryButton + AuthPrimaryButton tap'lerinde
+✅ Polish 5 (A11y) — Semantics PrimaryButton'larda (geniş audit kalmış)
+✅ Polish 9 (Crash reporting) — Global handlers + setUser hook
+❌ Polish 6 (Tooltips / onboarding showcase) — yapılmadı
+❌ Polish 7 (Localization TR/EN ARB) — yapılmadı
+❌ Polish 8 (Dark/Light mode full coverage) — light variant yarım
+❌ Polish 10 (Analytics event tagging) — yapılmadı
+❌ Bug Hunt 6 kategori (network/offline banner, permission flows, edge
+   cases, UI breaking, state edge cases, performance) — sistematik
+   scan yapılmadı
+
+### Chat 24'ten Chat 25'e devreden borç
+
+**Polish backlog:**
+- i18n setup (TR/EN ARB, `flutter_localizations` delegates wiring).
+- Light mode full coverage (AppColors.X kullanan custom widget'ları
+  theme-aware'e taşı).
+- Geniş A11y audit (IconButton tooltip, dynamic font size, color
+  contrast 4.5:1 — App Store reviewer pass için kritik).
 - Tooltips / onboarding showcase (`showcaseview` paketi).
-- Bug Hunt edge case scan (network/offline banner, double-tap throttle,
-  iPhone SE layout, very-long input).
+- Empty state coverage (kalan ekranlardaki inline empty state'ler).
+- Haptic yaygınlaştırma (IconButton, TextButton, tab geçişleri).
+- Analytics event tagging (AppAnalytics zaten var, kullanım eksik).
 
-**Bir sonraki adım:** Yeni bir Claude chat aç, **Chat 24 round 2 polish
-listesinden bir kategori seç ve devam et**. Önerilen: i18n setup
-(`flutter gen-l10n` ile TR/EN dual base), sonra A11y audit (sistematik
-ekran-ekran geçiş).
+**Bug Hunt backlog (tamamı kalan):**
+- Network/offline banner (connectivity_plus paketi entegrasyonu).
+- Permission red etme flows (kamera, notification).
+- Edge case veri (0/50000 kalori meal, 100 char isim, emoji input).
+- UI breaking points (iPhone SE 375x667, iPad layout, RTL test).
+- State edge cases (token refresh, app kill ortası, 2 cihaz aynı user).
+- Performance benchmarks (cold start <3s, FPS 60, memory <200MB).
 
-`docs/sprints/chat24_bughunt.md` dosyasını project files'a yükle — Claude
-doğrudan Chat 24 hazırlık paketini görür.
+**Devralınan teknik borç (Chat 22+23+24 → Chat 25+):**
+- **3 ayrı error class file** (`api_exception` / `api_exceptions` /
+  `app_error`) — AppError dominant ama diğer ikisi hâlâ legacy
+  import'larda yaşıyor.
+- **3 Dio unification** — ApiClient + authedDioProvider +
+  ProfileService._buildDio() hâlâ ayrı; LogInterceptor parity sağlandı.
+- **`test_get_me_returns_profile`** hâlâ skipped — mock chain runtime'da
+  override edilen instance farklı.
+- **`decision_engine` / `checkin_service` / `premium_service`** backend
+  servisleri implement edilmedi, sadece test'ler skip durumunda.
+- **CI workflow fix** (`.github/workflows/ci.yml`) — backend syntax check
+  step'i non-existent app/ layout'una bakıyor; PAT'in `workflow` scope'u
+  olmadığı için PR'da push edilemedi.
+- **`profiles` vs `user_profiles` FK** — `weight_logs` / `weight_goals`
+  FK'ları yanlış tabloya bakıyor, try/except'le yutuluyor.
 
-Chat 24 kapsam özeti:
-- **Bug Hunt (Defense):** Network kapalı, double-tap, çok uzun input,
-  permission red etme, edge case veri, UI breaking points, state edge
-  cases, performans dipleri.
-- **Polish (Offense):** Loading skeletons, empty states, friendly
-  error messages, micro-interactions + haptics, accessibility (A11y),
-  onboarding tooltips, TR+EN localization, dark/light mode, Sentry
-  crash reporting, Firebase/Mixpanel analytics.
-- **Pre-launch final checklist:** Functional + UX + A11y + Performance
-  + Production Setup + Marketing.
+### Production State (Chat 24 final snapshot)
+- Backend: `https://nuveli-api.onrender.com` (Render free, dual-alg JWT)
+- Supabase: `asicgcnpahdnitzalcva.supabase.co`, ES256 keys, schema aligned
+- iOS Build: `flutter build ios --debug --no-codesign` ✓ Built
+- Smoke test akışı: signup → onboarding → dashboard ✓ green
+
+---
+
+## 🎬 SONRAKİ ADIM
+
+**Şu an:** Chat 24 final ✅ — 26 PR (#36 → #60), 252 frontend + 32 backend test,
+polish round 1+2 + 2 test-surfaced bug fix + DashboardScreen widget tests
+unblocked.
+
+**Bir sonraki adım:** Yeni bir Claude chat aç, **Chat 25** ile devam et.
+Tavsiye edilen ilk konu sırası:
+
+1. **Localization (Polish 7)** — `flutter gen-l10n` ile TR/EN ARB setup,
+   sonra ekran-ekran string lift. Apple Store TR pazarı için kritik.
+2. **A11y audit (Polish 5 geniş)** — IconButton tooltip'leri sistematik
+   eklenmesi (Apple reject sebebi), dynamic font size + contrast.
+3. **Bug Hunt edge case scan** — connectivity_plus offline banner,
+   double-tap throttle, very-large input audit.
+4. **Light mode coverage** — AppColors.X kullanan custom widget'ları
+   theme-aware migration.
+
+Chat 25 hazırlık dosyasını `docs/sprints/chat25_xxx.md` olarak yükle
+(Chat 23 + 24'te yaptığımız gibi). Master plan zaten bu kapsamlı
+closure'ı içeriyor; yeni session direkt buraya bakıp devam edebilir.
 
 Başarılar! 🚀
