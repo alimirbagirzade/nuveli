@@ -4,6 +4,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/shared/widgets/empty_state_view.dart';
 
 import '../models/weekly_analytics.dart';
 
@@ -101,13 +102,11 @@ class _CalorieBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final days = analytics.days;
     if (days.isEmpty) {
-      return Center(
-        child: Text(
-          'No data for the past week',
-          style: AppTypography.caption.copyWith(
-            color: AppColors.textTertiary,
-          ),
-        ),
+      return const EmptyStateView(
+        icon: Icons.insights_outlined,
+        title: 'Henüz veri yok',
+        message: 'Birkaç gün yemek logladığında trend buraya gelir.',
+        compact: true,
       );
     }
 
