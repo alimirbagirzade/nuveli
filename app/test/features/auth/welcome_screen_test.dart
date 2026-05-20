@@ -39,4 +39,31 @@ void main() {
     // No crash means the gesture handler ran successfully.
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('error parameter is surfaced as a banner', (tester) async {
+    const msg = 'Apple Sign-In was cancelled';
+    await pumpWithProviders(tester, const WelcomeScreen(error: msg));
+    await tester.pumpAndSettle();
+
+    // Banner content is the message verbatim — locks the silent-drop
+    // bug fix from chat-24.
+    expect(find.text(msg), findsOneWidget);
+  });
+
+  testWidgets('null error → no banner rendered', (tester) async {
+    await pumpWithProviders(tester, const WelcomeScreen());
+    await tester.pumpAndSettle();
+
+    // No accidental empty-string banner on the happy path.
+    expect(find.text('Apple Sign-In was cancelled'), findsNothing);
+  });
+
+  testWidgets('empty-string error is treated as no error', (tester) async {
+    await pumpWithProviders(tester, const WelcomeScreen(error: ''));
+    await tester.pumpAndSettle();
+
+    // The widget guards `widget.error!.isNotEmpty` — empty string
+    // shouldn't produce a banner.
+    expect(tester.takeException(), isNull);
+  });
 }
