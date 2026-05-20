@@ -40,15 +40,9 @@ void main() {
       expect(AuthValidators.email('user@example.c'), 'Enter a valid email');
     });
 
-    // Documented behaviour, not necessarily desired: the current regex
-    // `[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,}` does not match `+` so Gmail
-    // tags like alice+test@gmail.com are rejected. If this changes,
-    // update both the regex and this test.
-    test('plus-aliased email is REJECTED (regex limitation)', () {
-      expect(
-        AuthValidators.email('alice+test@gmail.com'),
-        'Enter a valid email',
-      );
+    test('plus-aliased Gmail address is accepted', () {
+      expect(AuthValidators.email('alice+test@gmail.com'), null);
+      expect(AuthValidators.email('user+chat22+t1@example.com'), null);
     });
   });
 

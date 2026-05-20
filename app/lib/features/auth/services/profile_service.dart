@@ -61,26 +61,59 @@ class UserProfile {
     this.isPremium = false,
   });
 
+  /// Backend payload reader.
+  ///
+  /// Chat 22 aligned the API to: `full_name`, `sex`, `weight_kg`,
+  /// `weight_goal_direction` (lose/maintain/gain), `daily_water_target_ml`,
+  /// `protein_target_g`/`carbs_target_g`/`fat_target_g` etc.
+  ///
+  /// Legacy keys (`display_name`, `gender`, `current_weight_kg`,
+  /// `goal_type`, `daily_water_ml`, `protein_percent`/`carbs_percent`/
+  /// `fat_percent`) are read as fallbacks so any cached/persisted
+  /// payloads or older endpoints still parse.
   factory UserProfile.fromJson(Map<String, dynamic> json) => UserProfile(
         id: json['id'] as String,
-        displayName: json['display_name'] as String?,
+        displayName:
+            (json['full_name'] ?? json['display_name']) as String?,
         email: json['email'] as String?,
         dateOfBirth: _parseDate(json['date_of_birth']),
-        gender: Gender.tryFromJson(json['gender']),
+        gender: Gender.tryFromJson(json['sex'] ?? json['gender']),
         heightCm: (json['height_cm'] as num?)?.toDouble(),
-        currentWeightKg: (json['current_weight_kg'] as num?)?.toDouble(),
-        activityLevel: ActivityLevel.tryFromJson(json['activity_level']),
-        goalType: GoalType.tryFromJson(json['goal_type']),
+        currentWeightKg:
+            ((json['weight_kg'] ?? json['current_weight_kg']) as num?)
+                ?.toDouble(),
+        activityLevel:
+            ActivityLevel.tryFromJson(json['activity_level']),
+        goalType: GoalType.tryFromJson(
+          json['weight_goal_direction'] ?? json['goal_type'],
+        ),
         targetWeightKg: (json['target_weight_kg'] as num?)?.toDouble(),
         dailyCalorieTarget: json['daily_calorie_target'] as int?,
-        dailyWaterMl: json['daily_water_ml'] as int?,
-        proteinPercent: json['protein_percent'] as int?,
-        carbsPercent: json['carbs_percent'] as int?,
-        fatPercent: json['fat_percent'] as int?,
+        dailyWaterMl:
+            (json['daily_water_target_ml'] ?? json['daily_water_ml']) as int?,
+        // Macro keys: prefer new gram-based keys; if absent, fall back
+        // to legacy percent keys (different semantics but stored on the
+        // same field today — model refactor to split them is a follow-up).
+        proteinPercent: _macroNumToInt(
+          json['protein_target_g'] ?? json['protein_percent'],
+        ),
+        carbsPercent: _macroNumToInt(
+          json['carbs_target_g'] ?? json['carbs_percent'],
+        ),
+        fatPercent: _macroNumToInt(
+          json['fat_target_g'] ?? json['fat_percent'],
+        ),
         onboardingCompleted: json['onboarding_completed'] as bool? ?? false,
         isPremium: json['is_premium'] as bool? ?? false,
         createdAt: _parseDate(json['created_at']) ?? DateTime.now(),
       );
+
+  static int? _macroNumToInt(Object? v) {
+    if (v == null) return null;
+    if (v is int) return v;
+    if (v is num) return v.round();
+    return null;
+  }
 
   static DateTime? _parseDate(Object? v) {
     if (v == null) return null;

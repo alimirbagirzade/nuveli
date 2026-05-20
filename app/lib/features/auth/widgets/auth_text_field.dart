@@ -166,7 +166,10 @@ class _AuthTextFieldState extends State<AuthTextField> {
 class AuthValidators {
   static String? email(String? value) {
     if (value == null || value.trim().isEmpty) return 'Email is required';
-    final regex = RegExp(r'^[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,}$');
+    // Allow `+` aliases (alice+test@gmail.com) — Gmail / iCloud /
+    // FastMail etc. treat them as routing tags, and they're a
+    // legitimate way to sign up multiple accounts under one inbox.
+    final regex = RegExp(r'^[\w\.\-\+]+@([\w\-]+\.)+[a-zA-Z]{2,}$');
     if (!regex.hasMatch(value.trim())) return 'Enter a valid email';
     return null;
   }
