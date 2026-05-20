@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../auth/providers/auth_provider.dart';
+import '../../settings/settings_screen.dart';
 
 /// Top section of the Dashboard: date, greeting, and avatar.
 ///
@@ -77,7 +78,18 @@ class DashboardHeader extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: 12),
-          _Avatar(initial: identity.initial),
+          // Avatar doubles as the entry point into Settings. App Review reaches
+          // the in-app account-deletion flow (Apple 5.1.1(v)) by tapping here.
+          Semantics(
+            label: 'Open settings',
+            button: true,
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+              ),
+              child: _Avatar(initial: identity.initial),
+            ),
+          ),
         ],
       ),
     );

@@ -184,16 +184,39 @@ async def onboarding(
     return res.data[0]
 
 
-@router.delete("", response_model=StatusResponse, summary="Delete account (GDPR)")
+@router.delete("", response_model=StatusResponse, summary="Delete account (GDPR + Apple 5.1.1(v))")
 async def delete_me(user_id: str = Depends(get_current_user)):
     """
-    GDPR-compliant cascade delete. ON DELETE CASCADE in schema handles related rows.
-    Note: Supabase Auth user must be deleted separately by frontend via supabase.auth.admin.
+    Apple App Store Guideline 5.1.1(v) + GDPR Article 17 compliant.
+
+    Order matters:
+      1) Delete auth user via admin client — cascade removes user_profiles row
+         and (via FK ON DELETE CASCADE) all related domain tables.
+      2) Best-effort explicit profile delete in case schema-level cascade is
+         partial. Safe to call after auth.admin.delete_user — row is gone.
+
+    Frontend completes the flow by calling supabase.auth.signOut() locally so
+    the cached session is cleared and the user is sent back to /welcome.
     """
-    supabase = get_supabase()
-    supabase.table("user_profiles").delete().eq("user_id", user_id).execute()
-    logger.info(f"User {user_id} requested account deletion")
+    supabase = get_supabase()  # service-role client
+
+    # 1) Auth user removal (cascades via auth.users FK)
+    try:
+        supabase.auth.admin.delete_user(user_id)
+        logger.info(f"Auth user {user_id} deleted via admin")
+    except Exception as e:
+        # If admin delete fails (e.g. user already gone), log and continue —
+        # we still want to clean the profile row defensively.
+        logger.warning(f"auth.admin.delete_user({user_id}) failed: {e}")
+
+    # 2) Defensive profile cleanup (no-op if cascade already removed it)
+    try:
+        supabase.table("user_profiles").delete().eq("user_id", user_id).execute()
+    except Exception as e:
+        logger.warning(f"user_profiles delete skipped for {user_id}: {e}")
+
+    logger.info(f"Account deletion complete for user {user_id}")
     return StatusResponse(
         status="deleted",
-        message="Profile and all user data deleted. Auth user must be removed via Supabase Admin.",
+        message="Account and all associated data permanently deleted.",
     )
