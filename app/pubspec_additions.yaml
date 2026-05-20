@@ -1,0 +1,27 @@
+# ============================================================
+# Chat 19 (RevenueCat & Premium) için pubspec.yaml'a EKLENECEK
+# ============================================================
+# Mevcut dependencies: bölümüne aşağıdakileri ekle.
+# Versiyonlar Mayıs 2026 itibarıyla stabil.
+
+dependencies:
+  # RevenueCat SDK (Apple + Google IAP wrapper)
+  purchases_flutter: ^6.20.0          # Hazırlık dosyası ^6.0.0 diyor; 6.20.0 son stable
+
+  # Eğer henüz yoksa (.env okumak için)
+  flutter_dotenv: ^5.1.0
+
+  # Terms / Privacy / external link açma (paywall footer'ı için)
+  url_launcher: ^6.2.5
+
+  # Mevcutsa atla:
+  # flutter_riverpod: ^2.4.0           # Provider'lar için (zaten Chat 15'te eklenmişti)
+
+# ============================================================
+# Komut: pubspec güncellenince çalıştır
+# ============================================================
+#   flutter pub get
+#   cd ios && pod install --repo-update && cd ..
+#
+# iOS Podfile minimum platform: '13.0' olmalı (RC gerektiriyor)
+# Android minSdkVersion 21 olmalı (Play Billing v6 için).

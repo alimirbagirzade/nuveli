@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,7 @@ import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/theme/app_theme.dart';
 import 'package:nuveli/features/auth/screens/auth_gate.dart';
 import 'package:nuveli/features/notifications/providers/notifications_provider.dart';
+import 'package:nuveli/features/premium/services/revenue_cat_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +27,19 @@ Future<void> main() async {
     await NotificationService.instance.init();
   } catch (e, st) {
     debugPrint('NotificationService init failed: $e\n$st');
+  }
+
+  // Chat 19: RevenueCat. Init only if a session is already present (auto-login).
+  // Otherwise we wait until the user signs in (see auth listener in NuveliApp).
+  // Wrapped in try/catch — RC init failure (e.g. missing .env keys on dev
+  // machine) should NOT block app startup; paywall will simply show an error.
+  try {
+    final session = Supabase.instance.client.auth.currentSession;
+    if (session != null) {
+      await RevenueCatService.instance.init(userId: session.user.id);
+    }
+  } catch (e, st) {
+    debugPrint('RevenueCatService init skipped: $e\n$st');
   }
 
   // SharedPreferences needs to be ready before Riverpod scope so the
@@ -48,15 +64,44 @@ class NuveliApp extends ConsumerStatefulWidget {
 }
 
 class _NuveliAppState extends ConsumerState<NuveliApp> {
+  /// Chat 19: Auth state subscription — keeps RevenueCat user in sync
+  /// with Supabase session. Cancelled in [dispose].
+  StreamSubscription<AuthState>? _authSub;
+
   @override
   void initState() {
     super.initState();
+    _wireAuthRevenueCatSync();
+
     // Post-frame: wire notification tap handling once the widget tree is
     // built (so we can navigate from a tap if a router is in place later).
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _wireNotificationHandlers();
       _reapplyScheduledNotifications();
     });
+  }
+
+  /// Chat 19: Listen to Supabase auth changes and mirror them in RC.
+  /// - signedIn  → RC.init(userId) so purchases attach to the right account
+  /// - signedOut → RC.logOut() so the next anonymous user doesn't inherit
+  ///   the previous user's entitlement cache.
+  void _wireAuthRevenueCatSync() {
+    _authSub = Supabase.instance.client.auth.onAuthStateChange.listen(
+      (data) async {
+        final event = data.event;
+        final session = data.session;
+
+        try {
+          if (event == AuthChangeEvent.signedIn && session != null) {
+            await RevenueCatService.instance.init(userId: session.user.id);
+          } else if (event == AuthChangeEvent.signedOut) {
+            await RevenueCatService.instance.logOut();
+          }
+        } catch (e, st) {
+          debugPrint('RC auth sync failed: $e\n$st');
+        }
+      },
+    );
   }
 
   void _wireNotificationHandlers() {
@@ -92,6 +137,13 @@ class _NuveliAppState extends ConsumerState<NuveliApp> {
     } catch (e) {
       debugPrint('Failed to reapply notifications: $e');
     }
+  }
+
+  @override
+  void dispose() {
+    _authSub?.cancel();
+    _authSub = null;
+    super.dispose();
   }
 
   @override
