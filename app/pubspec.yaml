@@ -33,8 +33,8 @@ dependencies:
   firebase_messaging: ^15.1.0
   # Note: Firebase iOS SDK 11.x requires iOS 15+ deployment target.
   # Podfile is set to platform :ios, '15.0' for compatibility.
-  flutter_local_notifications: ^17.2.2
-  timezone: ^0.9.4
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
 
   # Storage
   hive_flutter: ^1.1.0
@@ -67,6 +67,8 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   crypto: ^3.0.3
   flutter_dotenv: ^5.1.0
+  flutter_timezone: ^5.0.2
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:
