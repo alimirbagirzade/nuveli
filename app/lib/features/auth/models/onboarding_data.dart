@@ -40,7 +40,11 @@ enum ActivityLevel {
   active, // 1.725 — haftada 6-7 gün
   veryActive; // 1.9 — günde 2 antrenman / fiziksel iş
 
-  String toJson() => name;
+  /// Backend wire value (snake_case for very_active).
+  String toJson() => switch (this) {
+        ActivityLevel.veryActive => 'very_active',
+        _ => name,
+      };
   static ActivityLevel? tryFromJson(Object? v) => v == null
       ? null
       : ActivityLevel.values.firstWhere(
@@ -79,7 +83,15 @@ enum GoalType {
   gainWeight,
   buildMuscle;
 
-  String toJson() => name;
+  /// Backend wire value (matches WeightGoalDirection: lose | maintain | gain).
+  /// buildMuscle maps to "gain" since it implies caloric surplus.
+  String toJson() => switch (this) {
+        GoalType.loseWeight => 'lose',
+        GoalType.maintain => 'maintain',
+        GoalType.gainWeight => 'gain',
+        GoalType.buildMuscle => 'gain',
+      };
+
   static GoalType? tryFromJson(Object? v) => v == null
       ? null
       : GoalType.values.firstWhere(
@@ -198,14 +210,14 @@ class OnboardingData {
   /// Backend formatına serialize eder.
   /// Backend snake_case beklediği için key'leri buna göre yazıyoruz.
   Map<String, dynamic> toJson() => {
-        if (displayName != null) 'display_name': displayName,
+        if (displayName != null) 'full_name': displayName,
         if (dateOfBirth != null)
           'date_of_birth': _dateOnlyIso(dateOfBirth!),
-        if (gender != null) 'gender': gender!.toJson(),
+        if (gender != null) 'sex': gender!.toJson(),
         if (heightCm != null) 'height_cm': heightCm,
-        if (currentWeightKg != null) 'current_weight_kg': currentWeightKg,
+        if (currentWeightKg != null) 'weight_kg': currentWeightKg,
         if (activityLevel != null) 'activity_level': activityLevel!.toJson(),
-        if (goalType != null) 'goal_type': goalType!.toJson(),
+        if (goalType != null) 'weight_goal_direction': goalType!.toJson(),
         if (targetWeightKg != null) 'target_weight_kg': targetWeightKg,
         if (targetDate != null) 'target_date': _dateOnlyIso(targetDate!),
         if (dailyCalorieTarget != null)
