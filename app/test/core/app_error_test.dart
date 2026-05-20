@@ -137,4 +137,27 @@ void main() {
       expect(AppError.fromDio(e), isA<NetworkError>());
     });
   });
+
+  group('AppError.from (any-object adapter)', () {
+    test('AppError instance is returned unchanged', () {
+      final original = AppError.notFound();
+      expect(identical(AppError.from(original), original), isTrue);
+    });
+
+    test('DioException → routed through fromDio (network etc.)', () {
+      expect(AppError.from(networkError()), isA<NetworkError>());
+    });
+
+    test('arbitrary object → UnknownError carrying the stringified form', () {
+      final result = AppError.from(StateError('bad state x'));
+      expect(result, isA<UnknownError>());
+      expect(result.userMessage, contains('bad state x'));
+    });
+
+    test('plain string falls into UnknownError', () {
+      final result = AppError.from('just a string');
+      expect(result, isA<UnknownError>());
+      expect(result.userMessage, 'just a string');
+    });
+  });
 }
