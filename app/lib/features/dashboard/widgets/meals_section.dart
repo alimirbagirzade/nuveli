@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/widgets/empty_state_view.dart';
 import '../models/meal.dart';
 
 /// "Today's meals" section with a section header + list + empty state.
@@ -50,7 +51,12 @@ class MealsSection extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           if (meals.isEmpty)
-            const _EmptyState()
+            const EmptyStateView(
+              icon: Icons.restaurant_outlined,
+              title: 'No meals logged yet',
+              message: 'Tap "Add Food" below to scan your first meal',
+              compact: true,
+            )
           else
             ...meals.map((m) => Padding(
                   padding: const EdgeInsets.only(bottom: 10),
@@ -62,61 +68,6 @@ class MealsSection extends StatelessWidget {
   }
 }
 
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: const Color(0xFF142346).withOpacity(0.3),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.05),
-          width: 1,
-          style: BorderStyle.solid,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF00D4FF).withOpacity(0.1),
-            ),
-            child: const Icon(
-              Icons.restaurant_outlined,
-              color: Color(0xFF4DDBFF),
-              size: 24,
-            ),
-          ),
-          const SizedBox(height: 12),
-          const Text(
-            'No meals logged yet',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 4),
-          const Text(
-            'Tap "Add Food" below to scan your first meal',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12,
-              color: Color(0xFF6E7B91),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class _MealTile extends StatelessWidget {
   final Meal meal;
