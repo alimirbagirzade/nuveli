@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/app_haptics.dart';
 
 /// Nuveli standart primary button.
 class PrimaryButton extends StatelessWidget {
@@ -27,11 +28,22 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final canPress = isEnabled && !isLoading && onPressed != null;
 
-    return SizedBox(
+    return Semantics(
+      label: label,
+      button: true,
+      enabled: canPress,
+      excludeSemantics: true,
+      hint: isLoading ? 'Loading' : null,
+      child: SizedBox(
       width: width,
       height: height,
       child: ElevatedButton(
-        onPressed: canPress ? onPressed : null,
+        onPressed: canPress
+            ? () {
+                AppHaptics.light();
+                onPressed!();
+              }
+            : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
@@ -60,6 +72,7 @@ class PrimaryButton extends StatelessWidget {
                   Text(label, style: AppTextStyles.buttonLarge),
                 ],
               ),
+      ),
       ),
     );
   }

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/utils/app_haptics.dart';
 
 class AuthPrimaryButton extends StatelessWidget {
   final String label;
@@ -61,7 +62,12 @@ class AuthPrimaryButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: disabled ? null : onPressed,
+          onTap: disabled
+              ? null
+              : () {
+                  AppHaptics.light();
+                  onPressed!();
+                },
           borderRadius: BorderRadius.circular(28),
           splashColor: Colors.white.withValues(alpha: 0.1),
           child: Center(
@@ -97,8 +103,21 @@ class AuthPrimaryButton extends StatelessWidget {
       ),
     );
 
-    return fullWidth
+    final wrapped = fullWidth
         ? SizedBox(width: double.infinity, child: button)
         : button;
+
+    // Semantic label so VoiceOver / TalkBack announce the button by its
+    // text and reflect the busy/disabled states. App Store reviewers
+    // (and humans) hit this with screen readers — keep it informative.
+    return Semantics(
+      label: label,
+      button: true,
+      enabled: !disabled,
+      excludeSemantics: true,
+      // Let assistive tech also pick up the busy spinner.
+      hint: isLoading ? 'Loading' : null,
+      child: wrapped,
+    );
   }
 }
