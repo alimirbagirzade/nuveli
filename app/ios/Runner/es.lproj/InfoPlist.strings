@@ -1,0 +1,4 @@
+"NSCameraUsageDescription" = "El acceso a la cámara permite a Nuveli analizar tus fotos de comidas y estimar calorías automáticamente.";
+"NSPhotoLibraryUsageDescription" = "El acceso a la fototeca te permite seleccionar fotos de comidas existentes para el análisis de calorías con IA.";
+"NSPhotoLibraryAddUsageDescription" = "Permiso para guardar tus fotos de comidas en la fototeca.";
+"NSMicrophoneUsageDescription" = "El acceso al micrófono te permite hablar con tu entrenador de IA por voz.";
