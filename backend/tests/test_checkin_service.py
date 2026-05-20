@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pytest
 pytest.skip("Targets a backend layout (app/ package, decision_engine, checkin_service, premium_service, schemas/) that doesn't exist in the current backend yet. Chat 23 follow-up: either align backend to this design or rewrite these tests to the current structure.", allow_module_level=True)
 
@@ -5,7 +6,6 @@ pytest.skip("Targets a backend layout (app/ package, decision_engine, checkin_se
 backend/tests/test_checkin_service.py
 """
 
-from __future__ import annotations
 import pytest
 from datetime import date
 from unittest.mock import MagicMock
