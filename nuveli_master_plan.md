@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 20 Mayıs 2026 (Chat 22 tamamlandı — Smoke Test SUCCESS)
+**Son Güncelleme:** 20 Mayıs 2026 (Chat 23 tamamlandı — Testing Suite, 230 tests merged)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -697,19 +697,87 @@ apscheduler==3.10.4  # cron jobs
 
 ---
 
+---
+
+## 📋 CHAT 23 KAPANIŞ ÖZETİ (20 Mayıs 2026)
+
+### Tamamlananlar — 14 PR (#22 → #34)
+- Test infrastructure baseline temizlendi (haptics timing assertions, backend
+  side_effect → shared chainable, `from __future__` import konumu fixes).
+- **Flutter testleri: 70 → 198 (+128)**.
+- **Backend testleri: 21 → 32** (+8 skipped follow-ups with clear reasons).
+- Email validator `+` aliases artık kabul ediliyor (Gmail/iCloud tag flow'u
+  fix); UserProfile.fromJson hem yeni hem legacy backend key isimlerini
+  okur (Chat 22 alignment çakışması temizlendi).
+- ApiClient + ProfileService + AuthedDio Dio'larının üçü de `kDebugMode`'da
+  prefix'li LogInterceptor yayımlıyor — backend trafiği debug build'lerde
+  tamamen görünür durumda.
+
+### Coverage haritası
+| Kritik path | Test sayısı |
+|-------------|-------------|
+| BMR / TDEE / Calorie pipeline | 29 (BMR formula 5, TDEE multiplier 4, calorie target + safety floors 7, water/macro split/grams 9, fromOnboarding 3) |
+| Auth (validators / errors / service) | 48 (regex + form 23, fromSupabase mapping 14, AuthService mocktail 11) |
+| UserProfile fromJson + key alignment | 14 (happy / null defaults / enum tolerance / date parse / dual-key backend support) |
+| Auth widgets (Login / Signup / Welcome / Banner / Strength / AuthGate) | 21 (form gate, error surface, render, both AuthGate branches) |
+| Integration (auth flow + onboarding complete) | 4 (Welcome → Signup, full submit happy paths, Step 5 → ProfileService.completeOnboarding) |
+| Backend JWT verifier | 11 (HS256 happy, header parsing, expiry, alg whitelist, sub / aud claims, ES256 happy + unknown-kid via JWKS cache) |
+| Backend other (health / meals / profiles / ai_coach / water) | 21 |
+
+### Chat 23'ten Devralınan Technical Debt → Chat 24 takip
+- **DashboardScreen widget testleri** ertelendi — `DashboardHeader` doğrudan
+  `Supabase.instance.client` global singleton'ını okuyor; provider-driven hâle
+  refactor edilene kadar mock'lanamıyor.
+- **Onboarding step widget testleri** ertelendi — ListView içindeki
+  AuthTextField + AppTypography asset bağımlılıkları test env'de stabil
+  değil; custom surface size + Localizations delegate setup gerekiyor.
+- **`test_get_me_returns_profile`** hâlâ skip — conftest mock_supabase
+  fixture redesign'ı yetti ama runtime'da geri çağrılan chain test'in
+  override ettiği instance ile aynı değil; daha derin bir conftest
+  redesign gerekiyor.
+- **`decision_engine` / `checkin_service` / `premium_service`** testleri
+  module-level skip — bu servisler backend'de hiç implement edilmemiş,
+  CLAUDE.md tasarım kalıntısı; ya implement edilmeli ya test rewrite.
+- **3 Dio konsolidasyonu** ertelendi — ApiClient + authedDioProvider +
+  ProfileService._buildDio() ayrı yaşıyor; LogInterceptor parity sağlandı
+  ama tam birleştirme refactor + regression riski taşıyor.
+- **CI workflow fix** (`.github/workflows/ci.yml`) ertelendi — backend
+  syntax check adımı non-existent `app/` paket layout'una bakıyor, PAT'in
+  `workflow` scope'u olmadığı için bu PR'da push edilemedi; el ile düzeltilmeli.
+- **`profiles` vs `user_profiles` FK** — Chat 22'den devreden açık. `weight_logs` /
+  `weight_goals` FK'ları yanlış tabloya bakıyor, try/except'le yutuluyor;
+  SQL migration follow-up.
+
+### Production State (sprint kapanışı)
+- **Branch durumu:** main (head: PR #34 merged) — 14 Chat 23 PR'ı tek tek squash-merged.
+- **Run komutu:**
+  - Flutter: `cd app && flutter test` → 198 passed
+  - Backend: `cd backend && source venv/bin/activate && pytest` → 32 passed, 8 skipped
+- Smoke akışı (Chat 22'den): `ambz@yandex.com` ile signup → onboarding
+  Step 5 → dashboard hâlâ green.
+
+---
+
 ## 🎬 SONRAKİ ADIM
 
-**Şu an:** Chat 22 tamamlandı ✅ — End-to-end auth + onboarding + dashboard akışı çalışıyor.
+**Şu an:** Chat 23 tamamlandı ✅ — 198 frontend + 32 backend tests; tüm
+kritik path'ler test altında.
 
-**Bir sonraki adım:** Yeni bir Claude chat aç ve **Chat 23: Testing Suite** ile devam et.
+**Bir sonraki adım:** Yeni bir Claude chat aç ve **Chat 24: Bug Hunt &
+Pre-Launch Polish** ile devam et.
 
-`docs/sprints/chat23_testing.md` dosyasını project files'a yükle — Claude doğrudan Chat 23 hazırlık paketini görür.
+`docs/sprints/chat24_bughunt.md` dosyasını project files'a yükle — Claude
+doğrudan Chat 24 hazırlık paketini görür.
 
-Chat 23 kapsam özeti:
-- Unit tests (BMR/TDEE, validators, auth service, models)
-- Widget tests (login/signup screens, dashboard, common widgets)
-- Integration tests (auth flow, meal logging)
-- Backend tests (pytest, FastAPI test client)
-- CI/CD (GitHub Actions)
+Chat 24 kapsam özeti:
+- **Bug Hunt (Defense):** Network kapalı, double-tap, çok uzun input,
+  permission red etme, edge case veri, UI breaking points, state edge
+  cases, performans dipleri.
+- **Polish (Offense):** Loading skeletons, empty states, friendly
+  error messages, micro-interactions + haptics, accessibility (A11y),
+  onboarding tooltips, TR+EN localization, dark/light mode, Sentry
+  crash reporting, Firebase/Mixpanel analytics.
+- **Pre-launch final checklist:** Functional + UX + A11y + Performance
+  + Production Setup + Marketing.
 
 Başarılar! 🚀
