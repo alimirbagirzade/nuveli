@@ -3,7 +3,7 @@
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
 **Repo:** github.com/alimirbagirzade/nuveli_test
 **Backend URL:** https://nuveli-api.onrender.com
-**Son Güncelleme:** 20 Mayıs 2026 (Chat 24 in progress — Polish round 1: AppError → AppErrorView → SkeletonBox → CrashReporter wiring)
+**Son Güncelleme:** 21 Mayıs 2026 (Chat 24 round 2 — A11y semantics + haptic + empty state coverage)
 **Hazırlayan:** Claude (Anthropic) + Ali
 
 ---
@@ -842,13 +842,31 @@ apscheduler==3.10.4  # cron jobs
 
 ## 🎬 SONRAKİ ADIM
 
-**Şu an:** Chat 24 — Polish round 1 tamamlandı (8 PR). 224 frontend +
-32 backend tests; error surface + loading skeleton + crash reporting
-artık production-grade.
+**Şu an:** Chat 24 — Polish round 1 + round 2 in progress (11 PR merged total).
+224 frontend + 32 backend tests still green.
 
-**Bir sonraki adım:** Yeni bir Claude chat aç, **Chat 24'e Polish round 2** ile devam et.
-İlk değer alanları: A11y audit, dark mode verification, haptic
-yaygınlaştırma, localization setup, Bug Hunt edge case scan.
+**Round 2 additions (PR #45 → #46):**
+- PrimaryButton + AuthPrimaryButton wrapped in Semantics(label, button,
+  enabled, hint) with excludeSemantics — VoiceOver/TalkBack now read
+  out the right label + busy state. App Store reviewer-friendly.
+- Same buttons fire AppHaptics.light() on tap — every CTA gets that
+  subtle premium-feeling confirmation.
+- progress_section empty state lifted from a tiny grey Text line to
+  the shared EmptyStateView (icon + title + sub-message in TR).
+
+**Hâlâ Round 2 backlog'unda:**
+- i18n setup (TR/EN, ARB dosyaları + flutter_localizations delegates).
+- Light mode full coverage (AppColors.X → theme-aware migration).
+- Geniş A11y audit (her IconButton'a tooltip + semantic label,
+  dynamic font size verification, color contrast 4.5:1).
+- Tooltips / onboarding showcase (`showcaseview` paketi).
+- Bug Hunt edge case scan (network/offline banner, double-tap throttle,
+  iPhone SE layout, very-long input).
+
+**Bir sonraki adım:** Yeni bir Claude chat aç, **Chat 24 round 2 polish
+listesinden bir kategori seç ve devam et**. Önerilen: i18n setup
+(`flutter gen-l10n` ile TR/EN dual base), sonra A11y audit (sistematik
+ekran-ekran geçiş).
 
 `docs/sprints/chat24_bughunt.md` dosyasını project files'a yükle — Claude
 doğrudan Chat 24 hazırlık paketini görür.
