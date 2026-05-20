@@ -48,8 +48,8 @@ class MacrosRow extends StatelessWidget {
 
 class _MacroCard extends StatelessWidget {
   final String label;
-  final int current;
-  final int target;
+  final num current;
+  final num target;
   final Color color;
 
   const _MacroCard({
