@@ -155,22 +155,30 @@ async def onboarding(
         .execute()
     )
 
-    # Initial weight log (column names follow current schema, not migration draft)
-    supabase.table("weight_logs").insert({
-        "user_id": user_id,
-        "weight_kg": req.weight_kg,
-        "local_day": date.today().isoformat(),
-    }).execute()
-
-    # Initial weight goal if target provided
-    if req.target_weight_kg:
-        supabase.table("weight_goals").insert({
+    # Initial weight log (best-effort — schema currently has a FK to a
+    # different `profiles` table; that mismatch needs its own migration.
+    # Don't block onboarding completion on this side-effect.)
+    try:
+        supabase.table("weight_logs").insert({
             "user_id": user_id,
-            "start_weight_kg": req.weight_kg,
-            "target_weight_kg": req.target_weight_kg,
-            "target_date": req.target_date.isoformat() if req.target_date else None,
-            "is_active": True,
+            "weight_kg": req.weight_kg,
+            "local_day": date.today().isoformat(),
         }).execute()
+    except Exception as e:
+        logger.warning(f"weight_logs insert skipped during onboarding: {e}")
+
+    # Initial weight goal (same caveat as weight_logs).
+    if req.target_weight_kg:
+        try:
+            supabase.table("weight_goals").insert({
+                "user_id": user_id,
+                "start_weight_kg": req.weight_kg,
+                "target_weight_kg": req.target_weight_kg,
+                "target_date": req.target_date.isoformat() if req.target_date else None,
+                "is_active": True,
+            }).execute()
+        except Exception as e:
+            logger.warning(f"weight_goals insert skipped during onboarding: {e}")
 
     logger.info(f"Onboarding complete for user {user_id}: targets={targets}")
     return res.data[0]
