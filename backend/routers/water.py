@@ -26,8 +26,25 @@ async def create_water_log(
     log: WaterLogCreate,
     user_id: str = Depends(get_current_user),
 ):
+    """
+    Create a water-intake record. Server timestamp is authoritative —
+    `logged_at` from the request is dropped before INSERT and the DB
+    DEFAULT NOW() fills it in. This avoids two production issues:
+      1) schema drift: prod's water_logs may not have a `logged_at`
+         column right now (smoke test surfaced "column water_logs.logged_at
+         does not exist" on the dashboard query path). Sending the field
+         in the INSERT payload would crash the request even when read
+         queries succeed.
+      2) clock skew: client devices with wrong system clocks would
+         otherwise plant records dated 1970 or 2099 and break daily
+         aggregation. Server time is steady.
+
+    If we ever need user-supplied timestamps (e.g. retroactive log
+    entry from Apple Health), add a separate endpoint that bypasses
+    this strip.
+    """
     supabase = get_supabase()
-    payload = log.model_dump(mode="json")
+    payload = log.model_dump(mode="json", exclude={"logged_at"})
     payload["user_id"] = user_id
     res = supabase.table("water_logs").insert(payload).execute()
     if not res.data:
