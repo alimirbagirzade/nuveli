@@ -101,6 +101,15 @@
 				<string>nuveli</string>
 			</array>
 		</dict>
+		<dict>
+			<!-- Google Sign-In callback. REVERSED_CLIENT_ID from
+			     GoogleService-Info.plist. Without this scheme the in-app
+			     browser opened by google_sign_in can't return to the app. -->
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.886580633831-evhlvcre23cac25dd7qj2ej6ogsmgc7l</string>
+			</array>
+		</dict>
 	</array>
 		<key>NSAppTransportSecurity</key>
 		<dict>
