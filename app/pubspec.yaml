@@ -71,6 +71,13 @@ dependencies:
   flutter_timezone: ^5.0.2
   permission_handler: ^12.0.1
 
+  # GDPR Article 20 (Right to Data Portability) — `path_provider` writes
+  # the exported JSON to a sandboxed temp file, `share_plus` opens the
+  # system share sheet so the user can save it to Files / send to email /
+  # AirDrop / etc. See lib/features/settings/services/data_export_service.dart.
+  path_provider: ^2.1.5
+  share_plus: ^10.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

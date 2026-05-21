@@ -1,10 +1,12 @@
 """
-User profile endpoints: GET /me, PATCH /me, POST /me/onboarding, DELETE /me.
+User profile endpoints: GET /me, PATCH /me, POST /me/onboarding, DELETE /me, GET /me/export.
 """
 from datetime import date, datetime
-from fastapi import APIRouter, Depends, status
+from typing import Any
+from fastapi import APIRouter, Depends, Request, status
 
 from core.auth import get_current_user
+from core.rate_limit import limiter
 from core.supabase_client import get_supabase
 from core.exceptions import NotFound, ValidationError
 from core.logging import get_logger
@@ -220,3 +222,71 @@ async def delete_me(user_id: str = Depends(get_current_user)):
         status="deleted",
         message="Account and all associated data permanently deleted.",
     )
+
+
+# Tables the user owns directly via `user_id`. Each is dumped as-is from
+# Supabase; sensitive columns (auth row, RC purchase tokens, etc.) live
+# in tables NOT listed here, so we don't have to filter columns per-table.
+_EXPORT_TABLES = (
+    "user_profiles",
+    "meals",
+    "water_logs",
+    "water_reminders",
+    "habits",
+    "habit_completions",
+    "weight_logs",
+    "weight_goals",
+    "meal_plans",
+    "ai_insights",
+    "user_achievements",
+)
+
+
+@router.get("/export", summary="Export all user data (GDPR Article 20)")
+@limiter.limit("3/hour")
+async def export_me(
+    request: Request,
+    user_id: str = Depends(get_current_user),
+) -> dict[str, Any]:
+    """
+    GDPR Article 20 (Right to Data Portability). Returns every row the user
+    owns across the domain tables as one JSON document the frontend can
+    write to disk and share via the system share sheet.
+
+    Rate limit: 3/hour per user — keeps a malicious client from hammering
+    a Supabase service-role query that scans across 11 tables. Honest
+    user export-then-decide flow doesn't need more than a couple.
+
+    Out of scope:
+      - meal_foods rows are pulled via the meals payload (Supabase nested
+        select) so they ride along without a separate fetch.
+      - auth.users row is intentionally excluded; that's Supabase's
+        property and we don't have user-readable secrets to share.
+      - Storage bucket files (meal photo URLs) are referenced from the
+        meals rows; the frontend can re-fetch them if needed.
+    """
+    supabase = get_supabase()
+    snapshot: dict[str, Any] = {
+        "schema_version": 1,
+        "exported_at": datetime.utcnow().isoformat() + "Z",
+        "user_id": user_id,
+    }
+
+    for table in _EXPORT_TABLES:
+        try:
+            select_clause = "*, meal_foods(*)" if table == "meals" else "*"
+            res = (
+                supabase.table(table)
+                .select(select_clause)
+                .eq("user_id", user_id)
+                .execute()
+            )
+            snapshot[table] = res.data or []
+        except Exception as e:
+            # Don't fail the whole export over one table — log and emit an
+            # empty list so the frontend still gets a usable file.
+            logger.warning(f"export {table} failed for {user_id}: {e}")
+            snapshot[table] = []
+
+    logger.info(f"User {user_id} exported data: {sum(len(v) for k, v in snapshot.items() if isinstance(v, list))} rows")
+    return snapshot

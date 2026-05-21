@@ -5,6 +5,7 @@ import '../../core/network/api_exception.dart';
 import '../../core/theme/app_colors.dart';
 import '../auth/providers/auth_provider.dart';
 import 'providers/account_delete_provider.dart';
+import 'providers/data_export_provider.dart';
 
 /// Settings screen — minimum viable surface for Apple 5.1.1(v) compliance.
 ///
@@ -31,6 +32,10 @@ class SettingsScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: const [
+            _Section(
+              title: 'Your data',
+              child: _ExportDataTile(),
+            ),
             _Section(
               title: 'Account',
               child: _DeleteAccountTile(),
@@ -80,6 +85,57 @@ class _Section extends StatelessWidget {
           child: child,
         ),
       ],
+    );
+  }
+}
+
+class _ExportDataTile extends ConsumerWidget {
+  const _ExportDataTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(dataExportProvider);
+    return ListTile(
+      leading: const Icon(Icons.download_for_offline_outlined,
+          color: AppColors.primaryCyan),
+      title: const Text('Export My Data',
+          style: TextStyle(color: Colors.white)),
+      subtitle: const Text(
+        'Download every meal, water log, weight entry, habit, and insight '
+        'as a JSON file. Right to data portability (GDPR Art. 20).',
+        style: TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+      ),
+      trailing: state.isLoading
+          ? const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation(AppColors.primaryCyan),
+              ),
+            )
+          : const Icon(Icons.chevron_right, color: Color(0xFF8FA0B8)),
+      onTap: state.isLoading
+          ? null
+          : () async {
+              await ref.read(dataExportProvider.notifier).exportData();
+              if (!context.mounted) return;
+              final next = ref.read(dataExportProvider);
+              if (next.hasError) {
+                final err = next.error;
+                final msg = err is ApiException
+                    ? err.userMessage
+                    : 'Could not export your data.';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(msg),
+                    backgroundColor: const Color(0xFFFF6B6B),
+                  ),
+                );
+              }
+              // Success case: SharePlus already showed the share sheet,
+              // no extra UI needed.
+            },
     );
   }
 }

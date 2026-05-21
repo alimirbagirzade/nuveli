@@ -52,3 +52,42 @@ def test_get_me_returns_profile(client, auth_headers, mock_supabase, test_user_i
 def test_delete_me_requires_auth(client):
     response = client.delete("/me")
     assert response.status_code in (401, 403)
+
+
+def test_export_me_requires_auth(client):
+    response = client.get("/me/export")
+    assert response.status_code in (401, 403)
+
+
+def test_export_me_returns_snapshot(client, auth_headers, mock_supabase, test_user_id):
+    """GET /me/export returns a JSON dict with one entry per domain table."""
+    # The shared chain returns an empty list for every table — we only need
+    # to verify the keys exist + the surrounding metadata is populated.
+    chain = mock_supabase.table.return_value
+    chain.execute = MagicMock(return_value=MagicMock(data=[]))
+
+    response = client.get("/me/export", headers=auth_headers)
+    assert response.status_code == 200, response.text
+
+    body = response.json()
+    assert body["user_id"] == test_user_id
+    assert body["schema_version"] == 1
+    assert "exported_at" in body
+    # Every domain table the endpoint promises must be present as a list,
+    # even if empty. This keeps the export shape stable for the frontend
+    # JSON consumer regardless of how much data the user has.
+    for table in (
+        "user_profiles",
+        "meals",
+        "water_logs",
+        "water_reminders",
+        "habits",
+        "habit_completions",
+        "weight_logs",
+        "weight_goals",
+        "meal_plans",
+        "ai_insights",
+        "user_achievements",
+    ):
+        assert table in body, f"missing table {table}"
+        assert isinstance(body[table], list)
