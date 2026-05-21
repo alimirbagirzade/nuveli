@@ -44,7 +44,7 @@ class PremiumCtaButton extends StatelessWidget {
                 ? null
                 : [
                     BoxShadow(
-                      color: const Color(0xFF00D4FF).withOpacity(0.45),
+                      color: const Color(0xFF00D4FF).withValues(alpha: 0.45),
                       blurRadius: 28,
                       spreadRadius: -2,
                       offset: const Offset(0, 8),
@@ -80,7 +80,7 @@ class PremiumCtaButton extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
-                          color: const Color(0xFF050A1F).withOpacity(0.7),
+                          color: const Color(0xFF050A1F).withValues(alpha: 0.7),
                         ),
                       ),
                     ],

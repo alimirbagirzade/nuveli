@@ -9,8 +9,8 @@
 
 | ID | Konu | Etki | Effort | Hedef |
 |---|---|---|---|---|
-| K-1 | 61 `withOpacity` deprecation | Build warning, runtime OK | 1-2 saat | v1.0.1 |
-| K-2 | iOS permission strings sadece TR | Yabancı dil kullanıcısı | 1-2 saat | v1.0.1 |
+| ~~K-1~~ | ~~61 `withOpacity` deprecation~~ | ✅ Migrated to `.withValues(alpha:)` pre-launch | — | DONE |
+| ~~K-2~~ | ~~iOS permission strings sadece TR~~ | ✅ 7 lproj/ files shipped in PR #62 | — | DONE |
 | K-3 | Light mode yok | Accessibility preference | 1 sprint | v1.1 |
 | K-4 | iPad layout suboptimal | Tablet kullanıcı | 1 sprint | v1.1 |
 

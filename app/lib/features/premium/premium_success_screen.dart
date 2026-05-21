@@ -99,7 +99,7 @@ class _PremiumSuccessScreenState extends State<PremiumSuccessScreen>
                           boxShadow: [
                             BoxShadow(
                               color: const Color(0xFF00D4FF)
-                                  .withOpacity(glowOpacity),
+                                  .withValues(alpha: glowOpacity),
                               blurRadius: 60,
                               spreadRadius: 4,
                             ),
@@ -173,7 +173,7 @@ class _PremiumSuccessScreenState extends State<PremiumSuccessScreen>
                         boxShadow: [
                           BoxShadow(
                             color:
-                                const Color(0xFF00D4FF).withOpacity(0.4),
+                                const Color(0xFF00D4FF).withValues(alpha: 0.4),
                             blurRadius: 24,
                             spreadRadius: -2,
                             offset: const Offset(0, 6),

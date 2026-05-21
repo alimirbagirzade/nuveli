@@ -28,17 +28,17 @@ class TodaysSummarySection extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF142346).withOpacity(0.6),
-            const Color(0xFF0B1A3D).withOpacity(0.4),
+            const Color(0xFF142346).withValues(alpha: 0.6),
+            const Color(0xFF0B1A3D).withValues(alpha: 0.4),
           ],
         ),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withValues(alpha: 0.08),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D4FF).withOpacity(0.12),
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.12),
             blurRadius: 30,
             spreadRadius: -5,
           ),
@@ -155,7 +155,7 @@ class _RingPainter extends CustomPainter {
 
     // Background ring
     final bgPaint = Paint()
-      ..color = Colors.white.withOpacity(0.08)
+      ..color = Colors.white.withValues(alpha: 0.08)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;

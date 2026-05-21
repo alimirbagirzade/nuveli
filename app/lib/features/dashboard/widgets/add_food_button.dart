@@ -26,7 +26,7 @@ class AddFoodButton extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00D4FF).withOpacity(0.5),
+                  color: const Color(0xFF00D4FF).withValues(alpha: 0.5),
                   blurRadius: 24,
                   spreadRadius: -4,
                   offset: const Offset(0, 8),
