@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/config/app_config.dart';
 import '../../core/network/app_error.dart';
 import '../../shared/widgets/app_error_view.dart';
 import 'models/premium_features.dart';
@@ -370,12 +371,12 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
               const _FooterDot(),
               _FooterLink(
                 label: 'Terms',
-                onTap: () => _openUrl('https://nuveli.app/terms'),
+                onTap: () => _openUrl(AppConfig.termsUrl),
               ),
               const _FooterDot(),
               _FooterLink(
                 label: 'Privacy',
-                onTap: () => _openUrl('https://nuveli.app/privacy'),
+                onTap: () => _openUrl(AppConfig.privacyUrl),
               ),
             ],
           ),
