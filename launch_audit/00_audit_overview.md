@@ -11,34 +11,41 @@
 
 | Faz | Konu | Skor | Status |
 |---|---|---|---|
-| 1 | Code Audit | **92/100** | ✅ DONE (quick wins applied) |
-| 2 | Security | **96/100** | ✅ DONE (3 critical + H-2, H-4, M-1, M-2 fixed) |
-| 3 | Data Integrity | **86/100** | 🟡 Prelim (prod SQL kuyrukta) |
-| 4 | User Journey | **TBD** | ⏳ Manual test pending (65 scenario) |
-| 5 | Device Matrix | **TBD** | ⏳ Real device pending (8 device) |
-| 6 | Load & Stress | **TBD** | ⏳ k6 + memory pending |
-| 7 | Compliance | **92/100** | ✅ DONE (3 critical + M-3 fixed) |
-| 8 | GO/NO-GO | **⚠️ CAUTION GO → GO** | ✅ Preliminary decision |
-| **VERIFIED (4 phase)** | | **366/400 = 91.5%** | GO zone |
-| **PROJECTED (full)** | | **606-636/700** | CAUTION GO → GO |
+| 1 | Code Audit | **95/100** | ✅ DONE (`flutter analyze` → No issues found after K-1) |
+| 2 | Security | **98/100** | ✅ DONE (C-1 + H-2 + H-4 + M-1 + M-2 + M-3) |
+| 3 | Data Integrity | **86/100** | 🟡 Prelim (prod SQL kuyrukta — Ali) |
+| 4 | User Journey | **TBD** | ⏳ Device test pending (65 scenario — Ali) |
+| 5 | Device Matrix | **TBD** | ⏳ Real device pending (8 device — Ali) |
+| 6 | Load & Stress | **TBD** | ⏳ k6 + memory pending (Ali) |
+| 7 | Compliance | **94/100** | ✅ DONE (C-2 + C-3 + H-3 + M-3) |
+| 8 | GO/NO-GO | **🚀 GO** | ✅ Preliminary; Phase 4-6 ile final |
+| **VERIFIED (4 phase)** | | **373/400 = 93.25%** | GO zone |
+| **PROJECTED (full)** | | **613-643/700** | GO |
 
 ### Critical Blockers — ALL RESOLVED ✅
-- **C-1** python-jose CVE-2024-33663 → upgraded to 3.5.0
-- **C-2** PrivacyInfo.xcprivacy → created (Xcode target add MANUEL gerekli)
-- **C-3** Account Delete UI → implemented + tested
+- **C-1** python-jose CVE-2024-33663 → upgraded to 3.5.0 (PR #62)
+- **C-2** PrivacyInfo.xcprivacy → created + added to Runner target (PR #62 + #68)
+- **C-3** Account Delete UI → implemented + tested (PR #62)
 
-### High & Medium Findings — RESOLVED ✅
-- **H-1** CORS production override → set in Render env (Ali confirmed)
+### High Findings — ALL RESOLVED ✅
+- **H-1** CORS production override → Render env set (Ali confirmed)
 - **H-2** Backend rate limiting → slowapi on 3 AI endpoints (PR #63)
-- **H-3** Google Sign-In → service + UI + 6 tests shipped, dashboard wiring docs in `docs/auth/google-signin-setup.md`
-- **H-4** iOS permission strings i18n → 7 languages in `<lang>.lproj/InfoPlist.strings`
-- **M-1** Android `network_security_config.xml` → cleartextTrafficPermitted=false
-- **M-2** iOS NSAppTransportSecurity → explicit declaration
-- **M-3** iOS ITSAppUsesNonExemptEncryption → false
+- **H-3** Google Sign-In → service + UI + Firebase + Supabase fully wired (PR #66 + #69)
+- **H-4** iOS permission strings i18n → 7 languages in `<lang>.lproj/InfoPlist.strings` (PR #62)
 
-### Remaining Open
-- **M-4** Apple Sign-In Xcode capability → MANUEL verify gerekli
-- **H-3 dashboard wiring** → Code shipped; Ali must complete Firebase Console + Supabase provider config (`docs/auth/google-signin-setup.md`)
+### Medium Findings — ALL RESOLVED ✅
+- **M-1** Android `network_security_config.xml` → cleartextTrafficPermitted=false (PR #62)
+- **M-2** iOS NSAppTransportSecurity → explicit declaration (PR #62)
+- **M-3** iOS ITSAppUsesNonExemptEncryption → false (PR #62)
+- **M-4** Apple Sign-In Xcode capability → Runner.entitlements (PR #68)
+
+### Remaining Pre-Launch (sahada)
+- Phase 3 prod SQL probes (Supabase SQL Editor)
+- Phase 4 user journey on device (65 scenario)
+- Phase 5 device matrix (8 cihaz × 5)
+- Phase 6 k6 load test
+- Production SHA-1/SHA-256 → Firebase Android app (Play Console → App integrity)
+- App Store Connect submission (`backend/scripts/seed_reviewer_account.py --allow-production` ile)
 
 **Decision matrix:**
 - ≥630 (90%+) → 🚀 **GO**
