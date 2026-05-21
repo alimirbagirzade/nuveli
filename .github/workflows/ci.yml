@@ -19,7 +19,9 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.4'
+          # flutter_timezone ^5.0.2 needs meta ^1.16, which only ships in
+          # Flutter 3.29+. Local dev is on 3.41.7; pin CI to the same.
+          flutter-version: '3.41.7'
           channel: 'stable'
           cache: true
 
@@ -60,10 +62,12 @@ jobs:
           python -m py_compile routers/profiles.py
 
       - name: Run tests
+        # SUPABASE_JWT_SECRET must match the value tests/conftest.py uses to
+        # mint tokens, otherwise auth checks fail with 401 in CI.
         env:
           SUPABASE_URL: https://placeholder.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: placeholder
-          SUPABASE_JWT_SECRET: placeholder-secret-min-32-chars-long
+          SUPABASE_JWT_SECRET: test-jwt-secret
           OPENAI_API_KEY: sk-placeholder
           REVENUECAT_WEBHOOK_SECRET: placeholder
         run: |
