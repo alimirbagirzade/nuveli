@@ -25,18 +25,27 @@ class DataExportService {
   DataExportService({required Dio dio}) : _dio = dio;
 
   /// Fetch the export, write it to a temp file, share. Returns the file
-  /// path for callers that want to log it. Throws [ApiException] on
-  /// backend failure (rate limit, network, auth).
+  /// path for callers that want to log it. Throws [ApiException] only
+  /// on backend failure (rate limit, network, auth). Failures in the
+  /// share-sheet step are swallowed — the export itself succeeded, the
+  /// file is on disk, and the user dismissed / had no share target
+  /// available (common on iOS Simulator). UI shouldn't surface that as
+  /// "Could not export your data" because the data IS exported.
   Future<String> exportToFile() async {
     final response = await _fetchExport();
     final file = await _writeJsonFile(response);
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      subject: 'Nuveli data export',
-      text:
-          'Your Nuveli data export. Contains every meal, water log, weight '
-          'entry, habit, and AI insight tied to your account.',
-    );
+    try {
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        subject: 'Nuveli data export',
+        text:
+            'Your Nuveli data export. Contains every meal, water log, weight '
+            'entry, habit, and AI insight tied to your account.',
+      );
+    } catch (_) {
+      // Simulator with no installed share targets throws PlatformException
+      // here. Backend export succeeded, file is on disk — treat as success.
+    }
     return file.path;
   }
 
