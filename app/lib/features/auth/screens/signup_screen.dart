@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../shared/widgets/nuveli_background.dart';
@@ -265,16 +266,15 @@ class _TermsCheckboxState extends State<_TermsCheckbox> {
   late final TapGestureRecognizer _termsRecognizer;
   late final TapGestureRecognizer _privacyRecognizer;
 
-  static const _termsUrl = 'https://nuveli.com.tr/sartlar.html';
-  static const _privacyUrl = 'https://nuveli.com.tr/gizlilik.html';
-
   @override
   void initState() {
     super.initState();
+    // URLs live in AppConfig so paywall, settings, marketing pages all
+    // point at the same canonical Turkish-domain legal docs.
     _termsRecognizer = TapGestureRecognizer()
-      ..onTap = () => _open(_termsUrl);
+      ..onTap = () => _open(AppConfig.termsUrl);
     _privacyRecognizer = TapGestureRecognizer()
-      ..onTap = () => _open(_privacyUrl);
+      ..onTap = () => _open(AppConfig.privacyUrl);
   }
 
   @override
