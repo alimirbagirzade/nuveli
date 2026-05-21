@@ -1,6 +1,7 @@
+
 name: CI
 
-  on:
+on:
     push:
       branches: [ main ]
     pull_request:
@@ -19,9 +20,6 @@ name: CI
         - name: Setup Flutter
           uses: subosito/flutter-action@v2
           with:
-            # flutter_timezone ^5.0.2 needs meta ^1.16, which lands in Flutter
-            # 3.27+. Local dev is on 3.41.7; 3.27.4 is the minimum compatible
-            # stable, so pin there for reproducibility.
             flutter-version: '3.27.4'
             channel: 'stable'
             cache: true
@@ -50,16 +48,13 @@ name: CI
           with:
             python-version: '3.11'
             cache: 'pip'
-  
+
         - name: Install dependencies
           run: |
             pip install --upgrade pip
             pip install -r requirements.txt
 
         - name: Syntax check
-          # working-directory is already `backend`. Files referenced here must
-          # exist at backend/<path>. Old paths pointed at app/main.py etc which
-          # never existed — that's why CI has been red on main since Chat 24.
           run: |
             python -m py_compile main.py
             python -m py_compile config.py
