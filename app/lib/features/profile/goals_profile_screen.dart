@@ -247,36 +247,81 @@ class _InlineError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.s24),
-      padding: const EdgeInsets.all(AppSpacing.s16),
-      decoration: BoxDecoration(
-        color: AppColors.danger.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: AppColors.danger.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.error_outline, color: AppColors.danger),
-          const SizedBox(width: AppSpacing.s12),
-          Expanded(
-            child: Text(
-              'Couldn\'t load this section',
-              style: AppTypography.body.copyWith(color: Colors.white),
-            ),
+    // Auto-select layout based on available width. The old version was
+    // a fixed-Row that overflowed by 15px when placed inside a
+    // GoalsRow card (~150px wide) — the icon + text + button trio
+    // simply doesn't fit in half-screen, so the text got squeezed into
+    // a 1-char-wide column rendered vertically letter-by-letter.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final compact = constraints.maxWidth < 220;
+        return Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: compact ? AppSpacing.s8 : AppSpacing.s24,
           ),
-          TextButton(
-            onPressed: onRetry,
-            child: Text(
-              'Retry',
-              style: AppTypography.body.copyWith(
-                color: AppColors.primaryCyan,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+          padding: const EdgeInsets.all(AppSpacing.s16),
+          decoration: BoxDecoration(
+            color: AppColors.danger.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: AppColors.danger.withValues(alpha: 0.3)),
           ),
-        ],
-      ),
+          child: compact
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.error_outline,
+                        color: AppColors.danger, size: 18),
+                    const SizedBox(height: AppSpacing.s8),
+                    Text(
+                      "Couldn't load",
+                      style: AppTypography.body.copyWith(
+                        color: Colors.white,
+                        fontSize: 13,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: onRetry,
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(40, 28),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text(
+                        'Retry',
+                        style: AppTypography.body.copyWith(
+                          color: AppColors.primaryCyan,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    const Icon(Icons.error_outline, color: AppColors.danger),
+                    const SizedBox(width: AppSpacing.s12),
+                    Expanded(
+                      child: Text(
+                        "Couldn't load this section",
+                        style: AppTypography.body.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: onRetry,
+                      child: Text(
+                        'Retry',
+                        style: AppTypography.body.copyWith(
+                          color: AppColors.primaryCyan,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 }

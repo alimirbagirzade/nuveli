@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../profile/goals_profile_screen.dart';
 import '../settings/settings_screen.dart';
+import 'placeholder_tab_screen.dart';
 
 /// The persistent shell that hosts the three primary tabs of the app.
 ///
@@ -31,6 +32,8 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
 
   static const _tabs = <_TabSpec>[
     _TabSpec(icon: Icons.dashboard_rounded, label: 'Dashboard'),
+    _TabSpec(icon: Icons.camera_alt_outlined, label: 'Scan'),
+    _TabSpec(icon: Icons.insights_outlined, label: 'Analytics'),
     _TabSpec(icon: Icons.person_outline, label: 'Profile'),
     _TabSpec(icon: Icons.settings_outlined, label: 'Settings'),
   ];
@@ -43,6 +46,22 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
         index: _index,
         children: const [
           DashboardScreen(),
+          PlaceholderTabScreen(
+            icon: Icons.camera_alt_outlined,
+            title: 'AI Meal Scan',
+            subtitle: 'Coming in v1.1',
+            description:
+                'Point your camera at a meal and let our AI estimate calories + '
+                'macros. Until then, log meals manually from the Dashboard.',
+          ),
+          PlaceholderTabScreen(
+            icon: Icons.insights_outlined,
+            title: 'Analytics',
+            subtitle: 'Coming in v1.1',
+            description:
+                'Weekly calorie bars, weight trends and macro breakdowns. '
+                'Your Profile tab already shows weekly progress.',
+          ),
           GoalsProfileScreen(),
           SettingsScreen(),
         ],
