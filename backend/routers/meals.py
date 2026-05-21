@@ -141,7 +141,15 @@ async def todays_summary(user_id: str = Depends(get_current_user)):
     except Exception as e:
         logger.debug(f"dashboard_today view unavailable: {e}")
 
-    # Fallback
+    # Fallback when the dashboard_today view path errored (caught above)
+    # or returned no row. Smoke test caught this path 500-ing for new
+    # users on the Welcome dashboard with "Sunucu hatası" — root cause
+    # was the old query asked user_profiles for protein_target_g /
+    # carbs_target_g / fat_target_g columns that don't exist in the
+    # schema. routers/profiles.py's _compute_targets even strips those
+    # keys before upsert because the columns were never added. The macros
+    # are derived from daily_calorie_target via the documented split
+    # (25/45/30) — recompute here instead of querying.
     today = date.today()
     meals_res = (
         supabase.table("meals")
@@ -160,31 +168,39 @@ async def todays_summary(user_id: str = Depends(get_current_user)):
         .lt("logged_at", f"{today}T23:59:59")
         .execute()
     )
-    prof = (
+    prof_res = (
         supabase.table("user_profiles")
-        .select("daily_calorie_target, protein_target_g, carbs_target_g, fat_target_g, daily_water_target_ml")
+        .select("daily_calorie_target, daily_water_target_ml")
         .eq("user_id", user_id)
-        .single()
+        .maybe_single()
         .execute()
     )
-    p = prof.data or {}
+    p = prof_res.data or {}
 
     consumed = sum(m.get("total_calories", 0) for m in meals)
-    target = p.get("daily_calorie_target") or 2000
+    target_kcal = p.get("daily_calorie_target") or 2000
+
+    # Macro split mirrors _compute_targets in routers/profiles.py
+    # (25% protein, 45% carbs, 30% fat). Keep in sync if that split ever
+    # changes — there's no single config constant for it yet.
+    protein_target_g = round((target_kcal * 0.25) / 4)
+    carbs_target_g = round((target_kcal * 0.45) / 4)
+    fat_target_g = round((target_kcal * 0.30) / 9)
+
     return TodaySummary(
         consumed_calories=consumed,
         consumed_protein_g=sum(m.get("total_protein_g", 0) for m in meals),
         consumed_carbs_g=sum(m.get("total_carbs_g", 0) for m in meals),
         consumed_fat_g=sum(m.get("total_fat_g", 0) for m in meals),
-        daily_calorie_target=target,
-        daily_protein_target_g=p.get("protein_target_g") or 0,
-        daily_carbs_target_g=p.get("carbs_target_g") or 0,
-        daily_fat_target_g=p.get("fat_target_g") or 0,
+        daily_calorie_target=target_kcal,
+        daily_protein_target_g=protein_target_g,
+        daily_carbs_target_g=carbs_target_g,
+        daily_fat_target_g=fat_target_g,
         consumed_water_ml=sum(w.get("amount_ml", 0) for w in (water_res.data or [])),
         daily_water_target_ml=p.get("daily_water_target_ml") or 2500,
         meal_count_today=len(meals),
-        remaining_calories=max(0, target - consumed),
-        percent_complete=round(min(100, consumed / target * 100), 1) if target else 0,
+        remaining_calories=max(0, target_kcal - consumed),
+        percent_complete=round(min(100, consumed / target_kcal * 100), 1) if target_kcal else 0,
     )
 
 
