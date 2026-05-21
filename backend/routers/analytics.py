@@ -2,6 +2,7 @@
 Analytics endpoints: dashboard, weekly bars, weight trend, macro breakdown.
 """
 from datetime import date, datetime, timedelta
+from typing import Optional
 from fastapi import APIRouter, Depends, Query
 
 from core.auth import get_current_user
@@ -36,45 +37,67 @@ async def dashboard(user_id: str = Depends(get_current_user)):
     """
     Single-call dashboard payload: today summary + streak + score + recent meals.
     Designed to minimize round-trips on app open.
+
+    Defensive: each sub-query is wrapped in try/except so one broken
+    table / missing column / postgrest quirk doesn't 500 the entire
+    dashboard. Smoke test (Chat 25) caught two real failure modes here:
+      - .maybe_single() throws on HTTP 204 when no row exists (known
+        postgrest-py bug); now uses .limit(1) + index-0
+      - water_logs.logged_at schema drift (handled inside todays_summary)
     """
     supabase = get_supabase()
     today = date.today()
 
-    # Today summary (re-use logic from meals router for consistency)
+    # Today summary already swallows its own per-query failures and
+    # always returns a valid TodaySummary, so no try/except needed here.
     from routers.meals import todays_summary
     today_data = await todays_summary(user_id)
 
-    # Streak
-    streak = await compute_user_streak(user_id)
+    streak = 0
+    try:
+        streak = await compute_user_streak(user_id)
+    except Exception as e:
+        logger.warning(f"dashboard streak failed for {user_id}: {e}")
 
-    # Cached nutrition score
-    insight = (
-        supabase.table("ai_insights")
-        .select("payload")
-        .eq("user_id", user_id)
-        .eq("insight_date", today.isoformat())
-        .maybe_single()
-        .execute()
-    )
-    score = None
-    if insight.data and (insight.data.get("payload") or {}).get("nutrition_score") is not None:
-        score = insight.data["payload"]["nutrition_score"]
+    # Cached nutrition score. .maybe_single() raises HTTP 204 as an
+    # exception in postgrest-py (long-standing library bug). Use
+    # .limit(1) + manual index instead so 0-row is just an empty list.
+    score: Optional[int] = None
+    try:
+        insight_res = (
+            supabase.table("ai_insights")
+            .select("payload")
+            .eq("user_id", user_id)
+            .eq("insight_date", today.isoformat())
+            .limit(1)
+            .execute()
+        )
+        if insight_res.data:
+            payload = insight_res.data[0].get("payload") or {}
+            if payload.get("nutrition_score") is not None:
+                score = payload["nutrition_score"]
+    except Exception as e:
+        logger.warning(f"dashboard ai_insights failed for {user_id}: {e}")
 
-    # Recent meals (last 5)
-    recent_meals = (
-        supabase.table("meals")
-        .select("id, meal_type, name, total_calories, consumed_at, image_url")
-        .eq("user_id", user_id)
-        .order("consumed_at", desc=True)
-        .limit(5)
-        .execute()
-    )
+    recent_meals_data: list[dict] = []
+    try:
+        recent_meals = (
+            supabase.table("meals")
+            .select("id, meal_type, name, total_calories, consumed_at, image_url")
+            .eq("user_id", user_id)
+            .order("consumed_at", desc=True)
+            .limit(5)
+            .execute()
+        )
+        recent_meals_data = recent_meals.data or []
+    except Exception as e:
+        logger.warning(f"dashboard recent_meals failed for {user_id}: {e}")
 
     return DashboardResponse(
         today_summary=today_data.model_dump(mode="json"),
         streak_days=streak,
         nutrition_score=score,
-        recent_meals=recent_meals.data or [],
+        recent_meals=recent_meals_data,
         water_consumed_ml=today_data.consumed_water_ml,
         water_target_ml=today_data.daily_water_target_ml,
     )
