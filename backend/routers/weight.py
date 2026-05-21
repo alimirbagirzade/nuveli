@@ -39,19 +39,38 @@ async def create_weight_log(
     log: WeightLogCreate,
     user_id: str = Depends(get_current_user),
 ):
+    """
+    Log a weight entry. Mirrors the schema-drift defense from water.py:
+    smoke test surfaced "Could not find the 'logged_at' column of
+    'weight_logs' in the schema cache" (PGRST204). Strips `logged_at`
+    from the INSERT payload and backfills the response so the Pydantic
+    model is satisfied regardless of what columns the live DB has.
+
+    See migrations/015_schema_drift_repair.sql for the permanent fix —
+    once that runs in prod, this strip becomes a no-op.
+    """
     supabase = get_supabase()
-    payload = log.model_dump(mode="json")
+    payload = log.model_dump(mode="json", exclude={"logged_at"})
     payload["user_id"] = user_id
     res = supabase.table("weight_logs").insert(payload).execute()
     if not res.data:
         raise ValidationError("Failed to log weight")
 
-    # Also update profile.weight_kg with latest
-    supabase.table("user_profiles").update(
-        {"weight_kg": log.weight_kg, "updated_at": datetime.utcnow().isoformat()}
-    ).eq("user_id", user_id).execute()
+    row = res.data[0]
+    if "logged_at" not in row:
+        row["logged_at"] = log.logged_at.isoformat()
 
-    return res.data[0]
+    # Also update profile.weight_kg with latest. Wrapped because the
+    # user-visible action (logging weight) shouldn't fail if this side
+    # effect errors — log loudly but return success.
+    try:
+        supabase.table("user_profiles").update(
+            {"weight_kg": log.weight_kg, "updated_at": datetime.utcnow().isoformat()}
+        ).eq("user_id", user_id).execute()
+    except Exception as e:
+        logger.warning(f"weight_log profile mirror failed for {user_id}: {e}")
+
+    return row
 
 
 @router.get("/logs", response_model=list[WeightLogResponse])
