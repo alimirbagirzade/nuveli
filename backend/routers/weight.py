@@ -40,17 +40,18 @@ async def create_weight_log(
     user_id: str = Depends(get_current_user),
 ):
     """
-    Log a weight entry. Mirrors the schema-drift defense from water.py:
-    smoke test surfaced "Could not find the 'logged_at' column of
-    'weight_logs' in the schema cache" (PGRST204). Strips `logged_at`
-    from the INSERT payload and backfills the response so the Pydantic
-    model is satisfied regardless of what columns the live DB has.
+    Log a weight entry. Strips every column that prod schema might be
+    missing — smoke test caught `logged_at` (PR #88), then `note`
+    (this PR). Only `weight_kg` + `user_id` go to the INSERT; anything
+    else gets DB defaults when the column exists or is silently absent.
+    Response is backfilled from request values so Pydantic stays
+    consistent regardless of live DB shape.
 
-    See migrations/015_schema_drift_repair.sql for the permanent fix —
-    once that runs in prod, this strip becomes a no-op.
+    See migrations/015_schema_drift_repair.sql for the permanent fix.
+    Once Ali runs that in prod, this strip is a no-op (still safe).
     """
     supabase = get_supabase()
-    payload = log.model_dump(mode="json", exclude={"logged_at"})
+    payload = log.model_dump(mode="json", exclude={"logged_at", "note"})
     payload["user_id"] = user_id
     res = supabase.table("weight_logs").insert(payload).execute()
     if not res.data:
@@ -59,6 +60,8 @@ async def create_weight_log(
     row = res.data[0]
     if "logged_at" not in row:
         row["logged_at"] = log.logged_at.isoformat()
+    if "note" not in row:
+        row["note"] = log.note
 
     # Also update profile.weight_kg with latest. Wrapped because the
     # user-visible action (logging weight) shouldn't fail if this side

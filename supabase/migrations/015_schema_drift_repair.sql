@@ -1,13 +1,14 @@
 -- =============================================================================
 -- Migration 015: Schema-drift repair (PERMANENT FIX for the smoke-test bugs)
 -- =============================================================================
--- Chat 25 smoke test surfaced three PGRST204 / 42703 failures from
+-- Chat 25 smoke test surfaced four PGRST204 / 42703 failures from
 -- columns that exist in migration 004 / 007 but are missing from the
 -- live prod schema:
 --
 --   1) water_logs.logged_at   "column water_logs.logged_at does not exist"
 --   2) water_logs.source      "Could not find the 'source' column..."
 --   3) weight_logs.logged_at  "Could not find the 'logged_at' column..."
+--   4) weight_logs.note       "Could not find the 'note' column..."
 --
 -- Root cause: prod was set up from an older version of these tables
 -- (pre-001/004/007). Subsequent migrations updated the .sql files in
@@ -48,6 +49,10 @@ END $$;
 ALTER TABLE public.weight_logs
   ADD COLUMN IF NOT EXISTS logged_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
 
+-- weight_logs.note: optional user comment ("after workout", etc.)
+ALTER TABLE public.weight_logs
+  ADD COLUMN IF NOT EXISTS note TEXT;
+
 -- Re-create the indexes declared in migrations 004 / 007 that were
 -- silently skipped because logged_at didn't exist.
 CREATE INDEX IF NOT EXISTS idx_water_logs_user_time
@@ -74,4 +79,5 @@ COMMIT;
 --   water_logs   | logged_at | timestamp with time zone
 --   water_logs   | source    | text
 --   weight_logs  | logged_at | timestamp with time zone
+--   weight_logs  | note      | text
 -- =============================================================================
