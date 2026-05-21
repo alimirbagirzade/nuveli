@@ -17,7 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/nuveli_background.dart';
-import '../../dashboard/dashboard_screen.dart';
+import '../../main/main_shell_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/current_user_provider.dart';
 import 'onboarding/onboarding_screen.dart';
@@ -55,7 +55,7 @@ class AuthGate extends ConsumerWidget {
               return const OnboardingScreen();
             }
             // 4. Ana app
-            return const DashboardScreen();
+            return const MainShellScreen();
           },
         );
       },

@@ -13,7 +13,7 @@ import 'widgets/meals_section.dart';
 import 'widgets/todays_summary_section.dart';
 import 'widgets/water_quick_card.dart';
 
-/// Main Dashboard screen — the home of the app once authenticated.
+/// Main Dashboard screen — the home tab inside ``MainShellScreen``.
 ///
 /// Layout (top to bottom):
 ///   1. Header (date + greeting + avatar)
@@ -21,8 +21,12 @@ import 'widgets/water_quick_card.dart';
 ///   3. Macros row (Protein / Carbs / Fat)
 ///   4. Water quick card (+250ml)
 ///   5. Today's meals list
-///   6. Add Food CTA (sticky above bottom nav)
-///   + Bottom nav placeholder (real navigation lands in Chat 17)
+///   6. Add Food CTA (sticky above the shell's bottom nav)
+///
+/// The bottom nav itself lives in MainShellScreen — this widget no
+/// longer ships its own. Previously the embedded ``_BottomNavPlaceholder``
+/// returned "X is wired up in Chat 17 (Navigation)" toasts on tap,
+/// which would be flagged as broken navigation in App Review.
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
@@ -84,24 +88,20 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              // Sticky CTA above bottom nav
+              // Sticky CTA above the shell's bottom nav. The button is
+              // still a "coming soon" toast in this PR — the meal entry
+              // sheet that actually POSTs /meals lands in the next PR.
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: AddFoodButton(
                   onPressed: () => _showComingSoon(
                     context,
-                    'AI Meal Scan ships in Chat 5.',
+                    'Manual meal entry ships next — camera scan in v1.1.',
                   ),
                 ),
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: _BottomNavPlaceholder(
-        onTap: (label) => _showComingSoon(
-          context,
-          '$label is wired up in Chat 17 (Navigation).',
         ),
       ),
     );
@@ -184,75 +184,3 @@ class _DashboardSkeleton extends StatelessWidget {
   }
 }
 
-// ============================================================================
-// Bottom nav placeholder (Chat 17 will replace this with the real one)
-// ============================================================================
-
-class _BottomNavPlaceholder extends StatelessWidget {
-  final void Function(String label) onTap;
-  const _BottomNavPlaceholder({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final items = [
-      ('Dashboard', Icons.dashboard_rounded, true),
-      ('Scan', Icons.camera_alt_outlined, false),
-      ('Analytics', Icons.insights_outlined, false),
-      ('Profile', Icons.person_outline, false),
-    ];
-
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF050A1F).withValues(alpha: 0.95),
-        border: Border(
-          top: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: items.map((it) {
-              final (label, icon, active) = it;
-              return Expanded(
-                child: InkWell(
-                  onTap: () => onTap(label),
-                  borderRadius: BorderRadius.circular(12),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          icon,
-                          color: active
-                              ? const Color(0xFF4DDBFF)
-                              : const Color(0xFF6E7B91),
-                          size: 22,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          label,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight:
-                                active ? FontWeight.w600 : FontWeight.w500,
-                            color: active
-                                ? const Color(0xFF4DDBFF)
-                                : const Color(0xFF6E7B91),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-      ),
-    );
-  }
-}
