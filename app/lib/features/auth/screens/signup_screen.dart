@@ -6,8 +6,10 @@
 
 import 'dart:io' show Platform;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
@@ -242,11 +244,55 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 // Terms checkbox
 // ============================================================================
 
-class _TermsCheckbox extends StatelessWidget {
+class _TermsCheckbox extends StatefulWidget {
   final bool value;
   final ValueChanged<bool?> onChanged;
 
   const _TermsCheckbox({required this.value, required this.onChanged});
+
+  @override
+  State<_TermsCheckbox> createState() => _TermsCheckboxState();
+}
+
+class _TermsCheckboxState extends State<_TermsCheckbox> {
+  // The TapGestureRecognizers below have to be retained on State (not
+  // rebuilt every frame) and disposed when the widget goes away — that's
+  // why this is a StatefulWidget. The previous implementation rendered
+  // the Terms / Privacy strings as styled text but never wired the taps,
+  // so users got a link-looking surface that only toggled the checkbox.
+  // Apple App Review 5.1.1(i) wants the policy URL reachable from any
+  // consent surface; this fixes that.
+  late final TapGestureRecognizer _termsRecognizer;
+  late final TapGestureRecognizer _privacyRecognizer;
+
+  static const _termsUrl = 'https://nuveli.com.tr/sartlar.html';
+  static const _privacyUrl = 'https://nuveli.com.tr/gizlilik.html';
+
+  @override
+  void initState() {
+    super.initState();
+    _termsRecognizer = TapGestureRecognizer()
+      ..onTap = () => _open(_termsUrl);
+    _privacyRecognizer = TapGestureRecognizer()
+      ..onTap = () => _open(_privacyUrl);
+  }
+
+  @override
+  void dispose() {
+    _termsRecognizer.dispose();
+    _privacyRecognizer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _open(String url) async {
+    final uri = Uri.parse(url);
+    // mode: externalApplication so the link opens in Safari/Chrome instead
+    // of an in-app webview that could trap the user. Best-effort: if the
+    // launch fails (jailbroken phone with no browser?) we swallow rather
+    // than crash the signup screen.
+    await launchUrl(uri, mode: LaunchMode.externalApplication)
+        .catchError((_) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -257,8 +303,8 @@ class _TermsCheckbox extends StatelessWidget {
           width: 24,
           height: 24,
           child: Checkbox(
-            value: value,
-            onChanged: onChanged,
+            value: widget.value,
+            onChanged: widget.onChanged,
             activeColor: AppColors.primaryCyan,
             checkColor: Colors.white,
             side: BorderSide(
@@ -272,39 +318,44 @@ class _TermsCheckbox extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: GestureDetector(
-            onTap: () => onChanged(!value),
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'I agree to the ',
-                    style: AppTypography.caption12.copyWith(
-                      color: AppColors.secondaryText,
-                    ),
+          child: Text.rich(
+            TextSpan(
+              // Tapping outside the link spans still toggles the checkbox
+              // — same UX as before, just no longer the ONLY action.
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => widget.onChanged(!widget.value),
+              children: [
+                TextSpan(
+                  text: 'I agree to the ',
+                  style: AppTypography.caption12.copyWith(
+                    color: AppColors.secondaryText,
                   ),
-                  TextSpan(
-                    text: 'Terms of Service',
-                    style: AppTypography.caption12.copyWith(
-                      color: AppColors.primaryCyan,
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                TextSpan(
+                  text: 'Terms of Service',
+                  style: AppTypography.caption12.copyWith(
+                    color: AppColors.primaryCyan,
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline,
                   ),
-                  TextSpan(
-                    text: ' and ',
-                    style: AppTypography.caption12.copyWith(
-                      color: AppColors.secondaryText,
-                    ),
+                  recognizer: _termsRecognizer,
+                ),
+                TextSpan(
+                  text: ' and ',
+                  style: AppTypography.caption12.copyWith(
+                    color: AppColors.secondaryText,
                   ),
-                  TextSpan(
-                    text: 'Privacy Policy',
-                    style: AppTypography.caption12.copyWith(
-                      color: AppColors.primaryCyan,
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                TextSpan(
+                  text: 'Privacy Policy',
+                  style: AppTypography.caption12.copyWith(
+                    color: AppColors.primaryCyan,
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline,
                   ),
-                ],
-              ),
+                  recognizer: _privacyRecognizer,
+                ),
+              ],
             ),
           ),
         ),
