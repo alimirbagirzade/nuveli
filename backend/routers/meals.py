@@ -142,40 +142,62 @@ async def todays_summary(user_id: str = Depends(get_current_user)):
         logger.debug(f"dashboard_today view unavailable: {e}")
 
     # Fallback when the dashboard_today view path errored (caught above)
-    # or returned no row. Smoke test caught this path 500-ing for new
-    # users on the Welcome dashboard with "Sunucu hatası" — root cause
-    # was the old query asked user_profiles for protein_target_g /
-    # carbs_target_g / fat_target_g columns that don't exist in the
-    # schema. routers/profiles.py's _compute_targets even strips those
-    # keys before upsert because the columns were never added. The macros
-    # are derived from daily_calorie_target via the documented split
-    # (25/45/30) — recompute here instead of querying.
+    # or returned no row. Smoke test (Chat 25) caught two ways this path
+    # used to 500 on real prod traffic:
+    #   - user_profiles asked for protein/carbs/fat_target_g — columns
+    #     never existed in the schema (profiles.py strips them before
+    #     upsert with the same note)
+    #   - water_logs asked for `logged_at` — prod schema appears to be
+    #     out of sync with migration 004 ("column water_logs.logged_at
+    #     does not exist", postgrest 42703)
+    #
+    # Fix shape: each sub-query is now wrapped in its own try/except so
+    # one bad column doesn't take down the entire dashboard. Default
+    # values render a sane "no data yet" state instead of "Sunucu hatası".
+    # Macros derive from daily_calorie_target via the 25/45/30 split
+    # documented in routers/profiles.py — no separate columns needed.
     today = date.today()
-    meals_res = (
-        supabase.table("meals")
-        .select("total_calories, total_protein_g, total_carbs_g, total_fat_g")
-        .eq("user_id", user_id)
-        .gte("consumed_at", f"{today}T00:00:00")
-        .lt("consumed_at", f"{today}T23:59:59")
-        .execute()
-    )
-    meals = meals_res.data or []
-    water_res = (
-        supabase.table("water_logs")
-        .select("amount_ml")
-        .eq("user_id", user_id)
-        .gte("logged_at", f"{today}T00:00:00")
-        .lt("logged_at", f"{today}T23:59:59")
-        .execute()
-    )
-    prof_res = (
-        supabase.table("user_profiles")
-        .select("daily_calorie_target, daily_water_target_ml")
-        .eq("user_id", user_id)
-        .maybe_single()
-        .execute()
-    )
-    p = prof_res.data or {}
+
+    meals: list[dict[str, Any]] = []
+    try:
+        meals_res = (
+            supabase.table("meals")
+            .select("total_calories, total_protein_g, total_carbs_g, total_fat_g")
+            .eq("user_id", user_id)
+            .gte("consumed_at", f"{today}T00:00:00")
+            .lt("consumed_at", f"{today}T23:59:59")
+            .execute()
+        )
+        meals = meals_res.data or []
+    except Exception as e:
+        logger.warning(f"today_summary meals query failed for {user_id}: {e}")
+
+    water_ml_today = 0
+    try:
+        water_res = (
+            supabase.table("water_logs")
+            .select("amount_ml")
+            .eq("user_id", user_id)
+            .gte("logged_at", f"{today}T00:00:00")
+            .lt("logged_at", f"{today}T23:59:59")
+            .execute()
+        )
+        water_ml_today = sum(w.get("amount_ml", 0) for w in (water_res.data or []))
+    except Exception as e:
+        logger.warning(f"today_summary water_logs query failed for {user_id}: {e}")
+
+    p: dict[str, Any] = {}
+    try:
+        prof_res = (
+            supabase.table("user_profiles")
+            .select("daily_calorie_target, daily_water_target_ml")
+            .eq("user_id", user_id)
+            .maybe_single()
+            .execute()
+        )
+        p = prof_res.data or {}
+    except Exception as e:
+        logger.warning(f"today_summary user_profiles query failed for {user_id}: {e}")
 
     consumed = sum(m.get("total_calories", 0) for m in meals)
     target_kcal = p.get("daily_calorie_target") or 2000
@@ -196,7 +218,7 @@ async def todays_summary(user_id: str = Depends(get_current_user)):
         daily_protein_target_g=protein_target_g,
         daily_carbs_target_g=carbs_target_g,
         daily_fat_target_g=fat_target_g,
-        consumed_water_ml=sum(w.get("amount_ml", 0) for w in (water_res.data or [])),
+        consumed_water_ml=water_ml_today,
         daily_water_target_ml=p.get("daily_water_target_ml") or 2500,
         meal_count_today=len(meals),
         remaining_calories=max(0, target_kcal - consumed),
