@@ -18,7 +18,7 @@
 
 | ID | Konu | Etki | Hedef |
 |---|---|---|---|
-| ~~K-5~~ | ~~Google Sign-In yok~~ | ✅ Implemented + tested; needs Firebase/Supabase dashboard wiring (see `docs/auth/google-signin-setup.md`) | DONE |
+| ~~K-5~~ | ~~Google Sign-In yok~~ | ✅ Service + UI + Firebase + Supabase wiring all shipped (PR #66 + #69). Smoke test pending on device. | DONE |
 | K-6 | Apple Watch app yok | Premium audience | v1.2 |
 | K-7 | Web app yok (Flutter web) | Desktop kullanıcı | v1.2 |
 | K-8 | Social features yok | Engagement (intentional) | v1.5+ |
