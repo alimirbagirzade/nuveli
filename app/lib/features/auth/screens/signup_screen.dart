@@ -38,6 +38,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   bool _acceptTerms = false;
   bool _loading = false;
   bool _appleLoading = false;
+  bool _googleLoading = false;
   String? _error;
 
   @override
@@ -97,6 +98,21 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       if (mounted) setState(() => _error = e.userMessage);
     } finally {
       if (mounted) setState(() => _appleLoading = false);
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    setState(() {
+      _googleLoading = true;
+      _error = null;
+    });
+    try {
+      await ref.read(authProvider.notifier).signInWithGoogle();
+    } on NuveliAuthException catch (e) {
+      if (e.type == AuthErrorType.googleSignInCanceled) return;
+      if (mounted) setState(() => _error = e.userMessage);
+    } finally {
+      if (mounted) setState(() => _googleLoading = false);
     }
   }
 
@@ -185,16 +201,22 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     isLoading: _loading,
                     onPressed: _signup,
                   ),
+                  const SizedBox(height: 24),
+                  const AuthOrDivider(),
+                  const SizedBox(height: 24),
                   if (showApple) ...[
-                    const SizedBox(height: 24),
-                    const AuthOrDivider(),
-                    const SizedBox(height: 24),
                     AuthSocialButton(
                       provider: SocialProvider.apple,
                       isLoading: _appleLoading,
                       onPressed: _signInWithApple,
                     ),
+                    const SizedBox(height: 12),
                   ],
+                  AuthSocialButton(
+                    provider: SocialProvider.google,
+                    isLoading: _googleLoading,
+                    onPressed: _signInWithGoogle,
+                  ),
                   const SizedBox(height: 32),
                   AuthLinkText(
                     prefix: 'Already have an account?',
