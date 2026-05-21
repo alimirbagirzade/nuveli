@@ -19,11 +19,22 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          # flutter_timezone ^5.0.2 needs meta ^1.16, which only ships in
-          # Flutter 3.29+. Local dev is on 3.41.7; pin CI to the same.
+          # flutter_timezone ^5.0.2 needs meta ^1.16 (Flutter 3.29+). Local
+          # dev is on 3.41.7; pinning CI to match.
           flutter-version: '3.41.7'
           channel: 'stable'
           cache: true
+
+      - name: Stub .env for tests
+        # pubspec.yaml declares .env as an asset; the real file is gitignored
+        # so flutter test fails to build the asset bundle without this stub.
+        run: |
+          cat > .env << 'ENVEOF'
+          SUPABASE_URL=https://placeholder.supabase.co
+          SUPABASE_ANON_KEY=placeholder-anon-key
+          APP_ENV=test
+          API_BASE_URL=https://nuveli-api.onrender.com
+          ENVEOF
 
       - name: Install dependencies
         run: flutter pub get
@@ -62,8 +73,6 @@ jobs:
           python -m py_compile routers/profiles.py
 
       - name: Run tests
-        # SUPABASE_JWT_SECRET must match the value tests/conftest.py uses to
-        # mint tokens, otherwise auth checks fail with 401 in CI.
         env:
           SUPABASE_URL: https://placeholder.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: placeholder
