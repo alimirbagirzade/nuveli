@@ -22,7 +22,7 @@
 | K-6 | Apple Watch app yok | Premium audience | v1.2 |
 | K-7 | Web app yok (Flutter web) | Desktop kullanıcı | v1.2 |
 | K-8 | Social features yok | Engagement (intentional) | v1.5+ |
-| K-9 | Export Data feature yok | GDPR portability nice-to-have | v1.1 |
+| ~~K-9~~ | ~~Export Data feature yok~~ | ✅ shipped pre-launch — `GET /me/export` + Settings tile + share sheet (GDPR Art. 20) | DONE |
 
 ## 🟡 Tech Debt
 
