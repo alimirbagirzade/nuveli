@@ -106,7 +106,7 @@ class _GlassPainter extends CustomPainter {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            AppColors.accent.withOpacity(0.95),
+            AppColors.accent.withValues(alpha: 0.95),
             AppColors.primary,
           ],
         ).createShader(Rect.fromLTWH(0, 0, w, h));
@@ -114,7 +114,7 @@ class _GlassPainter extends CustomPainter {
 
       // Highlight line at the water surface.
       final surfacePaint = Paint()
-        ..color = Colors.white.withOpacity(0.35)
+        ..color = Colors.white.withValues(alpha: 0.35)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.2;
       canvas.drawLine(
@@ -126,7 +126,7 @@ class _GlassPainter extends CustomPainter {
 
     // Outline on top of fill so it's always visible.
     final outlinePaint = Paint()
-      ..color = Colors.white.withOpacity(0.25)
+      ..color = Colors.white.withValues(alpha: 0.25)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4
       ..strokeJoin = StrokeJoin.round;

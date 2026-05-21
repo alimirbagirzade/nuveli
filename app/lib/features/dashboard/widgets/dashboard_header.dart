@@ -109,19 +109,19 @@ class _Avatar extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF00D4FF).withOpacity(0.25),
-            const Color(0xFF4DDBFF).withOpacity(0.10),
+            const Color(0xFF00D4FF).withValues(alpha: 0.25),
+            const Color(0xFF4DDBFF).withValues(alpha: 0.10),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: const Color(0xFF00D4FF).withOpacity(0.4),
+          color: const Color(0xFF00D4FF).withValues(alpha: 0.4),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D4FF).withOpacity(0.15),
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.15),
             blurRadius: 12,
             spreadRadius: 0,
           ),

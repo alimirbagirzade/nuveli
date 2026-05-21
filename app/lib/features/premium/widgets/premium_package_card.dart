@@ -23,7 +23,7 @@ class PremiumPackageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const cyan = Color(0xFF00D4FF);
-    final cardBg = const Color(0xFF142346).withOpacity(0.6);
+    final cardBg = const Color(0xFF142346).withValues(alpha: 0.6);
 
     return GestureDetector(
       onTap: onTap,
@@ -37,13 +37,13 @@ class PremiumPackageCard extends StatelessWidget {
           border: Border.all(
             color: isSelected
                 ? cyan
-                : Colors.white.withOpacity(0.1),
+                : Colors.white.withValues(alpha: 0.1),
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: cyan.withOpacity(0.3),
+                    color: cyan.withValues(alpha: 0.3),
                     blurRadius: 24,
                     spreadRadius: -4,
                   ),
@@ -177,7 +177,7 @@ class _RadioIndicator extends StatelessWidget {
         border: Border.all(
           color: isSelected
               ? const Color(0xFF00D4FF)
-              : Colors.white.withOpacity(0.3),
+              : Colors.white.withValues(alpha: 0.3),
           width: 2,
         ),
         color: isSelected ? const Color(0xFF00D4FF) : Colors.transparent,
@@ -204,7 +204,7 @@ class _TopBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D4FF).withOpacity(0.4),
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.4),
             blurRadius: 12,
           ),
         ],
@@ -235,7 +235,7 @@ class _SavingsBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3DDC97).withOpacity(0.35),
+            color: const Color(0xFF3DDC97).withValues(alpha: 0.35),
             blurRadius: 10,
           ),
         ],
@@ -262,10 +262,10 @@ class _TrialPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: const Color(0xFF00D4FF).withOpacity(0.15),
+        color: const Color(0xFF00D4FF).withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(
-          color: const Color(0xFF00D4FF).withOpacity(0.4),
+          color: const Color(0xFF00D4FF).withValues(alpha: 0.4),
           width: 1,
         ),
       ),

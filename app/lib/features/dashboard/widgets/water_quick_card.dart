@@ -54,9 +54,9 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: const Color(0xFF142346).withOpacity(0.5),
+        color: const Color(0xFF142346).withValues(alpha: 0.5),
         border: Border.all(
-          color: Colors.white.withOpacity(0.06),
+          color: Colors.white.withValues(alpha: 0.06),
           width: 1,
         ),
       ),
@@ -70,8 +70,8 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
               shape: BoxShape.circle,
               gradient: LinearGradient(
                 colors: [
-                  const Color(0xFF00D4FF).withOpacity(0.25),
-                  const Color(0xFF4DDBFF).withOpacity(0.10),
+                  const Color(0xFF00D4FF).withValues(alpha: 0.25),
+                  const Color(0xFF4DDBFF).withValues(alpha: 0.10),
                 ],
               ),
             ),
@@ -128,7 +128,7 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 4,
-                    backgroundColor: Colors.white.withOpacity(0.08),
+                    backgroundColor: Colors.white.withValues(alpha: 0.08),
                     valueColor: const AlwaysStoppedAnimation(Color(0xFF4DDBFF)),
                   ),
                 ),
@@ -162,7 +162,7 @@ class _AddButton extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF00D4FF).withOpacity(0.4),
+              color: const Color(0xFF00D4FF).withValues(alpha: 0.4),
               blurRadius: 12,
               spreadRadius: -2,
             ),

@@ -76,12 +76,12 @@ class _PremiumSettingsSectionState
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF142346).withOpacity(0.5),
+        color: const Color(0xFF142346).withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isPremium
-              ? const Color(0xFF00D4FF).withOpacity(0.4)
-              : Colors.white.withOpacity(0.08),
+              ? const Color(0xFF00D4FF).withValues(alpha: 0.4)
+              : Colors.white.withValues(alpha: 0.08),
         ),
       ),
       child: Column(
@@ -156,11 +156,11 @@ class _StatusHeader extends StatelessWidget {
                       colors: [Color(0xFF00D4FF), Color(0xFF0099CC)],
                     )
                   : null,
-              color: isPremium ? null : Colors.white.withOpacity(0.08),
+              color: isPremium ? null : Colors.white.withValues(alpha: 0.08),
               boxShadow: isPremium
                   ? [
                       BoxShadow(
-                        color: const Color(0xFF00D4FF).withOpacity(0.4),
+                        color: const Color(0xFF00D4FF).withValues(alpha: 0.4),
                         blurRadius: 18,
                         spreadRadius: -2,
                       ),
@@ -359,7 +359,7 @@ class _Divider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 1,
-      color: Colors.white.withOpacity(0.06),
+      color: Colors.white.withValues(alpha: 0.06),
     );
   }
 }

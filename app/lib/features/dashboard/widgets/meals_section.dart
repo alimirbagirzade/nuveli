@@ -100,9 +100,9 @@ class _MealTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        color: const Color(0xFF142346).withOpacity(0.5),
+        color: const Color(0xFF142346).withValues(alpha: 0.5),
         border: Border.all(
-          color: Colors.white.withOpacity(0.06),
+          color: Colors.white.withValues(alpha: 0.06),
           width: 1,
         ),
       ),
@@ -166,7 +166,7 @@ class _MealTile extends StatelessWidget {
     return Container(
       width: 44,
       height: 44,
-      color: const Color(0xFF00D4FF).withOpacity(0.1),
+      color: const Color(0xFF00D4FF).withValues(alpha: 0.1),
       child: Icon(
         _iconForType(meal.mealType),
         color: const Color(0xFF4DDBFF),

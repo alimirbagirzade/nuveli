@@ -218,7 +218,7 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00D4FF).withOpacity(0.5),
+                  color: const Color(0xFF00D4FF).withValues(alpha: 0.5),
                   blurRadius: 48,
                   spreadRadius: -4,
                 ),
@@ -277,10 +277,10 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFF142346).withOpacity(0.5),
+              color: const Color(0xFF142346).withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: Colors.white.withOpacity(0.08),
+                color: Colors.white.withValues(alpha: 0.08),
               ),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
@@ -403,9 +403,9 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.08),
+              color: Colors.white.withValues(alpha: 0.08),
               border: Border.all(
-                color: Colors.white.withOpacity(0.12),
+                color: Colors.white.withValues(alpha: 0.12),
               ),
             ),
             child: const Icon(

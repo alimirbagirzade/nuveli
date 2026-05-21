@@ -203,9 +203,9 @@ class _BottomNavPlaceholder extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF050A1F).withOpacity(0.95),
+        color: const Color(0xFF050A1F).withValues(alpha: 0.95),
         border: Border(
-          top: BorderSide(color: Colors.white.withOpacity(0.05), width: 1),
+          top: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1),
         ),
       ),
       child: SafeArea(

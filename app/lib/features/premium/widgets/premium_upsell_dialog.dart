@@ -23,7 +23,7 @@ class PremiumUpsellDialog extends StatelessWidget {
   static Future<bool?> show(BuildContext context, {String? source}) {
     return showDialog<bool>(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       builder: (_) => PremiumUpsellDialog(source: source),
     );
   }
@@ -51,7 +51,7 @@ class PremiumUpsellDialog extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
               ),
             ),
             child: Padding(
@@ -73,7 +73,7 @@ class PremiumUpsellDialog extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF00D4FF).withOpacity(0.5),
+                          color: const Color(0xFF00D4FF).withValues(alpha: 0.5),
                           blurRadius: 32,
                           spreadRadius: -4,
                         ),
