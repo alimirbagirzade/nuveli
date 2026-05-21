@@ -1,62 +1,62 @@
 name: CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  on:
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
 
-jobs:
-  flutter-test:
-    runs-on: ubuntu-latest
-    name: Flutter tests
-    defaults:
-      run:
-        working-directory: app
-    steps:
-      - uses: actions/checkout@v4
+  jobs:
+    flutter-test:
+      runs-on: ubuntu-latest
+      name: Flutter tests
+      defaults:
+        run:
+          working-directory: app
+      steps:
+        - uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-           # flutter_timezone ^5.0.2 needs meta ^1.16, which lands in Flutter
+        - name: Setup Flutter
+          uses: subosito/flutter-action@v2
+          with:
+            # flutter_timezone ^5.0.2 needs meta ^1.16, which lands in Flutter
             # 3.27+. Local dev is on 3.41.7; 3.27.4 is the minimum compatible
             # stable, so pin there for reproducibility.
             flutter-version: '3.27.4'
-          channel: 'stable'
-          cache: true
+            channel: 'stable'
+            cache: true
 
-      - name: Install dependencies
-        run: flutter pub get
+        - name: Install dependencies
+          run: flutter pub get
 
-      - name: Static analysis
-        run: flutter analyze --no-pub
-        continue-on-error: true
+        - name: Static analysis
+          run: flutter analyze --no-pub
+          continue-on-error: true
 
-      - name: Run tests
-        run: flutter test --no-pub
+        - name: Run tests
+          run: flutter test --no-pub
 
-  backend-test:
-    runs-on: ubuntu-latest
-    name: Backend tests
-    defaults:
-      run:
-        working-directory: backend
-    steps:
-      - uses: actions/checkout@v4
+    backend-test:
+      runs-on: ubuntu-latest
+      name: Backend tests
+      defaults:
+        run:
+          working-directory: backend
+      steps:
+        - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
+        - name: Setup Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.11'
+            cache: 'pip'
+  
+        - name: Install dependencies
+          run: |
+            pip install --upgrade pip
+            pip install -r requirements.txt
 
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Syntax check
+        - name: Syntax check
           # working-directory is already `backend`. Files referenced here must
           # exist at backend/<path>. Old paths pointed at app/main.py etc which
           # never existed — that's why CI has been red on main since Chat 24.
@@ -64,18 +64,17 @@ jobs:
             python -m py_compile main.py
             python -m py_compile config.py
             python -m py_compile routers/profiles.py
-          
 
-      - name: Run tests
-        env:
-          SUPABASE_URL: https://placeholder.supabase.co
-          SUPABASE_SERVICE_ROLE_KEY: placeholder
-          SUPABASE_JWT_SECRET: placeholder-secret-min-32-chars-long
-          OPENAI_API_KEY: sk-placeholder
-          REVENUECAT_WEBHOOK_SECRET: placeholder
-        run: |
-          if [ -d "tests" ]; then
-            pytest tests/ -v
-          else
-            echo "No tests directory found"
-          fi
+        - name: Run tests
+          env:
+            SUPABASE_URL: https://placeholder.supabase.co
+            SUPABASE_SERVICE_ROLE_KEY: placeholder
+            SUPABASE_JWT_SECRET: placeholder-secret-min-32-chars-long
+            OPENAI_API_KEY: sk-placeholder
+            REVENUECAT_WEBHOOK_SECRET: placeholder
+          run: |
+            if [ -d "tests" ]; then
+              pytest tests/ -v
+            else
+              echo "No tests directory found"
+            fi
