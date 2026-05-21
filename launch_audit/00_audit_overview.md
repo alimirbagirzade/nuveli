@@ -12,15 +12,15 @@
 | Faz | Konu | Skor | Status |
 |---|---|---|---|
 | 1 | Code Audit | **92/100** | ✅ DONE (quick wins applied) |
-| 2 | Security | **94/100** | ✅ DONE (3 critical + M-1, M-2, H-4 fixed) |
+| 2 | Security | **96/100** | ✅ DONE (3 critical + H-2, H-4, M-1, M-2 fixed) |
 | 3 | Data Integrity | **86/100** | 🟡 Prelim (prod SQL kuyrukta) |
 | 4 | User Journey | **TBD** | ⏳ Manual test pending (65 scenario) |
 | 5 | Device Matrix | **TBD** | ⏳ Real device pending (8 device) |
 | 6 | Load & Stress | **TBD** | ⏳ k6 + memory pending |
 | 7 | Compliance | **92/100** | ✅ DONE (3 critical + M-3 fixed) |
 | 8 | GO/NO-GO | **⚠️ CAUTION GO → GO** | ✅ Preliminary decision |
-| **VERIFIED (4 phase)** | | **364/400 = 91%** | GO zone |
-| **PROJECTED (full)** | | **604-634/700** | CAUTION GO → GO |
+| **VERIFIED (4 phase)** | | **366/400 = 91.5%** | GO zone |
+| **PROJECTED (full)** | | **606-636/700** | CAUTION GO → GO |
 
 ### Critical Blockers — ALL RESOLVED ✅
 - **C-1** python-jose CVE-2024-33663 → upgraded to 3.5.0
@@ -29,13 +29,13 @@
 
 ### High & Medium Findings — RESOLVED ✅
 - **H-1** CORS production override → set in Render env (Ali confirmed)
+- **H-2** Backend rate limiting → slowapi on 3 AI endpoints (PR #63)
 - **H-4** iOS permission strings i18n → 7 languages in `<lang>.lproj/InfoPlist.strings`
 - **M-1** Android `network_security_config.xml` → cleartextTrafficPermitted=false
 - **M-2** iOS NSAppTransportSecurity → explicit declaration
 - **M-3** iOS ITSAppUsesNonExemptEncryption → false
 
 ### Remaining Open
-- **H-2** Backend rate limiting → deferred to v1.0.1 (accepted risk)
 - **H-3** Google Sign-In → deferred to v1.0.1 (Apple SI sufficient per 4.8)
 - **M-4** Apple Sign-In Xcode capability → MANUEL verify gerekli
 

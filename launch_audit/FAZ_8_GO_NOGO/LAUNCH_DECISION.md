@@ -97,7 +97,7 @@ Submit'e basmadan önce **mutlaka yap:**
 
 ### App Store Connect (Apple)
 - [ ] App Privacy form complete (11 data type)
-- [ ] Test reviewer account oluşturuldu (premium + 7 günlük seed data)
+- [ ] Test reviewer account oluşturuldu — `cd backend && source venv/bin/activate && python scripts/seed_reviewer_account.py --allow-production` (idempotent; premium aktif + 7 günlük data + credentials çıktıda)
 - [ ] Reviewer notes: "Avatar üst sağda → Settings → Delete My Account"
 - [ ] Subscription disclosure paywall'da görünür
 - [ ] Description'larda "medical/treat/cure" kelimesi yok
@@ -119,8 +119,8 @@ Bunlar launch'ı engellemiyor, ama post-launch fix edilmeli:
 - 3 transitive discontinued package (js, build_resolvers, build_runner_core)
 
 ### Security
-- Backend rate limiting (slowapi) — Supabase'in default'una bel bağlıyoruz
-- iOS permission strings sadece Türkçe
+- ~~Backend rate limiting (slowapi)~~ ✅ shipped via PR #63 — 3 AI endpoints capped per-user
+- ~~iOS permission strings sadece Türkçe~~ ✅ 7 languages via lproj/ (PR #62)
 - Certificate pinning yok (v1.1+)
 
 ### Architecture
