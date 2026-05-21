@@ -4,9 +4,10 @@ Meal planner & recipe endpoints.
 import json
 from datetime import date, datetime, timedelta
 from typing import Optional
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, Request, status
 
 from core.auth import get_current_user
+from core.rate_limit import limiter
 from core.supabase_client import get_supabase
 from core.exceptions import NotFound, ValidationError, ExternalServiceError
 from core.logging import get_logger
@@ -243,13 +244,18 @@ async def grocery_summary(
 # --- AI plan generation ---
 
 @router.post("/meal-plans/generate", response_model=GeneratePlanResponse)
+@limiter.limit("3/minute")
 async def generate_meal_plan(
+    request: Request,
     req: GeneratePlanRequest,
     user_id: str = Depends(get_current_user),
 ):
     """
     Generate an AI meal plan with GPT-4o.
     Inserts plans into meal_plans table (without recipe_id; custom_* fields).
+
+    Rate limit: 3/minute per user — generates a full week of meals per call,
+    so even a small abuse burst is expensive.
     """
     from openai import AsyncOpenAI, APIError, APITimeoutError
 

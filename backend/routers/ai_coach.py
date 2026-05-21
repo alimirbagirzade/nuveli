@@ -2,9 +2,10 @@
 AI Coach endpoints: today's insight, manual generate, apply-tip.
 """
 from datetime import date, datetime
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Request, status
 
 from core.auth import get_current_user
+from core.rate_limit import limiter
 from core.supabase_client import get_supabase
 from core.exceptions import NotFound, ValidationError
 from core.logging import get_logger
@@ -58,11 +59,16 @@ async def coach_today(user_id: str = Depends(get_current_user)):
 
 
 @router.post("/generate", response_model=AIInsightResponse, summary="Force regenerate insight")
+@limiter.limit("5/minute")
 async def coach_generate(
+    request: Request,
     req: GenerateInsightRequest = GenerateInsightRequest(),
     user_id: str = Depends(get_current_user),
 ):
-    """Manually trigger insight generation. Useful for testing & forced refresh."""
+    """
+    Manually trigger insight generation. Useful for testing & forced refresh.
+    Rate limit: 5/minute per user (full GPT-4o call per invocation).
+    """
     target_date = req.target_date or date.today()
 
     if not req.force:

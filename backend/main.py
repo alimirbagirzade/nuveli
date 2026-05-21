@@ -12,11 +12,15 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
 from config import get_settings
 from core.logging import setup_logging, get_logger
 from core.supabase_client import init_supabase
 from core.exceptions import NuveliException
+from core.rate_limit import limiter
 
 from routers import (
     profiles,
@@ -81,7 +85,17 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# --- Middleware ---
+# --- Rate limiter ---
+# H-2: defense-in-depth for AI endpoint cost-blowout. Decorators live on
+# the individual routes (see routers/meals.py /scan, routers/ai_coach.py,
+# routers/meal_planner.py /meal-plans/generate). The handler turns 429s
+# into the same JSON shape as our other errors.
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
+
+
+# --- CORS ---
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origin_list,
