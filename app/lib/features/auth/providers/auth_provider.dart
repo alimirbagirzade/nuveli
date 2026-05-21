@@ -3,7 +3,7 @@
 // Auth state'in tek doğruluk kaynağı.
 // - AsyncNotifier<AuthUser?> — null = logged out, AuthUser = logged in
 // - Supabase auth state stream'ini dinler, otomatik günceller
-// - signIn / signUp / signInWithApple / signOut metodları
+// - signIn / signUp / signInWithApple / signInWithGoogle / signOut metodları
 // ============================================================================
 
 import 'dart:async';
@@ -16,6 +16,7 @@ import '../models/auth_errors.dart';
 import '../models/auth_user.dart';
 import '../services/apple_signin_service.dart';
 import '../services/auth_service.dart';
+import '../services/google_signin_service.dart';
 
 // ============================================================================
 // SERVICE PROVIDERS — DI için, test'te override edilebilir
@@ -26,6 +27,9 @@ final authServiceProvider = Provider<AuthService>((ref) => AuthService());
 final appleSignInServiceProvider =
     Provider<AppleSignInService>((ref) => AppleSignInService());
 
+final googleSignInServiceProvider =
+    Provider<GoogleSignInService>((ref) => GoogleSignInService());
+
 // ============================================================================
 // AUTH NOTIFIER
 // ============================================================================
@@ -33,12 +37,14 @@ final appleSignInServiceProvider =
 class AuthNotifier extends AsyncNotifier<AuthUser?> {
   late final AuthService _authService;
   late final AppleSignInService _appleService;
+  late final GoogleSignInService _googleService;
   StreamSubscription<sb.AuthState>? _sub;
 
   @override
   Future<AuthUser?> build() async {
     _authService = ref.read(authServiceProvider);
     _appleService = ref.read(appleSignInServiceProvider);
+    _googleService = ref.read(googleSignInServiceProvider);
 
     // Supabase auth state stream'ini dinle.
     // Token refresh, başka tab'tan logout vs. otomatik yansır.
@@ -143,10 +149,39 @@ class AuthNotifier extends AsyncNotifier<AuthUser?> {
   }
 
   // --------------------------------------------------------------------------
+  // SIGN IN — Google
+  // --------------------------------------------------------------------------
+  Future<void> signInWithGoogle() async {
+    state = const AsyncValue.loading();
+    try {
+      final response = await _googleService.signInWithGoogle();
+      final user = response.user;
+      state = AsyncValue.data(
+        user == null ? null : AuthUser.fromSupabase(user),
+      );
+    } catch (e, st) {
+      // Cancel sırada hata gibi göstermeyelim — Apple flow ile aynı pattern.
+      if (e is NuveliAuthException &&
+          e.type == AuthErrorType.googleSignInCanceled) {
+        final current = _authService.currentUser;
+        state = AsyncValue.data(
+          current == null ? null : AuthUser.fromSupabase(current),
+        );
+        return;
+      }
+      state = AsyncValue.error(e, st);
+      rethrow;
+    }
+  }
+
+  // --------------------------------------------------------------------------
   // SIGN OUT
   // --------------------------------------------------------------------------
   Future<void> signOut() async {
     try {
+      // Clear cached Google account so the next sign-in shows the picker
+      // again. Best-effort — doesn't fail signOut if it throws.
+      await _googleService.signOut();
       await _authService.signOut();
       state = const AsyncValue.data(null);
     } catch (e, st) {

@@ -17,6 +17,8 @@ enum AuthErrorType {
   networkError,
   appleSignInCanceled,
   appleSignInFailed,
+  googleSignInCanceled,
+  googleSignInFailed,
   unknown,
 }
 
@@ -137,6 +139,21 @@ class NuveliAuthException implements Exception {
       NuveliAuthException(
         type: AuthErrorType.appleSignInFailed,
         userMessage: 'Apple Sign-In failed. Please try again.',
+        originalMessage: originalMessage,
+      );
+
+  // --------------------------------------------------------------------------
+  // Google Sign-In hataları
+  // --------------------------------------------------------------------------
+  factory NuveliAuthException.googleCanceled() => const NuveliAuthException(
+        type: AuthErrorType.googleSignInCanceled,
+        userMessage: 'Google Sign-In was canceled.',
+      );
+
+  factory NuveliAuthException.googleFailed([String? originalMessage]) =>
+      NuveliAuthException(
+        type: AuthErrorType.googleSignInFailed,
+        userMessage: 'Google Sign-In failed. Please try again.',
         originalMessage: originalMessage,
       );
 }

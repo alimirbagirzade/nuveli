@@ -30,14 +30,15 @@
 ### High & Medium Findings — RESOLVED ✅
 - **H-1** CORS production override → set in Render env (Ali confirmed)
 - **H-2** Backend rate limiting → slowapi on 3 AI endpoints (PR #63)
+- **H-3** Google Sign-In → service + UI + 6 tests shipped, dashboard wiring docs in `docs/auth/google-signin-setup.md`
 - **H-4** iOS permission strings i18n → 7 languages in `<lang>.lproj/InfoPlist.strings`
 - **M-1** Android `network_security_config.xml` → cleartextTrafficPermitted=false
 - **M-2** iOS NSAppTransportSecurity → explicit declaration
 - **M-3** iOS ITSAppUsesNonExemptEncryption → false
 
 ### Remaining Open
-- **H-3** Google Sign-In → deferred to v1.0.1 (Apple SI sufficient per 4.8)
 - **M-4** Apple Sign-In Xcode capability → MANUEL verify gerekli
+- **H-3 dashboard wiring** → Code shipped; Ali must complete Firebase Console + Supabase provider config (`docs/auth/google-signin-setup.md`)
 
 **Decision matrix:**
 - ≥630 (90%+) → 🚀 **GO**
