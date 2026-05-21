@@ -64,12 +64,22 @@ app/lib/
 ## Klasör Yapısı — Backend
 
 ```
-backend/app/
-├── api/routes/           # auth, meals, coach, premium, profile, home, app
-├── core/                 # config, security (JWT), dependencies, logging
-├── db/                   # Supabase client
-├── schemas/              # Pydantic request/response
-└── services/             # Business logic (profile, meal, coach, premium, safety)
+backend/
+├── main.py               # FastAPI app entry + middleware + lifespan
+├── config.py             # Pydantic Settings (env vars)
+├── routers/              # auth, meals, water, habits, weight, meal_planner,
+│                         #   ai_coach, analytics, achievements, premium, profiles
+├── services/             # Business logic (openai_vision, insights_generation,
+│                         #   revenuecat, streak, achievement, nutrition_score, ...)
+├── core/                 # auth (JWT), supabase_client, exceptions, logging,
+│                         #   rate_limit (H-2)
+├── models/               # Pydantic request/response (Chat 25 audit calls
+│                         #   these "schemas" — terms are interchangeable)
+├── migrations/           # SQL migration files mirroring supabase/migrations/
+├── prompts/              # System prompts for OpenAI calls
+├── cron/                 # Scheduled jobs (apscheduler)
+├── scripts/              # One-shot ops scripts (seed_reviewer_account, ...)
+└── tests/                # pytest suite (38 tests as of 2026-05-21)
 ```
 
 ## Test Dosyaları
