@@ -12,6 +12,7 @@ Chat 19 eklemeleri (eski kodun üstüne):
 - processed_at / processing_error tracking
 - /sync endpoint (RevenueCatService kullanır)
 """
+import hmac
 from datetime import datetime
 from typing import Any, Optional
 
@@ -64,7 +65,24 @@ TEST_EVENTS = {"TEST"}
 def _verify_webhook_auth(authorization: Optional[str]) -> None:
     """Verify the Bearer token from RevenueCat matches the configured secret."""
     if not settings.revenuecat_webhook_secret:
-        logger.warning("REVENUECAT_WEBHOOK_SECRET not configured — webhook is open")
+        # Fail closed in production — an unset secret means the env var was
+        # never set in Render, which means anyone hitting /premium/webhook
+        # can fake a "user just bought Premium" event. In dev / staging
+        # we still accept (with a loud warning) so local fake-webhook
+        # testing isn't blocked.
+        if settings.is_production:
+            logger.error(
+                "REVENUECAT_WEBHOOK_SECRET missing in production — "
+                "refusing webhook to prevent forged premium grants"
+            )
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Webhook auth not configured",
+            )
+        logger.warning(
+            "REVENUECAT_WEBHOOK_SECRET not configured — accepting unauthenticated "
+            "webhook (dev/staging only)"
+        )
         return
 
     if not authorization:
@@ -78,7 +96,11 @@ def _verify_webhook_auth(authorization: Optional[str]) -> None:
     expected_normalized = expected.removeprefix("Bearer ").strip()
     received_normalized = authorization.removeprefix("Bearer ").strip()
 
-    if received_normalized != expected_normalized:
+    # Timing-safe comparison so an attacker can't shave bytes off the
+    # secret one round trip at a time. The plain != would short-circuit
+    # on the first mismatching byte; compare_digest takes the same time
+    # regardless of where the mismatch is.
+    if not hmac.compare_digest(received_normalized, expected_normalized):
         logger.warning("RevenueCat webhook auth mismatch")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
