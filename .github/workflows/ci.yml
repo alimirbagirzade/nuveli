@@ -19,7 +19,10 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+           # flutter_timezone ^5.0.2 needs meta ^1.16, which lands in Flutter
+            # 3.27+. Local dev is on 3.41.7; 3.27.4 is the minimum compatible
+            # stable, so pin there for reproducibility.
+            flutter-version: '3.27.4'
           channel: 'stable'
           cache: true
 
@@ -54,10 +57,14 @@ jobs:
           pip install -r requirements.txt
 
       - name: Syntax check
-        run: |
-          python -m py_compile app/main.py
-          python -m py_compile app/core/config.py
-          python -m py_compile app/services/profile_service.py
+          # working-directory is already `backend`. Files referenced here must
+          # exist at backend/<path>. Old paths pointed at app/main.py etc which
+          # never existed — that's why CI has been red on main since Chat 24.
+          run: |
+            python -m py_compile main.py
+            python -m py_compile config.py
+            python -m py_compile routers/profiles.py
+          
 
       - name: Run tests
         env:
