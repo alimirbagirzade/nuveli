@@ -59,7 +59,17 @@ async def create_weight_log(
     # was logged. Migration 016 adds SET DEFAULT CURRENT_DATE to make
     # this self-filling, but sending it is harmless either way.
     payload["local_day"] = date.today().isoformat()
-    res = supabase.table("weight_logs").insert(payload).execute()
+
+    # weight_logs has UNIQUE(user_id, local_day) — one weight entry per
+    # user per calendar day, by design (chronic weighing is anti-pattern
+    # in the wellness protocol). Without upsert, the second "Save weight"
+    # tap on the same day returns 23505 → frontend banner "Could not save".
+    # Upsert resolves the conflict by UPDATING the existing row instead.
+    res = (
+        supabase.table("weight_logs")
+        .upsert(payload, on_conflict="user_id,local_day")
+        .execute()
+    )
     if not res.data:
         raise ValidationError("Failed to log weight")
 
