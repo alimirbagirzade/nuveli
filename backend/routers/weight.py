@@ -53,6 +53,12 @@ async def create_weight_log(
     supabase = get_supabase()
     payload = log.model_dump(mode="json", exclude={"logged_at", "note"})
     payload["user_id"] = user_id
+    # Prod schema has `local_day` (DATE) as NOT NULL with no default.
+    # If we don't send it, INSERT fails with 23502 not-null violation.
+    # Use today (server-side UTC date) — same calendar day the entry
+    # was logged. Migration 016 adds SET DEFAULT CURRENT_DATE to make
+    # this self-filling, but sending it is harmless either way.
+    payload["local_day"] = date.today().isoformat()
     res = supabase.table("weight_logs").insert(payload).execute()
     if not res.data:
         raise ValidationError("Failed to log weight")
@@ -119,15 +125,30 @@ async def delete_weight_log(
 @router.get("/goal", response_model=Optional[WeightGoalResponse])
 async def get_active_goal(user_id: str = Depends(get_current_user)):
     supabase = get_supabase()
-    res = (
-        supabase.table("weight_goals")
-        .select("*")
-        .eq("user_id", user_id)
-        .eq("status", "active")
-        .order("created_at", desc=True)
-        .limit(1)
-        .execute()
-    )
+    # Prod weight_goals may not have a `status` column (schema drift —
+    # migration 007 declared it but live schema is missing it). Try the
+    # filtered query first; on PGRST204/42703, fall back to "most recent
+    # goal regardless of status" so the Profile tab stops 500-ing.
+    try:
+        res = (
+            supabase.table("weight_goals")
+            .select("*")
+            .eq("user_id", user_id)
+            .eq("status", "active")
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+    except Exception as e:
+        logger.warning(f"weight_goals.status filter failed for {user_id}: {e}")
+        res = (
+            supabase.table("weight_goals")
+            .select("*")
+            .eq("user_id", user_id)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
     if not res.data:
         return None
     goal = res.data[0]
