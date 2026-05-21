@@ -12,15 +12,15 @@
 | Faz | Konu | Skor | Status |
 |---|---|---|---|
 | 1 | Code Audit | **95/100** | ✅ DONE (`flutter analyze` → No issues found after K-1) |
-| 2 | Security | **98/100** | ✅ DONE (C-1 + H-2 + H-4 + M-1 + M-2 + M-3) |
-| 3 | Data Integrity | **86/100** | 🟡 Prelim (prod SQL kuyrukta — Ali) |
+| 2 | Security | **99/100** | ✅ DONE (C-1 + H-2 + H-4 + M-1 + M-2 + M-3 + M-5 webhook + M-10 docs hidden) |
+| 3 | Data Integrity | **90/100** | 🟡 Prelim (migration 014 sanity bounds shipped, prod SQL kuyrukta — Ali) |
 | 4 | User Journey | **TBD** | ⏳ Device test pending (65 scenario — Ali) |
 | 5 | Device Matrix | **TBD** | ⏳ Real device pending (8 device — Ali) |
 | 6 | Load & Stress | **TBD** | ⏳ k6 + memory pending (Ali) |
-| 7 | Compliance | **94/100** | ✅ DONE (C-2 + C-3 + H-3 + M-3) |
+| 7 | Compliance | **95/100** | ✅ DONE (C-2 + C-3 + H-3 + M-3 + paywall disclosure + tappable links) |
 | 8 | GO/NO-GO | **🚀 GO** | ✅ Preliminary; Phase 4-6 ile final |
-| **VERIFIED (4 phase)** | | **373/400 = 93.25%** | GO zone |
-| **PROJECTED (full)** | | **613-643/700** | GO |
+| **VERIFIED (4 phase)** | | **379/400 = 94.75%** | GO zone |
+| **PROJECTED (full)** | | **619-649/700** | GO |
 
 ### Critical Blockers — ALL RESOLVED ✅
 - **C-1** python-jose CVE-2024-33663 → upgraded to 3.5.0 (PR #62)
@@ -38,6 +38,15 @@
 - **M-2** iOS NSAppTransportSecurity → explicit declaration (PR #62)
 - **M-3** iOS ITSAppUsesNonExemptEncryption → false (PR #62)
 - **M-4** Apple Sign-In Xcode capability → Runner.entitlements (PR #68)
+- **M-5** RevenueCat webhook signature verification → timing-safe + fail-closed (PR #77)
+- **M-10** `/docs` API surface enumeration → hidden in production (PR #76)
+
+### Bonus Polish — Pre-launch reject-trigger fixes
+- **Tappable consent links** → Terms + Privacy spans on signup actually open the policy now (PR #73)
+- **Canonical legal URLs** → paywall + signup point at `nuveli.com.tr/sartlar.html` / `gizlilik.html` (PR #74; paywall was using nonexistent `nuveli.app/terms`)
+- **Apple 3.1.2(a) subscription disclosure** → auto-renewal + 24h cancel window + where-to-manage (PR #75)
+- **K-9 GDPR Article 20 data export** → `GET /me/export` + Settings tile + share sheet (PR #71)
+- **Migration 014** → calorie/macro/date sanity upper bounds on meals + meal_foods (PR #78; Ali runs in SQL Editor)
 
 ### Remaining Pre-Launch (sahada)
 - Phase 3 prod SQL probes (Supabase SQL Editor)
