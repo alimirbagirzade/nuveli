@@ -81,8 +81,12 @@ app = FastAPI(
     version=settings.app_version,
     description="Nuveli AI Calorie Coach — Backend API",
     lifespan=lifespan,
-    docs_url="/docs",
-    redoc_url="/redoc",
+    # Hide Swagger / ReDoc / openapi.json in production. They make API
+    # surface enumeration trivial for an attacker and there's no reason
+    # an end-user needs them. Dev / staging keep them on for ergonomics.
+    docs_url=None if settings.is_production else "/docs",
+    redoc_url=None if settings.is_production else "/redoc",
+    openapi_url=None if settings.is_production else "/openapi.json",
 )
 
 # --- Rate limiter ---
