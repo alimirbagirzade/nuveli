@@ -51,7 +51,7 @@ void main() {
     service = GoogleSignInService(client: supabase, googleSignIn: google);
   });
 
-  AuthResponse _ok() => AuthResponse(session: _FakeSession(), user: _FakeUser());
+  AuthResponse okResponse() => AuthResponse(session: _FakeSession(), user: _FakeUser());
 
   group('GoogleSignInService.signInWithGoogle', () {
     test('happy path: ID token reaches Supabase via signInWithIdToken', () async {
@@ -67,7 +67,7 @@ void main() {
           idToken: any(named: 'idToken'),
           accessToken: any(named: 'accessToken'),
         ),
-      ).thenAnswer((_) async => _ok());
+      ).thenAnswer((_) async => okResponse());
 
       final response = await service.signInWithGoogle();
 
