@@ -19,6 +19,11 @@ python-jose[cryptography]==3.5.0
 # --- HTTP ---
 httpx==0.27.2
 
+# --- Rate limiting ---
+# H-2 defense-in-depth for AI cost-blowout: caps /meals/scan,
+# /coach/generate, /meal-plans/generate per user. See core/rate_limit.py.
+slowapi==0.1.9
+
 # --- Supabase ---
 supabase==2.8.1
 

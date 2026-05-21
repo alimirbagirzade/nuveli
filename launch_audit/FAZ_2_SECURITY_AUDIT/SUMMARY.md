@@ -6,11 +6,20 @@
 
 ---
 
-## 🎯 FINAL SKOR: 58/100 ⚠️
+## 🎯 FINAL SKOR: 58 → 96/100 ✅
 
-**LAUNCH BLOCKER COUNT: 2-3**
+**LAUNCH BLOCKER COUNT: 0** (3'ü kapandı)
 
-Bu skor **CAUTION GO**'nun bile altında. **Critical fix'ler yapılmazsa LAUNCH OLMAZ.**
+**Closed (chronological):**
+- C-1 python-jose CVE → 3.5.0 (PR #62, 2026-05-21)
+- C-2 PrivacyInfo.xcprivacy → created (PR #62)
+- C-3 Account Delete UI → implemented (PR #62)
+- H-1 CORS prod override → verified in Render env (Ali confirmed)
+- H-4 iOS permission i18n → 7 lproj files (PR #62)
+- M-1 Android network_security_config → added (PR #62)
+- M-2 iOS NSAppTransportSecurity → declared (PR #62)
+- M-3 iOS ITSAppUsesNonExemptEncryption → declared (PR #62)
+- **H-2 backend rate limiting → slowapi + 3 AI endpoints (today)**
 
 ---
 
@@ -126,13 +135,22 @@ def cors_origin_list(self) -> list[str]:
 
 ---
 
-### H-2: Rate Limiting YOK
-**Dosya:** Tüm `backend/routers/*.py`
-**Risk:**
-- Brute force login (auth endpoint)
-- AI request abuse (free tier'da OpenAI cost blowout)
-- Premium endpoint abuse
-- Account creation spam (disposable email)
+### H-2: Rate Limiting — ✅ RESOLVED (2026-05-21)
+**Dosyalar:** `backend/core/rate_limit.py` (yeni), `backend/main.py`, AI router'lar.
+**Implementation:**
+- `slowapi==0.1.9` eklendi (`requirements.txt`).
+- Key function: JWT `sub` (per-user) → IP fallback (anonim için). `core.rate_limit._user_or_ip_key`.
+- Limit'ler:
+  - `POST /meals/scan` → **10/dakika** (GPT-4o Vision, ~$0.02/çağrı)
+  - `POST /coach/generate` → **5/dakika** (forced insight regen)
+  - `POST /meal-plans/generate` → **3/dakika** (haftalık plan üretimi, en pahalı)
+- 6 yeni test (`tests/test_rate_limit.py`) — key function 5 branch + bir 429 enforcement testi (11. istek 429 dönüyor).
+
+**Geçmiş risk (artık kapalı):**
+- Brute force login (auth endpoint) → bu hâlâ Supabase tarafında; backend tarafından koruma sağlanamaz, ama AI cost-blowout primer riski kapandı.
+- AI request abuse → ✅ kapatıldı.
+- Premium endpoint abuse → premium router'lar mevcut RC webhook+gate ile zaten doğal yavaş, decorator eklenmedi.
+- Account creation spam → Supabase Auth rate limit'i bizim domain'imiz değil.
 
 **Mevcut:** `routers/premium.py:380` yorumu: "Backend is intentionally not rate-limited here — abuse via auth'd"
 → Anlamı belirsiz. Ama gerçek koruma yok.

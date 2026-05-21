@@ -3,9 +3,10 @@ Meal endpoints: AI scan, CRUD, today summary.
 """
 from datetime import date, datetime
 from typing import Optional
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, Request, status
 
 from core.auth import get_current_user
+from core.rate_limit import limiter
 from core.supabase_client import get_supabase
 from core.exceptions import NotFound, ValidationError
 from core.logging import get_logger
@@ -20,17 +21,22 @@ router = APIRouter()
 
 
 @router.post("/scan", response_model=MealScanResponse, summary="AI Vision meal analysis")
+@limiter.limit("10/minute")
 async def scan_meal(
-    request: MealScanRequest,
+    request: Request,
+    body: MealScanRequest,
     user_id: str = Depends(get_current_user),
 ):
     """
     Analyze a meal photo with GPT-4o Vision.
     Returns detected foods + nutritional estimate. Does NOT auto-save —
     frontend confirms with the user and calls POST /meals separately.
+
+    Rate limit: 10/minute per user. Free-tier daily quota is enforced
+    elsewhere; this cap is defense-in-depth against burst abuse.
     """
-    logger.info(f"User {user_id} scanning meal (hint={request.meal_type_hint})")
-    return await analyze_meal_image(request.image_base64, request.meal_type_hint)
+    logger.info(f"User {user_id} scanning meal (hint={body.meal_type_hint})")
+    return await analyze_meal_image(body.image_base64, body.meal_type_hint)
 
 
 @router.post("", response_model=MealResponse, status_code=status.HTTP_201_CREATED,
