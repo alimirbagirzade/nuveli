@@ -381,11 +381,18 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
             ],
           ),
           const SizedBox(height: 8),
+          // Apple 3.1.2(a) + Play Console subscription policy: spell out
+          // auto-renewal + the cancel window + where to manage. A bare
+          // "cancel anytime" is the classic reject trigger because it
+          // doesn't tell the user WHERE or by WHEN.
           const Text(
-            'Cancel anytime in your account settings.',
+            'Subscriptions auto-renew at the end of each period unless '
+            'canceled at least 24 hours before. Manage in your Apple ID / '
+            'Google Play account settings.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 11,
+              height: 1.4,
               color: Color(0xFF6E7B91),
             ),
           ),
