@@ -6,5 +6,22 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<!--
+	    Universal Links — iOS counterpart to Android App Links (#103).
+	    Declared here so the moment Apple Developer enrollment lands
+	    and apple-app-site-association ships at nuveli.com.tr/.well-known/,
+	    no iOS code change is needed — iOS will fetch the file via
+	    Apple's CDN and verify the domain ↔ app association on install.
+
+	    Harmless until then: with no enrolled Team ID, iOS attempts
+	    verification, sees no matching file, and silently treats the
+	    https:// links as regular web URLs. The app still builds and
+	    runs. Custom-scheme nuveli:// links continue to work normally.
+	-->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:nuveli.com.tr</string>
+		<string>applinks:www.nuveli.com.tr</string>
+	</array>
 </dict>
 </plist>
