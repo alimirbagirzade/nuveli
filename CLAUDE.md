@@ -87,7 +87,7 @@ backend/
 ```
 app/test/                 # 372 Dart test (host-side)
 app/integration_test/     #   5 device-level tests (real Keychain)
-backend/tests/            # 129 Python test (94 active + 8 skipped + new)
+backend/tests/            # 136 Python test (active) + 8 skipped
 ```
 
 Suite koşumu:

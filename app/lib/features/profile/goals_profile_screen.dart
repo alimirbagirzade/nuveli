@@ -252,9 +252,19 @@ class _InlineError extends StatelessWidget {
     // GoalsRow card (~150px wide) — the icon + text + button trio
     // simply doesn't fit in half-screen, so the text got squeezed into
     // a 1-char-wide column rendered vertically letter-by-letter.
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final compact = constraints.maxWidth < 220;
+    //
+    // We used to ask LayoutBuilder for the slot's actual width, but
+    // GoalsRow wraps its children in IntrinsicHeight, which asks each
+    // descendant for its intrinsic dimensions — and Flutter explicitly
+    // forbids LayoutBuilder there:
+    //   "LayoutBuilder does not support returning intrinsic dimensions."
+    // Result: a crash report on every render of this widget inside
+    // GoalsRow. We approximate the slot width from MediaQuery instead
+    // (each card gets ~half the screen minus padding).
+    final screenW = MediaQuery.of(context).size.width;
+    final compact = screenW < 440;
+    return Builder(
+      builder: (context) {
         return Container(
           margin: EdgeInsets.symmetric(
             horizontal: compact ? AppSpacing.s8 : AppSpacing.s24,
