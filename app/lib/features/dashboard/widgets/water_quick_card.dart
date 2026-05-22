@@ -25,13 +25,37 @@ class WaterQuickCard extends StatefulWidget {
 class _WaterQuickCardState extends State<WaterQuickCard> {
   bool _isAdding = false;
 
+  /// Optimistic delta — how many ml we've added since the parent widget's
+  /// `consumedMl` was last seen. Lets the tile jump immediately on tap
+  /// instead of waiting for the dashboard provider to re-fetch (which
+  /// on Render free tier can take 1-3 seconds — perceived as broken).
+  /// Reset to 0 when the parent's `consumedMl` changes (= refetch
+  /// landed and now includes our delta).
+  int _pendingMl = 0;
+
+  @override
+  void didUpdateWidget(WaterQuickCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Refetch landed. Canonical totals now include whatever we
+    // optimistically added — clear the local delta.
+    if (oldWidget.consumedMl != widget.consumedMl) {
+      _pendingMl = 0;
+    }
+  }
+
   Future<void> _handleAdd() async {
     if (_isAdding) return;
-    setState(() => _isAdding = true);
+    setState(() {
+      _isAdding = true;
+      _pendingMl += 250;  // Optimistic — tile jumps right now.
+    });
     try {
       await widget.onAddWater(250);
     } catch (e) {
+      // Rollback the optimistic update so the user doesn't see a phantom
+      // glass that isn't actually saved.
       if (mounted) {
+        setState(() => _pendingMl -= 250);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Could not log water. Tap to retry.')),
         );
@@ -43,10 +67,11 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
 
   @override
   Widget build(BuildContext context) {
-    final glasses = (widget.consumedMl / 250).floor();
+    final effectiveMl = widget.consumedMl + _pendingMl;
+    final glasses = (effectiveMl / 250).floor();
     final glassesTarget = (widget.targetMl / 250).ceil().clamp(1, 99);
     final progress = widget.targetMl > 0
-        ? (widget.consumedMl / widget.targetMl).clamp(0.0, 1.0)
+        ? (effectiveMl / widget.targetMl).clamp(0.0, 1.0)
         : 0.0;
 
     return Container(
