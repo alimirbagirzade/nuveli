@@ -42,11 +42,15 @@ class RejectedDeepLink extends DeepLinkResult {
 }
 
 class DeepLinkValidator {
-  /// The only scheme we accept for incoming URIs. Anything else
-  /// (http, https, custom evil schemes) is rejected outright until
-  /// we publish a Universal Link / App Link config (apple-app-site-
-  /// association + assetlinks.json on nuveli.com.tr).
+  /// The custom URL scheme we accept (e.g. `nuveli://dashboard`).
   final String allowedScheme;
+
+  /// Apex domain trusted for `https://` App Links / Universal Links.
+  /// `null` disables https entirely. When set, both the apex and
+  /// `www.` subdomain are accepted. Any other host (including
+  /// look-alike subdomains like `nuveli.com.tr.attacker.com`) is
+  /// rejected.
+  final String? trustedHttpsHost;
 
   /// Exact route prefixes allowed. Paths that equal one of these or
   /// extend with `/segment` pass; anything else is rejected.
@@ -54,6 +58,7 @@ class DeepLinkValidator {
 
   const DeepLinkValidator({
     this.allowedScheme = 'nuveli',
+    this.trustedHttpsHost = 'nuveli.com.tr',
     this.allowedRoutes = defaultAllowedRoutes,
   });
 
@@ -73,8 +78,13 @@ class DeepLinkValidator {
 
   /// Validate a URI handed to us by the OS (via app_links).
   DeepLinkResult validateExternalUri(Uri uri) {
-    if (uri.scheme != allowedScheme) {
-      return RejectedDeepLink('disallowed scheme: ${uri.scheme}');
+    final isCustomScheme = uri.scheme == allowedScheme;
+    final isTrustedHttps = uri.scheme == 'https' && _isTrustedHost(uri.host);
+
+    if (!isCustomScheme && !isTrustedHttps) {
+      return RejectedDeepLink(
+        'disallowed scheme/host: ${uri.scheme}://${uri.host}',
+      );
     }
     // Traversal can be hidden in several places:
     //   - `pathSegments` preserves '..' even when toString() normalizes
@@ -85,8 +95,14 @@ class DeepLinkValidator {
         _containsTraversal(uri.toString())) {
       return RejectedDeepLink('path traversal: $uri');
     }
-    final path = _normalizePath(uri);
+    final path = _normalizePath(uri, isHttps: isTrustedHttps);
     return _validatePath(path, uri.queryParameters);
+  }
+
+  bool _isTrustedHost(String host) {
+    final trusted = trustedHttpsHost;
+    if (trusted == null) return false;
+    return host == trusted || host == 'www.$trusted';
   }
 
   /// Validate a route string emitted by our own subsystems
@@ -130,9 +146,15 @@ class DeepLinkValidator {
   // --- helpers ---
 
   /// For `nuveli://dashboard/water` Dart's Uri parser puts "dashboard"
-  /// in `host` and "/water" in `path`. We want a unified leading-slash
-  /// path the way go_router expects, so we re-glue.
-  String _normalizePath(Uri uri) {
+  /// in `host` and "/water" in `path` — we re-glue so the in-app
+  /// route is `/dashboard/water`.
+  ///
+  /// For `https://nuveli.com.tr/dashboard/water` the host is a domain,
+  /// NOT a route segment — we use the path verbatim.
+  String _normalizePath(Uri uri, {required bool isHttps}) {
+    if (isHttps) {
+      return uri.path.isEmpty ? '/' : uri.path;
+    }
     final host = uri.host;
     final path = uri.path;
     if (host.isEmpty) {

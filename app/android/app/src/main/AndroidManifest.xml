@@ -46,24 +46,33 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <!-- Deep link: nuveli:// scheme.
-                 autoVerify stays false because this is a custom scheme,
-                 not an https:// App Link — autoVerify only does anything
-                 for android:scheme="https" + a published assetlinks.json.
-                 To upgrade to verified App Links later:
-                   1. Add a second intent-filter with android:scheme="https"
-                      and android:host="nuveli.com.tr".
-                   2. Publish /.well-known/assetlinks.json at that host with
-                      this app's package name + signing cert fingerprint.
-                   3. Set android:autoVerify="true" on that filter.
-                 Every incoming URI MUST still flow through
-                 DeepLinkValidator (lib/core/routing/) before reaching
-                 the router. -->
+            <!-- Custom scheme deep links: nuveli://route. autoVerify is
+                 a no-op for non-https schemes, kept here for documentation.
+                 Every incoming URI MUST still flow through DeepLinkValidator
+                 (lib/core/routing/) before reaching the router. -->
             <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="nuveli" />
+            </intent-filter>
+
+            <!-- Verified Android App Links: https://nuveli.com.tr/*.
+                 autoVerify="true" tells Android to fetch
+                 https://nuveli.com.tr/.well-known/assetlinks.json on install
+                 and confirm the SHA-256 fingerprint of the running APK
+                 matches the one published there. When verification passes,
+                 https://nuveli.com.tr/... links open the app directly —
+                 no chooser dialog, no browser fallback.
+                 Both www and apex hosts are listed so links from either
+                 are intercepted. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="nuveli.com.tr" />
+                <data android:host="www.nuveli.com.tr" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
