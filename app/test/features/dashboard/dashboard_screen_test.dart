@@ -23,6 +23,8 @@ import 'package:nuveli/features/dashboard/models/meal.dart';
 import 'package:nuveli/features/dashboard/providers/dashboard_provider.dart';
 import 'package:nuveli/features/dashboard/widgets/add_food_button.dart';
 import 'package:nuveli/features/dashboard/widgets/macros_row.dart';
+import 'package:nuveli/features/habits/models/habit.dart';
+import 'package:nuveli/features/habits/providers/habits_providers.dart';
 import 'package:nuveli/features/profile/models/weekly_analytics.dart';
 import 'package:nuveli/features/profile/providers/profile_provider.dart';
 import 'package:nuveli/shared/widgets/app_error_view.dart';
@@ -74,6 +76,10 @@ Future<void> _pump(
             _ => Completer<List<Meal>>().future,
           },
         ),
+        // HabitsTodaySection makes a real /habits call in production
+        // — stub to empty so the dashboard test doesn't try to hit
+        // the network.
+        habitsProvider.overrideWith((ref) async => const <Habit>[]),
       ],
       child: const MaterialApp(home: DashboardScreen()),
     ),
