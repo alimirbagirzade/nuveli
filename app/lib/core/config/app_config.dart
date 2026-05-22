@@ -40,9 +40,14 @@ class AppConfig {
   // Backend API
   // ─────────────────────────────────────────────────────────────
 
+  // Default points at the real production backend so a bare
+  // `flutter run` (no --dart-define-from-file) still produces a
+  // working app talking to the deployed API. Override with
+  // --dart-define-from-file=.env.development when iterating against
+  // a local FastAPI instance.
   static const apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:8000',
+    defaultValue: 'https://nuveli-api.onrender.com',
   );
 
   // ─────────────────────────────────────────────────────────────
@@ -100,7 +105,6 @@ class AppConfig {
     if (!isProduction) return true;
     return supabaseUrl != 'https://your-project.supabase.co' &&
         supabaseAnonKey != 'your-anon-key' &&
-        apiBaseUrl != 'http://localhost:8000' &&
         revenueCatAppleKey.isNotEmpty &&
         revenueCatGoogleKey.isNotEmpty;
   }
@@ -113,9 +117,6 @@ class AppConfig {
     }
     if (supabaseAnonKey == 'your-anon-key') {
       missing.add('SUPABASE_ANON_KEY');
-    }
-    if (apiBaseUrl == 'http://localhost:8000' && isProduction) {
-      missing.add('API_BASE_URL');
     }
     if (revenueCatAppleKey.isEmpty && isProduction) {
       missing.add('RC_APPLE_KEY');

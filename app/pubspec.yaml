@@ -68,7 +68,6 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   google_sign_in: ^6.2.1
   crypto: ^3.0.3
-  flutter_dotenv: ^5.1.0
   flutter_timezone: ^5.0.2
   permission_handler: ^12.0.1
 
@@ -117,11 +116,9 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - .env
-
-
-
-
+    # .env is no longer an asset — secrets now flow through
+    # --dart-define-from-file=.env.<env> at build time. See
+    # lib/core/config/app_config.dart.
     - assets/icons/
   # Note: Inter fonts and other asset folders removed temporarily.
   # When ready, add Inter-*.ttf files to assets/fonts/ and uncomment below.

@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:nuveli/core/auth/secure_session_storage.dart';
+import 'package:nuveli/core/config/app_config.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/theme/app_theme.dart';
@@ -18,16 +19,24 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Chat 24: Wire global error handlers BEFORE any other init so that
-  // an exception inside dotenv / Supabase init still gets reported.
-  // In debug builds CrashReporter just logs to console; in release
-  // builds it forwards to Firebase Crashlytics.
+  // an exception inside Supabase init still gets reported. In debug
+  // builds CrashReporter just logs to console; in release builds it
+  // forwards to Firebase Crashlytics.
   CrashReporter.installGlobalHandlers();
 
-  await dotenv.load(fileName: '.env');
+  // Fail fast if a release build ships with placeholder credentials —
+  // better to crash on launch than ship a broken-but-running app.
+  if (kReleaseMode && !AppConfig.isProductionConfigValid) {
+    throw StateError(
+      'Production config missing values: ${AppConfig.missingConfigKeys}. '
+      'Rebuild with --dart-define-from-file=.env.production',
+    );
+  }
+
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-    debug: dotenv.env['APP_ENV'] != 'production',
+    url: AppConfig.supabaseUrl,
+    anonKey: AppConfig.supabaseAnonKey,
+    debug: !AppConfig.isProduction,
     // JWT and PKCE code verifier are held in Keychain (iOS) /
     // EncryptedSharedPreferences (Android) instead of plaintext
     // SharedPreferences. SecureSessionStorage.initialize() also
