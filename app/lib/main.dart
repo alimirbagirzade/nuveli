@@ -10,6 +10,8 @@ import 'package:nuveli/core/auth/secure_session_storage.dart';
 import 'package:nuveli/core/config/app_config.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
+import 'package:nuveli/core/routing/deep_link_listener.dart';
+import 'package:nuveli/core/routing/deep_link_validator.dart';
 import 'package:nuveli/core/theme/app_theme.dart';
 import 'package:nuveli/features/auth/screens/auth_gate.dart';
 import 'package:nuveli/features/notifications/providers/notifications_provider.dart';
@@ -75,6 +77,18 @@ Future<void> main() async {
   // notification settings provider can read persisted toggles synchronously.
   final prefs = await SharedPreferences.getInstance();
 
+  // Start the deep-link listener. Every nuveli:// or https://nuveli.com.tr
+  // URI the OS hands us flows through DeepLinkValidator first; rejections
+  // are logged to Crashlytics, allowed ones currently log a breadcrumb
+  // and become wired to the router once Chat 17 routing lands.
+  // Fire-and-forget — start() is fully async-safe and we don't block
+  // first frame on it.
+  unawaited(
+    _deepLinkListener.start().catchError((Object e, StackTrace st) {
+      debugPrint('DeepLinkListener start failed: $e\n$st');
+    }),
+  );
+
   runApp(
     ProviderScope(
       overrides: [
@@ -84,6 +98,11 @@ Future<void> main() async {
     ),
   );
 }
+
+// Top-level so the NuveliApp dispose hook can cancel it on hot-restart.
+final _deepLinkListener = DeepLinkListener(
+  validator: const DeepLinkValidator(),
+);
 
 class NuveliApp extends ConsumerStatefulWidget {
   const NuveliApp({super.key});
