@@ -9,6 +9,7 @@ import 'providers/dashboard_provider.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
 import 'widgets/macros_row.dart';
+import 'widgets/meal_entry_sheet.dart';
 import 'widgets/meals_section.dart';
 import 'widgets/todays_summary_section.dart';
 import 'widgets/water_quick_card.dart';
@@ -88,16 +89,14 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              // Sticky CTA above the shell's bottom nav. The button is
-              // still a "coming soon" toast in this PR — the meal entry
-              // sheet that actually POSTs /meals lands in the next PR.
+              // Sticky CTA above the shell's bottom nav. Opens the
+              // manual meal entry sheet (POSTs /meals via the
+              // foods[] list shape the backend expects). Camera-based
+              // AI scan still lives on the Scan tab and ships separately.
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: AddFoodButton(
-                  onPressed: () => _showComingSoon(
-                    context,
-                    'Manual meal entry ships next — camera scan in v1.1.',
-                  ),
+                  onPressed: () => MealEntrySheet.show(context),
                 ),
               ),
             ],
