@@ -190,13 +190,34 @@ async def generate_daily_insight(user_id: str, target_date: date | None = None) 
     payload["nutrition_score"] = score_breakdown["total"]
     payload["score_breakdown"] = score_breakdown
 
-    # 5. Persist
+    # 5. Persist — map LLM JSON keys → live DB structured columns.
+    #
+    # ai_insights schema (per information_schema):
+    #   nutrition_score, score_label, score_breakdown (jsonb),
+    #   main_insight (jsonb), small_insights (jsonb), recommendation (jsonb),
+    #   daily_recap (jsonb), ai_model, tokens_used, generated_at
+    #
+    # LLM payload (per prompts/coach_prompts.py COACH_INSIGHT_SYSTEM_PROMPT):
+    #   nutrition_score, today_insight, tips (list), recommended_action
+    #
+    # The names don't match — earlier code wrote a single "payload"
+    # column that doesn't exist, so the upsert silently failed and no
+    # insight was ever persisted. Now we map explicitly. score_label and
+    # daily_recap stay NULL until the prompt/contract is extended to
+    # produce them.
     supabase = get_supabase()
+    today_insight = payload.get("today_insight")
     record = {
         "user_id": user_id,
         "insight_date": target_date.isoformat(),
-        "payload": payload,
-        "model_used": settings.openai_model_chat,
+        "nutrition_score": payload["nutrition_score"],
+        "score_breakdown": payload.get("score_breakdown"),
+        # main_insight is jsonb on DB so we wrap the string under a known key
+        "main_insight": {"text": today_insight} if today_insight else None,
+        "small_insights": payload.get("tips"),
+        "recommendation": payload.get("recommended_action"),
+        "ai_model": settings.openai_model_chat,
+        "tokens_used": getattr(resp.usage, "total_tokens", None) if hasattr(resp, "usage") else None,
     }
     # Upsert: one insight per user per day
     supabase.table("ai_insights").upsert(
