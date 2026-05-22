@@ -42,12 +42,28 @@ void main() {
   });
 
   group('validateExternalUri — rejections', () {
-    test('rejects http scheme (no Universal Links configured yet)', () {
+    test('rejects https on a foreign host', () {
       final r = validator.validateExternalUri(
         Uri.parse('https://attacker.com/dashboard'),
       );
       expect(r, isA<RejectedDeepLink>());
-      expect(r.rejectedReason, contains('disallowed scheme'));
+      expect(r.rejectedReason, contains('disallowed'));
+    });
+
+    test('rejects look-alike subdomain attacks', () {
+      // nuveli.com.tr.attacker.com → host is the attacker domain, not ours.
+      final r = validator.validateExternalUri(
+        Uri.parse('https://nuveli.com.tr.attacker.com/dashboard'),
+      );
+      expect(r, isA<RejectedDeepLink>());
+    });
+
+    test('rejects http (only https on the trusted host is accepted)', () {
+      // Plain http to our domain is rejected — App Links require https.
+      final r = validator.validateExternalUri(
+        Uri.parse('http://nuveli.com.tr/dashboard'),
+      );
+      expect(r, isA<RejectedDeepLink>());
     });
 
     test('rejects an arbitrary custom scheme', () {
@@ -83,6 +99,65 @@ void main() {
         Uri.parse('nuveli://dashboards'),
       );
       expect(r, isA<RejectedDeepLink>());
+    });
+  });
+
+  group('validateExternalUri — App Links (https://nuveli.com.tr)', () {
+    test('accepts apex host', () {
+      final r = validator.validateExternalUri(
+        Uri.parse('https://nuveli.com.tr/dashboard'),
+      );
+      expect(r, isA<AllowedDeepLink>());
+      expect((r as AllowedDeepLink).path, equals('/dashboard'));
+    });
+
+    test('accepts www host', () {
+      final r = validator.validateExternalUri(
+        Uri.parse('https://www.nuveli.com.tr/meal/capture'),
+      );
+      expect(r, isA<AllowedDeepLink>());
+      expect((r as AllowedDeepLink).path, equals('/meal/capture'));
+    });
+
+    test('host is NOT prepended to path (key difference from custom scheme)',
+        () {
+      // For nuveli://meal/x the host "meal" IS the first route segment.
+      // For https://nuveli.com.tr/meal/x the host is the domain — the
+      // route is just /meal/x. _normalizePath must branch on this.
+      final r = validator.validateExternalUri(
+        Uri.parse('https://nuveli.com.tr/meal/x'),
+      );
+      expect(r, isA<AllowedDeepLink>());
+      expect((r as AllowedDeepLink).path, equals('/meal/x'));
+    });
+
+    test('captures query params as extras over https', () {
+      final r = validator.validateExternalUri(
+        Uri.parse('https://nuveli.com.tr/meal?meal_id=abc'),
+      );
+      expect(r, isA<AllowedDeepLink>());
+      expect((r as AllowedDeepLink).extras['meal_id'], equals('abc'));
+    });
+
+    test('rejects allowlist-miss over https same as over custom scheme', () {
+      final r = validator.validateExternalUri(
+        Uri.parse('https://nuveli.com.tr/admin'),
+      );
+      expect(r, isA<RejectedDeepLink>());
+      expect(r.rejectedReason, contains('allowlist'));
+    });
+
+    test('disables https entirely when trustedHttpsHost is null', () {
+      const v = DeepLinkValidator(trustedHttpsHost: null);
+      expect(
+        v.validateExternalUri(Uri.parse('https://nuveli.com.tr/dashboard')),
+        isA<RejectedDeepLink>(),
+      );
+      // Custom scheme still works:
+      expect(
+        v.validateExternalUri(Uri.parse('nuveli://dashboard')),
+        isA<AllowedDeepLink>(),
+      );
     });
   });
 
