@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:nuveli/core/auth/secure_session_storage.dart';
 import 'package:nuveli/core/config/app_config.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
+import 'package:nuveli/core/notifications/notification_route_router.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/routing/deep_link_listener.dart';
 import 'package:nuveli/core/routing/deep_link_validator.dart';
@@ -155,23 +156,24 @@ class _NuveliAppState extends ConsumerState<NuveliApp> {
   void _wireNotificationHandlers() {
     final service = ref.read(notificationServiceProvider);
 
-    // Foreground/background notification tap → currently just logs.
-    // When Chat 17 (routing) is merged, replace debugPrint with the actual
-    // router.go(payload.route, extra: payload.extras) call.
-    service.setOnTap((payload) {
-      debugPrint(
-        'Notification tapped → ${payload.route} (extras: ${payload.extras})',
-      );
-    });
+    // Every notification-driven navigation flows through the same
+    // validator as deep links. onAllowed stays null until Chat 17
+    // routing lands — for now the router just logs allowed/rejected
+    // breadcrumbs to Crashlytics so we can see in production what
+    // routes notifications are actually firing.
+    final notificationRouter = NotificationRouteRouter(
+      validator: const DeepLinkValidator(),
+      logger: CrashReporter.log,
+    );
 
-    // Cold start: was the app launched by a notification tap? If so,
-    // capture the payload and route to it. Same router caveat as above.
+    service.setOnTap(
+      (payload) => notificationRouter.handle(payload, source: 'tap'),
+    );
+
+    // Cold start: was the app launched by a notification tap?
     final launch = service.consumeLaunchPayload();
     if (launch != null) {
-      debugPrint(
-        'Cold start from notification → ${launch.route} '
-        '(extras: ${launch.extras})',
-      );
+      notificationRouter.handle(launch, source: 'cold-start');
     }
   }
 
