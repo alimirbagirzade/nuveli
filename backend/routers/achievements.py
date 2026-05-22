@@ -14,12 +14,11 @@ router = APIRouter()
 
 
 @router.get("", response_model=list[AchievementResponse])
-async def get_achievements(user: dict = Depends(get_current_user)):
+async def get_achievements(user_id: str = Depends(get_current_user)):
     """
     List all achievements with unlock status for the current user.
     Returns both locked and unlocked achievements with progress info.
     """
-    user_id = user["sub"]
     try:
         rows = await list_user_achievements(user_id)
         return [AchievementResponse(**row) for row in rows]
@@ -32,13 +31,12 @@ async def get_achievements(user: dict = Depends(get_current_user)):
 
 
 @router.post("/check", response_model=AchievementCheckResponse)
-async def check_achievements(user: dict = Depends(get_current_user)):
+async def check_achievements(user_id: str = Depends(get_current_user)):
     """
     Check for newly unlocked achievements based on current user progress.
     Persists newly unlocked rows to user_achievements table.
     Returns list of newly unlocked achievements (empty if none).
     """
-    user_id = user["sub"]
     try:
         newly_unlocked = await check_and_unlock(user_id)
         all_achievements = await list_user_achievements(user_id)
