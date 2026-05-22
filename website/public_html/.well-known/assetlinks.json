@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.nuveli.app",
       "sha256_cert_fingerprints": [
-        "43:BB:DD:C8:6F:C8:58:80:14:89:F3:38:9C:E5:2B:F8:90:0E:E8:3F:8C:EA:96:F8:4B:30:4F:86:09:92:0E:8B"
+        "43:BB:DD:C8:6F:C8:58:80:14:89:F3:38:9C:E5:2B:F8:90:0E:E8:3F:8C:EA:96:F8:4B:30:4F:86:09:92:0E:8B",
+        "71:B8:7B:16:04:5A:64:B4:BC:C6:9A:35:78:72:9A:B6:0C:CA:1B:F6:6C:F1:EE:D4:B4:A3:60:79:8A:18:89:ED"
       ]
     }
   }
