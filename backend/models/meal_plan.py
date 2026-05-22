@@ -118,10 +118,14 @@ class GeneratePlanRequest(BaseModel):
     week_start: date
     days: int = Field(7, ge=1, le=14)
     meals_per_day: int = Field(4, ge=2, le=6)
-    target_calories: Optional[int] = None
-    dietary_preference: Optional[str] = None
-    avoid_ingredients: Optional[list[str]] = None
-    note: Optional[str] = None
+    target_calories: Optional[int] = Field(None, ge=800, le=6000)
+    # Free-form fields flow into the OpenAI prompt. Caps below limit
+    # token-cost abuse and the surface area for prompt-injection payloads.
+    # Runtime sanitization (control-char strip, delimiter wrap) happens
+    # in the router before the prompt is built.
+    dietary_preference: Optional[str] = Field(None, max_length=200)
+    avoid_ingredients: Optional[list[str]] = Field(None, max_length=30)
+    note: Optional[str] = Field(None, max_length=500)
 
 
 class GeneratePlanResponse(BaseModel):
