@@ -10,6 +10,7 @@ import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
 import 'widgets/macros_row.dart';
 import 'widgets/meal_entry_sheet.dart';
+import 'widgets/water_weekly_chart.dart';
 import 'widgets/meals_section.dart';
 import 'widgets/todays_summary_section.dart';
 import 'widgets/water_quick_card.dart';
@@ -71,6 +72,15 @@ class DashboardScreen extends ConsumerWidget {
                                 await ref.read(logWaterProvider)(amount);
                               },
                             ),
+                            // 7-day water bar chart. Hidden on failure
+                            // so a slow /water/weekly call doesn't
+                            // block the rest of the dashboard.
+                            ref.watch(waterWeeklyProvider).when(
+                                  loading: () => const SizedBox.shrink(),
+                                  error: (_, __) => const SizedBox.shrink(),
+                                  data: (weekly) =>
+                                      WaterWeeklyChart(weekly: weekly),
+                                ),
                           ],
                         ),
                       ),

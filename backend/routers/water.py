@@ -11,6 +11,7 @@ from core.exceptions import NotFound, ValidationError
 from core.logging import get_logger
 from models.water import (
     WaterLogCreate, WaterLogResponse, WaterTodaySummary,
+    WaterDayTotal, WaterWeeklyResponse,
     WaterReminderCreate, WaterReminderUpdate, WaterReminderResponse,
     WaterInsight,
 )
@@ -136,6 +137,71 @@ async def water_today_summary(user_id: str = Depends(get_current_user)):
         remaining_ml=max(0, target - consumed),
         logs_count=len(rows),
     )
+
+
+# --- Weekly aggregate ---
+
+@router.get("/weekly", response_model=WaterWeeklyResponse,
+            summary="Last 7 days of water totals, per local-day")
+async def water_weekly(user_id: str = Depends(get_current_user)):
+    """
+    Aggregates water_logs into per-day totals for the last 7 calendar
+    days (inclusive of today). Used by the Dashboard's daily-water
+    bar chart so a small phone-side fetch covers the whole week
+    without making 7 separate /water/logs calls.
+
+    Always returns exactly 7 day buckets — missing days come back as
+    `total_ml=0` so the chart stays a clean weekday strip.
+    """
+    supabase = get_supabase()
+    end = date.today()
+    start = end - timedelta(days=6)
+
+    res = (
+        supabase.table("water_logs")
+        .select("amount_ml, logged_at")
+        .eq("user_id", user_id)
+        .gte("logged_at", f"{start.isoformat()}T00:00:00")
+        .lte("logged_at", f"{end.isoformat()}T23:59:59")
+        .execute()
+    )
+
+    by_day: dict[date, int] = {}
+    for row in res.data or []:
+        d_str = (row.get("logged_at") or "")[:10]
+        try:
+            d = date.fromisoformat(d_str)
+        except ValueError:
+            continue
+        by_day[d] = by_day.get(d, 0) + (row.get("amount_ml") or 0)
+
+    # User's daily target (falls back to 2500 ml if profile row missing)
+    target_ml = 2500
+    try:
+        prof = (
+            supabase.table("user_profiles")
+            .select("daily_water_target_ml")
+            .eq("user_id", user_id)
+            .maybe_single()
+            .execute()
+        )
+        if prof.data and prof.data.get("daily_water_target_ml"):
+            target_ml = int(prof.data["daily_water_target_ml"])
+    except Exception as e:
+        logger.warning(f"water_weekly target lookup failed for {user_id}: {e}")
+
+    days = []
+    for i in range(7):
+        d = start + timedelta(days=i)
+        days.append(
+            WaterDayTotal(
+                day=d,
+                total_ml=by_day.get(d, 0),
+                target_ml=target_ml,
+            )
+        )
+
+    return WaterWeeklyResponse(days=days, target_ml=target_ml)
 
 
 # --- Reminders ---

@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/network/api_client.dart';
+import '../../../core/network/api_endpoints.dart';
 import '../../profile/providers/profile_provider.dart';
 import '../models/meal.dart';
+import '../models/water_weekly.dart';
 
 /// Dashboard screen — supporting providers that complement the
 /// already-existing `dashboardSummaryProvider` (defined in
@@ -57,6 +59,21 @@ final todayMealsProvider = FutureProvider<List<Meal>>((ref) async {
 });
 
 // ---------------------------------------------------------------
+// Weekly water totals (Dashboard mini-chart)
+// ---------------------------------------------------------------
+
+/// `GET /water/weekly` → 7 day buckets for the daily-water bar chart
+/// on the dashboard. Invalidated alongside the summary on a water-add
+/// so the chart's "today" bar grows with the optimistic tile update.
+final waterWeeklyProvider = FutureProvider<WaterWeekly>((ref) async {
+  final dio = ref.read(apiClientProvider).raw;
+  final response = await dio.get<Map<String, dynamic>>(
+    ApiEndpoints.waterWeekly,
+  );
+  return WaterWeekly.fromJson(response.data ?? const {});
+});
+
+// ---------------------------------------------------------------
 // Log water (quick-add)
 // ---------------------------------------------------------------
 
@@ -82,8 +99,9 @@ final logWaterProvider = Provider<LogWaterFn>((ref) {
       // Let the screen catch & show a snackbar; do NOT swallow.
       rethrow;
     }
-    // Refresh dependent providers so the ring updates.
+    // Refresh dependent providers so the ring + weekly chart update.
     ref.invalidate(dashboardSummaryProvider);
+    ref.invalidate(waterWeeklyProvider);
   };
 });
 
@@ -96,9 +114,11 @@ final logWaterProvider = Provider<LogWaterFn>((ref) {
 Future<void> refreshDashboard(WidgetRef ref) async {
   ref.invalidate(dashboardSummaryProvider);
   ref.invalidate(todayMealsProvider);
+  ref.invalidate(waterWeeklyProvider);
 
   await Future.wait<dynamic>([
     ref.read(dashboardSummaryProvider.future),
     ref.read(todayMealsProvider.future),
+    ref.read(waterWeeklyProvider.future),
   ]);
 }
