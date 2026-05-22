@@ -11,9 +11,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/config/app_config.dart';
 import '../models/onboarding_data.dart';
 
 // ============================================================================
@@ -135,10 +135,8 @@ class ProfileService {
         _supabase = client ?? Supabase.instance.client;
 
   static Dio _buildDio() {
-    final baseUrl = dotenv.env['API_BASE_URL'] ??
-        'https://nuveli-api.onrender.com';
     final dio = Dio(BaseOptions(
-      baseUrl: baseUrl,
+      baseUrl: AppConfig.apiBaseUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 30),
       headers: {'Content-Type': 'application/json'},

@@ -14,8 +14,9 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+
+import '../../../core/config/app_config.dart';
 
 class RevenueCatService {
   // Singleton
@@ -35,24 +36,27 @@ class RevenueCatService {
   bool _initialized = false;
   bool get isInitialized => _initialized;
 
-  /// .env'den API key getir.
-  /// iOS → RC_APPLE_KEY, Android → RC_GOOGLE_KEY
+  /// Compile-time API key from AppConfig.
+  /// iOS → RC_APPLE_KEY, Android → RC_GOOGLE_KEY (injected via
+  /// --dart-define-from-file=.env.<env> at build time).
   String get _apiKey {
     if (Platform.isIOS || Platform.isMacOS) {
-      final k = dotenv.env['RC_APPLE_KEY'];
-      if (k == null || k.isEmpty) {
+      const k = AppConfig.revenueCatAppleKey;
+      if (k.isEmpty) {
         throw StateError(
-          'RC_APPLE_KEY not found in .env. '
-          'See nuveli_credentials_guide.md §5.1',
+          'RC_APPLE_KEY not set. Rebuild with '
+          '--dart-define-from-file=.env.production '
+          '(see nuveli_credentials_guide.md §5.1)',
         );
       }
       return k;
     } else if (Platform.isAndroid) {
-      final k = dotenv.env['RC_GOOGLE_KEY'];
-      if (k == null || k.isEmpty) {
+      const k = AppConfig.revenueCatGoogleKey;
+      if (k.isEmpty) {
         throw StateError(
-          'RC_GOOGLE_KEY not found in .env. '
-          'See nuveli_credentials_guide.md §5.2',
+          'RC_GOOGLE_KEY not set. Rebuild with '
+          '--dart-define-from-file=.env.production '
+          '(see nuveli_credentials_guide.md §5.2)',
         );
       }
       return k;
