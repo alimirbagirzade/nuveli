@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'package:nuveli/core/auth/secure_session_storage.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/theme/app_theme.dart';
@@ -27,6 +28,17 @@ Future<void> main() async {
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
     debug: dotenv.env['APP_ENV'] != 'production',
+    // JWT and PKCE code verifier are held in Keychain (iOS) /
+    // EncryptedSharedPreferences (Android) instead of plaintext
+    // SharedPreferences. SecureSessionStorage.initialize() also
+    // migrates any pre-existing plaintext session into secure storage,
+    // so users upgrading from a prior build stay signed in.
+    authOptions: FlutterAuthClientOptions(
+      localStorage: SecureSessionStorage(
+        persistSessionKey: supabasePersistSessionKey,
+      ),
+      pkceAsyncStorage: SecureGotrueAsyncStorage(),
+    ),
   );
 
   // Chat 18: Local notifications. Wrapped in try/catch so a notification
