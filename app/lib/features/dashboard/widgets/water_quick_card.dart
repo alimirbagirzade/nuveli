@@ -33,6 +33,10 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
   /// landed and now includes our delta).
   int _pendingMl = 0;
 
+  /// Preset portions in ml. Covers small-sip → sport-bottle. Selecting
+  /// "Custom" opens a numeric input so power-users can log any volume.
+  static const List<int> _presetMl = [100, 200, 250, 330, 500, 750];
+
   @override
   void didUpdateWidget(WaterQuickCard oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -43,25 +47,39 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
     }
   }
 
-  Future<void> _handleAdd() async {
+  Future<void> _addAmount(int amountMl) async {
     if (_isAdding) return;
     setState(() {
       _isAdding = true;
-      _pendingMl += 250;  // Optimistic — tile jumps right now.
+      _pendingMl += amountMl; // Optimistic — tile jumps right now.
     });
     try {
-      await widget.onAddWater(250);
+      await widget.onAddWater(amountMl);
     } catch (e) {
       // Rollback the optimistic update so the user doesn't see a phantom
       // glass that isn't actually saved.
       if (mounted) {
-        setState(() => _pendingMl -= 250);
+        setState(() => _pendingMl -= amountMl);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Could not log water. Tap to retry.')),
         );
       }
     } finally {
       if (mounted) setState(() => _isAdding = false);
+    }
+  }
+
+  Future<void> _showPortionPicker() async {
+    final picked = await showModalBottomSheet<int>(
+      context: context,
+      backgroundColor: const Color(0xFF142346),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetCtx) => const _WaterPortionSheet(presets: _presetMl),
+    );
+    if (picked != null && picked > 0) {
+      await _addAmount(picked);
     }
   }
 
@@ -161,17 +179,194 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
             ),
           ),
           const SizedBox(width: 12),
-          _AddButton(isLoading: _isAdding, onTap: _handleAdd),
+          // Two buttons stacked horizontally: the big "+250" quick-add
+          // for the common case (a glass), and a smaller chevron that
+          // opens the portion picker for other volumes.
+          _QuickAddButton(
+            isLoading: _isAdding,
+            onTap: () => _addAmount(250),
+          ),
+          const SizedBox(width: 6),
+          _PickerChevron(onTap: _isAdding ? () {} : _showPortionPicker),
         ],
       ),
     );
   }
 }
 
-class _AddButton extends StatelessWidget {
+/// Bottom sheet listing preset portion sizes + a Custom input.
+/// Returns the selected ml via Navigator.pop.
+class _WaterPortionSheet extends StatefulWidget {
+  final List<int> presets;
+  const _WaterPortionSheet({required this.presets});
+
+  @override
+  State<_WaterPortionSheet> createState() => _WaterPortionSheetState();
+}
+
+class _WaterPortionSheetState extends State<_WaterPortionSheet> {
+  final TextEditingController _customCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    _customCtrl.dispose();
+    super.dispose();
+  }
+
+  void _submitCustom() {
+    final raw = _customCtrl.text.trim();
+    final parsed = int.tryParse(raw);
+    if (parsed == null || parsed <= 0 || parsed > 5000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a number between 1 and 5000 ml')),
+      );
+      return;
+    }
+    Navigator.pop(context, parsed);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          16,
+          20,
+          16 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Drag handle
+            Center(
+              child: Container(
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 14),
+            const Text(
+              'Add water',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 14),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: widget.presets
+                  .map((ml) => _PortionChip(
+                        label: '$ml ml',
+                        onTap: () => Navigator.pop(context, ml),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(height: 18),
+            const Text(
+              'Custom (ml)',
+              style: TextStyle(
+                color: Color(0xFFB8C5D6),
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _customCtrl,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'e.g. 400',
+                      hintStyle:
+                          const TextStyle(color: Color(0xFF6E7B91)),
+                      filled: true,
+                      fillColor: Colors.white.withValues(alpha: 0.04),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 14),
+                    ),
+                    onSubmitted: (_) => _submitCustom(),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _submitCustom,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF00D4FF),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PortionChip extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  const _PortionChip({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(999),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(999),
+          color: const Color(0xFF00D4FF).withValues(alpha: 0.12),
+          border: Border.all(
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.4),
+          ),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFF4DDBFF),
+            fontWeight: FontWeight.w600,
+            fontSize: 13,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickAddButton extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onTap;
-  const _AddButton({required this.isLoading, required this.onTap});
+  const _QuickAddButton({required this.isLoading, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -217,6 +412,36 @@ class _AddButton extends StatelessWidget {
                   ),
                 ],
               ),
+      ),
+    );
+  }
+}
+
+/// Small chevron beside the quick-add button. Opens the portion
+/// picker so the user can log a non-standard volume.
+class _PickerChevron extends StatelessWidget {
+  final VoidCallback onTap;
+  const _PickerChevron({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 28,
+        height: 28,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white.withValues(alpha: 0.06),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.18),
+          ),
+        ),
+        child: const Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: Color(0xFFB8C5D6),
+          size: 18,
+        ),
       ),
     );
   }
