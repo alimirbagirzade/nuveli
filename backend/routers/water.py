@@ -46,6 +46,12 @@ async def create_water_log(
     supabase = get_supabase()
     payload = log.model_dump(mode="json", exclude={"logged_at", "source"})
     payload["user_id"] = user_id
+    # Same `local_day NOT NULL` constraint as weight_logs in prod —
+    # not in migration 004 but the live table has it. Send today's
+    # date so INSERT doesn't 23502. Migration 016 added DEFAULT
+    # CURRENT_DATE only on weight_logs; water_logs needs the same
+    # treatment (covered in the SQL block I'll attach in the PR body).
+    payload["local_day"] = date.today().isoformat()
     res = supabase.table("water_logs").insert(payload).execute()
     if not res.data:
         raise ValidationError("Failed to log water")
