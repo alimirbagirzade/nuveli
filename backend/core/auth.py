@@ -11,7 +11,9 @@ so the verifier inspects each token's header to pick the right path.
 
 Frontend sends 'Authorization: Bearer {access_token}'.
 """
-from typing import Optional, Dict, Any
+import asyncio
+import time
+from typing import Optional, Dict, Any, Callable
 from fastapi import Header, Depends
 from jose import jwt, JWTError, ExpiredSignatureError
 import httpx
@@ -23,33 +25,90 @@ from core.logging import get_logger
 
 logger = get_logger(__name__)
 
-# Module-level JWKS cache: { kid -> jwk_dict }. Refreshed lazily on cache miss.
-_jwks_cache: Dict[str, Dict[str, Any]] = {}
+# JWKS cache TTL — Supabase rarely rotates more often than this, and
+# capping freshness means a revoked or rotated-out key is gone within
+# this window even if the process never restarts.
+JWKS_CACHE_TTL_SECONDS = 3600.0
 
 
-async def _refresh_jwks() -> None:
-    """Fetch Supabase JWKS and merge into the in-process cache."""
-    settings = get_settings()
-    url = f"{settings.supabase_url.rstrip('/')}/auth/v1/.well-known/jwks.json"
-    async with httpx.AsyncClient(timeout=10.0) as client:
-        resp = await client.get(url)
-        resp.raise_for_status()
-        data = resp.json()
-    for jwk in data.get("keys", []):
-        kid = jwk.get("kid")
-        if kid:
-            _jwks_cache[kid] = jwk
-    logger.info(f"JWKS refreshed: {len(_jwks_cache)} keys cached")
+class _JwksCache:
+    """
+    In-process JWKS cache with:
+
+      * TTL — after `ttl_seconds` the whole keyset is considered stale
+        and a request triggers a refresh. Without this, an old key that
+        Supabase removed from the published JWKS would live forever in
+        the dict (the prior `merge`-style refresh never evicted).
+      * REPLACE semantics on refresh — revoked keys disappear.
+      * Single-flight refresh under `asyncio.Lock` — N concurrent
+        cache-miss requests fire one fetch, not N.
+
+    Clock is injectable so tests can advance time without sleeping.
+    """
+
+    def __init__(
+        self,
+        ttl_seconds: float = JWKS_CACHE_TTL_SECONDS,
+        clock: Callable[[], float] = time.monotonic,
+    ):
+        self._ttl = ttl_seconds
+        self._clock = clock
+        self._keys: Dict[str, Dict[str, Any]] = {}
+        # None = never fetched. We can't use 0.0 as a sentinel because
+        # monotonic clocks can legitimately read 0 in unit tests.
+        self._fetched_at: Optional[float] = None
+        self._lock = asyncio.Lock()
+
+    def _is_fresh(self) -> bool:
+        if self._fetched_at is None:
+            return False
+        return (self._clock() - self._fetched_at) < self._ttl
+
+    async def get(self, kid: str) -> Dict[str, Any]:
+        """Return the JWK for `kid`, refreshing the cache when stale.
+
+        A fresh cache without `kid` is *not* refreshed — that would let
+        an attacker amplify each invalid-token request into a JWKS fetch
+        and DoS the upstream. We trust the cache for its full TTL; new
+        keys are picked up within `JWKS_CACHE_TTL_SECONDS` of publication.
+        """
+        if not self._is_fresh():
+            async with self._lock:
+                # Re-check under lock — a sibling coroutine may have
+                # just refreshed while we were waiting for it.
+                if not self._is_fresh():
+                    await self._refresh()
+
+        if kid in self._keys:
+            return self._keys[kid]
+        raise AuthError(f"Signing key not found in JWKS: {kid}")
+
+    async def _refresh(self) -> None:
+        """Fetch JWKS and REPLACE the in-memory keyset."""
+        settings = get_settings()
+        url = f"{settings.supabase_url.rstrip('/')}/auth/v1/.well-known/jwks.json"
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(url)
+            resp.raise_for_status()
+            data = resp.json()
+        new_keys: Dict[str, Dict[str, Any]] = {}
+        for jwk in data.get("keys", []):
+            kid = jwk.get("kid")
+            if kid:
+                new_keys[kid] = jwk
+        self._keys = new_keys
+        self._fetched_at = self._clock()
+        logger.info(f"JWKS refreshed: {len(self._keys)} keys cached")
+
+
+# Module-singleton used by the auth dependency. Tests that need a
+# clean slate or a fake clock can patch this attribute directly.
+_jwks_cache = _JwksCache()
 
 
 async def _get_jwks_key(kid: str) -> Dict[str, Any]:
-    """Return the JWK matching `kid`. Refreshes JWKS once if not found."""
-    if kid in _jwks_cache:
-        return _jwks_cache[kid]
-    await _refresh_jwks()
-    if kid in _jwks_cache:
-        return _jwks_cache[kid]
-    raise AuthError(f"Signing key not found in JWKS: {kid}")
+    """Thin shim kept for backward compatibility with any external callers."""
+    return await _jwks_cache.get(kid)
 
 
 async def get_current_user(

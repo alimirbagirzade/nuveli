@@ -169,13 +169,16 @@ def _generate_es256_keypair_and_jwk(kid: str):
 
 def test_es256_valid_token_accepted_via_jwks_cache(client):
     """ES256 path: token signed with EC private key; matching public
-    JWK in `_jwks_cache` lets verification succeed."""
+    JWK seeded in the in-process JWKS cache lets verification pass."""
     from core.auth import _jwks_cache
 
     kid = "test-es256-kid"
     private_pem, jwk = _generate_es256_keypair_and_jwk(kid)
 
-    _jwks_cache[kid] = jwk
+    # Seed and mark fresh so the cache fast-path returns the JWK
+    # without triggering a real HTTP fetch.
+    _jwks_cache._keys[kid] = jwk
+    _jwks_cache._fetched_at = _jwks_cache._clock()
     try:
         token = jwt.encode(
             _valid_payload(),
@@ -191,21 +194,18 @@ def test_es256_valid_token_accepted_via_jwks_cache(client):
                 headers={"Authorization": f"Bearer {token}"},
             )
     finally:
-        _jwks_cache.pop(kid, None)
+        _jwks_cache._keys.pop(kid, None)
 
 
-def test_es256_unknown_kid_rejected(client, monkeypatch):
-    """ES256 token with a kid that's not in the JWKS cache must 401.
-    Stub _refresh_jwks to a no-op so the verifier can't repopulate
-    the cache out from under us."""
-    from core import auth as auth_module
+def test_es256_unknown_kid_rejected(client):
+    """ES256 token with a kid that's not in the (fresh) JWKS cache must 401.
 
-    auth_module._jwks_cache.clear()
+    Marking the cache fresh means the verifier trusts the current keyset
+    and does not refetch — so a kid we never seeded stays unknown."""
+    from core.auth import _jwks_cache
 
-    async def _no_op_refresh():
-        return None
-
-    monkeypatch.setattr(auth_module, "_refresh_jwks", _no_op_refresh)
+    _jwks_cache._keys = {}
+    _jwks_cache._fetched_at = _jwks_cache._clock()  # fresh-but-empty
 
     private_pem, _ = _generate_es256_keypair_and_jwk("ignored")
     token = jwt.encode(
