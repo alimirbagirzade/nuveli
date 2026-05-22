@@ -33,6 +33,7 @@ venv/
 env/
 ENV/
 .venv/
+.venv311/
 .env-venv/
 
 # --- Testing & coverage ---
