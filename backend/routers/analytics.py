@@ -59,23 +59,33 @@ async def dashboard(user_id: str = Depends(get_current_user)):
     except Exception as e:
         logger.warning(f"dashboard streak failed for {user_id}: {e}")
 
-    # Cached nutrition score. .maybe_single() raises HTTP 204 as an
-    # exception in postgrest-py (long-standing library bug). Use
-    # .limit(1) + manual index instead so 0-row is just an empty list.
+    # Cached nutrition score. Two prior bugs in this block:
+    # 1. .maybe_single() raises HTTP 204 as an exception in postgrest-py
+    #    (long-standing library bug). Use .limit(1) + index instead.
+    # 2. The query selected "payload" but the live ai_insights table has
+    #    no `payload` column — its schema is structured (nutrition_score,
+    #    score_breakdown, main_insight, etc. as separate columns). The
+    #    try/except swallowed the resulting PGRST error and quietly set
+    #    score=None on EVERY dashboard request, filling logs with
+    #    `column ai_insights.payload does not exist` (SQLSTATE 42703).
+    #    Fixed by reading the direct column.
+    #
+    # NOTE: the WRITE side (services/insights_generation_service.py) still
+    # tries to upsert a payload field, so until that's refactored to
+    # structured columns, no rows will ever have nutrition_score — score
+    # stays None until both sides are aligned. Tracked as a follow-up.
     score: Optional[int] = None
     try:
         insight_res = (
             supabase.table("ai_insights")
-            .select("payload")
+            .select("nutrition_score")
             .eq("user_id", user_id)
             .eq("insight_date", today.isoformat())
             .limit(1)
             .execute()
         )
         if insight_res.data:
-            payload = insight_res.data[0].get("payload") or {}
-            if payload.get("nutrition_score") is not None:
-                score = payload["nutrition_score"]
+            score = insight_res.data[0].get("nutrition_score")
     except Exception as e:
         logger.warning(f"dashboard ai_insights failed for {user_id}: {e}")
 
