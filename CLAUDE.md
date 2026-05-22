@@ -85,8 +85,16 @@ backend/
 ## Test Dosyaları
 
 ```
-app/test/                 # 98 Dart test
-backend/tests/            # 29 Python test
+app/test/                 # 372 Dart test (host-side)
+app/integration_test/     #   5 device-level tests (real Keychain)
+backend/tests/            # 129 Python test (94 active + 8 skipped + new)
+```
+
+Suite koşumu:
+```bash
+flutter test                                              # host
+flutter test integration_test/ -d <booted-simulator>      # device
+cd backend && source .venv311/bin/activate && pytest      # backend
 ```
 
 ---

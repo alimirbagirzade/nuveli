@@ -62,11 +62,25 @@ class DeepLinkValidator {
     this.allowedRoutes = defaultAllowedRoutes,
   });
 
-  /// Feature roots that exist in `lib/features/`. Add a new entry
-  /// here when a feature ships a deep-link target. Keep this list
-  /// tight — every entry is something an attacker can navigate into.
+  /// Routes the app navigates to today. Two flavors live here:
+  ///
+  ///   (a) Feature roots that match `lib/features/` folders —
+  ///       /dashboard, /meal, /coach, /premium, /profile, /settings,
+  ///       /notifications.
+  ///   (b) Concrete paths the existing notification scheduler emits —
+  ///       /water, /meals, /habits, /ai-coach, /analytics — these
+  ///       were in flight before this allowlist existed and are kept
+  ///       so the new validator does not silently break legitimate
+  ///       notifications.
+  ///
+  /// When Chat 17 routing (go_router) lands, this list should be
+  /// regenerated from the actual `GoRoute` definitions so the two
+  /// can't drift. Keep it tight — every entry is something an
+  /// attacker can navigate into via a deep link or a forged
+  /// notification payload.
   static const Set<String> defaultAllowedRoutes = {
     '/',
+    // Feature roots
     '/dashboard',
     '/meal',
     '/coach',
@@ -74,6 +88,13 @@ class DeepLinkValidator {
     '/profile',
     '/settings',
     '/notifications',
+    // Concrete scheduler-emitted routes (notification_service.dart).
+    // Audited 2026-05-22 against actual NotificationPayload sites.
+    '/water',
+    '/meals',
+    '/habits',
+    '/ai-coach',
+    '/analytics',
   };
 
   /// Validate a URI handed to us by the OS (via app_links).
