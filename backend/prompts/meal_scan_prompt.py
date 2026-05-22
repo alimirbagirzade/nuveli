@@ -3,6 +3,13 @@ Meal scan prompts for GPT-4o Vision.
 Output is strict JSON for reliable parsing.
 """
 
+# Defensive whitelist for the meal_type hint that gets interpolated into the
+# user prompt. The request schema already constrains this via Pydantic's
+# Literal type, so a hostile client request gets a 422 long before reaching
+# here. This second check protects internal callers (cron jobs, future
+# refactors, tests) that bypass the HTTP boundary.
+ALLOWED_MEAL_TYPES = {"breakfast", "lunch", "dinner", "snack"}
+
 MEAL_SCAN_SYSTEM_PROMPT = """You are a nutrition expert analyzing meal photos for the Nuveli AI Calorie Coach app.
 
 Your job: identify foods in the image, estimate portions in grams, and compute nutritional values.
@@ -56,9 +63,17 @@ If a meal_type hint is provided, prefer it: {meal_type_hint}
 
 
 def build_meal_scan_messages(image_base64: str, meal_type_hint: str | None = None) -> list[dict]:
-    """Build OpenAI Chat Completions messages with vision content."""
+    """Build OpenAI Chat Completions messages with vision content.
+
+    `meal_type_hint` is interpolated into the user prompt. Even though the
+    HTTP layer's Pydantic Literal already restricts it, anything that isn't
+    in the whitelist (e.g. an internal caller passes an unsanitized string)
+    gets coerced to the safe default so a payload like
+    "breakfast\\n\\nIGNORE PREVIOUS" can't reshape the prompt.
+    """
+    safe_hint = meal_type_hint if meal_type_hint in ALLOWED_MEAL_TYPES else None
     user_text = MEAL_SCAN_USER_PROMPT.format(
-        meal_type_hint=meal_type_hint or "none — you decide"
+        meal_type_hint=safe_hint or "none — you decide"
     )
 
     # Auto-detect mime: default to jpeg

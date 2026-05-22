@@ -19,6 +19,7 @@ from models.meal_plan import (
     GeneratePlanRequest, GeneratePlanResponse,
 )
 from prompts.coach_prompts import build_meal_plan_messages
+from prompts.sanitize import sanitize_for_prompt, sanitize_list_for_prompt
 
 logger = get_logger(__name__)
 router = APIRouter()
@@ -281,7 +282,14 @@ async def generate_meal_plan(
         timeout=settings.openai_timeout_seconds,
         max_retries=settings.openai_max_retries,
     )
-    messages = build_meal_plan_messages(req.model_dump(mode="json"))
+    # Strip control chars from free-form fields before they reach the
+    # prompt. Pydantic max_length already caps size at the request layer;
+    # this is the second line of defense (newlines / U+0000 / etc.).
+    payload = req.model_dump(mode="json")
+    payload["dietary_preference"] = sanitize_for_prompt(payload.get("dietary_preference"))
+    payload["note"] = sanitize_for_prompt(payload.get("note"))
+    payload["avoid_ingredients"] = sanitize_list_for_prompt(payload.get("avoid_ingredients"))
+    messages = build_meal_plan_messages(payload)
 
     logger.info(f"Generating AI meal plan for user {user_id}, days={req.days}")
     try:

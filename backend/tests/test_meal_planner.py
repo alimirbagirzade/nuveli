@@ -146,6 +146,53 @@ def test_generate_meal_plan_calls_openai_mocked(client, auth_headers, mock_supab
         assert body["plans_created"] >= 1
 
 
+def test_generate_meal_plan_rejects_oversized_dietary_preference(
+    client, auth_headers
+):
+    """Pydantic max_length on free-form fields → 422, no OpenAI call."""
+    response = client.post(
+        "/meal-plans/generate",
+        json={
+            "week_start": date.today().isoformat(),
+            "days": 1,
+            "target_calories": 2000,
+            "dietary_preference": "x" * 5000,  # well over 200
+        },
+        headers=auth_headers,
+    )
+    assert response.status_code == 422
+
+
+def test_generate_meal_plan_rejects_oversized_note(client, auth_headers):
+    response = client.post(
+        "/meal-plans/generate",
+        json={
+            "week_start": date.today().isoformat(),
+            "days": 1,
+            "target_calories": 2000,
+            "note": "y" * 5000,
+        },
+        headers=auth_headers,
+    )
+    assert response.status_code == 422
+
+
+def test_generate_meal_plan_rejects_target_calories_out_of_range(
+    client, auth_headers
+):
+    """800 kcal floor matches the wellness-protocol minimum from CLAUDE.md."""
+    response = client.post(
+        "/meal-plans/generate",
+        json={
+            "week_start": date.today().isoformat(),
+            "days": 1,
+            "target_calories": 500,  # below 800 floor
+        },
+        headers=auth_headers,
+    )
+    assert response.status_code == 422
+
+
 def test_generate_meal_plan_rejects_garbage_openai_response(
     client, auth_headers, mock_supabase
 ):
