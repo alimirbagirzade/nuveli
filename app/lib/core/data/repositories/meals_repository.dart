@@ -33,8 +33,15 @@ class MealsRepository extends BaseRepository {
         .toList(growable: false);
   }
 
-  /// Manual meal log (no photo). Used by the "add food manually"
-  /// flow until Chat 5 ships the camera-based scan.
+  /// Manual meal log (no photo). The backend's `POST /meals` accepts
+  /// a `MealCreate` whose macros come from a `foods: list[MealFoodCreate]`
+  /// — the meals table itself doesn't store macros; a DB trigger
+  /// recomputes meals.total_* from meal_foods on insert.
+  ///
+  /// For the simple "I want to log a yogurt with 150 kcal" UX we wrap
+  /// the single user entry as a one-element foods list. Future
+  /// multi-ingredient entries (recipe import, AI-scan results) can
+  /// extend this with a `foods` parameter directly.
   Future<Meal> createMeal({
     required String name,
     required int totalCalories,
@@ -47,13 +54,21 @@ class MealsRepository extends BaseRepository {
     final response = await apiClient.post<Map<String, dynamic>>(
       ApiEndpoints.meals,
       data: {
-        'name': name,
-        'total_calories': totalCalories,
-        'protein_g': proteinG,
-        'carbs_g': carbsG,
-        'fat_g': fatG,
         if (mealType != null) 'meal_type': mealType,
+        'name': name,
         if (consumedAt != null) 'consumed_at': formatDateTimeUtc(consumedAt),
+        // Single-food wrapping. The DB trigger turns this into the
+        // meal-level totals (total_calories, total_protein_g, etc.).
+        'foods': [
+          {
+            'name': name,
+            'calories': totalCalories,
+            'protein_g': proteinG,
+            'carbs_g': carbsG,
+            'fat_g': fatG,
+            'position': 0,
+          },
+        ],
       },
     );
     return Meal.fromJson(response);
