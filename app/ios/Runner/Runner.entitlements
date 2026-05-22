@@ -6,5 +6,22 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<!--
+	    Universal Links — iOS counterpart to Android App Links (#103).
+	    On install, iOS fetches apple-app-site-association from
+	    nuveli.com.tr via Apple's CDN and confirms our Team ID +
+	    bundle ID match. After that, taps on https://nuveli.com.tr/...
+	    open the app directly instead of Safari.
+
+	    The matching website file (apple-app-site-association, no
+	    extension) lives in website/public_html/.well-known/ and must
+	    be deployed to nuveli.com.tr/.well-known/ for verification to
+	    succeed.
+	-->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:nuveli.com.tr</string>
+		<string>applinks:www.nuveli.com.tr</string>
+	</array>
 </dict>
 </plist>
