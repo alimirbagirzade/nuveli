@@ -46,6 +46,18 @@ void main() {
     await prefs.remove(_key);
   });
 
+  // CRITICAL — without this, the LAST test's writes survive in the
+  // simulator's Keychain across runs. A subsequent `flutter run` of
+  // the real app reads e.g. 'newer-payload' as a session, Supabase's
+  // recoverSession throws FormatException trying to JSON-parse it,
+  // and the app boots with auth errors. Mirror the setUp cleanup so
+  // we leave no trace.
+  tearDown(() async {
+    await secure.delete(key: _key);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_key);
+  });
+
   group('SecureSessionStorage roundtrip (real native store)', () {
     testWidgets('persistSession → accessToken returns the same value',
         (tester) async {
