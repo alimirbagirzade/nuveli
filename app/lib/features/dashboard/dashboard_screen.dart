@@ -6,6 +6,7 @@ import '../../core/network/app_error.dart';
 import '../../shared/widgets/app_error_view.dart';
 import '../../shared/widgets/skeleton.dart';
 import 'providers/dashboard_provider.dart';
+import '../habits/widgets/habits_today_section.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
 import 'widgets/macros_row.dart';
@@ -95,6 +96,11 @@ class DashboardScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
+                      // Today's habits — read GET /habits, tap to
+                      // toggle. Hides itself silently if the call
+                      // errors so the rest of the dashboard remains
+                      // usable.
+                      const HabitsTodaySection(),
                     ],
                   ),
                 ),
