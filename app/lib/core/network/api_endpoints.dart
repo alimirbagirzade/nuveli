@@ -33,6 +33,7 @@ class ApiEndpoints {
   // ---------------------------------------------------------------
   static const String waterLogs = '/water/logs';
   static const String waterTodaySummary = '/water/today/summary';
+  static const String waterWeekly = '/water/weekly';
   static const String waterReminders = '/water/reminders';
   static const String waterInsight = '/water/insight';
   static String waterReminderById(String id) => '/water/reminders/$id';

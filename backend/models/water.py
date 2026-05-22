@@ -32,6 +32,17 @@ class WaterTodaySummary(BaseModel):
     logs_count: int = 0
 
 
+class WaterDayTotal(BaseModel):
+    day: date  # local calendar day
+    total_ml: int
+    target_ml: int
+
+
+class WaterWeeklyResponse(BaseModel):
+    days: list[WaterDayTotal]  # always 7 entries, oldest → today
+    target_ml: int
+
+
 class WaterReminderCreate(BaseModel):
     time_of_day: time = Field(..., description="HH:MM")
     label: Optional[str] = None
