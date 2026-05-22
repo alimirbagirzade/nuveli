@@ -2,7 +2,7 @@ name: nuveli
 description: Nuveli - AI Calorie Coach
 
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -65,7 +65,9 @@ dependencies:
   url_launcher: ^6.3.0
   app_links: ^7.0.0
   fl_chart: ^1.2.0
-  sign_in_with_apple: ^5.0.0
+  # 5.0.0 used the removed Flutter PluginRegistry.Registrar API → release
+  # builds failed compileReleaseKotlin. 6+ uses Android embedding v2.
+  sign_in_with_apple: ^6.1.0
   google_sign_in: ^6.2.1
   crypto: ^3.0.3
   flutter_timezone: ^5.0.2
