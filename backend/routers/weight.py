@@ -131,6 +131,48 @@ async def delete_weight_log(
 
 
 # --- Goals ---
+#
+# Schema drift: the live DB has columns `start_weight_kg`, `target_weight_kg`,
+# and NO `direction` column on weight_goals. The Pydantic models + Flutter
+# client speak the older names (`starting_weight_kg`, `target_kg`, `direction`).
+# Two small adapters bridge the two without forcing a destructive DB rename or
+# a Flutter release. When/if a future migration renames the DB columns, drop
+# these helpers along with the Pydantic field renames.
+
+
+def _db_to_api(row: dict) -> dict:
+    """DB row → API/Flutter-shaped dict."""
+    out = dict(row)
+    if "start_weight_kg" in out and "starting_weight_kg" not in out:
+        out["starting_weight_kg"] = out["start_weight_kg"]
+    if "target_weight_kg" in out and "target_kg" not in out:
+        out["target_kg"] = out["target_weight_kg"]
+    # `direction` isn't stored on weight_goals — infer from start vs target.
+    if not out.get("direction"):
+        start = out.get("starting_weight_kg") or 0
+        target = out.get("target_kg") or 0
+        if abs(start - target) < 0.01:
+            out["direction"] = "maintain"
+        elif target < start:
+            out["direction"] = "lose"
+        else:
+            out["direction"] = "gain"
+    return out
+
+
+def _api_to_db(payload: dict) -> dict:
+    """API/Pydantic-shaped payload → DB column names (drops fields DB lacks)."""
+    out = dict(payload)
+    if "starting_weight_kg" in out:
+        out["start_weight_kg"] = out.pop("starting_weight_kg")
+    if "target_kg" in out:
+        out["target_weight_kg"] = out.pop("target_kg")
+    # weight_goals table has no `direction` column today. Strip it so the
+    # INSERT/UPDATE doesn't trip "column does not exist". Direction is
+    # re-inferred on read by _db_to_api.
+    out.pop("direction", None)
+    return out
+
 
 @router.get("/goal", response_model=Optional[WeightGoalResponse])
 async def get_active_goal(user_id: str = Depends(get_current_user)):
@@ -161,7 +203,7 @@ async def get_active_goal(user_id: str = Depends(get_current_user)):
         )
     if not res.data:
         return None
-    goal = res.data[0]
+    goal = _db_to_api(res.data[0])
 
     # Compute progress
     current_w = (
@@ -215,8 +257,8 @@ async def create_goal(
         if latest.data:
             payload["starting_weight_kg"] = latest.data[0]["weight_kg"]
 
-    res = supabase.table("weight_goals").insert(payload).execute()
-    return res.data[0]
+    res = supabase.table("weight_goals").insert(_api_to_db(payload)).execute()
+    return _db_to_api(res.data[0])
 
 
 @router.patch("/goal", response_model=WeightGoalResponse)
@@ -243,9 +285,9 @@ async def update_goal(
 
     res = (
         supabase.table("weight_goals")
-        .update(payload)
+        .update(_api_to_db(payload))
         .eq("id", active.data[0]["id"])
         .eq("user_id", user_id)
         .execute()
     )
-    return res.data[0]
+    return _db_to_api(res.data[0])
