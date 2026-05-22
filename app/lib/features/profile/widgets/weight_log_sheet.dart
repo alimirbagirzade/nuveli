@@ -33,7 +33,6 @@ class WeightLogSheet extends ConsumerStatefulWidget {
 class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
   late final TextEditingController _ctrl;
   final _noteCtrl = TextEditingController();
-  bool _submitting = false;
   String? _error;
 
   @override
@@ -58,23 +57,59 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
       setState(() => _error = 'Enter a weight between 20 and 400 kg');
       return;
     }
-    setState(() {
-      _submitting = true;
-      _error = null;
-    });
+    final note = _noteCtrl.text.trim().isEmpty ? null : _noteCtrl.text.trim();
+
+    // Capture refs to outlive the sheet — the next pop() unmounts this
+    // widget so we can't use `context` for snackbars afterwards.
+    final messenger = ScaffoldMessenger.of(context);
+    final actions = ref.read(profileActionsProvider);
+
+    // Pop optimistically. On Render free tier the POST + dashboard
+    // refetch takes 1-3 seconds; with this change the sheet feels
+    // instant. Profile providers will refresh in the background and
+    // the WeightGoalCard updates whenever the data lands.
+    Navigator.of(context).pop(true);
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text('Saving ${parsed.toStringAsFixed(1)} kg...'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+
     try {
-      await ref.read(profileActionsProvider).logWeight(
-            weightKg: parsed,
-            note: _noteCtrl.text.trim().isEmpty ? null : _noteCtrl.text.trim(),
-          );
-      if (mounted) Navigator.of(context).pop(true);
+      await actions.logWeight(weightKg: parsed, note: note);
+      messenger.hideCurrentSnackBar();
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('Weight saved (${parsed.toStringAsFixed(1)} kg)'),
+          duration: const Duration(seconds: 2),
+          backgroundColor: const Color(0xFF1B5E20),
+        ),
+      );
     } catch (e) {
-      if (mounted) {
-        setState(() {
-          _submitting = false;
-          _error = 'Could not save. Check your connection and try again.';
-        });
-      }
+      messenger.hideCurrentSnackBar();
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('Could not save ${parsed.toStringAsFixed(1)} kg'),
+          backgroundColor: const Color(0xFFB71C1C),
+          action: SnackBarAction(
+            label: 'Retry',
+            textColor: Colors.white,
+            onPressed: () async {
+              try {
+                await actions.logWeight(weightKg: parsed, note: note);
+                messenger.showSnackBar(
+                  const SnackBar(content: Text('Weight saved')),
+                );
+              } catch (_) {
+                messenger.showSnackBar(
+                  const SnackBar(content: Text('Still could not save')),
+                );
+              }
+            },
+          ),
+        ),
+      );
     }
   }
 
@@ -203,7 +238,7 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: _submitting ? null : _submit,
+                  onPressed: _submit,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryCyan,
                     foregroundColor: Colors.white,
@@ -214,30 +249,19 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
                     ),
                     elevation: 0,
                   ),
-                  child: _submitting
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.4,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Text(
-                          'Save weight',
-                          style: AppTypography.cardTitle.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                  child: Text(
+                    'Save weight',
+                    style: AppTypography.cardTitle.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.s12),
               Center(
                 child: TextButton(
-                  onPressed: _submitting
-                      ? null
-                      : () => Navigator.of(context).pop(),
+                  onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     'Cancel',
                     style: AppTypography.body.copyWith(
