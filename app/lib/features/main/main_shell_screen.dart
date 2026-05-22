@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../analytics/analytics_screen.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../profile/goals_profile_screen.dart';
 import '../settings/settings_screen.dart';
@@ -54,14 +55,7 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
                 'Point your camera at a meal and let our AI estimate calories + '
                 'macros. Until then, log meals manually from the Dashboard.',
           ),
-          PlaceholderTabScreen(
-            icon: Icons.insights_outlined,
-            title: 'Analytics',
-            subtitle: 'Coming in v1.1',
-            description:
-                'Weekly calorie bars, weight trends and macro breakdowns. '
-                'Your Profile tab already shows weekly progress.',
-          ),
+          AnalyticsScreen(),
           GoalsProfileScreen(),
           SettingsScreen(),
         ],
