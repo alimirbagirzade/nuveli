@@ -1,0 +1,136 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/theme/app_colors.dart';
+import '../models/ai_insight.dart';
+import '../providers/coach_actions_controller.dart';
+
+/// Renders the `recommended_action` block beneath the insight.
+/// - Always shows the explanatory text.
+/// - If `action_type` is set, shows an "Apply" CTA that calls
+///   POST /coach/apply-tip.
+class RecommendedActionButton extends ConsumerWidget {
+  const RecommendedActionButton({
+    super.key,
+    required this.insightId,
+    required this.action,
+  });
+
+  final String insightId;
+  final RecommendedAction action;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final phase = ref.watch(coachActionsControllerProvider).phase;
+    final isApplying = phase == CoachActionPhase.applyingTip;
+
+    ref.listen<CoachActionState>(coachActionsControllerProvider, (prev, next) {
+      if (prev?.lastAppliedAction != next.lastAppliedAction &&
+          next.lastAppliedAction != null) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              backgroundColor: AppColors.success,
+              behavior: SnackBarBehavior.floating,
+              content: Text(
+                _confirmationFor(next.lastAppliedAction!),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          );
+      }
+    });
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Row(
+            children: [
+              Icon(Icons.auto_awesome_rounded,
+                  color: AppColors.primary, size: 16),
+              SizedBox(width: 6),
+              Text(
+                'Recommended next step',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            action.text,
+            style: const TextStyle(
+              color: Color(0xFFE8F3F1),
+              fontSize: 13.5,
+              height: 1.4,
+            ),
+          ),
+          if (action.isExecutable) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              height: 44,
+              child: ElevatedButton(
+                onPressed: isApplying
+                    ? null
+                    : () => ref
+                        .read(coachActionsControllerProvider.notifier)
+                        .applyRecommendedTip(insightId),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: isApplying
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                        ),
+                      )
+                    : Text(
+                        action.ctaLabel,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  static String _confirmationFor(String actionTaken) {
+    switch (actionTaken) {
+      case 'add_habit':
+        return 'Habit added';
+      case 'log_water':
+        return 'Water logged';
+      case 'adjust_reminder':
+        return 'Reminder set';
+      case 'increase_target':
+        return 'Target updated';
+      default:
+        return 'Done';
+    }
+  }
+}

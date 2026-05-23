@@ -100,97 +100,104 @@ Per `PremiumGateService.mealScanBeyond5Daily`: free user gets 5 scans/day, premi
 
 ## F2 — AI Coach UI
 
-Backend ready: `POST /coach/insight` (daily structured insight), `POST /coach/chat` (text chat — verify endpoint exists in routers/ai_coach.py before assuming). TTS `/coach/audio` for short voiced responses. Crisis-detection middleware on coach prompts (per `docs/protocols/coach-ai-protocol.md`).
+**Backend reality check (2026-05-23):** verified `backend/routers/ai_coach.py`
+ships only:
+
+  - `GET /coach/today` → cached daily insight (nutrition_score 0-100, body
+    text, tips[], optional `recommended_action`)
+  - `POST /coach/generate` → force-regenerate (rate-limited 5/min)
+  - `POST /coach/apply-tip` → execute `recommended_action` (add_habit,
+    log_water, adjust_reminder, increase_target)
+
+There is **no `/coach/chat` and no `/coach/audio`**. Crisis-detection lives
+inside the prompt pipeline — persona auto-shifts to `calm` on `high_risk`,
+no `crisis: true` flag on the response. Persona is read from `coach_prefs`
+JSON server-side and is not currently exposed via the profile API.
+
+F2 v0 ships an **insight-only Coach tab**. Chat-only questions (Q12 partial,
+Q13, Q15, Q16, Q17, Q19, Q20) are **moot** for v0 and deferred to a future
+conversational-coach feature.
 
 **This is the biggest gap — Nuveli's brand promise is "AI Calorie Coach". App is incomplete without this.**
 
 ### 11. Coach surface — primary entry point
-- [ ] **New bottom-nav tab "Coach"** (5 → 6 tabs, but Coach is the core feature)
+- [x] **New bottom-nav tab "Coach"** (5 → 6 tabs, but Coach is the core feature)
 - [ ] **Floating action button on Dashboard** (less prominent)
 - [ ] **Card on Dashboard** ("Today's insight: ...")
 
-**Your answer:** ___________
+**Your answer:** Bottom-nav tab "Coach" (default — surfaces the brand promise)
 
 ### 12. Coach behavior — daily insight vs chat
-- [ ] **Daily insight only** — once-a-day generated card with tips. No conversation.
+- [x] **Daily insight only** — once-a-day generated card with tips. No conversation.
 - [ ] **Chat only** — open chat surface, user asks anything.
 - [ ] **Both** — daily insight at top, "Ask coach a question" below.
 
-**Your answer:** ___________
+**Your answer:** Daily insight only (forced — backend has no chat endpoint in v0)
 
 ### 13. Voice (TTS) — when does coach speak?
 - [ ] **Manual** — user taps speaker icon on a message to hear it
 - [ ] **Auto for daily insight** — coach speaks its daily message once on first view
-- [ ] **Never** — text-only
+- [x] **Never** — text-only
 
-**Your answer:** ___________
+**Your answer:** Never — text-only (forced — no `/coach/audio` endpoint in v0)
 
 ### 14. Persona selection
 Onboarding offers persona choice. Where does it show up?
 
 - [ ] **Coach screen header** — "Coach: Warm" or "Coach: Direct" badge
-- [ ] **System-only** — affects tone but isn't visible
+- [x] **System-only** — affects tone but isn't visible
 - [ ] **Settings → Change persona**
 
-**Your answer:** ___________
+**Your answer:** System-only (default — persona stored in `coach_prefs`, no profile API field surfaced yet)
 
 ### 15. Crisis banner
-Per protocol: if user mentions self-harm / suicidal ideation, app must show a crisis banner with helpline.
+Moot for v0 — no chat surface to host one. Crisis prompt mitigation is
+already applied server-side: persona shifts to `calm` for high-risk
+content. Will revisit when chat ships.
 
-- [ ] **Inline in coach chat** — banner appears in the conversation
-- [ ] **Full-screen takeover** — modal that blocks the chat until user acknowledges
-- [ ] **Persistent header** — sticky banner until user dismisses
-
-**Your answer:** ___________
+**Your answer:** Moot for v0 (deferred with chat feature)
 
 ### 16. Crisis trigger
-Backend already has detection logic. When does Flutter show the banner?
+Moot for v0 — no chat surface, backend does not emit a `crisis: true` flag
+on `/coach/today`.
 
-- [ ] **Backend tells us** — response includes `crisis: true` flag
-- [ ] **Frontend keyword check** — Flutter scans user message before send
-- [ ] **Both** — defense in depth
-
-**Your answer:** ___________
+**Your answer:** Moot for v0 (deferred with chat feature)
 
 ### 17. Chat input affordances
-- [ ] **Plain text input only**
-- [ ] **Text + voice input** (speech-to-text → text → coach)
-- [ ] **Text + quick-suggestion chips** ("How am I doing today?", "What should I eat?", etc.)
-- [ ] **All three**
+Moot for v0 — no chat input.
 
-**Your answer:** ___________
+**Your answer:** Moot for v0 (deferred with chat feature)
 
 ### 18. Free tier limit
-Per `PremiumGateService.aiInsightSecond`: free user gets 1 AI insight per day, premium unlimited. Where does this gating show?
+Per `PremiumGateService.aiInsightSecond`: free user gets 1 AI insight per
+day, premium unlimited. F2 v0 reads today's insight via `/coach/today`
+(unlimited, since it's cached). The gate triggers on the **regenerate
+button** which calls `/coach/generate`.
 
-- [ ] **After daily insight: "Want another? Unlock premium"**
+- [x] **After daily insight: "Want another? Unlock premium"** (the regenerate CTA shows the gate inline)
 - [ ] **In chat: usage counter at top, paywall on limit**
 - [ ] **Both**
 
-**Your answer:** ___________
+**Your answer:** Show gate on the "Regenerate" CTA inside the insight screen (default)
 
 ### 19. Conversation history
-- [ ] **Persistent** — store every message, user sees their full history
-- [ ] **Session-only** — clear on app restart, fresh start every day
-- [ ] **Today only** — keep today's conversation, archive nightly
+Moot for v0 — no conversation.
 
-**Your answer:** ___________
+**Your answer:** Moot for v0 (deferred with chat feature)
 
 ### 20. "What can I ask?" empty state
-First-time users won't know what coach can do. The first screen they see:
+Moot for v0 — no chat input. The insight-only empty state (cron hasn't
+run yet for new user) renders a "Generating your first insight…" skeleton
+and triggers `/coach/today`, which falls back to on-demand generation.
 
-- [ ] **Just the input box**
-- [ ] **Empty box + 3-4 sample prompts** ("Why did I gain weight?", "Plan tomorrow's meals", etc.)
-- [ ] **Pre-written welcome message from coach** ("Hey Ali! I'm here to help...")
-
-**Your answer:** ___________
+**Your answer:** Generating-skeleton empty state (default; backend handles first-run gen)
 
 ### 21. Notifications
-- [ ] **Push notification when daily insight is ready** ("Your insight is in 🌱")
+- [x] **Push notification when daily insight is ready** ("Your insight is in 🌱")
 - [ ] **No push — user opens app to see it**
 - [ ] **Configurable via Settings → Notifications**
 
-**Your answer:** ___________
+**Your answer:** Push when insight is ready (default — handler route `coach` deep-links to the Coach tab; Settings → Notifications toggle controls opt-out via existing infra)
 
 ---
 

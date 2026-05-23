@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../analytics/analytics_screen.dart';
+import '../coach/screens/coach_screen.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../meal/screens/meal_scan_screen.dart';
 import '../profile/goals_profile_screen.dart';
@@ -34,6 +35,7 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
   static const _tabs = <_TabSpec>[
     _TabSpec(icon: Icons.dashboard_rounded, label: 'Dashboard'),
     _TabSpec(icon: Icons.camera_alt_outlined, label: 'Scan'),
+    _TabSpec(icon: Icons.auto_awesome_rounded, label: 'Coach'),
     _TabSpec(icon: Icons.insights_outlined, label: 'Analytics'),
     _TabSpec(icon: Icons.person_outline, label: 'Profile'),
     _TabSpec(icon: Icons.settings_outlined, label: 'Settings'),
@@ -48,6 +50,7 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
         children: const [
           DashboardScreen(),
           MealScanScreen(),
+          CoachScreen(),
           AnalyticsScreen(),
           GoalsProfileScreen(),
           SettingsScreen(),
