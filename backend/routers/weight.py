@@ -233,9 +233,12 @@ async def create_goal(
     """Create new goal. Marks any previous active goal as 'cancelled'."""
     supabase = get_supabase()
 
-    # Deactivate existing active goals
+    # Deactivate existing active goals. Prod's weight_goals_status_check
+    # constraint allows {active, paused, completed, abandoned} and rejects
+    # 'cancelled' — use 'abandoned' to mean "the user moved on from this
+    # goal before reaching it".
     supabase.table("weight_goals")\
-        .update({"status": "cancelled"})\
+        .update({"status": "abandoned"})\
         .eq("user_id", user_id)\
         .eq("status", "active")\
         .execute()
