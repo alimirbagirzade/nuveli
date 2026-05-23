@@ -10,6 +10,7 @@ import 'package:nuveli/shared/widgets/app_error_view.dart';
 
 import 'models/user_profile.dart';
 import 'providers/profile_provider.dart';
+import 'screens/profile_edit_screen.dart';
 import 'widgets/daily_calorie_target_card.dart';
 import 'widgets/goals_row.dart';
 import 'widgets/profile_header.dart';
@@ -93,7 +94,10 @@ class _LoadedView extends ConsumerWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(
-          child: ProfileHeader(profile: profile),
+          child: ProfileHeader(
+            profile: profile,
+            onSettingsTap: () => ProfileEditScreen.open(context, profile),
+          ),
         ),
         SliverToBoxAdapter(
           child: todayAsync.when(

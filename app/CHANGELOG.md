@@ -1,5 +1,21 @@
 # Nuveli Changelog
 
+## [1.0.4+14] - 2026-05-23 - Profile edit + water-test rewrite
+
+### Features
+- **Profile edit screen** — settings gear in `ProfileHeader` now opens
+  `ProfileEditScreen` instead of debug-printing. Form covers name, sex,
+  date of birth, height, weight, activity level, dietary preference;
+  ships only changed fields to `PATCH /me` then invalidates
+  profileProvider so the goals screen re-fetches.
+
+### Tests
+- Rewrote `water_quick_card_test.dart` to match the new chip-only
+  picker (the "Custom (ml)" TextField was removed in 1.0.3 for the
+  iOS freeze fix; the tests were still poking at it). 4 obsolete
+  tests → 4 new tests covering the widened preset set + 1000 ml
+  chip dispatch. 458 → 460 passing.
+
 ## [1.0.3+13] - 2026-05-23 - Sprint A live-device QA pass
 
 ### Features

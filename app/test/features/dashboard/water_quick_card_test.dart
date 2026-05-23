@@ -39,7 +39,7 @@ void main() {
     expect(receivedAmount, equals(250));
   });
 
-  testWidgets('chevron opens portion picker with preset chips',
+  testWidgets('chevron opens portion picker with the widened preset chip set',
       (tester) async {
     await _pump(
       tester,
@@ -54,15 +54,22 @@ void main() {
     await tester.tap(find.byIcon(Icons.keyboard_arrow_down_rounded));
     await tester.pumpAndSettle();
 
-    // All preset chips visible
+    // Preset chips visible. The previous "Custom (ml)" TextField was
+    // removed because it consistently froze iOS Simulator (infinite
+    // BoxConstraints assertion), so the preset list was widened
+    // instead.
     expect(find.text('100 ml'), findsOneWidget);
+    expect(find.text('150 ml'), findsOneWidget);
     expect(find.text('200 ml'), findsOneWidget);
     // 250 ml appears in both the card AND the picker — accept >= 1
     expect(find.text('250 ml'), findsWidgets);
-    expect(find.text('330 ml'), findsOneWidget);
+    expect(find.text('300 ml'), findsOneWidget);
     expect(find.text('500 ml'), findsOneWidget);
     expect(find.text('750 ml'), findsOneWidget);
-    expect(find.text('Custom (ml)'), findsOneWidget);
+    expect(find.text('1000 ml'), findsOneWidget);
+    // The custom-input form is gone.
+    expect(find.text('Custom (ml)'), findsNothing);
+    expect(find.byType(TextField), findsNothing);
   });
 
   testWidgets('selecting a preset chip calls onAddWater with that amount',
@@ -89,7 +96,7 @@ void main() {
     expect(receivedAmount, equals(500));
   });
 
-  testWidgets('custom amount calls onAddWater with the entered value',
+  testWidgets('selecting the 1000 ml chip calls onAddWater with 1000',
       (tester) async {
     int? receivedAmount;
     await _pump(
@@ -106,57 +113,9 @@ void main() {
     await tester.tap(find.byIcon(Icons.keyboard_arrow_down_rounded));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), '400');
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Add'));
+    await tester.tap(find.text('1000 ml'));
     await tester.pumpAndSettle();
 
-    expect(receivedAmount, equals(400));
-  });
-
-  testWidgets('custom input rejects non-positive numbers', (tester) async {
-    int? receivedAmount;
-    await _pump(
-      tester,
-      _build(
-        consumed: 0,
-        target: 2500,
-        onAdd: (ml) async {
-          receivedAmount = ml;
-        },
-      ),
-    );
-
-    await tester.tap(find.byIcon(Icons.keyboard_arrow_down_rounded));
-    await tester.pumpAndSettle();
-
-    await tester.enterText(find.byType(TextField), '0');
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Add'));
-    await tester.pumpAndSettle();
-
-    expect(receivedAmount, isNull);
-    expect(find.textContaining('between 1 and 5000'), findsOneWidget);
-  });
-
-  testWidgets('custom input rejects values > 5000 ml', (tester) async {
-    int? receivedAmount;
-    await _pump(
-      tester,
-      _build(
-        consumed: 0,
-        target: 2500,
-        onAdd: (ml) async {
-          receivedAmount = ml;
-        },
-      ),
-    );
-
-    await tester.tap(find.byIcon(Icons.keyboard_arrow_down_rounded));
-    await tester.pumpAndSettle();
-
-    await tester.enterText(find.byType(TextField), '9999');
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Add'));
-    await tester.pumpAndSettle();
-
-    expect(receivedAmount, isNull);
+    expect(receivedAmount, equals(1000));
   });
 }
