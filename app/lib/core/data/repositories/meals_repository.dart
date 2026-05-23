@@ -1,17 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../features/dashboard/models/meal.dart';
+import '../../../features/meal/models/meal_scan_models.dart';
 import '../../network/api_client.dart';
 import '../../network/api_endpoints.dart';
 import 'base_repository.dart';
 
 /// Meal log CRUD against the FastAPI backend.
-///
-/// Note: AI-vision scanning (`POST /meals/scan`) is intentionally **NOT**
-/// in this repository yet — the meal-scan UI lands in Chat 5 and we'll
-/// add `scanMeal()` plus a `ScanResult` model alongside it. Adding it
-/// here would require a model that doesn't exist, so we keep this thin
-/// for now.
 class MealsRepository extends BaseRepository {
   MealsRepository(super.apiClient);
 
@@ -76,6 +71,47 @@ class MealsRepository extends BaseRepository {
 
   Future<void> deleteMeal(String id) {
     return apiClient.delete(ApiEndpoints.mealById(id));
+  }
+
+  /// AI vision scan. Sends base64-encoded JPEG to `POST /meals/scan`.
+  /// Does NOT save — frontend confirms with the user then calls
+  /// [createScannedMeal] with the (possibly edited) detected foods.
+  Future<MealScanResult> scanMeal({
+    required String imageBase64,
+    String? mealTypeHint,
+  }) async {
+    final response = await apiClient.post<Map<String, dynamic>>(
+      ApiEndpoints.mealsScan,
+      data: {
+        'image_base64': imageBase64,
+        if (mealTypeHint != null) 'meal_type_hint': mealTypeHint,
+      },
+    );
+    return MealScanResult.fromJson(response);
+  }
+
+  /// Persist a scanned meal after the user reviewed/edited the foods.
+  /// Sets `scan_source='ai_scan'` so the daily scan-count provider can
+  /// gate the free tier (5/day).
+  Future<Meal> createScannedMeal({
+    required String mealType,
+    required String? name,
+    required List<DetectedFood> foods,
+    DateTime? consumedAt,
+  }) async {
+    final response = await apiClient.post<Map<String, dynamic>>(
+      ApiEndpoints.meals,
+      data: {
+        'meal_type': mealType,
+        if (name != null && name.isNotEmpty) 'name': name,
+        if (consumedAt != null) 'consumed_at': formatDateTimeUtc(consumedAt),
+        'scan_source': 'ai_scan',
+        'foods': [
+          for (var i = 0; i < foods.length; i++) foods[i].toCreatePayload(i),
+        ],
+      },
+    );
+    return Meal.fromJson(response);
   }
 }
 

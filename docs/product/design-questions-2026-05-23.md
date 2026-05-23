@@ -18,83 +18,83 @@ Backend ready: `POST /meals/scan` accepts `{image_base64, meal_type_hint?}`, ret
 
 ### 1. Source of the photo
 - [ ] **Camera only** — simpler, less code
-- [ ] **Camera + gallery** — better UX, what most users expect
+- [x] **Camera + gallery** — better UX, what most users expect
   → Recommended unless there's a specific reason not to. (gallery requires extra permission strings already declared in Info.plist)
   
-**Your answer:** ___________
+**Your answer:** Camera + gallery (default)
 
 ### 2. Pre-flight UI before sending to AI
 - [ ] **No preview** — snap → directly to loading → result
-- [ ] **Preview + retake button** — user can cancel a bad shot
+- [x] **Preview + retake button** — user can cancel a bad shot
 - [ ] **Preview + crop tool** — user trims to focus on plate
   → Cropping is significant scope. Most users don't need it. Recommend preview + retake.
 
-**Your answer:** ___________
+**Your answer:** Preview + retake (default)
 
 ### 3. Loading state (OpenAI Vision takes 6–15 sec)
 - [ ] **Spinner only**
-- [ ] **Spinner + progress text** ("Analyzing your meal...", "Identifying foods...", "Calculating macros...")
+- [x] **Spinner + progress text** ("Analyzing your meal...", "Identifying foods...", "Calculating macros...")
 - [ ] **Animated illustration** (eats time visually)
   → Recommend option 2 — copy changes every 3s to signal progress; cheap to ship.
 
-**Your answer:** ___________
+**Your answer:** Spinner + rotating progress text (default)
 
 ### 4. Result screen — what does the user see first?
 After AI returns, before saving the meal:
 
 - [ ] **Auto-save, show confirmation** ("Saved! 380 kcal — undo / edit")
-- [ ] **Editable preview** — list of foods with kcal/macros, user can tap to edit values, then "Save"
+- [x] **Editable preview** — list of foods with kcal/macros, user can tap to edit values, then "Save"
 - [ ] **Confidence-gated** — auto-save if AI's portion_insight.score ≥ 70, else editable
 
-**Your answer:** ___________
+**Your answer:** Editable preview before save (default)
 
 ### 5. Editing AI's estimates
 If user finds AI's calorie or portion guess wrong:
 
 - [ ] **Per-food row editor** — change calories/macros per detected food
 - [ ] **Whole-meal scale** — slider to adjust portion size (0.5x, 1x, 1.5x) that scales all macros
-- [ ] **Both**
+- [x] **Both**
 - [ ] **None — user must accept AI's answer or retake**
 
-**Your answer:** ___________
+**Your answer:** Both — per-food row editor + whole-meal scale slider (default)
 
 ### 6. What if AI says "not food"?
 Backend returns `foods: []` and explains in `portion_insight.main_text`.
 
 - [ ] **Show the explanation + "Try another photo" button**
 - [ ] **Auto-redirect to manual entry sheet** (B9, already shipped)
-- [ ] **Both — explanation card with "Edit manually" link**
+- [x] **Both — explanation card with "Edit manually" link**
 
-**Your answer:** ___________
+**Your answer:** Explanation card + retake + "Edit manually" link (default)
 
 ### 7. Errors (OpenAI timeout / rate limit)
 - [ ] **Just a snackbar, user retries**
-- [ ] **Big error screen + "Try again" + "Add manually instead"**
+- [x] **Big error screen + "Try again" + "Add manually instead"**
 
-**Your answer:** ___________
+**Your answer:** Error screen + retry + manual fallback (default)
 
 ### 8. Meal type hint
 Backend accepts `meal_type_hint` (breakfast/lunch/dinner/snack) to bias the AI. Where does it come from?
 
 - [ ] **User picks before taking photo** (extra tap)
-- [ ] **Auto-pick from time-of-day** (B9's heuristic — already in code)
+- [x] **Auto-pick from time-of-day** (B9's heuristic — already in code)
 - [ ] **AI decides; we accept its `suggested_meal_type`**
 
-**Your answer:** ___________
+**Your answer:** Auto from time-of-day, user can override on result screen (default)
 
 ### 9. Premium gating
 Per `PremiumGateService.mealScanBeyond5Daily`: free user gets 5 scans/day, premium unlimited.
 
-- [ ] **Show remaining count** ("3/5 scans left today") at top of scan screen
+- [x] **Show remaining count** ("3/5 scans left today") at top of scan screen
 - [ ] **No counter, just show paywall on 6th attempt**
 
-**Your answer:** ___________
+**Your answer:** Show "N/5 scans left today" (default)
 
 ### 10. Post-save UX
-- [ ] **Pop back to dashboard, meal appears in list**
+- [x] **Pop back to dashboard, meal appears in list**
 - [ ] **Show success screen with "View in journal" / "Add another"**
 
-**Your answer:** ___________
+**Your answer:** Pop to dashboard, meal in list (default)
 
 ---
 

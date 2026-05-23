@@ -9,6 +9,7 @@ class Meal {
   final double carbsG;
   final double fatG;
   final String? imageUrl;
+  final String? scanSource; // 'ai_scan' | 'manual' | 'barcode' | 'recipe'
   final DateTime consumedAt;
 
   const Meal({
@@ -20,6 +21,7 @@ class Meal {
     required this.carbsG,
     required this.fatG,
     this.imageUrl,
+    this.scanSource,
     required this.consumedAt,
   });
 
@@ -34,6 +36,7 @@ class Meal {
       carbsG: _asDouble(json['carbs_g'] ?? json['total_carbs_g']),
       fatG: _asDouble(json['fat_g'] ?? json['total_fat_g']),
       imageUrl: json['image_url']?.toString(),
+      scanSource: json['scan_source']?.toString(),
       consumedAt: _asDate(json['consumed_at']),
     );
   }
