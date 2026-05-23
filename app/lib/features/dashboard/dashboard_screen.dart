@@ -7,10 +7,12 @@ import '../../shared/widgets/app_error_view.dart';
 import '../../shared/widgets/skeleton.dart';
 import 'providers/dashboard_provider.dart';
 import '../habits/widgets/habits_today_section.dart';
+import '../meal_planner/screens/meal_planner_screen.dart';
 import 'widgets/add_food_button.dart';
 import 'widgets/dashboard_header.dart';
 import 'widgets/macros_row.dart';
 import 'widgets/meal_entry_sheet.dart';
+import 'widgets/meal_planner_cta_card.dart';
 import 'widgets/water_weekly_chart.dart';
 import 'widgets/meals_section.dart';
 import 'widgets/todays_summary_section.dart';
@@ -101,6 +103,10 @@ class DashboardScreen extends ConsumerWidget {
                       // errors so the rest of the dashboard remains
                       // usable.
                       const HabitsTodaySection(),
+                      // F4 entry point — opens the weekly plan view.
+                      MealPlannerCtaCard(
+                        onTap: () => MealPlannerScreen.open(context),
+                      ),
                     ],
                   ),
                 ),
