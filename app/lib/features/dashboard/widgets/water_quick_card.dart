@@ -72,6 +72,12 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
   Future<void> _showPortionPicker() async {
     final picked = await showModalBottomSheet<int>(
       context: context,
+      // isScrollControlled lets the sheet expand to accommodate the
+      // keyboard when the "Custom (ml)" TextField is focused. Without
+      // this, the sheet is locked to ~half-screen and the keyboard
+      // pushes the inner Column into negative space → an infinite-width
+      // BoxConstraints assertion cascade that freezes the app.
+      isScrollControlled: true,
       backgroundColor: const Color(0xFF142346),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),

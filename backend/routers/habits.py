@@ -19,6 +19,79 @@ logger = get_logger(__name__)
 router = APIRouter()
 
 
+# --- Schema drift adapter ---
+#
+# Prod `habits` table actually uses these column names (verified 2026-05-23
+# via service-role probes):
+#   title              (our Pydantic field is `name`)
+#   display_order      (our field is `sort_order`)
+#   schedule_type      (our field is `schedule`)
+#   days_of_week TEXT[] {mon,tue,wed,thu,fri,sat,sun}  (we use int[] custom_days)
+#   habit_type         (NOT NULL, default 'check' — not on our model)
+#   target_type, target_value, icon, is_active, created_at
+#
+# Backend (this file) and `models/habit.py` were written against an older
+# repo migration that used different names. Migration would be the right
+# fix, but doing it without diffing every prod row carries data-loss risk.
+# Instead we adapt at the router boundary so the API contract stays
+# stable while the DB stays untouched.
+
+_DOW_NAMES = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+
+
+def _row_to_api(row: dict) -> dict:
+    """Translate one prod `habits` row into the HabitResponse shape."""
+    days_raw = row.get("days_of_week") or []
+    if isinstance(days_raw, list):
+        custom_days = [
+            _DOW_NAMES.index(d.lower())
+            for d in days_raw
+            if isinstance(d, str) and d.lower() in _DOW_NAMES
+        ]
+    else:
+        custom_days = None
+    return {
+        "id": row.get("id"),
+        "user_id": row.get("user_id"),
+        "name": row.get("title", ""),
+        "icon": row.get("icon"),
+        "target_type": row.get("target_type", "boolean"),
+        "target_value": row.get("target_value"),
+        "schedule": row.get("schedule_type", "daily"),
+        "custom_days": custom_days or None,
+        "reminder_time": None,  # prod has no reminder column yet
+        "is_active": row.get("is_active", True),
+        "sort_order": row.get("display_order", 0),
+        "created_at": row.get("created_at"),
+    }
+
+
+def _api_to_row(payload: dict) -> dict:
+    """Translate inbound HabitCreate/HabitUpdate payload to prod columns."""
+    out: dict = {}
+    if "name" in payload:
+        out["title"] = payload["name"]
+    if "icon" in payload:
+        out["icon"] = payload["icon"]
+    if "target_type" in payload:
+        out["target_type"] = payload["target_type"]
+    if "target_value" in payload:
+        out["target_value"] = payload["target_value"]
+    if "schedule" in payload:
+        out["schedule_type"] = payload["schedule"]
+    if "custom_days" in payload and payload["custom_days"] is not None:
+        out["days_of_week"] = [
+            _DOW_NAMES[i] for i in payload["custom_days"] if 0 <= i < 7
+        ]
+    if "sort_order" in payload:
+        out["display_order"] = payload["sort_order"]
+    if "is_active" in payload:
+        out["is_active"] = payload["is_active"]
+    # `habit_type` is NOT NULL with default 'check' in prod; only set on
+    # create. Update paths don't include it (the row already has a value).
+    return out
+
+
 @router.get("", response_model=list[HabitResponse])
 async def list_habits(user_id: str = Depends(get_current_user)):
     """List active habits with completed_today + current_streak derived fields."""
@@ -28,10 +101,10 @@ async def list_habits(user_id: str = Depends(get_current_user)):
         .select("*")
         .eq("user_id", user_id)
         .eq("is_active", True)
-        .order("sort_order")
+        .order("display_order")
         .execute()
     )
-    habits = res.data or []
+    rows = res.data or []
 
     today = date.today()
     completions_today = (
@@ -44,10 +117,12 @@ async def list_habits(user_id: str = Depends(get_current_user)):
     )
     done_today = {c["habit_id"] for c in (completions_today.data or [])}
 
-    # Add derived fields
-    for h in habits:
+    habits = []
+    for row in rows:
+        h = _row_to_api(row)
         h["completed_today"] = h["id"] in done_today
         h["current_streak"] = 0  # cheap default; full streak via /habits/streak
+        habits.append(h)
     return habits
 
 
@@ -57,13 +132,14 @@ async def create_habit(
     user_id: str = Depends(get_current_user),
 ):
     supabase = get_supabase()
-    payload = habit.model_dump(mode="json")
+    payload = _api_to_row(habit.model_dump(mode="json"))
     payload["user_id"] = user_id
     payload["is_active"] = True
+    payload.setdefault("habit_type", "check")  # NOT NULL in prod
     res = supabase.table("habits").insert(payload).execute()
     if not res.data:
         raise ValidationError("Failed to create habit")
-    h = res.data[0]
+    h = _row_to_api(res.data[0])
     h["completed_today"] = False
     h["current_streak"] = 0
     return h
@@ -76,7 +152,7 @@ async def update_habit(
     user_id: str = Depends(get_current_user),
 ):
     supabase = get_supabase()
-    payload = update.model_dump(exclude_unset=True, mode="json")
+    payload = _api_to_row(update.model_dump(exclude_unset=True, mode="json"))
     if not payload:
         raise ValidationError("Empty update")
     res = (
@@ -88,7 +164,7 @@ async def update_habit(
     )
     if not res.data:
         raise NotFound("Habit")
-    h = res.data[0]
+    h = _row_to_api(res.data[0])
     h["completed_today"] = False
     h["current_streak"] = 0
     return h
