@@ -218,6 +218,11 @@ async def generate_daily_insight(user_id: str, target_date: date | None = None) 
         "main_insight": {"text": today_insight} if today_insight else None,
         "small_insights": payload.get("tips"),
         "recommendation": payload.get("recommended_action"),
+        # daily_recap is NOT NULL in prod. We don't have a separate
+        # recap field in the LLM payload yet, so dump the whole payload
+        # under a `summary` key — gives future migrations / debugging
+        # something to read while satisfying the constraint.
+        "daily_recap": {"summary": today_insight or "", "raw": payload},
         "ai_model": settings.openai_model_chat,
         "tokens_used": getattr(resp.usage, "total_tokens", None) if hasattr(resp, "usage") else None,
     }
