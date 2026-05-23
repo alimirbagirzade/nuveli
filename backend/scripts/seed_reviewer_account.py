@@ -51,7 +51,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from config import get_settings  # noqa: E402
-from core.supabase_client import init_supabase  # noqa: E402
+from core.supabase_client import get_supabase  # noqa: E402
 
 DEFAULT_EMAIL = "reviewer@nuveli.app"
 DEFAULT_PASSWORD = "ReviewPass2026!"
@@ -267,7 +267,7 @@ def main() -> int:
         )
         return 2
 
-    supabase = init_supabase()
+    supabase = get_supabase()
     print(
         f"Seeding reviewer account ({args.email}) into "
         f"{settings.app_env} ({settings.supabase_url})"

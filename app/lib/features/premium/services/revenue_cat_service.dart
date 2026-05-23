@@ -128,7 +128,13 @@ class RevenueCatService {
   // ────────────────────────────────────────────────────────
 
   /// Anlık premium kontrolü (cache'den okur, network call yapmaz).
+  ///
+  /// Returns false when the SDK is not configured (e.g. dev build
+  /// without RC_APPLE_KEY / RC_GOOGLE_KEY). Calling `Purchases.*` on
+  /// an unconfigured SDK is a *native* fatal that crashes the app —
+  /// the Dart try/catch can't catch it.
   Future<bool> isPremium() async {
+    if (!_initialized) return false;
     try {
       final info = await Purchases.getCustomerInfo();
       return _hasPremiumEntitlement(info);
@@ -140,6 +146,7 @@ class RevenueCatService {
 
   /// Network'ten yeni CustomerInfo çek (cache'i invalid et).
   Future<CustomerInfo?> refreshCustomerInfo() async {
+    if (!_initialized) return null;
     try {
       await Purchases.invalidateCustomerInfoCache();
       return await Purchases.getCustomerInfo();
@@ -155,6 +162,7 @@ class RevenueCatService {
 
   /// Premium expiration tarihi (varsa).
   Future<DateTime?> premiumExpiresAt() async {
+    if (!_initialized) return null;
     try {
       final info = await Purchases.getCustomerInfo();
       final ent = info.entitlements.active[entitlementId];
@@ -171,6 +179,7 @@ class RevenueCatService {
 
   /// RC dashboard'da tanımlı "default" offering'i getir.
   Future<Offering?> getDefaultOffering() async {
+    if (!_initialized) return null;
     try {
       final offerings = await Purchases.getOfferings();
       return offerings.current; // dashboard'da "current" işaretli olan
@@ -182,6 +191,7 @@ class RevenueCatService {
 
   /// Tüm offerings (gelişmiş kullanım için).
   Future<Offerings?> getAllOfferings() async {
+    if (!_initialized) return null;
     try {
       return await Purchases.getOfferings();
     } catch (e) {
@@ -198,6 +208,11 @@ class RevenueCatService {
   /// Dönüş: true = premium oldu, false = user iptal etti / başarısız.
   /// Hata atarsa = network/store hatası (UI'da göster).
   Future<PurchaseOutcome> purchase(Package package) async {
+    if (!_initialized) {
+      return const PurchaseOutcome.failed(
+        'Premium purchases are not configured in this build.',
+      );
+    }
     try {
       // RC 8.x: purchasePackage returns CustomerInfo directly (not wrapped).
       // (v9+ will introduce PurchaseResult — when upgrading, adapt back.)
@@ -230,6 +245,11 @@ class RevenueCatService {
   /// Restore purchases (yeni cihaz / reinstall).
   /// App Store kuralı: paywall'da "Restore" butonu zorunlu.
   Future<PurchaseOutcome> restore() async {
+    if (!_initialized) {
+      return const PurchaseOutcome.failed(
+        'Premium purchases are not configured in this build.',
+      );
+    }
     try {
       final info = await Purchases.restorePurchases();
       final granted = _hasPremiumEntitlement(info);
