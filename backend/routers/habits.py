@@ -38,6 +38,25 @@ router = APIRouter()
 
 _DOW_NAMES = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
 
+# Prod has rows with `target_type='check'` plus the values our Literal
+# allows. Anything outside the Literal makes Pydantic 500 the entire
+# response, so normalise unknowns to 'boolean' (a checkbox habit is
+# semantically a boolean target).
+_VALID_TARGET_TYPES = {"boolean", "count", "duration_min", "amount_ml"}
+_VALID_SCHEDULES = {"daily", "weekdays", "custom"}
+
+
+def _norm_target_type(raw) -> str:
+    if isinstance(raw, str) and raw in _VALID_TARGET_TYPES:
+        return raw
+    return "boolean"
+
+
+def _norm_schedule(raw) -> str:
+    if isinstance(raw, str) and raw in _VALID_SCHEDULES:
+        return raw
+    return "daily"
+
 
 def _row_to_api(row: dict) -> dict:
     """Translate one prod `habits` row into the HabitResponse shape."""
@@ -55,9 +74,9 @@ def _row_to_api(row: dict) -> dict:
         "user_id": row.get("user_id"),
         "name": row.get("title", ""),
         "icon": row.get("icon"),
-        "target_type": row.get("target_type", "boolean"),
+        "target_type": _norm_target_type(row.get("target_type")),
         "target_value": row.get("target_value"),
-        "schedule": row.get("schedule_type", "daily"),
+        "schedule": _norm_schedule(row.get("schedule_type")),
         "custom_days": custom_days or None,
         "reminder_time": None,  # prod has no reminder column yet
         "is_active": row.get("is_active", True),
