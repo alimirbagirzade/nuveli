@@ -1,4 +1,4 @@
-# Nuveli — Session Handoff (last updated 2026-05-23)
+# Nuveli — Session Handoff (last updated 2026-05-23, late afternoon)
 
 > **Bu doküman**: bir Claude Code oturumundan diğerine geçişi temiz tutar.
 > Yeni chat açıldığında okunur, "neredeyiz, sırada ne var" net olur.
@@ -12,9 +12,27 @@
 
 ## Şu anda neredeyiz
 
-**Backend + infrastructure: %100 hazır.** UI tarafı: launch için gerekli iki büyük feature kaldı (AI Coach, AI Meal Scan). Geri kalan her şey shipped + canlıda.
+**Sprint A artık tamam — 3 büyük UI gap'i de PR'da.** Backend + infrastructure zaten %100. UI tarafında F1 (Meal Scan), F2 (AI Coach insight-only), F4 (Meal Planner v0) hepsi stacked PR olarak açık ve merge bekliyor. F3 (Analytics) + F5 (Habits) önceden shipped.
 
-### Bu son oturumda (2026-05-22 → 23) shipped olan PR'lar
+### Bu öğleden sonraki sesyonda (2026-05-23 PM) main'e merge edilen PR'lar
+
+```
+PR #129  feat(planner): weekly meal plan view (F4 v0)        squash-merged
+PR #128  feat(coach): AI Coach daily-insight UI (F2 v0)      squash-merged
+PR #124  feat(meal): AI meal scan UI (F1)                    squash-merged
+```
+
+Not: #125 ve #126 başlangıçta stacked PR olarak açılmıştı; base branch'leri squash-merge'de silinince GitHub otomatik kapattı. #128 ve #129 onların main üzerine rebase edilmiş yenileri (aynı diff).
+
+Bu üç merge'de toplam 51 yeni test (410 → 461 host), analyze temiz (pre-existing 4 warning aynı).
+
+### F2 v0 önemli daralma
+
+Design doc'taki `/coach/chat` + `/coach/audio` backend'de **yok** — `backend/routers/ai_coach.py` sadece `GET /coach/today` + `POST /coach/generate` + `POST /coach/apply-tip` ship'liyor. F2 v0 bu yüzden **insight-only**: günlük cached insight + nutrition score arc + tip listesi + recommended action apply. Chat/TTS/persona display deferred. Design questions Q11-Q21 backend gerçeğine göre güncellendi (#128 commit'inde).
+
+Ali talebi: **lokal mood-bubble katmanı** (OpenAI'siz, persona × situation copy bank) → ayrı sesyon. Bu sesyonda dokunulmadı, sadece yol haritasına yazıldı.
+
+### Bu sabah / dün gece shipped olan PR'lar (sesyon başında main'de olanlar)
 
 ```
 5aec41a  #122  docs: design questions for F1 Meal Scan + F2 AI Coach
@@ -38,37 +56,39 @@ e17d877  #110  ops: assetlinks.json 2nd fingerprint
 
 #96-#107 (security top-5: secure session storage, prompt injection guards, JWKS cache TTL, deep link validator + listener, .env out of build, integration tests, App Links activation, notification route validation, scheduler allowlist audit, more).
 
-### Test counts (canlıda)
+### Test counts (PR'lar merge edilince main'de olacak)
 
-- Flutter: **410 host-side + 5 device-level integration**
-- Backend: **139 pytest active + 8 skipped**
+- Flutter: **461 host-side + 5 device-level integration** (410 → +51 bu sesyonda)
+- Backend: **139 pytest active + 8 skipped** (değişmedi)
 - analyze: clean (4 pre-existing warnings in `lib/main_integration_snippet.dart`)
 
 ---
 
 ## Sırada ne var
 
-### 1. F1 — AI Meal Scan UI (2-3 gün)
-- Backend ready: `POST /meals/scan` (GPT-4o Vision)
-- Flutter: placeholder ekranı var, gerçek UI yok
-- **Bloker**: tasarım kararları → cevaplar `docs/product/design-questions-2026-05-23.md` (1-10 numaralı sorular)
+### 1. Cihaz QA — üç feature de
+Sırasıyla yürü:
+- **F1**: Scan tab → kamera/galeri → preview → analyze → result düzenle → save → dashboard'da görünür mü, "N/5" sayacı düşüyor mu, 6. tıklamada paywall açılıyor mu
+- **F2**: Coach tab → günlük insight render mı, "Regenerate (1 free / day)" 1 kez çalışıp upgrade'e dönüyor mu, recommended action butonu (varsa) snackbar veriyor mu
+- **F4**: Dashboard "Plan your week" tile → planner ekranı, hafta navigatörü, free user next-week paywall'a düşüyor mu, grocery sheet açılıyor mu
 
-### 2. F2 — AI Coach UI (4-5 gün) ⭐ BÜYÜK
-- "Nuveli — AI Calorie Coach" — uygulamanın adındaki feature
-- Backend ready: `/coach/insight`, `/coach/chat`, TTS audio, crisis detection
-- Flutter: `lib/features/coach/` klasörü dahi yok
-- **Bloker**: tasarım kararları → cevaplar `docs/product/design-questions-2026-05-23.md` (11-21 numaralı sorular)
+### 2. Mood-bubble v0 (Ali talebi — ayrı sesyon)
+Backend `/coach/today` zaten zengin insight üretiyor. Bunun **üstüne** lokal mood-bubble katmanı: persona × durum copy bank, meal log / water düşük / streak milestone anlarında anlık metin. Sıfır OpenAI maliyeti. Bir yarım gün iş.
 
-### 3. F4 — Meal Planner UI (3-4 gün)
-- Backend ready: `/meal-plans/*` (recipes, weekly plan, AI generate, grocery list)
-- Flutter yok
-- Sprint B sonrasına bırakıldı
+### 3. F4 v0.1 polish
+- Add-meal-to-plan modal (manual entry → `POST /meal-plans`)
+- AI generate dietary preferences sheet → repo metodu hazır, sadece UI lazım
+- Edit/delete plan entries
+- Recipe browser
 
-### 4. Operasyonel
+### 4. S3 — go_router refactor (notif deep link'leri için)
+Şu an `notification_service.dart` payload route `/coach` veya `/meals/scan` döndürüyor, ama router yok → tap navigate etmiyor. Push notif tıklayan kullanıcı dashboard'a düşüyor. Refactor büyük (her tab + her ekran), Sprint C için bekliyor.
+
+### 5. Operasyonel
 - ✅ Migration 018 (Ali applied 2026-05-22 night)
 - ⏳ assetlinks.json cPanel upload — sideload test için, App Store deploy için zorunlu değil
 - ⏳ Apple Developer enrollment (paused, $99, sonra)
-- ⏳ Yeni APK build + Play Console Internal Testing upload (sabah)
+- ⏳ Yeni APK build + Play Console Internal Testing upload (F1+F2+F4 main'de — versionCode bump et ve build al)
 
 ---
 
@@ -136,5 +156,5 @@ Uygulamayı cihazda test ettim, şu sorun var: [açıkla]. Düzelt.
 
 ---
 
-**Hazırlandı:** 2026-05-23 (gecenin sonu)
-**Bir sonraki güncelleme:** F1 veya F2'den ilki shipped olunca
+**Hazırlandı:** 2026-05-23 (öğleden sonra, F1+F2+F4 PR'ları açıldıktan sonra)
+**Bir sonraki güncelleme:** üç PR main'e land edince + cihaz QA tamamlanınca
