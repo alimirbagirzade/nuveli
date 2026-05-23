@@ -70,7 +70,7 @@ class ApiEndpoints {
   // ---------------------------------------------------------------
   static const String coachToday = '/coach/today';
   static const String coachApplyTip = '/coach/apply-tip';
-  static const String coachRefresh = '/coach/refresh';
+  static const String coachGenerate = '/coach/generate';
 
   // ---------------------------------------------------------------
   // Analytics
