@@ -103,13 +103,26 @@ class TodaySummary {
   });
 
   factory TodaySummary.fromJson(Map<String, dynamic> json) {
+    // Backend ships these as `consumed_*` / `daily_*_target` / `meal_count_today`.
+    // The older names below were never live — accept both so callers
+    // can't be coupled to either side's wording.
+    int asInt(dynamic v) {
+      if (v is num) return v.toInt();
+      return 0;
+    }
+
     return TodaySummary(
-      caloriesConsumed: (json['calories_consumed'] as num?)?.toInt() ?? 0,
-      caloriesTarget: (json['calories_target'] as num?)?.toInt() ?? 0,
-      proteinConsumedG: (json['protein_consumed_g'] as num?)?.toInt() ?? 0,
-      carbsConsumedG: (json['carbs_consumed_g'] as num?)?.toInt() ?? 0,
-      fatConsumedG: (json['fat_consumed_g'] as num?)?.toInt() ?? 0,
-      mealsLogged: (json['meals_logged'] as num?)?.toInt() ?? 0,
+      caloriesConsumed:
+          asInt(json['consumed_calories'] ?? json['calories_consumed']),
+      caloriesTarget:
+          asInt(json['daily_calorie_target'] ?? json['calories_target']),
+      proteinConsumedG:
+          asInt(json['consumed_protein_g'] ?? json['protein_consumed_g']),
+      carbsConsumedG:
+          asInt(json['consumed_carbs_g'] ?? json['carbs_consumed_g']),
+      fatConsumedG: asInt(json['consumed_fat_g'] ?? json['fat_consumed_g']),
+      mealsLogged:
+          asInt(json['meal_count_today'] ?? json['meals_logged']),
     );
   }
 
