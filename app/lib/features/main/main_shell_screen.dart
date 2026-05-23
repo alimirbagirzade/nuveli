@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../analytics/analytics_screen.dart';
 import '../dashboard/dashboard_screen.dart';
+import '../meal/screens/meal_scan_screen.dart';
 import '../profile/goals_profile_screen.dart';
 import '../settings/settings_screen.dart';
-import 'placeholder_tab_screen.dart';
 
 /// The persistent shell that hosts the three primary tabs of the app.
 ///
@@ -47,14 +47,7 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
         index: _index,
         children: const [
           DashboardScreen(),
-          PlaceholderTabScreen(
-            icon: Icons.camera_alt_outlined,
-            title: 'AI Meal Scan',
-            subtitle: 'Coming in v1.1',
-            description:
-                'Point your camera at a meal and let our AI estimate calories + '
-                'macros. Until then, log meals manually from the Dashboard.',
-          ),
+          MealScanScreen(),
           AnalyticsScreen(),
           GoalsProfileScreen(),
           SettingsScreen(),
