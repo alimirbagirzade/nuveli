@@ -65,8 +65,10 @@ async def gather_user_7day_data(user_id: str) -> dict[str, Any]:
         .execute()
     )
     habits_res = (
+        # `name` column doesn't exist in prod (it's `title`); we only
+        # use `len(habits)` here so just select id and avoid the join.
         supabase.table("habits")
-        .select("id, name")
+        .select("id")
         .eq("user_id", user_id)
         .eq("is_active", True)
         .execute()

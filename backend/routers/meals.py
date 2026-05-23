@@ -47,8 +47,13 @@ async def create_meal(
 ):
     supabase = get_supabase()
 
-    # 1. Insert meal row
-    meal_payload = meal.model_dump(exclude={"foods"}, mode="json")
+    # 1. Insert meal row.
+    # `notes` is in our Pydantic model but the prod `meals` table doesn't
+    # have that column yet; strip it (and any other unknown drift) so
+    # PostgREST doesn't 500.
+    meal_payload = meal.model_dump(
+        exclude={"foods", "notes"}, mode="json", exclude_none=True
+    )
     meal_payload["user_id"] = user_id
     res = supabase.table("meals").insert(meal_payload).execute()
     if not res.data:
