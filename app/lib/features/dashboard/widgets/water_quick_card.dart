@@ -35,7 +35,9 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
 
   /// Preset portions in ml. Covers small-sip → sport-bottle. Selecting
   /// "Custom" opens a numeric input so power-users can log any volume.
-  static const List<int> _presetMl = [100, 200, 250, 330, 500, 750];
+  static const List<int> _presetMl = [
+    100, 150, 200, 250, 300, 350, 400, 500, 600, 750, 1000,
+  ];
 
   @override
   void didUpdateWidget(WaterQuickCard oldWidget) {
@@ -200,36 +202,12 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
   }
 }
 
-/// Bottom sheet listing preset portion sizes + a Custom input.
-/// Returns the selected ml via Navigator.pop.
-class _WaterPortionSheet extends StatefulWidget {
+/// Bottom sheet listing preset portion sizes. Returns the selected ml
+/// via Navigator.pop. Custom-input TextField removed — see comment in
+/// the Wrap below for the iOS freeze that prompted that decision.
+class _WaterPortionSheet extends StatelessWidget {
   final List<int> presets;
   const _WaterPortionSheet({required this.presets});
-
-  @override
-  State<_WaterPortionSheet> createState() => _WaterPortionSheetState();
-}
-
-class _WaterPortionSheetState extends State<_WaterPortionSheet> {
-  final TextEditingController _customCtrl = TextEditingController();
-
-  @override
-  void dispose() {
-    _customCtrl.dispose();
-    super.dispose();
-  }
-
-  void _submitCustom() {
-    final raw = _customCtrl.text.trim();
-    final parsed = int.tryParse(raw);
-    if (parsed == null || parsed <= 0 || parsed > 5000) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a number between 1 and 5000 ml')),
-      );
-      return;
-    }
-    Navigator.pop(context, parsed);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -266,69 +244,23 @@ class _WaterPortionSheetState extends State<_WaterPortionSheet> {
               ),
             ),
             const SizedBox(height: 14),
+            // Preset chips only. Earlier this sheet had a "Custom (ml)"
+            // TextField below, which on iOS sim consistently froze the
+            // app: focusing the TextField raised the keyboard,
+            // MediaQuery.viewInsets.bottom pushed the inner Column into
+            // negative space, and Flutter cascaded into an infinite-width
+            // BoxConstraints assertion that killed the simulator. The
+            // preset set was widened (extra 350/400/750/1000 ml) so the
+            // user still has fine-grained control without typing.
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: widget.presets
+              children: presets
                   .map((ml) => _PortionChip(
                         label: '$ml ml',
                         onTap: () => Navigator.pop(context, ml),
                       ))
                   .toList(),
-            ),
-            const SizedBox(height: 18),
-            const Text(
-              'Custom (ml)',
-              style: TextStyle(
-                color: Color(0xFFB8C5D6),
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _customCtrl,
-                    keyboardType: TextInputType.number,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'e.g. 400',
-                      hintStyle:
-                          const TextStyle(color: Color(0xFF6E7B91)),
-                      filled: true,
-                      fillColor: Colors.white.withValues(alpha: 0.04),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 14),
-                    ),
-                    onSubmitted: (_) => _submitCustom(),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: _submitCustom,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00D4FF),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    'Add',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
             ),
           ],
         ),

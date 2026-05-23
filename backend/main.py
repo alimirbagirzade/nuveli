@@ -136,7 +136,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
         content={
             "error": "InternalServerError",
             "detail": "An unexpected error occurred",
-            "_debug_exc": f"{type(exc).__name__}: {str(exc)[:500]}",
+            "_debug_exc": f"{type(exc).__name__}: {str(exc)[:2000]}",
         },
     )
 
