@@ -23,6 +23,7 @@ from core.exceptions import NuveliException
 from core.rate_limit import limiter
 
 from routers import (
+    auth,
     profiles,
     meals,
     water,
@@ -131,6 +132,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 
 # --- Routers ---
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(profiles.router, prefix="/me", tags=["profiles"])
 app.include_router(meals.router, prefix="/meals", tags=["meals"])
 app.include_router(water.router, prefix="/water", tags=["water"])

@@ -22,7 +22,6 @@ import '../widgets/auth_primary_button.dart';
 import '../widgets/auth_social_button.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/password_strength_indicator.dart';
-import 'email_verification_screen.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
@@ -67,16 +66,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             email: _emailCtl.text.trim(),
             password: _passCtl.text,
           );
-      // Email confirmation açıksa → EmailVerificationScreen
-      // Açık değilse → AuthGate Dashboard'a alır
+      // Signup now returns a real session (backend auto-confirms then we
+      // signInWithPassword). The auth listener on the app shell sees the
+      // new session and routes to the onboarding wizard / dashboard, so
+      // we don't push anywhere — just bail out of this screen.
+      // If a future build re-enables real email verification, push
+      // EmailVerificationScreen here gated on response.session == null.
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              EmailVerificationScreen(email: _emailCtl.text.trim()),
-        ),
-      );
     } on NuveliAuthException catch (e) {
       if (mounted) setState(() => _error = e.userMessage);
     } catch (e) {
