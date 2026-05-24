@@ -1898,4 +1898,43 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mealHistoryEmptyBody =>
       'Tes repas enregistrés apparaîtront ici, regroupés par jour.';
+
+  @override
+  String get settingsCoachSection => 'Coach';
+
+  @override
+  String get settingsYourData => 'Tes données';
+
+  @override
+  String get settingsExportData => 'Exporter mes données';
+
+  @override
+  String get settingsExportDataDesc =>
+      'Télécharge chaque repas, hydratation, poids, habitude et insight en JSON. Droit à la portabilité (RGPD art. 20).';
+
+  @override
+  String get settingsExportFailed => 'Impossible d\'exporter tes données.';
+
+  @override
+  String get settingsDeleteDesc =>
+      'Supprime définitivement ton profil, tes repas et toutes les données.';
+
+  @override
+  String get settingsDeleteTitle => 'Supprimer le compte ?';
+
+  @override
+  String get settingsDeleteConfirmBody =>
+      'Ceci supprime définitivement ton profil, repas, hydratation, poids, habitudes et abonnements. Irréversible.';
+
+  @override
+  String get settingsDeleteType => 'Tape DELETE pour confirmer :';
+
+  @override
+  String get settingsDeleteFailed => 'Impossible de supprimer le compte.';
+
+  @override
+  String get settingsLanguageItalian => 'Italien';
+
+  @override
+  String get settingsLanguageRussian => 'Russe';
 }

@@ -717,5 +717,17 @@
   "mealHistoryTitle": "Mahlzeiten-Verlauf",
   "historyYesterday": "Gestern",
   "mealHistoryEmptyTitle": "Noch keine Mahlzeiten erfasst",
-  "mealHistoryEmptyBody": "Deine erfassten Mahlzeiten erscheinen hier, nach Tag gruppiert."
+  "mealHistoryEmptyBody": "Deine erfassten Mahlzeiten erscheinen hier, nach Tag gruppiert.",
+  "settingsCoachSection": "Coach",
+  "settingsYourData": "Deine Daten",
+  "settingsExportData": "Meine Daten exportieren",
+  "settingsExportDataDesc": "Lade jede Mahlzeit, jeden Wasser-, Gewichts-, Gewohnheits- und Insight-Eintrag als JSON herunter. Recht auf Datenübertragbarkeit (DSGVO Art. 20).",
+  "settingsExportFailed": "Daten konnten nicht exportiert werden.",
+  "settingsDeleteDesc": "Entfernt dein Profil, deine Mahlzeiten und alle Daten dauerhaft.",
+  "settingsDeleteTitle": "Konto löschen?",
+  "settingsDeleteConfirmBody": "Dies löscht dein Profil, alle Mahlzeiten-, Wasser- und Gewichtsdaten, Gewohnheiten und Abos dauerhaft. Nicht rückgängig zu machen.",
+  "settingsDeleteType": "Zum Bestätigen DELETE eingeben:",
+  "settingsDeleteFailed": "Konto konnte nicht gelöscht werden.",
+  "settingsLanguageItalian": "Italienisch",
+  "settingsLanguageRussian": "Russisch"
 }

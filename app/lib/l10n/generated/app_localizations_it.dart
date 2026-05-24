@@ -1890,4 +1890,43 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mealHistoryEmptyBody =>
       'I pasti che registri appariranno qui, raggruppati per giorno.';
+
+  @override
+  String get settingsCoachSection => 'Coach';
+
+  @override
+  String get settingsYourData => 'I tuoi dati';
+
+  @override
+  String get settingsExportData => 'Esporta i miei dati';
+
+  @override
+  String get settingsExportDataDesc =>
+      'Scarica ogni pasto, acqua, peso, abitudine e insight come JSON. Diritto alla portabilità dei dati (GDPR art. 20).';
+
+  @override
+  String get settingsExportFailed => 'Impossibile esportare i tuoi dati.';
+
+  @override
+  String get settingsDeleteDesc =>
+      'Rimuove definitivamente il profilo, i pasti e tutti i dati.';
+
+  @override
+  String get settingsDeleteTitle => 'Eliminare l\'account?';
+
+  @override
+  String get settingsDeleteConfirmBody =>
+      'Elimina definitivamente profilo, pasti, acqua, peso, abitudini e abbonamenti. Irreversibile.';
+
+  @override
+  String get settingsDeleteType => 'Scrivi DELETE per confermare:';
+
+  @override
+  String get settingsDeleteFailed => 'Impossibile eliminare l\'account.';
+
+  @override
+  String get settingsLanguageItalian => 'Italiano';
+
+  @override
+  String get settingsLanguageRussian => 'Russo';
 }

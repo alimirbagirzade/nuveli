@@ -717,5 +717,17 @@
   "mealHistoryTitle": "Cronologia pasti",
   "historyYesterday": "Ieri",
   "mealHistoryEmptyTitle": "Nessun pasto registrato",
-  "mealHistoryEmptyBody": "I pasti che registri appariranno qui, raggruppati per giorno."
+  "mealHistoryEmptyBody": "I pasti che registri appariranno qui, raggruppati per giorno.",
+  "settingsCoachSection": "Coach",
+  "settingsYourData": "I tuoi dati",
+  "settingsExportData": "Esporta i miei dati",
+  "settingsExportDataDesc": "Scarica ogni pasto, acqua, peso, abitudine e insight come JSON. Diritto alla portabilità dei dati (GDPR art. 20).",
+  "settingsExportFailed": "Impossibile esportare i tuoi dati.",
+  "settingsDeleteDesc": "Rimuove definitivamente il profilo, i pasti e tutti i dati.",
+  "settingsDeleteTitle": "Eliminare l'account?",
+  "settingsDeleteConfirmBody": "Elimina definitivamente profilo, pasti, acqua, peso, abitudini e abbonamenti. Irreversibile.",
+  "settingsDeleteType": "Scrivi DELETE per confermare:",
+  "settingsDeleteFailed": "Impossibile eliminare l'account.",
+  "settingsLanguageItalian": "Italiano",
+  "settingsLanguageRussian": "Russo"
 }

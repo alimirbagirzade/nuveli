@@ -815,5 +815,53 @@
   "mealHistoryEmptyBody": "Eklediğin öğünler burada güne göre gruplanır.",
   "@mealHistoryEmptyBody": {
     "description": "Empty-state body on the meal history screen."
+  },
+  "settingsCoachSection": "Koç",
+  "@settingsCoachSection": {
+    "description": "Settings: settingsCoachSection"
+  },
+  "settingsYourData": "Verilerin",
+  "@settingsYourData": {
+    "description": "Settings: settingsYourData"
+  },
+  "settingsExportData": "Verilerimi Dışa Aktar",
+  "@settingsExportData": {
+    "description": "Settings: settingsExportData"
+  },
+  "settingsExportDataDesc": "Tüm öğün, su, kilo, alışkanlık ve içgörü kayıtlarını JSON olarak indir. Veri taşınabilirliği hakkı (KVKK / GDPR Mad. 20).",
+  "@settingsExportDataDesc": {
+    "description": "Settings: settingsExportDataDesc"
+  },
+  "settingsExportFailed": "Verilerin dışa aktarılamadı.",
+  "@settingsExportFailed": {
+    "description": "Settings: settingsExportFailed"
+  },
+  "settingsDeleteDesc": "Profilini, öğünlerini ve tüm verilerini kalıcı olarak siler.",
+  "@settingsDeleteDesc": {
+    "description": "Settings: settingsDeleteDesc"
+  },
+  "settingsDeleteTitle": "Hesap silinsin mi?",
+  "@settingsDeleteTitle": {
+    "description": "Settings: settingsDeleteTitle"
+  },
+  "settingsDeleteConfirmBody": "Bu işlem profilini, tüm öğün, su, kilo geçmişini, alışkanlıkları ve abonelikleri kalıcı olarak siler. Geri alınamaz.",
+  "@settingsDeleteConfirmBody": {
+    "description": "Settings: settingsDeleteConfirmBody"
+  },
+  "settingsDeleteType": "Onaylamak için DELETE yaz:",
+  "@settingsDeleteType": {
+    "description": "Settings: settingsDeleteType"
+  },
+  "settingsDeleteFailed": "Hesap silinemedi.",
+  "@settingsDeleteFailed": {
+    "description": "Settings: settingsDeleteFailed"
+  },
+  "settingsLanguageItalian": "İtalyanca",
+  "@settingsLanguageItalian": {
+    "description": "Settings: settingsLanguageItalian"
+  },
+  "settingsLanguageRussian": "Rusça",
+  "@settingsLanguageRussian": {
+    "description": "Settings: settingsLanguageRussian"
   }
 }

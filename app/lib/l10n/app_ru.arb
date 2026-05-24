@@ -758,5 +758,17 @@
   "mealHistoryTitle": "История приёмов пищи",
   "historyYesterday": "Вчера",
   "mealHistoryEmptyTitle": "Пока нет записей о приёмах пищи",
-  "mealHistoryEmptyBody": "Записанные приёмы пищи появятся здесь, сгруппированные по дням."
+  "mealHistoryEmptyBody": "Записанные приёмы пищи появятся здесь, сгруппированные по дням.",
+  "settingsCoachSection": "Тренер",
+  "settingsYourData": "Твои данные",
+  "settingsExportData": "Экспортировать мои данные",
+  "settingsExportDataDesc": "Скачай все приёмы пищи, воду, вес, привычки и инсайты в JSON. Право на переносимость данных (GDPR ст. 20).",
+  "settingsExportFailed": "Не удалось экспортировать данные.",
+  "settingsDeleteDesc": "Безвозвратно удаляет профиль, приёмы пищи и все данные.",
+  "settingsDeleteTitle": "Удалить аккаунт?",
+  "settingsDeleteConfirmBody": "Это безвозвратно удалит профиль, все приёмы пищи, воду, историю веса, привычки и подписки. Отменить нельзя.",
+  "settingsDeleteType": "Введите DELETE для подтверждения:",
+  "settingsDeleteFailed": "Не удалось удалить аккаунт.",
+  "settingsLanguageItalian": "Итальянский",
+  "settingsLanguageRussian": "Русский"
 }

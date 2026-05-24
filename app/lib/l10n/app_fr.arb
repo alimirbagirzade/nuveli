@@ -717,5 +717,17 @@
   "mealHistoryTitle": "Historique des repas",
   "historyYesterday": "Hier",
   "mealHistoryEmptyTitle": "Aucun repas enregistré",
-  "mealHistoryEmptyBody": "Tes repas enregistrés apparaîtront ici, regroupés par jour."
+  "mealHistoryEmptyBody": "Tes repas enregistrés apparaîtront ici, regroupés par jour.",
+  "settingsCoachSection": "Coach",
+  "settingsYourData": "Tes données",
+  "settingsExportData": "Exporter mes données",
+  "settingsExportDataDesc": "Télécharge chaque repas, hydratation, poids, habitude et insight en JSON. Droit à la portabilité (RGPD art. 20).",
+  "settingsExportFailed": "Impossible d'exporter tes données.",
+  "settingsDeleteDesc": "Supprime définitivement ton profil, tes repas et toutes les données.",
+  "settingsDeleteTitle": "Supprimer le compte ?",
+  "settingsDeleteConfirmBody": "Ceci supprime définitivement ton profil, repas, hydratation, poids, habitudes et abonnements. Irréversible.",
+  "settingsDeleteType": "Tape DELETE pour confirmer :",
+  "settingsDeleteFailed": "Impossible de supprimer le compte.",
+  "settingsLanguageItalian": "Italien",
+  "settingsLanguageRussian": "Russe"
 }

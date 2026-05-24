@@ -1884,4 +1884,43 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get mealHistoryEmptyBody =>
       'Eklediğin öğünler burada güne göre gruplanır.';
+
+  @override
+  String get settingsCoachSection => 'Koç';
+
+  @override
+  String get settingsYourData => 'Verilerin';
+
+  @override
+  String get settingsExportData => 'Verilerimi Dışa Aktar';
+
+  @override
+  String get settingsExportDataDesc =>
+      'Tüm öğün, su, kilo, alışkanlık ve içgörü kayıtlarını JSON olarak indir. Veri taşınabilirliği hakkı (KVKK / GDPR Mad. 20).';
+
+  @override
+  String get settingsExportFailed => 'Verilerin dışa aktarılamadı.';
+
+  @override
+  String get settingsDeleteDesc =>
+      'Profilini, öğünlerini ve tüm verilerini kalıcı olarak siler.';
+
+  @override
+  String get settingsDeleteTitle => 'Hesap silinsin mi?';
+
+  @override
+  String get settingsDeleteConfirmBody =>
+      'Bu işlem profilini, tüm öğün, su, kilo geçmişini, alışkanlıkları ve abonelikleri kalıcı olarak siler. Geri alınamaz.';
+
+  @override
+  String get settingsDeleteType => 'Onaylamak için DELETE yaz:';
+
+  @override
+  String get settingsDeleteFailed => 'Hesap silinemedi.';
+
+  @override
+  String get settingsLanguageItalian => 'İtalyanca';
+
+  @override
+  String get settingsLanguageRussian => 'Rusça';
 }

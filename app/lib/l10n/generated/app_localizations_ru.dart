@@ -1891,4 +1891,43 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get mealHistoryEmptyBody =>
       'Записанные приёмы пищи появятся здесь, сгруппированные по дням.';
+
+  @override
+  String get settingsCoachSection => 'Тренер';
+
+  @override
+  String get settingsYourData => 'Твои данные';
+
+  @override
+  String get settingsExportData => 'Экспортировать мои данные';
+
+  @override
+  String get settingsExportDataDesc =>
+      'Скачай все приёмы пищи, воду, вес, привычки и инсайты в JSON. Право на переносимость данных (GDPR ст. 20).';
+
+  @override
+  String get settingsExportFailed => 'Не удалось экспортировать данные.';
+
+  @override
+  String get settingsDeleteDesc =>
+      'Безвозвратно удаляет профиль, приёмы пищи и все данные.';
+
+  @override
+  String get settingsDeleteTitle => 'Удалить аккаунт?';
+
+  @override
+  String get settingsDeleteConfirmBody =>
+      'Это безвозвратно удалит профиль, все приёмы пищи, воду, историю веса, привычки и подписки. Отменить нельзя.';
+
+  @override
+  String get settingsDeleteType => 'Введите DELETE для подтверждения:';
+
+  @override
+  String get settingsDeleteFailed => 'Не удалось удалить аккаунт.';
+
+  @override
+  String get settingsLanguageItalian => 'Итальянский';
+
+  @override
+  String get settingsLanguageRussian => 'Русский';
 }
