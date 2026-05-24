@@ -7,6 +7,12 @@ import '../models/ai_insight.dart';
 
 /// Today's cached insight. Backend transparently generates one on first
 /// call if cron hasn't run yet.
+///
+/// NOTE: This fetches `GET /coach/today` which returns an AIInsight
+/// (nutritionScore, coaching text, tips). It is intentionally separate
+/// from Dashboard's `GET /analytics/dashboard` (streak, calorie totals).
+/// The two endpoints serve different data — there is no redundant network
+/// call between the Coach and Dashboard tabs.
 final coachTodayProvider = FutureProvider.autoDispose<AIInsight>((ref) async {
   final repo = ref.watch(coachRepositoryProvider);
   return repo.getToday();
