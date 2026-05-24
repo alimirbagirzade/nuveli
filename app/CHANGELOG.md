@@ -1,5 +1,29 @@
 # Nuveli Changelog
 
+## [1.5.0+22] - 2026-05-24 - Full 7-language UI (i18n migration)
+
+### Features
+- **The app is now genuinely multilingual.** Previously the l10n system
+  (delegates + .arb) was activated but only 3 surfaces used it — every other
+  screen rendered hardcoded English regardless of language. Migrated all
+  user-facing screens to `AppLocalizations`:
+  - Settings (+ **a real language picker** — the in-app switcher that was
+    missing; `changeLanguage()` was dead code with no UI)
+  - Coach, Dashboard/home (header, summary, macros, water, meals, add-food,
+    bottom nav), Meal scan + Meal planner, Profile + Analytics,
+    Auth + onboarding.
+- All strings localized across **7 locales** (en, tr, de, es, fr, it, ru);
+  ~190 new keys added on top of the existing ~585. Locale-aware dates via
+  `initializeDateFormatting()`.
+- Verified on the iOS simulator end-to-end: switching to Turkish renders the
+  dashboard, nav, summary, macros, water, and greeting in Turkish.
+
+### Notes
+- Dynamic/data strings (AI-generated insight text, recipe/meal names from the
+  API) are intentionally not localized — they come from the backend.
+- A few deep/rarely-seen strings may remain; they fall back to English and
+  can be picked up incrementally.
+
 ## [1.4.1+21] - 2026-05-24 - Fix release-build black screen (Android-first config)
 
 ### Fix
