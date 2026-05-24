@@ -1,5 +1,16 @@
 # Nuveli Changelog
 
+## [1.2.1+18] - 2026-05-24 - Revert debug exception leak (launch blocker)
+
+### Security
+- `backend/main.py` unhandled-exception handler no longer returns the
+  `_debug_exc` field (exception class + truncated message) in 500
+  response bodies. It was added intentionally for live-prod QA without
+  Render dashboard access; exposing exception class names is a soft
+  information-disclosure issue (can leak schema/internal names) and had
+  to come out before store submission. Full trace is still logged
+  server-side. Backend suite: 139 passed / 8 skipped.
+
 ## [1.2.0+17] - 2026-05-24 - Local coach mood bubbles + i18n activation
 
 ### Features

@@ -12,7 +12,9 @@
 
 ## Şu anda neredeyiz
 
-**Sprint A + canlı QA + Coach pipeline + Profile edit hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix main'de. v1.0.0+2 → v1.1.0+15.
+**Sprint A + canlı QA + Coach pipeline + Profile edit + mood-bubble hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix + lokal mood-bubble katmanı + app-wide i18n aktivasyonu main'de. Debug exc leak revert edildi (launch blocker kapalı). v1.0.0+2 → v1.2.1+18.
+
+> **Bu session (2026-05-24 PM) eklendi:** mood-bubble (#1) shipped + i18n aktive edildi (v1.2.0+17) ve debug exc leak revert edildi (#2, v1.2.1+18 — launch blocker kapandı). Bir sonraki öncelik artık #3 (Settings tab QA) / #4 (cihaz QA).
 
 ### Önceki sesyonda shipped (2026-05-23 PM)
 
@@ -72,17 +74,16 @@ FCM push backend HAZIR + Render env LIVE. **iOS Simulator FCM destek**lemez (APN
 
 ## Sırada ne var (yeni sesyonda öncelik)
 
-### 1. Lokal mood-bubble katmanı (sen 2 kez ertelendin, en üst öncelik)
-- Persona × situation copy-bank (gentle/direct/funny/calm × under-target/over/streak-broken/water-low/...)
-- LOKAL (no-OpenAI), anlık feedback meal log save / water low / streak milestone'da
-- ~yarım gün iş
-- Memory: `project_mood_bubble_planned.md`
-- Sıfır OpenAI maliyet — Coach AI daily insight üstüne katman
+### 1. ~~Lokal mood-bubble katmanı~~ ✅ SHIPPED 2026-05-24 (v1.2.0+17)
+- `lib/features/coach/mood/` — persona (gentle/funny/direct/calm) × situation (mealUnder/over/onTrack/waterLow/streakMilestone/firstMeal) copy bank, 7 dilde 24 satır.
+- Trigger'lar: meal save (post-save dashboard totals), water-low (>14:00 & <%50), streak milestone (3/7/14/.../365, de-duped).
+- Settings'te "Coach" persona picker (lokal, SharedPreferences, backend'e gitmez).
+- **Yan kazanım:** app-wide i18n aktive edildi — `MaterialApp` artık delegates + locale wire ediyor, `main()` `preloadLanguage()` çağırıyor. .arb anahtarları artık canlı; ama diğer ekranlar hâlâ hardcoded EN (tek tek migrate gerekir). Memory: `project_i18n_activated.md`.
+- +24 host test (460→484). analyze temiz (sadece pre-existing main_integration_snippet noise).
 
-### 2. Debug exception leak revert (PR sonra)
-- `backend/main.py` 500 handler şu an `_debug_exc` (exception class + truncated message) leak ediyor — QA için intentional
-- Production submit ÖNCESİ revert şart (memory'de: feedback_version_bump_per_fix + task #43)
-- 2 satır revert + version bump + CHANGELOG
+### 2. ~~Debug exception leak revert~~ ✅ SHIPPED 2026-05-24 (v1.2.1+18)
+- `backend/main.py` 500 handler artık `_debug_exc` field'ı dönmüyor. Full trace hâlâ server-side log'lanıyor.
+- Backend suite: 139 passed / 8 skipped. CHANGELOG'da Security entry.
 
 ### 3. Settings tab QA (sen 3 kez sordun, hiç screenshot atmadın)
 - Senin "Settings çalışmıyor" iddian → ben investigator agent ile dosyayı audit ettim, gerçek bug bulunmadı
