@@ -6,6 +6,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 import '../models/user_profile.dart';
 import '../models/weekly_analytics.dart';
@@ -29,6 +30,7 @@ class DailyCalorieTargetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final target = profile.dailyCalorieTarget;
     final consumed = todaySummary.caloriesConsumed;
     final remaining = (target - consumed).clamp(-9999, 99999).toInt();
@@ -70,7 +72,7 @@ class DailyCalorieTargetCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Daily Target',
+                  l10n?.profileDailyTarget ?? 'Daily Target',
                   style: AppTypography.caption.copyWith(
                     color: AppColors.textSecondary,
                     letterSpacing: 0.6,
@@ -111,8 +113,11 @@ class DailyCalorieTargetCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.s4),
                     Text(
                       remaining > 0
-                          ? '${_formatNumber(remaining)} kcal left today'
-                          : 'Daily target reached',
+                          ? (l10n?.profileKcalLeftToday(
+                                  _formatNumber(remaining)) ??
+                              '${_formatNumber(remaining)} kcal left today')
+                          : (l10n?.profileDailyTargetReached ??
+                              'Daily target reached'),
                       style: AppTypography.body.copyWith(
                         color: AppColors.textSecondary,
                       ),

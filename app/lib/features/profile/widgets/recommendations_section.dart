@@ -4,6 +4,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 /// Static recommendations until Chat 11 (AI Coach) hooks up
 /// `aiInsightsProvider`.
@@ -17,30 +18,33 @@ class RecommendationsSection extends StatelessWidget {
 
   const RecommendationsSection({super.key, this.items});
 
-  static const List<Recommendation> _defaultItems = [
+  static List<Recommendation> _defaultItems(AppLocalizations? l10n) => [
     Recommendation(
       icon: Icons.local_drink_rounded,
-      title: 'Drink water before meals',
-      description: 'Helps with portion control and hydration.',
+      title: l10n?.profileRec1Title ?? 'Drink water before meals',
+      description: l10n?.profileRec1Desc ??
+          'Helps with portion control and hydration.',
       accentColor: AppColors.primaryCyan,
     ),
     Recommendation(
       icon: Icons.directions_walk_rounded,
-      title: 'Add a 30-min walk',
-      description: 'Easy way to hit your daily TDEE.',
+      title: l10n?.profileRec2Title ?? 'Add a 30-min walk',
+      description: l10n?.profileRec2Desc ?? 'Easy way to hit your daily TDEE.',
       accentColor: AppColors.success,
     ),
     Recommendation(
       icon: Icons.bedtime_rounded,
-      title: 'Sleep 7–8 hours',
-      description: 'Better recovery, better hunger control.',
+      title: l10n?.profileRec3Title ?? 'Sleep 7–8 hours',
+      description: l10n?.profileRec3Desc ??
+          'Better recovery, better hunger control.',
       accentColor: AppColors.warning,
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final list = items ?? _defaultItems;
+    final l10n = AppLocalizations.of(context);
+    final list = items ?? _defaultItems(l10n);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s24),
@@ -56,7 +60,7 @@ class RecommendationsSection extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.s8),
               Text(
-                'Recommended for You',
+                l10n?.profileRecommendedTitle ?? 'Recommended for You',
                 style: AppTypography.cardTitle.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
@@ -66,7 +70,8 @@ class RecommendationsSection extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.s4),
           Text(
-            'Personalized tips to help you reach your goals',
+            l10n?.profileRecommendedSubtitle ??
+                'Personalized tips to help you reach your goals',
             style: AppTypography.caption.copyWith(
               color: AppColors.textSecondary,
             ),

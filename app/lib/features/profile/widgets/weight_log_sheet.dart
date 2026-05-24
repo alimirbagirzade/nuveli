@@ -6,6 +6,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 import '../providers/profile_actions.dart';
 
@@ -51,10 +52,12 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
   }
 
   Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
     final raw = _ctrl.text.trim().replaceAll(',', '.');
     final parsed = double.tryParse(raw);
     if (parsed == null || parsed < 20 || parsed > 400) {
-      setState(() => _error = 'Enter a weight between 20 and 400 kg');
+      setState(() => _error = l10n?.profileWeightError ??
+          'Enter a weight between 20 and 400 kg');
       return;
     }
     final note = _noteCtrl.text.trim().isEmpty ? null : _noteCtrl.text.trim();
@@ -63,6 +66,7 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
     // widget so we can't use `context` for snackbars afterwards.
     final messenger = ScaffoldMessenger.of(context);
     final actions = ref.read(profileActionsProvider);
+    final kgStr = parsed.toStringAsFixed(1);
 
     // Pop optimistically. On Render free tier the POST + dashboard
     // refetch takes 1-3 seconds; with this change the sheet feels
@@ -71,7 +75,8 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
     Navigator.of(context).pop(true);
     messenger.showSnackBar(
       SnackBar(
-        content: Text('Saving ${parsed.toStringAsFixed(1)} kg...'),
+        content: Text(l10n?.profileWeightSaving(kgStr) ??
+            'Saving $kgStr kg...'),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -81,7 +86,8 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Weight saved (${parsed.toStringAsFixed(1)} kg)'),
+          content: Text(l10n?.profileWeightSaved(kgStr) ??
+              'Weight saved ($kgStr kg)'),
           duration: const Duration(seconds: 2),
           backgroundColor: const Color(0xFF1B5E20),
         ),
@@ -90,20 +96,27 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Could not save ${parsed.toStringAsFixed(1)} kg'),
+          content: Text(l10n?.profileWeightSaveFailed(kgStr) ??
+              'Could not save $kgStr kg'),
           backgroundColor: const Color(0xFFB71C1C),
           action: SnackBarAction(
-            label: 'Retry',
+            label: l10n?.commonRetry ?? 'Retry',
             textColor: Colors.white,
             onPressed: () async {
               try {
                 await actions.logWeight(weightKg: parsed, note: note);
                 messenger.showSnackBar(
-                  const SnackBar(content: Text('Weight saved')),
+                  SnackBar(
+                    content: Text(l10n?.profileWeightSavedShort ??
+                        'Weight saved'),
+                  ),
                 );
               } catch (_) {
                 messenger.showSnackBar(
-                  const SnackBar(content: Text('Still could not save')),
+                  SnackBar(
+                    content: Text(l10n?.profileWeightStillFailed ??
+                        'Still could not save'),
+                  ),
                 );
               }
             },
@@ -145,7 +158,8 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
               ),
               const SizedBox(height: AppSpacing.s16),
               Text(
-                'Log your weight',
+                AppLocalizations.of(context)?.profileLogWeightTitle ??
+                    'Log your weight',
                 style: AppTypography.sectionTitle.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
@@ -153,7 +167,8 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
               ),
               const SizedBox(height: AppSpacing.s4),
               Text(
-                'Track your progress toward your goal',
+                AppLocalizations.of(context)?.profileLogWeightSubtitle ??
+                    'Track your progress toward your goal',
                 style: AppTypography.body.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -162,7 +177,8 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
 
               // Weight input
               _LabeledField(
-                label: 'Weight',
+                label: AppLocalizations.of(context)?.profileWeightLabel ??
+                    'Weight',
                 child: Row(
                   children: [
                     Expanded(
@@ -206,12 +222,15 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
 
               // Optional note
               _LabeledField(
-                label: 'Note (optional)',
+                label: AppLocalizations.of(context)?.profileWeightNoteOptional ??
+                    'Note (optional)',
                 child: TextField(
                   controller: _noteCtrl,
                   style: AppTypography.body.copyWith(color: Colors.white),
                   decoration: InputDecoration(
-                    hintText: 'After workout, morning, etc.',
+                    hintText:
+                        AppLocalizations.of(context)?.profileWeightNoteHint ??
+                            'After workout, morning, etc.',
                     hintStyle: AppTypography.body.copyWith(
                       color: AppColors.textTertiary,
                     ),
@@ -250,7 +269,8 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
                     elevation: 0,
                   ),
                   child: Text(
-                    'Save weight',
+                    AppLocalizations.of(context)?.profileSaveWeight ??
+                        'Save weight',
                     style: AppTypography.cardTitle.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -263,7 +283,7 @@ class _WeightLogSheetState extends ConsumerState<WeightLogSheet> {
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
-                    'Cancel',
+                    AppLocalizations.of(context)?.commonCancel ?? 'Cancel',
                     style: AppTypography.body.copyWith(
                       color: AppColors.textSecondary,
                     ),

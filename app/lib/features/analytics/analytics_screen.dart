@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import 'providers/analytics_providers.dart';
 import 'widgets/macro_breakdown_card.dart';
 import 'widgets/weekly_calorie_chart.dart';
@@ -19,6 +20,7 @@ class AnalyticsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final weeklyAsync = ref.watch(weeklyAnalyticsProvider);
     final trendAsync = ref.watch(weightTrend8wProvider);
 
@@ -46,18 +48,18 @@ class AnalyticsScreen extends ConsumerWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
               children: [
-                const Text(
-                  'Analytics',
-                  style: TextStyle(
+                Text(
+                  l10n?.analyticsTitle ?? 'Analytics',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: 4),
-                const Text(
-                  'Your week at a glance',
-                  style: TextStyle(
+                Text(
+                  l10n?.analyticsSubtitle ?? 'Your week at a glance',
+                  style: const TextStyle(
                     color: Color(0xFFB8C5D6),
                     fontSize: 14,
                   ),
@@ -65,22 +67,25 @@ class AnalyticsScreen extends ConsumerWidget {
                 const SizedBox(height: 20),
                 weeklyAsync.when(
                   loading: () => const _Skeleton(height: 220),
-                  error: (_, __) =>
-                      const _ErrorTile(label: 'Could not load weekly bars'),
+                  error: (_, __) => _ErrorTile(
+                      label: l10n?.analyticsErrorWeeklyBars ??
+                          'Could not load weekly bars'),
                   data: (w) => WeeklyCalorieChart(analytics: w),
                 ),
                 const SizedBox(height: 14),
                 weeklyAsync.when(
                   loading: () => const _Skeleton(height: 130),
-                  error: (_, __) =>
-                      const _ErrorTile(label: 'Could not load macro breakdown'),
+                  error: (_, __) => _ErrorTile(
+                      label: l10n?.analyticsErrorMacroBreakdown ??
+                          'Could not load macro breakdown'),
                   data: (w) => MacroBreakdownCard(avg: w.avgMacroBreakdown),
                 ),
                 const SizedBox(height: 14),
                 trendAsync.when(
                   loading: () => const _Skeleton(height: 180),
-                  error: (_, __) =>
-                      const _ErrorTile(label: 'Could not load weight trend'),
+                  error: (_, __) => _ErrorTile(
+                      label: l10n?.analyticsErrorWeightTrend ??
+                          'Could not load weight trend'),
                   data: (t) => WeightTrendCard(trend: t),
                 ),
               ],

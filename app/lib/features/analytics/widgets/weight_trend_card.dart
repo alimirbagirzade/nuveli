@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/weight_trend.dart';
 
 /// Lightweight weight trend visual. Shows current weight, delta
@@ -13,8 +14,9 @@ class WeightTrendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     if (!trend.hasData) {
-      return _empty();
+      return _empty(l10n);
     }
 
     final delta = trend.deltaKg;
@@ -39,9 +41,9 @@ class WeightTrendCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Weight trend',
-            style: TextStyle(
+          Text(
+            l10n?.analyticsWeightTrend ?? 'Weight trend',
+            style: const TextStyle(
               color: Color(0xFFB8C5D6),
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -49,7 +51,8 @@ class WeightTrendCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '${trend.periodDays} days',
+            l10n?.analyticsWeightTrendDays(trend.periodDays) ??
+                '${trend.periodDays} days',
             style: const TextStyle(color: Color(0xFF6E7B91), fontSize: 11),
           ),
           const SizedBox(height: 12),
@@ -92,7 +95,7 @@ class WeightTrendCard extends StatelessWidget {
     );
   }
 
-  Widget _empty() {
+  Widget _empty(AppLocalizations? l10n) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -100,11 +103,11 @@ class WeightTrendCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
-          'Log your weight to see the trend',
+          l10n?.analyticsWeightTrendEmpty ?? 'Log your weight to see the trend',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFFB8C5D6), fontSize: 13),
+          style: const TextStyle(color: Color(0xFFB8C5D6), fontSize: 13),
         ),
       ),
     );

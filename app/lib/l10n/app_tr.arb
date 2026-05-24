@@ -1386,5 +1386,185 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyticsTitle": "Analizler",
+  "analyticsSubtitle": "Haftana bir bakış",
+  "analyticsErrorWeeklyBars": "Haftalık çubuklar yüklenemedi",
+  "analyticsErrorMacroBreakdown": "Makro dağılımı yüklenemedi",
+  "analyticsErrorWeightTrend": "Kilo trendi yüklenemedi",
+  "analyticsLast7Days": "Son 7 gün",
+  "analyticsDaysOnTarget": "{n}/7 gün hedefe ulaşıldı",
+  "@analyticsDaysOnTarget": {
+    "description": "Days on target label, e.g. 5/7 days on target",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsKcalAvg": "{avg} kcal ort.",
+  "@analyticsKcalAvg": {
+    "description": "Average kcal label, e.g. 1850 kcal avg",
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "analyticsTarget": "· hedef {target}",
+  "@analyticsTarget": {
+    "description": "Target label with value, e.g. · target 2000",
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeeklyEmpty": "Haftalık trendini görmek için birkaç öğün gir",
+  "analyticsMacroBreakdown": "Makro dağılımı",
+  "analytics7DayAverage": "7 günlük ortalama",
+  "analyticsMacroEmpty": "Bir öğün girdiğinde makro dağılımı burada görünür",
+  "analyticsMacroProtein": "Protein",
+  "analyticsMacroCarbs": "Karbonhidrat",
+  "analyticsMacroFat": "Yağ",
+  "analyticsWeightTrend": "Kilo trendi",
+  "analyticsWeightTrendDays": "{n} gün",
+  "@analyticsWeightTrendDays": {
+    "description": "Period label, e.g. 56 days",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeightTrendEmpty": "Trendi görmek için kilonu gir",
+  "profileGreeting": "Merhaba, {name}",
+  "@profileGreeting": {
+    "description": "Greeting with user name, e.g. Hi, Alex",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileYourGoals": "Hedefleriniz",
+  "profileCouldNotLoad": "Yüklenemedi",
+  "profileCouldNotLoadSection": "Bu bölüm yüklenemedi",
+  "profileLogWeight": "Kilo gir",
+  "profileDailyTarget": "Günlük Hedef",
+  "profileKcalLeftToday": "Bugün {n} kcal kaldı",
+  "@profileKcalLeftToday": {
+    "description": "Remaining calories today, e.g. 1,247 kcal left today",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDailyTargetReached": "Günlük hedefe ulaşıldı",
+  "profileStreak": "Seri",
+  "profileStreakDays": " gün",
+  "profileStreakKeepGoing": "Devam et!",
+  "profileStreakStartToday": "Başlamak için bugün bir öğün gir",
+  "profileCaloriesVsTarget": "Kalori - Hedef Karşılaştırması",
+  "profileProgressLast7Days": "Son 7 gün",
+  "profileAvg": "Ort.",
+  "profileWithinTarget": "Hedef dahilinde",
+  "profileOffTarget": "Hedef dışında",
+  "profileDaysHit": "{n}/7 gün hedefe ulaşıldı",
+  "@profileDaysHit": {
+    "description": "Days within target, e.g. 5/7 days hit",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileProgressNoData": "Henüz veri yok",
+  "profileProgressNoDataHint": "Birkaç gün yemek logladığında trend buraya gelir.",
+  "profileRecommendedTitle": "Sana Özel Öneriler",
+  "profileRecommendedSubtitle": "Hedeflerine ulaşmanı sağlayacak kişiselleştirilmiş ipuçları",
+  "profileRec1Title": "Yemeklerden önce su iç",
+  "profileRec1Desc": "Porsiyon kontrolü ve hidrasyona yardımcı olur.",
+  "profileRec2Title": "30 dakikalık yürüyüş ekle",
+  "profileRec2Desc": "Günlük TDEE'ne ulaşmanın kolay yolu.",
+  "profileRec3Title": "7–8 saat uy",
+  "profileRec3Desc": "Daha iyi toparlanma, daha iyi açlık kontrolü.",
+  "profileWeightGoal": "Kilo Hedefi",
+  "profileLogWeightToSeeTrend": "Trendi görmek için kilo gir",
+  "profileProgressPercent": "%{n} tamamlandı",
+  "@profileProgressPercent": {
+    "description": "Progress percentage, e.g. 42% complete",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileSetWeightGoal": "Kilo\nhedefini belirle",
+  "profileTapToStartTracking": "Takibe başlamak için dokun",
+  "profileSetWeightGoalTitle": "Kilo hedefini belirle",
+  "profileSetWeightGoalSubtitle": "İlerlemenizi takip edip önerileri düzenleyeceğiz.",
+  "profileGoalType": "HEDEF TÜRÜ",
+  "profileGoalLose": "Kaybet",
+  "profileGoalMaintain": "Koru",
+  "profileGoalGain": "Kazan",
+  "profileStartingWeight": "Başlangıç kilosu",
+  "profileTargetWeight": "Hedef kilo",
+  "profileMaintainWeightAt": "Kiloyu koru",
+  "profileTargetDate": "Hedef tarihi",
+  "profileChooseDate": "Tarih seç",
+  "profileSaveGoal": "Hedefi kaydet",
+  "profileGoalErrorTarget": "20 ile 400 kg arasında bir hedef kilo girin",
+  "profileGoalErrorStart": "20 ile 400 kg arasında bir başlangıç kilosu girin",
+  "profileGoalErrorLoseLower": "Hedef, başlangıç kilosundan düşük olmalı",
+  "profileGoalErrorGainHigher": "Hedef, başlangıç kilosundan yüksek olmalı",
+  "profileGoalSaveError": "Kaydedilemedi. Bağlantınızı kontrol edip tekrar deneyin.",
+  "profileLogWeightTitle": "Kilonu gir",
+  "profileLogWeightSubtitle": "Hedefinize doğru ilerlemenizi takip edin",
+  "profileWeightLabel": "Kilo",
+  "profileWeightNoteOptional": "Not (isteğe bağlı)",
+  "profileWeightNoteHint": "Egzersiz sonrası, sabah, vb.",
+  "profileWeightError": "20 ile 400 kg arasında bir kilo girin",
+  "profileSaveWeight": "Kiloyu kaydet",
+  "profileWeightSaving": "{kg} kg kaydediliyor...",
+  "@profileWeightSaving": {
+    "description": "Optimistic saving snackbar, e.g. Saving 75.0 kg...",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaved": "Kilo kaydedildi ({kg} kg)",
+  "@profileWeightSaved": {
+    "description": "Success snackbar, e.g. Weight saved (75.0 kg)",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaveFailed": "{kg} kg kaydedilemedi",
+  "@profileWeightSaveFailed": {
+    "description": "Error snackbar, e.g. Could not save 75.0 kg",
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSavedShort": "Kilo kaydedildi",
+  "profileWeightStillFailed": "Hâlâ kaydedilemedi",
+  "profileEditTitle": "Profili düzenle",
+  "profileEditName": "Ad",
+  "profileEditNameHint": "Adınız",
+  "profileEditSex": "Cinsiyet",
+  "profileEditDob": "Doğum tarihi",
+  "profileEditSelectDate": "Tarih seçin",
+  "profileEditHeightCm": "Boy (cm)",
+  "profileEditWeightKg": "Kilo (kg)",
+  "profileEditActivityLevel": "Aktivite seviyesi",
+  "profileEditDietaryPref": "Beslenme tercihi",
+  "profileEditUpdated": "Profil güncellendi"
 }

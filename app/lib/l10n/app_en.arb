@@ -916,5 +916,174 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyticsTitle": "Analytics",
+  "analyticsSubtitle": "Your week at a glance",
+  "analyticsErrorWeeklyBars": "Could not load weekly bars",
+  "analyticsErrorMacroBreakdown": "Could not load macro breakdown",
+  "analyticsErrorWeightTrend": "Could not load weight trend",
+  "analyticsLast7Days": "Last 7 days",
+  "analyticsDaysOnTarget": "{n}/7 days on target",
+  "@analyticsDaysOnTarget": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsKcalAvg": "{avg} kcal avg",
+  "@analyticsKcalAvg": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "analyticsTarget": "· target {target}",
+  "@analyticsTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeeklyEmpty": "Log a few meals to see your weekly trend",
+  "analyticsMacroBreakdown": "Macro breakdown",
+  "analytics7DayAverage": "7-day average",
+  "analyticsMacroEmpty": "Macro breakdown shows up once you log a meal",
+  "analyticsMacroProtein": "Protein",
+  "analyticsMacroCarbs": "Carbs",
+  "analyticsMacroFat": "Fat",
+  "analyticsWeightTrend": "Weight trend",
+  "analyticsWeightTrendDays": "{n} days",
+  "@analyticsWeightTrendDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeightTrendEmpty": "Log your weight to see the trend",
+  "profileGreeting": "Hi, {name}",
+  "@profileGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileYourGoals": "Your Goals",
+  "profileCouldNotLoad": "Couldn't load",
+  "profileCouldNotLoadSection": "Couldn't load this section",
+  "profileLogWeight": "Log weight",
+  "profileDailyTarget": "Daily Target",
+  "profileKcalLeftToday": "{n} kcal left today",
+  "@profileKcalLeftToday": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDailyTargetReached": "Daily target reached",
+  "profileStreak": "Streak",
+  "profileStreakDays": " days",
+  "profileStreakKeepGoing": "Keep it going!",
+  "profileStreakStartToday": "Log a meal today to start",
+  "profileCaloriesVsTarget": "Calories vs Target",
+  "profileProgressLast7Days": "Last 7 days",
+  "profileAvg": "Avg",
+  "profileWithinTarget": "Within target",
+  "profileOffTarget": "Off target",
+  "profileDaysHit": "{n}/7 days hit",
+  "@profileDaysHit": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileProgressNoData": "No data yet",
+  "profileProgressNoDataHint": "Log meals for a few days and your trend will appear here.",
+  "profileRecommendedTitle": "Recommended for You",
+  "profileRecommendedSubtitle": "Personalized tips to help you reach your goals",
+  "profileRec1Title": "Drink water before meals",
+  "profileRec1Desc": "Helps with portion control and hydration.",
+  "profileRec2Title": "Add a 30-min walk",
+  "profileRec2Desc": "Easy way to hit your daily TDEE.",
+  "profileRec3Title": "Sleep 7–8 hours",
+  "profileRec3Desc": "Better recovery, better hunger control.",
+  "profileWeightGoal": "Weight Goal",
+  "profileLogWeightToSeeTrend": "Log weight to see trend",
+  "profileProgressPercent": "{n}% complete",
+  "@profileProgressPercent": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileSetWeightGoal": "Set your\nweight goal",
+  "profileTapToStartTracking": "Tap to start tracking",
+  "profileSetWeightGoalTitle": "Set your weight goal",
+  "profileSetWeightGoalSubtitle": "We'll track your progress and adjust suggestions.",
+  "profileGoalType": "GOAL TYPE",
+  "profileGoalLose": "Lose",
+  "profileGoalMaintain": "Maintain",
+  "profileGoalGain": "Gain",
+  "profileStartingWeight": "Starting weight",
+  "profileTargetWeight": "Target weight",
+  "profileMaintainWeightAt": "Maintain weight at",
+  "profileTargetDate": "Target date",
+  "profileChooseDate": "Choose a date",
+  "profileSaveGoal": "Save goal",
+  "profileGoalErrorTarget": "Enter a target weight between 20 and 400 kg",
+  "profileGoalErrorStart": "Enter a starting weight between 20 and 400 kg",
+  "profileGoalErrorLoseLower": "Target should be lower than starting weight",
+  "profileGoalErrorGainHigher": "Target should be higher than starting weight",
+  "profileGoalSaveError": "Could not save. Check your connection and try again.",
+  "profileLogWeightTitle": "Log your weight",
+  "profileLogWeightSubtitle": "Track your progress toward your goal",
+  "profileWeightLabel": "Weight",
+  "profileWeightNoteOptional": "Note (optional)",
+  "profileWeightNoteHint": "After workout, morning, etc.",
+  "profileWeightError": "Enter a weight between 20 and 400 kg",
+  "profileSaveWeight": "Save weight",
+  "profileWeightSaving": "Saving {kg} kg...",
+  "@profileWeightSaving": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaved": "Weight saved ({kg} kg)",
+  "@profileWeightSaved": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaveFailed": "Could not save {kg} kg",
+  "@profileWeightSaveFailed": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSavedShort": "Weight saved",
+  "profileWeightStillFailed": "Still could not save",
+  "profileEditTitle": "Edit profile",
+  "profileEditName": "Name",
+  "profileEditNameHint": "Your name",
+  "profileEditSex": "Sex",
+  "profileEditDob": "Date of birth",
+  "profileEditSelectDate": "Select date",
+  "profileEditHeightCm": "Height (cm)",
+  "profileEditWeightKg": "Weight (kg)",
+  "profileEditActivityLevel": "Activity level",
+  "profileEditDietaryPref": "Dietary preference",
+  "profileEditUpdated": "Profile updated"
 }

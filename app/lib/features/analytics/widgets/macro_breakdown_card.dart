@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/weekly_analytics.dart';
 
 /// Three-bar macro breakdown for the analytics screen. Shows the
@@ -16,8 +17,9 @@ class MacroBreakdownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     if (!avg.hasData) {
-      return _empty();
+      return _empty(l10n);
     }
 
     return Container(
@@ -30,18 +32,18 @@ class MacroBreakdownCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Macro breakdown',
-            style: TextStyle(
+          Text(
+            l10n?.analyticsMacroBreakdown ?? 'Macro breakdown',
+            style: const TextStyle(
               color: Color(0xFFB8C5D6),
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            '7-day average',
-            style: TextStyle(color: Color(0xFF6E7B91), fontSize: 11),
+          Text(
+            l10n?.analytics7DayAverage ?? '7-day average',
+            style: const TextStyle(color: Color(0xFF6E7B91), fontSize: 11),
           ),
           const SizedBox(height: 14),
           // Stacked horizontal bar
@@ -70,11 +72,20 @@ class MacroBreakdownCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              _Legend(color: _protein, label: 'Protein', percent: avg.protein),
+              _Legend(
+                  color: _protein,
+                  label: l10n?.analyticsMacroProtein ?? 'Protein',
+                  percent: avg.protein),
               const SizedBox(width: 12),
-              _Legend(color: _carbs, label: 'Carbs', percent: avg.carbs),
+              _Legend(
+                  color: _carbs,
+                  label: l10n?.analyticsMacroCarbs ?? 'Carbs',
+                  percent: avg.carbs),
               const SizedBox(width: 12),
-              _Legend(color: _fat, label: 'Fat', percent: avg.fat),
+              _Legend(
+                  color: _fat,
+                  label: l10n?.analyticsMacroFat ?? 'Fat',
+                  percent: avg.fat),
             ],
           ),
         ],
@@ -82,7 +93,7 @@ class MacroBreakdownCard extends StatelessWidget {
     );
   }
 
-  Widget _empty() {
+  Widget _empty(AppLocalizations? l10n) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -90,11 +101,12 @@ class MacroBreakdownCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
-          'Macro breakdown shows up once you log a meal',
+          l10n?.analyticsMacroEmpty ??
+              'Macro breakdown shows up once you log a meal',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFFB8C5D6), fontSize: 13),
+          style: const TextStyle(color: Color(0xFFB8C5D6), fontSize: 13),
         ),
       ),
     );

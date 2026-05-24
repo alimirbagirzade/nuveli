@@ -4397,6 +4397,558 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{n} tarifte kullanıldı'**
   String plannerGroceryUsedIn(int n);
+
+  /// No description provided for @analyticsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Analizler'**
+  String get analyticsTitle;
+
+  /// No description provided for @analyticsSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftana bir bakış'**
+  String get analyticsSubtitle;
+
+  /// No description provided for @analyticsErrorWeeklyBars.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık çubuklar yüklenemedi'**
+  String get analyticsErrorWeeklyBars;
+
+  /// No description provided for @analyticsErrorMacroBreakdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makro dağılımı yüklenemedi'**
+  String get analyticsErrorMacroBreakdown;
+
+  /// No description provided for @analyticsErrorWeightTrend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo trendi yüklenemedi'**
+  String get analyticsErrorWeightTrend;
+
+  /// No description provided for @analyticsLast7Days.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 7 gün'**
+  String get analyticsLast7Days;
+
+  /// Days on target label, e.g. 5/7 days on target
+  ///
+  /// In tr, this message translates to:
+  /// **'{n}/7 gün hedefe ulaşıldı'**
+  String analyticsDaysOnTarget(int n);
+
+  /// Average kcal label, e.g. 1850 kcal avg
+  ///
+  /// In tr, this message translates to:
+  /// **'{avg} kcal ort.'**
+  String analyticsKcalAvg(String avg);
+
+  /// Target label with value, e.g. · target 2000
+  ///
+  /// In tr, this message translates to:
+  /// **'· hedef {target}'**
+  String analyticsTarget(int target);
+
+  /// No description provided for @analyticsWeeklyEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık trendini görmek için birkaç öğün gir'**
+  String get analyticsWeeklyEmpty;
+
+  /// No description provided for @analyticsMacroBreakdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makro dağılımı'**
+  String get analyticsMacroBreakdown;
+
+  /// No description provided for @analytics7DayAverage.
+  ///
+  /// In tr, this message translates to:
+  /// **'7 günlük ortalama'**
+  String get analytics7DayAverage;
+
+  /// No description provided for @analyticsMacroEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir öğün girdiğinde makro dağılımı burada görünür'**
+  String get analyticsMacroEmpty;
+
+  /// No description provided for @analyticsMacroProtein.
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein'**
+  String get analyticsMacroProtein;
+
+  /// No description provided for @analyticsMacroCarbs.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karbonhidrat'**
+  String get analyticsMacroCarbs;
+
+  /// No description provided for @analyticsMacroFat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ'**
+  String get analyticsMacroFat;
+
+  /// No description provided for @analyticsWeightTrend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo trendi'**
+  String get analyticsWeightTrend;
+
+  /// Period label, e.g. 56 days
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} gün'**
+  String analyticsWeightTrendDays(int n);
+
+  /// No description provided for @analyticsWeightTrendEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Trendi görmek için kilonu gir'**
+  String get analyticsWeightTrendEmpty;
+
+  /// Greeting with user name, e.g. Hi, Alex
+  ///
+  /// In tr, this message translates to:
+  /// **'Merhaba, {name}'**
+  String profileGreeting(String name);
+
+  /// No description provided for @profileYourGoals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefleriniz'**
+  String get profileYourGoals;
+
+  /// No description provided for @profileCouldNotLoad.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi'**
+  String get profileCouldNotLoad;
+
+  /// No description provided for @profileCouldNotLoadSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu bölüm yüklenemedi'**
+  String get profileCouldNotLoadSection;
+
+  /// No description provided for @profileLogWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo gir'**
+  String get profileLogWeight;
+
+  /// No description provided for @profileDailyTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük Hedef'**
+  String get profileDailyTarget;
+
+  /// Remaining calories today, e.g. 1,247 kcal left today
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün {n} kcal kaldı'**
+  String profileKcalLeftToday(String n);
+
+  /// No description provided for @profileDailyTargetReached.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük hedefe ulaşıldı'**
+  String get profileDailyTargetReached;
+
+  /// No description provided for @profileStreak.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seri'**
+  String get profileStreak;
+
+  /// No description provided for @profileStreakDays.
+  ///
+  /// In tr, this message translates to:
+  /// **' gün'**
+  String get profileStreakDays;
+
+  /// No description provided for @profileStreakKeepGoing.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam et!'**
+  String get profileStreakKeepGoing;
+
+  /// No description provided for @profileStreakStartToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlamak için bugün bir öğün gir'**
+  String get profileStreakStartToday;
+
+  /// No description provided for @profileCaloriesVsTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori - Hedef Karşılaştırması'**
+  String get profileCaloriesVsTarget;
+
+  /// No description provided for @profileProgressLast7Days.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 7 gün'**
+  String get profileProgressLast7Days;
+
+  /// No description provided for @profileAvg.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ort.'**
+  String get profileAvg;
+
+  /// No description provided for @profileWithinTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef dahilinde'**
+  String get profileWithinTarget;
+
+  /// No description provided for @profileOffTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef dışında'**
+  String get profileOffTarget;
+
+  /// Days within target, e.g. 5/7 days hit
+  ///
+  /// In tr, this message translates to:
+  /// **'{n}/7 gün hedefe ulaşıldı'**
+  String profileDaysHit(int n);
+
+  /// No description provided for @profileProgressNoData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz veri yok'**
+  String get profileProgressNoData;
+
+  /// No description provided for @profileProgressNoDataHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Birkaç gün yemek logladığında trend buraya gelir.'**
+  String get profileProgressNoDataHint;
+
+  /// No description provided for @profileRecommendedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sana Özel Öneriler'**
+  String get profileRecommendedTitle;
+
+  /// No description provided for @profileRecommendedSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedeflerine ulaşmanı sağlayacak kişiselleştirilmiş ipuçları'**
+  String get profileRecommendedSubtitle;
+
+  /// No description provided for @profileRec1Title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemeklerden önce su iç'**
+  String get profileRec1Title;
+
+  /// No description provided for @profileRec1Desc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyon kontrolü ve hidrasyona yardımcı olur.'**
+  String get profileRec1Desc;
+
+  /// No description provided for @profileRec2Title.
+  ///
+  /// In tr, this message translates to:
+  /// **'30 dakikalık yürüyüş ekle'**
+  String get profileRec2Title;
+
+  /// No description provided for @profileRec2Desc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük TDEE\'ne ulaşmanın kolay yolu.'**
+  String get profileRec2Desc;
+
+  /// No description provided for @profileRec3Title.
+  ///
+  /// In tr, this message translates to:
+  /// **'7–8 saat uy'**
+  String get profileRec3Title;
+
+  /// No description provided for @profileRec3Desc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Daha iyi toparlanma, daha iyi açlık kontrolü.'**
+  String get profileRec3Desc;
+
+  /// No description provided for @profileWeightGoal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo Hedefi'**
+  String get profileWeightGoal;
+
+  /// No description provided for @profileLogWeightToSeeTrend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Trendi görmek için kilo gir'**
+  String get profileLogWeightToSeeTrend;
+
+  /// Progress percentage, e.g. 42% complete
+  ///
+  /// In tr, this message translates to:
+  /// **'%{n} tamamlandı'**
+  String profileProgressPercent(String n);
+
+  /// No description provided for @profileSetWeightGoal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo\nhedefini belirle'**
+  String get profileSetWeightGoal;
+
+  /// No description provided for @profileTapToStartTracking.
+  ///
+  /// In tr, this message translates to:
+  /// **'Takibe başlamak için dokun'**
+  String get profileTapToStartTracking;
+
+  /// No description provided for @profileSetWeightGoalTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo hedefini belirle'**
+  String get profileSetWeightGoalTitle;
+
+  /// No description provided for @profileSetWeightGoalSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'İlerlemenizi takip edip önerileri düzenleyeceğiz.'**
+  String get profileSetWeightGoalSubtitle;
+
+  /// No description provided for @profileGoalType.
+  ///
+  /// In tr, this message translates to:
+  /// **'HEDEF TÜRÜ'**
+  String get profileGoalType;
+
+  /// No description provided for @profileGoalLose.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaybet'**
+  String get profileGoalLose;
+
+  /// No description provided for @profileGoalMaintain.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koru'**
+  String get profileGoalMaintain;
+
+  /// No description provided for @profileGoalGain.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kazan'**
+  String get profileGoalGain;
+
+  /// No description provided for @profileStartingWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlangıç kilosu'**
+  String get profileStartingWeight;
+
+  /// No description provided for @profileTargetWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef kilo'**
+  String get profileTargetWeight;
+
+  /// No description provided for @profileMaintainWeightAt.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kiloyu koru'**
+  String get profileMaintainWeightAt;
+
+  /// No description provided for @profileTargetDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef tarihi'**
+  String get profileTargetDate;
+
+  /// No description provided for @profileChooseDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih seç'**
+  String get profileChooseDate;
+
+  /// No description provided for @profileSaveGoal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefi kaydet'**
+  String get profileSaveGoal;
+
+  /// No description provided for @profileGoalErrorTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'20 ile 400 kg arasında bir hedef kilo girin'**
+  String get profileGoalErrorTarget;
+
+  /// No description provided for @profileGoalErrorStart.
+  ///
+  /// In tr, this message translates to:
+  /// **'20 ile 400 kg arasında bir başlangıç kilosu girin'**
+  String get profileGoalErrorStart;
+
+  /// No description provided for @profileGoalErrorLoseLower.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef, başlangıç kilosundan düşük olmalı'**
+  String get profileGoalErrorLoseLower;
+
+  /// No description provided for @profileGoalErrorGainHigher.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef, başlangıç kilosundan yüksek olmalı'**
+  String get profileGoalErrorGainHigher;
+
+  /// No description provided for @profileGoalSaveError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi. Bağlantınızı kontrol edip tekrar deneyin.'**
+  String get profileGoalSaveError;
+
+  /// No description provided for @profileLogWeightTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilonu gir'**
+  String get profileLogWeightTitle;
+
+  /// No description provided for @profileLogWeightSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefinize doğru ilerlemenizi takip edin'**
+  String get profileLogWeightSubtitle;
+
+  /// No description provided for @profileWeightLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo'**
+  String get profileWeightLabel;
+
+  /// No description provided for @profileWeightNoteOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not (isteğe bağlı)'**
+  String get profileWeightNoteOptional;
+
+  /// No description provided for @profileWeightNoteHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Egzersiz sonrası, sabah, vb.'**
+  String get profileWeightNoteHint;
+
+  /// No description provided for @profileWeightError.
+  ///
+  /// In tr, this message translates to:
+  /// **'20 ile 400 kg arasında bir kilo girin'**
+  String get profileWeightError;
+
+  /// No description provided for @profileSaveWeight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kiloyu kaydet'**
+  String get profileSaveWeight;
+
+  /// Optimistic saving snackbar, e.g. Saving 75.0 kg...
+  ///
+  /// In tr, this message translates to:
+  /// **'{kg} kg kaydediliyor...'**
+  String profileWeightSaving(String kg);
+
+  /// Success snackbar, e.g. Weight saved (75.0 kg)
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo kaydedildi ({kg} kg)'**
+  String profileWeightSaved(String kg);
+
+  /// Error snackbar, e.g. Could not save 75.0 kg
+  ///
+  /// In tr, this message translates to:
+  /// **'{kg} kg kaydedilemedi'**
+  String profileWeightSaveFailed(String kg);
+
+  /// No description provided for @profileWeightSavedShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo kaydedildi'**
+  String get profileWeightSavedShort;
+
+  /// No description provided for @profileWeightStillFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hâlâ kaydedilemedi'**
+  String get profileWeightStillFailed;
+
+  /// No description provided for @profileEditTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profili düzenle'**
+  String get profileEditTitle;
+
+  /// No description provided for @profileEditName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad'**
+  String get profileEditName;
+
+  /// No description provided for @profileEditNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adınız'**
+  String get profileEditNameHint;
+
+  /// No description provided for @profileEditSex.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cinsiyet'**
+  String get profileEditSex;
+
+  /// No description provided for @profileEditDob.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğum tarihi'**
+  String get profileEditDob;
+
+  /// No description provided for @profileEditSelectDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih seçin'**
+  String get profileEditSelectDate;
+
+  /// No description provided for @profileEditHeightCm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boy (cm)'**
+  String get profileEditHeightCm;
+
+  /// No description provided for @profileEditWeightKg.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo (kg)'**
+  String get profileEditWeightKg;
+
+  /// No description provided for @profileEditActivityLevel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite seviyesi'**
+  String get profileEditActivityLevel;
+
+  /// No description provided for @profileEditDietaryPref.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beslenme tercihi'**
+  String get profileEditDietaryPref;
+
+  /// No description provided for @profileEditUpdated.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil güncellendi'**
+  String get profileEditUpdated;
 }
 
 class _AppLocalizationsDelegate

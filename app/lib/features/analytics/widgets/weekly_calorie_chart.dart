@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/weekly_analytics.dart';
 
 /// 7-day calorie bars with a target line. Green when within ±15% of
@@ -16,9 +17,10 @@ class WeeklyCalorieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final days = analytics.days;
     if (days.isEmpty) {
-      return const _EmptyState();
+      return _EmptyState(l10n: l10n);
     }
 
     final maxValForScale = days
@@ -43,9 +45,9 @@ class WeeklyCalorieChart extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
-                'Last 7 days',
-                style: TextStyle(
+              Text(
+                l10n?.analyticsLast7Days ?? 'Last 7 days',
+                style: const TextStyle(
                   color: Color(0xFFB8C5D6),
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -53,7 +55,8 @@ class WeeklyCalorieChart extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${analytics.daysWithinTarget}/7 days on target',
+                l10n?.analyticsDaysOnTarget(analytics.daysWithinTarget) ??
+                    '${analytics.daysWithinTarget}/7 days on target',
                 style: const TextStyle(
                   color: Color(0xFF6E7B91),
                   fontSize: 11,
@@ -113,7 +116,9 @@ class WeeklyCalorieChart extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${analytics.avgDailyCalories.toStringAsFixed(0)} kcal avg',
+                l10n?.analyticsKcalAvg(
+                        analytics.avgDailyCalories.toStringAsFixed(0)) ??
+                    '${analytics.avgDailyCalories.toStringAsFixed(0)} kcal avg',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
@@ -122,7 +127,7 @@ class WeeklyCalorieChart extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                '· target $target',
+                l10n?.analyticsTarget(target) ?? '· target $target',
                 style: const TextStyle(
                   color: Color(0xFF6E7B91),
                   fontSize: 12,
@@ -212,7 +217,8 @@ class _DashedLine extends StatelessWidget {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState();
+  final AppLocalizations? l10n;
+  const _EmptyState({this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -223,11 +229,12 @@ class _EmptyState extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
-          'Log a few meals to see your weekly trend',
+          l10n?.analyticsWeeklyEmpty ??
+              'Log a few meals to see your weekly trend',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFFB8C5D6),
             fontSize: 13,
           ),

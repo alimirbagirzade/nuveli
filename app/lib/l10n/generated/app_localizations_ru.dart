@@ -2318,4 +2318,316 @@ class AppLocalizationsRu extends AppLocalizations {
   String plannerGroceryUsedIn(int n) {
     return 'Используется в $n рецептах';
   }
+
+  @override
+  String get analyticsTitle => 'Аналитика';
+
+  @override
+  String get analyticsSubtitle => 'Твоя неделя с первого взгляда';
+
+  @override
+  String get analyticsErrorWeeklyBars =>
+      'Не удалось загрузить недельные столбцы';
+
+  @override
+  String get analyticsErrorMacroBreakdown =>
+      'Не удалось загрузить разбивку по макронутриентам';
+
+  @override
+  String get analyticsErrorWeightTrend => 'Не удалось загрузить динамику веса';
+
+  @override
+  String get analyticsLast7Days => 'Последние 7 дней';
+
+  @override
+  String analyticsDaysOnTarget(int n) {
+    return '$n/7 дней в цели';
+  }
+
+  @override
+  String analyticsKcalAvg(String avg) {
+    return '$avg ккал среднее';
+  }
+
+  @override
+  String analyticsTarget(int target) {
+    return '· цель $target';
+  }
+
+  @override
+  String get analyticsWeeklyEmpty =>
+      'Внеси несколько приёмов пищи, чтобы увидеть недельный тренд';
+
+  @override
+  String get analyticsMacroBreakdown => 'Разбивка по макронутриентам';
+
+  @override
+  String get analytics7DayAverage => 'Среднее за 7 дней';
+
+  @override
+  String get analyticsMacroEmpty =>
+      'Разбивка по макронутриентам появится после регистрации приёма пищи';
+
+  @override
+  String get analyticsMacroProtein => 'Белки';
+
+  @override
+  String get analyticsMacroCarbs => 'Углеводы';
+
+  @override
+  String get analyticsMacroFat => 'Жиры';
+
+  @override
+  String get analyticsWeightTrend => 'Динамика веса';
+
+  @override
+  String analyticsWeightTrendDays(int n) {
+    return '$n дней';
+  }
+
+  @override
+  String get analyticsWeightTrendEmpty =>
+      'Внеси свой вес, чтобы увидеть динамику';
+
+  @override
+  String profileGreeting(String name) {
+    return 'Привет, $name';
+  }
+
+  @override
+  String get profileYourGoals => 'Твои цели';
+
+  @override
+  String get profileCouldNotLoad => 'Не удалось загрузить';
+
+  @override
+  String get profileCouldNotLoadSection => 'Не удалось загрузить этот раздел';
+
+  @override
+  String get profileLogWeight => 'Записать вес';
+
+  @override
+  String get profileDailyTarget => 'Дневная цель';
+
+  @override
+  String profileKcalLeftToday(String n) {
+    return 'Осталось $n ккал на сегодня';
+  }
+
+  @override
+  String get profileDailyTargetReached => 'Дневная цель достигнута';
+
+  @override
+  String get profileStreak => 'Серия';
+
+  @override
+  String get profileStreakDays => ' дней';
+
+  @override
+  String get profileStreakKeepGoing => 'Продолжай в том же духе!';
+
+  @override
+  String get profileStreakStartToday =>
+      'Внеси приём пищи сегодня, чтобы начать';
+
+  @override
+  String get profileCaloriesVsTarget => 'Калории и цель';
+
+  @override
+  String get profileProgressLast7Days => 'Последние 7 дней';
+
+  @override
+  String get profileAvg => 'Среднее';
+
+  @override
+  String get profileWithinTarget => 'В пределах цели';
+
+  @override
+  String get profileOffTarget => 'Вне цели';
+
+  @override
+  String profileDaysHit(int n) {
+    return '$n/7 дней в цели';
+  }
+
+  @override
+  String get profileProgressNoData => 'Данных пока нет';
+
+  @override
+  String get profileProgressNoDataHint =>
+      'Вноси приёмы пищи несколько дней — тренд появится здесь.';
+
+  @override
+  String get profileRecommendedTitle => 'Рекомендовано для тебя';
+
+  @override
+  String get profileRecommendedSubtitle =>
+      'Персонализированные советы для достижения твоих целей';
+
+  @override
+  String get profileRec1Title => 'Пей воду перед едой';
+
+  @override
+  String get profileRec1Desc =>
+      'Помогает контролировать порции и поддерживать гидратацию.';
+
+  @override
+  String get profileRec2Title => 'Добавь 30-минутную прогулку';
+
+  @override
+  String get profileRec2Desc => 'Простой способ достичь своего дневного TDEE.';
+
+  @override
+  String get profileRec3Title => 'Спи 7–8 часов';
+
+  @override
+  String get profileRec3Desc =>
+      'Лучшее восстановление, лучший контроль аппетита.';
+
+  @override
+  String get profileWeightGoal => 'Цель по весу';
+
+  @override
+  String get profileLogWeightToSeeTrend => 'Запиши вес, чтобы увидеть динамику';
+
+  @override
+  String profileProgressPercent(String n) {
+    return '$n% выполнено';
+  }
+
+  @override
+  String get profileSetWeightGoal => 'Установи\nцель по весу';
+
+  @override
+  String get profileTapToStartTracking => 'Нажми, чтобы начать отслеживание';
+
+  @override
+  String get profileSetWeightGoalTitle => 'Установи цель по весу';
+
+  @override
+  String get profileSetWeightGoalSubtitle =>
+      'Мы будем отслеживать твой прогресс и корректировать рекомендации.';
+
+  @override
+  String get profileGoalType => 'ТИП ЦЕЛИ';
+
+  @override
+  String get profileGoalLose => 'Похудеть';
+
+  @override
+  String get profileGoalMaintain => 'Удержать';
+
+  @override
+  String get profileGoalGain => 'Набрать';
+
+  @override
+  String get profileStartingWeight => 'Начальный вес';
+
+  @override
+  String get profileTargetWeight => 'Целевой вес';
+
+  @override
+  String get profileMaintainWeightAt => 'Удерживать вес на уровне';
+
+  @override
+  String get profileTargetDate => 'Целевая дата';
+
+  @override
+  String get profileChooseDate => 'Выбери дату';
+
+  @override
+  String get profileSaveGoal => 'Сохранить цель';
+
+  @override
+  String get profileGoalErrorTarget => 'Введи целевой вес от 20 до 400 кг';
+
+  @override
+  String get profileGoalErrorStart => 'Введи начальный вес от 20 до 400 кг';
+
+  @override
+  String get profileGoalErrorLoseLower =>
+      'Целевой вес должен быть ниже начального';
+
+  @override
+  String get profileGoalErrorGainHigher =>
+      'Целевой вес должен быть выше начального';
+
+  @override
+  String get profileGoalSaveError =>
+      'Не удалось сохранить. Проверь соединение и попробуй снова.';
+
+  @override
+  String get profileLogWeightTitle => 'Записать свой вес';
+
+  @override
+  String get profileLogWeightSubtitle => 'Отслеживай свой прогресс к цели';
+
+  @override
+  String get profileWeightLabel => 'Вес';
+
+  @override
+  String get profileWeightNoteOptional => 'Заметка (необязательно)';
+
+  @override
+  String get profileWeightNoteHint => 'После тренировки, утром и т.д.';
+
+  @override
+  String get profileWeightError => 'Введи вес от 20 до 400 кг';
+
+  @override
+  String get profileSaveWeight => 'Сохранить вес';
+
+  @override
+  String profileWeightSaving(String kg) {
+    return 'Сохранение $kg кг...';
+  }
+
+  @override
+  String profileWeightSaved(String kg) {
+    return 'Вес сохранён ($kg кг)';
+  }
+
+  @override
+  String profileWeightSaveFailed(String kg) {
+    return 'Не удалось сохранить $kg кг';
+  }
+
+  @override
+  String get profileWeightSavedShort => 'Вес сохранён';
+
+  @override
+  String get profileWeightStillFailed => 'По-прежнему не удаётся сохранить';
+
+  @override
+  String get profileEditTitle => 'Редактировать профиль';
+
+  @override
+  String get profileEditName => 'Имя';
+
+  @override
+  String get profileEditNameHint => 'Твоё имя';
+
+  @override
+  String get profileEditSex => 'Пол';
+
+  @override
+  String get profileEditDob => 'Дата рождения';
+
+  @override
+  String get profileEditSelectDate => 'Выбрать дату';
+
+  @override
+  String get profileEditHeightCm => 'Рост (см)';
+
+  @override
+  String get profileEditWeightKg => 'Вес (кг)';
+
+  @override
+  String get profileEditActivityLevel => 'Уровень активности';
+
+  @override
+  String get profileEditDietaryPref => 'Пищевые предпочтения';
+
+  @override
+  String get profileEditUpdated => 'Профиль обновлён';
 }
