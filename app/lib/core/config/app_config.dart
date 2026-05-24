@@ -101,12 +101,17 @@ class AppConfig {
   // ─────────────────────────────────────────────────────────────
 
   /// Production'da zorunlu olan değerler set edilmiş mi?
+  ///
+  /// Android-first launch: iOS paused, so we don't hard-require the Apple
+  /// RC key. At least one RevenueCat key must be present (the platform's
+  /// key is selected at runtime in RevenueCatService); requiring BOTH would
+  /// crash an Android-only release build that legitimately ships no Apple
+  /// key.
   static bool get isProductionConfigValid {
     if (!isProduction) return true;
     return supabaseUrl != 'https://your-project.supabase.co' &&
         supabaseAnonKey != 'your-anon-key' &&
-        revenueCatAppleKey.isNotEmpty &&
-        revenueCatGoogleKey.isNotEmpty;
+        (revenueCatAppleKey.isNotEmpty || revenueCatGoogleKey.isNotEmpty);
   }
 
   /// Hangi değerlerin eksik olduğunu göster (debug için).
@@ -118,11 +123,12 @@ class AppConfig {
     if (supabaseAnonKey == 'your-anon-key') {
       missing.add('SUPABASE_ANON_KEY');
     }
-    if (revenueCatAppleKey.isEmpty && isProduction) {
-      missing.add('RC_APPLE_KEY');
-    }
-    if (revenueCatGoogleKey.isEmpty && isProduction) {
-      missing.add('RC_GOOGLE_KEY');
+    // Only a problem if BOTH are empty — a single-platform release ships
+    // one key (see isProductionConfigValid).
+    if (isProduction &&
+        revenueCatAppleKey.isEmpty &&
+        revenueCatGoogleKey.isEmpty) {
+      missing.add('RC_APPLE_KEY or RC_GOOGLE_KEY');
     }
     return missing;
   }

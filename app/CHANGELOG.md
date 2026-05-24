@@ -1,5 +1,15 @@
 # Nuveli Changelog
 
+## [1.4.1+21] - 2026-05-24 - Fix release-build black screen (Android-first config)
+
+### Fix
+- **P0 launch crash:** `AppConfig.isProductionConfigValid` required *both*
+  `RC_APPLE_KEY` and `RC_GOOGLE_KEY` to be non-empty. The Android-first
+  release ships no Apple key (iOS paused), so the guard failed and `main()`
+  threw a `StateError` before `runApp` → **black screen on launch**. Now it
+  needs only the current platform's RC key (at least one present). The
+  per-platform key is still selected at runtime in `RevenueCatService`.
+
 ## [1.4.0+20] - 2026-05-24 - Meal history + placeholder polish + i18n slice
 
 ### Features
