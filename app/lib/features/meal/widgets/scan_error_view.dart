@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../dashboard/widgets/meal_entry_sheet.dart';
 import '../providers/meal_scan_controller.dart';
 
@@ -19,8 +20,11 @@ class ScanErrorView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final controller = ref.read(mealScanControllerProvider.notifier);
-    final title = isRateLimited ? 'Too many scans, too fast' : 'Scan failed';
+    final title = isRateLimited
+        ? (l10n?.mealScanRateLimitTitle ?? 'Too many scans, too fast')
+        : (l10n?.mealScanErrorTitle ?? 'Scan failed');
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
@@ -76,9 +80,9 @@ class ScanErrorView extends ConsumerWidget {
             child: ElevatedButton.icon(
               onPressed: controller.reset,
               icon: const Icon(Icons.refresh_rounded, color: Colors.white),
-              label: const Text(
-                'Try again',
-                style: TextStyle(
+              label: Text(
+                l10n?.commonRetry ?? 'Try again',
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),
@@ -102,9 +106,9 @@ class ScanErrorView extends ConsumerWidget {
                 await MealEntrySheet.show(context);
               },
               icon: const Icon(Icons.edit_outlined, color: Colors.white),
-              label: const Text(
-                'Add manually instead',
-                style: TextStyle(
+              label: Text(
+                l10n?.mealScanAddManuallyInstead ?? 'Add manually instead',
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),

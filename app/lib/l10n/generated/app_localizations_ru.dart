@@ -2043,4 +2043,279 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get homeNoMealsScanHint =>
       'Нажми \"Добавить еду\" ниже, чтобы записать первый приём пищи';
+
+  @override
+  String get mealScanScreenTitle => 'ИИ-сканер блюд';
+
+  @override
+  String get mealScanIdleTitle => 'Сфотографируйте блюдо';
+
+  @override
+  String get mealScanIdleSubtitle =>
+      'Направьте камеру на тарелку. ИИ Nuveli оценит калории и макросы за несколько секунд.';
+
+  @override
+  String get mealScanTakePhoto => 'Сделать фото';
+
+  @override
+  String get mealScanChooseGallery => 'Выбрать из галереи';
+
+  @override
+  String get mealScanAnalyzingStep1 => 'Анализируем блюдо...';
+
+  @override
+  String get mealScanAnalyzingStep2 => 'Распознаём продукты...';
+
+  @override
+  String get mealScanAnalyzingStep3 => 'Оцениваем порции...';
+
+  @override
+  String get mealScanAnalyzingStep4 => 'Рассчитываем макросы...';
+
+  @override
+  String get mealScanAnalyzingStep5 => 'Почти готово...';
+
+  @override
+  String get mealScanSaving => 'Сохранение блюда...';
+
+  @override
+  String get mealScanRateLimitTitle =>
+      'Слишком много сканирований, слишком быстро';
+
+  @override
+  String get mealScanErrorTitle => 'Ошибка сканирования';
+
+  @override
+  String get mealScanAddManuallyInstead => 'Добавить вручную';
+
+  @override
+  String get mealScanNotFoodTitle => 'Хмм, еду не вижу';
+
+  @override
+  String get mealScanNotFoodHint =>
+      'Попробуйте сделать более чёткое фото тарелки или введите блюдо вручную.';
+
+  @override
+  String get mealScanTryAnotherPhoto => 'Попробовать другое фото';
+
+  @override
+  String get mealScanAddManually => 'Добавить вручную';
+
+  @override
+  String get mealScanRetake => 'Переснять';
+
+  @override
+  String mealScanConfidentScore(int score) {
+    return '$score% уверенности';
+  }
+
+  @override
+  String get mealScanDetectedFoods => 'Обнаруженные продукты';
+
+  @override
+  String get mealScanPortionSize => 'Размер порции';
+
+  @override
+  String get mealScanDiscard => 'Отменить';
+
+  @override
+  String get mealScanAiTip => 'Совет ИИ';
+
+  @override
+  String get mealScanRemoveTooltip => 'Удалить';
+
+  @override
+  String get mealScanImageLoadError => 'Не удалось загрузить изображение';
+
+  @override
+  String get mealScanEditFood => 'Редактировать продукт';
+
+  @override
+  String get mealScanSaveChanges => 'Сохранить изменения';
+
+  @override
+  String get mealScanFieldName => 'Название';
+
+  @override
+  String get plannerScreenTitle => 'План питания';
+
+  @override
+  String get plannerGroceryListTooltip => 'Список покупок';
+
+  @override
+  String get plannerThisWeek => 'На этой неделе';
+
+  @override
+  String get plannerNextWeek => 'На следующей неделе';
+
+  @override
+  String get plannerLastWeek => 'На прошлой неделе';
+
+  @override
+  String plannerInWeeks(int n) {
+    return 'Через $n недели';
+  }
+
+  @override
+  String plannerWeeksAgo(int n) {
+    return '$n недели назад';
+  }
+
+  @override
+  String get plannerPrevWeekTooltip => 'Предыдущая неделя';
+
+  @override
+  String get plannerNextWeekTooltip => 'Следующая неделя';
+
+  @override
+  String plannerTotalsBanner(int kcal, int days) {
+    return '$kcal ккал запланировано на $days дней';
+  }
+
+  @override
+  String get plannerEmptyTitle => 'Пока нет плана на эту неделю';
+
+  @override
+  String get plannerEmptyAiHint =>
+      'Ваш ИИ-тренер составит план на всю неделю за секунды.';
+
+  @override
+  String get plannerEmptyPremiumHint =>
+      'Недельные ИИ-планы входят в Premium. Обновитесь для разблокировки.';
+
+  @override
+  String get plannerAddMealManually => 'Добавить блюдо вручную';
+
+  @override
+  String get plannerGenerateAiPlan => 'Создать план с ИИ';
+
+  @override
+  String get plannerUnlockAiPlan => 'Разблокировать создание плана с ИИ';
+
+  @override
+  String get plannerPremiumFeature => 'Функция Premium';
+
+  @override
+  String get plannerPaywallTitle => 'Смотрите и планируйте дальше этой недели';
+
+  @override
+  String get plannerPaywallBody =>
+      'Бесплатные планы охватывают текущую неделю. Обновитесь, чтобы планировать наперёд, создавать повторяющиеся планы и позволить ИИ составить целую неделю.';
+
+  @override
+  String get plannerSeePremium => 'Посмотреть Premium';
+
+  @override
+  String get plannerBackToThisWeek => 'Вернуться к этой неделе';
+
+  @override
+  String get plannerLoadError => 'Не удалось загрузить план';
+
+  @override
+  String get plannerEditNameNote => 'Изменить название / заметку';
+
+  @override
+  String get plannerRemoveFromPlan => 'Удалить из плана';
+
+  @override
+  String get plannerRemoveEntryTitle => 'Удалить запись?';
+
+  @override
+  String plannerRemoveEntryBody(String name) {
+    return 'Удалить \"$name\" из этого плана?';
+  }
+
+  @override
+  String get plannerRemove => 'Удалить';
+
+  @override
+  String get plannerToday => 'Сегодня';
+
+  @override
+  String plannerDayStats(int meals, int kcal) {
+    return '$meals запланировано · $kcal ккал';
+  }
+
+  @override
+  String get plannerAddMealTooltip => 'Добавить блюдо';
+
+  @override
+  String plannerServingsCount(String n) {
+    return '$n порций';
+  }
+
+  @override
+  String get plannerAddToPlan => 'Добавить в план';
+
+  @override
+  String get plannerMealName => 'Название блюда';
+
+  @override
+  String get plannerServings => 'Порции';
+
+  @override
+  String get plannerNoteOptional => 'Заметка (необязательно)';
+
+  @override
+  String get plannerMealNameRequired => 'Название блюда обязательно';
+
+  @override
+  String get plannerServingsError => 'Порции должны быть больше 0';
+
+  @override
+  String get plannerEditEntry => 'Редактировать запись';
+
+  @override
+  String get plannerEditCaloriesHint =>
+      'Чтобы изменить калории или порции, удалите эту запись и добавьте снова.';
+
+  @override
+  String get plannerGenerateSubtitle =>
+      'Ваш тренер составляет план на всю неделю. Настройте детали ниже — всё необязательно.';
+
+  @override
+  String get plannerDietaryPref => 'Диетические предпочтения (необязательно)';
+
+  @override
+  String get plannerAvoidIngredients => 'Избегать ингредиентов (через запятую)';
+
+  @override
+  String get plannerDailyCalorieTarget =>
+      'Дневная цель по калориям (необязательно)';
+
+  @override
+  String get plannerMealsPerDay => 'Блюд в день';
+
+  @override
+  String get plannerAnythingElse => 'Что-то ещё? (необязательно)';
+
+  @override
+  String get plannerCalorieTargetError =>
+      'Цель по калориям должна быть от 800 до 6000';
+
+  @override
+  String get plannerGenerating => 'Создание…';
+
+  @override
+  String get plannerGeneratePlan => 'Создать план';
+
+  @override
+  String plannerMealsCreated(int n) {
+    return '$n блюд запланировано на вашу неделю.';
+  }
+
+  @override
+  String get plannerGroceryList => 'Список покупок';
+
+  @override
+  String get plannerGroceryLoadError => 'Не удалось загрузить список покупок';
+
+  @override
+  String get plannerGroceryEmpty =>
+      'Пока нет покупок — добавьте рецепт в план.';
+
+  @override
+  String plannerGroceryUsedIn(int n) {
+    return 'Используется в $n рецептах';
+  }
 }

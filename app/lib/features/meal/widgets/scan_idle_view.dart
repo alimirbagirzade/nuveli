@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../premium/premium_paywall_screen.dart';
 import '../providers/meal_scan_controller.dart';
 import '../providers/scan_count_provider.dart';
@@ -13,6 +14,7 @@ class ScanIdleView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final gateAsync = ref.watch(scanGateProvider);
     final controller = ref.read(mealScanControllerProvider.notifier);
 
@@ -33,22 +35,23 @@ class ScanIdleView extends ConsumerWidget {
               children: [
                 _Illustration(),
                 const SizedBox(height: 28),
-                const Text(
-                  'Snap your meal',
-                  style: TextStyle(
+                Text(
+                  l10n?.mealScanIdleTitle ?? 'Snap your meal',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: Text(
-                    'Point your camera at your plate. Nuveli\'s AI will '
-                    'estimate calories and macros in a few seconds.',
+                    l10n?.mealScanIdleSubtitle ??
+                        'Point your camera at your plate. Nuveli\'s AI will '
+                        'estimate calories and macros in a few seconds.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFFB8D4D2),
                       fontSize: 14,
                       height: 1.4,
@@ -60,7 +63,7 @@ class ScanIdleView extends ConsumerWidget {
           ),
           _ScanCta(
             icon: Icons.camera_alt_rounded,
-            label: 'Take photo',
+            label: l10n?.mealScanTakePhoto ?? 'Take photo',
             primary: true,
             onPressed: () => _handleTap(context, ref, gateAsync, () {
               controller.pickFromCamera();
@@ -69,7 +72,7 @@ class ScanIdleView extends ConsumerWidget {
           const SizedBox(height: 12),
           _ScanCta(
             icon: Icons.photo_library_outlined,
-            label: 'Choose from gallery',
+            label: l10n?.mealScanChooseGallery ?? 'Choose from gallery',
             primary: false,
             onPressed: () => _handleTap(context, ref, gateAsync, () {
               controller.pickFromGallery();

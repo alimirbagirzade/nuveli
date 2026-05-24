@@ -1007,5 +1007,384 @@
   "homeNoMealsScanHint": "İlk öğününü eklemek için aşağıdaki \"Yemek Ekle\"ye dokun",
   "@homeNoMealsScanHint": {
     "description": "Home/dashboard: homeNoMealsScanHint"
+  },
+  "mealScanScreenTitle": "Yapay Zeka Yemek Taraması",
+  "@mealScanScreenTitle": {
+    "description": "AI Meal Scan screen title"
+  },
+  "mealScanIdleTitle": "Yemeğini fotoğrafla",
+  "@mealScanIdleTitle": {
+    "description": "Idle state title on scan screen"
+  },
+  "mealScanIdleSubtitle": "Kameranı tabağına doğrult. Nuveli'nin yapay zekası birkaç saniyede kalori ve makroları tahmin edecek.",
+  "@mealScanIdleSubtitle": {
+    "description": "Idle state subtitle on scan screen"
+  },
+  "mealScanTakePhoto": "Fotoğraf çek",
+  "@mealScanTakePhoto": {
+    "description": "Take photo CTA"
+  },
+  "mealScanChooseGallery": "Galeriden seç",
+  "@mealScanChooseGallery": {
+    "description": "Choose from gallery CTA"
+  },
+  "mealScanAnalyzingStep1": "Yemeğin analiz ediliyor...",
+  "@mealScanAnalyzingStep1": {
+    "description": "Loading step 1"
+  },
+  "mealScanAnalyzingStep2": "Yiyecekler tanımlanıyor...",
+  "@mealScanAnalyzingStep2": {
+    "description": "Loading step 2"
+  },
+  "mealScanAnalyzingStep3": "Porsiyonlar tahmin ediliyor...",
+  "@mealScanAnalyzingStep3": {
+    "description": "Loading step 3"
+  },
+  "mealScanAnalyzingStep4": "Makrolar hesaplanıyor...",
+  "@mealScanAnalyzingStep4": {
+    "description": "Loading step 4"
+  },
+  "mealScanAnalyzingStep5": "Neredeyse bitti...",
+  "@mealScanAnalyzingStep5": {
+    "description": "Loading step 5"
+  },
+  "mealScanSaving": "Öğün kaydediliyor...",
+  "@mealScanSaving": {
+    "description": "Saving state label"
+  },
+  "mealScanRateLimitTitle": "Çok fazla tarama, çok hızlı",
+  "@mealScanRateLimitTitle": {
+    "description": "Rate limit error title"
+  },
+  "mealScanErrorTitle": "Tarama başarısız",
+  "@mealScanErrorTitle": {
+    "description": "Generic scan error title"
+  },
+  "mealScanAddManuallyInstead": "Manuel olarak ekle",
+  "@mealScanAddManuallyInstead": {
+    "description": "Add manually fallback button (long)"
+  },
+  "mealScanNotFoodTitle": "Hmm, yiyecek göremedim",
+  "@mealScanNotFoodTitle": {
+    "description": "Not food state title"
+  },
+  "mealScanNotFoodHint": "Tabağın daha net bir fotoğrafını çekmeyi dene ya da bu öğünü manuel olarak kaydet.",
+  "@mealScanNotFoodHint": {
+    "description": "Not food state hint"
+  },
+  "mealScanTryAnotherPhoto": "Başka bir fotoğraf dene",
+  "@mealScanTryAnotherPhoto": {
+    "description": "Retake button in not-food view"
+  },
+  "mealScanAddManually": "Manuel ekle",
+  "@mealScanAddManually": {
+    "description": "Add manually button (short)"
+  },
+  "mealScanRetake": "Yeniden çek",
+  "@mealScanRetake": {
+    "description": "Retake button in preview view"
+  },
+  "mealScanConfidentScore": "%{score} güven",
+  "@mealScanConfidentScore": {
+    "description": "Confidence score chip ({score} placeholder)",
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Tespit edilen yiyecekler",
+  "@mealScanDetectedFoods": {
+    "description": "Section header for detected foods"
+  },
+  "mealScanPortionSize": "Porsiyon boyutu",
+  "@mealScanPortionSize": {
+    "description": "Portion size slider label"
+  },
+  "mealScanDiscard": "Sil",
+  "@mealScanDiscard": {
+    "description": "Discard button"
+  },
+  "mealScanAiTip": "YZ ipucu",
+  "@mealScanAiTip": {
+    "description": "AI insight card label"
+  },
+  "mealScanRemoveTooltip": "Kaldır",
+  "@mealScanRemoveTooltip": {
+    "description": "Remove food tooltip"
+  },
+  "mealScanImageLoadError": "Görsel yüklenemedi",
+  "@mealScanImageLoadError": {
+    "description": "Image load error placeholder"
+  },
+  "mealScanEditFood": "Yiyeceği düzenle",
+  "@mealScanEditFood": {
+    "description": "Edit food sheet title"
+  },
+  "mealScanSaveChanges": "Değişiklikleri kaydet",
+  "@mealScanSaveChanges": {
+    "description": "Save changes button"
+  },
+  "mealScanFieldName": "Ad",
+  "@mealScanFieldName": {
+    "description": "Name field label in edit food sheet"
+  },
+  "plannerScreenTitle": "Yemek Planı",
+  "@plannerScreenTitle": {
+    "description": "Meal planner screen title"
+  },
+  "plannerGroceryListTooltip": "Alışveriş listesi",
+  "@plannerGroceryListTooltip": {
+    "description": "Grocery list icon tooltip"
+  },
+  "plannerThisWeek": "Bu hafta",
+  "@plannerThisWeek": {
+    "description": "Week navigator — current week label"
+  },
+  "plannerNextWeek": "Gelecek hafta",
+  "@plannerNextWeek": {
+    "description": "Week navigator — next week label"
+  },
+  "plannerLastWeek": "Geçen hafta",
+  "@plannerLastWeek": {
+    "description": "Week navigator — last week label"
+  },
+  "plannerInWeeks": "{n} hafta içinde",
+  "@plannerInWeeks": {
+    "description": "Week navigator — in N weeks ({n} placeholder)",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "{n} hafta önce",
+  "@plannerWeeksAgo": {
+    "description": "Week navigator — N weeks ago ({n} placeholder)",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Önceki hafta",
+  "@plannerPrevWeekTooltip": {
+    "description": "Previous week button tooltip"
+  },
+  "plannerNextWeekTooltip": "Sonraki hafta",
+  "@plannerNextWeekTooltip": {
+    "description": "Next week button tooltip"
+  },
+  "plannerTotalsBanner": "{days} gün için {kcal} kcal planlandı",
+  "@plannerTotalsBanner": {
+    "description": "Totals banner ({kcal} and {days} placeholders)",
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "Bu hafta için henüz plan yok",
+  "@plannerEmptyTitle": {
+    "description": "Empty state title"
+  },
+  "plannerEmptyAiHint": "YZ koçun saniyeler içinde tam bir hafta taslağı hazırlasın.",
+  "@plannerEmptyAiHint": {
+    "description": "Empty state AI hint"
+  },
+  "plannerEmptyPremiumHint": "YZ haftalık planlar Premium özelliğidir. Kilitliği açmak için yükselt.",
+  "@plannerEmptyPremiumHint": {
+    "description": "Empty state premium hint"
+  },
+  "plannerAddMealManually": "Öğünü manuel ekle",
+  "@plannerAddMealManually": {
+    "description": "Add meal manually button in empty state"
+  },
+  "plannerGenerateAiPlan": "YZ planı oluştur",
+  "@plannerGenerateAiPlan": {
+    "description": "Generate AI plan button"
+  },
+  "plannerUnlockAiPlan": "YZ plan oluşturmanın kilidini aç",
+  "@plannerUnlockAiPlan": {
+    "description": "Unlock AI plan generation button"
+  },
+  "plannerPremiumFeature": "Premium özellik",
+  "@plannerPremiumFeature": {
+    "description": "Premium feature chip label"
+  },
+  "plannerPaywallTitle": "Bu haftanın ötesini gör ve planla",
+  "@plannerPaywallTitle": {
+    "description": "Paywall title"
+  },
+  "plannerPaywallBody": "Ücretsiz planlar yalnızca mevcut haftayı kapsar. Gelecek haftalara bakabilmek, tekrarlayan planlar oluşturabilmek ve YZ ile tam hafta planı oluşturabilmek için yükselt.",
+  "@plannerPaywallBody": {
+    "description": "Paywall body"
+  },
+  "plannerSeePremium": "Premium'u Gör",
+  "@plannerSeePremium": {
+    "description": "See premium button"
+  },
+  "plannerBackToThisWeek": "Bu haftaya dön",
+  "@plannerBackToThisWeek": {
+    "description": "Back to this week button"
+  },
+  "plannerLoadError": "Planın yüklenemedi",
+  "@plannerLoadError": {
+    "description": "Load error message"
+  },
+  "plannerEditNameNote": "Ad / notu düzenle",
+  "@plannerEditNameNote": {
+    "description": "Edit name/note action"
+  },
+  "plannerRemoveFromPlan": "Plandan kaldır",
+  "@plannerRemoveFromPlan": {
+    "description": "Remove from plan action"
+  },
+  "plannerRemoveEntryTitle": "Giriş kaldırılsın mı?",
+  "@plannerRemoveEntryTitle": {
+    "description": "Remove entry dialog title"
+  },
+  "plannerRemoveEntryBody": "\"{name}\" bu plandan kaldırılsın mı?",
+  "@plannerRemoveEntryBody": {
+    "description": "Remove entry dialog body ({name} placeholder)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Kaldır",
+  "@plannerRemove": {
+    "description": "Remove button"
+  },
+  "plannerToday": "Bugün",
+  "@plannerToday": {
+    "description": "Today badge on day card"
+  },
+  "plannerDayStats": "{meals} planlandı · {kcal} kcal",
+  "@plannerDayStats": {
+    "description": "Day stats subtitle ({meals} and {kcal} placeholders)",
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Öğün ekle",
+  "@plannerAddMealTooltip": {
+    "description": "Add meal icon tooltip on day card"
+  },
+  "plannerServingsCount": "{n} porsiyon",
+  "@plannerServingsCount": {
+    "description": "Servings count ({n} placeholder)",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Plana ekle",
+  "@plannerAddToPlan": {
+    "description": "Add to plan sheet title and button"
+  },
+  "plannerMealName": "Öğün adı",
+  "@plannerMealName": {
+    "description": "Meal name field label"
+  },
+  "plannerServings": "Porsiyon",
+  "@plannerServings": {
+    "description": "Servings field label"
+  },
+  "plannerNoteOptional": "Not (isteğe bağlı)",
+  "@plannerNoteOptional": {
+    "description": "Note field label"
+  },
+  "plannerMealNameRequired": "Öğün adı gereklidir",
+  "@plannerMealNameRequired": {
+    "description": "Meal name validation error"
+  },
+  "plannerServingsError": "Porsiyon 0'dan büyük olmalıdır",
+  "@plannerServingsError": {
+    "description": "Servings validation error"
+  },
+  "plannerEditEntry": "Girişi düzenle",
+  "@plannerEditEntry": {
+    "description": "Edit entry sheet title"
+  },
+  "plannerEditCaloriesHint": "Kalori veya porsiyon değiştirmek için bu girişi sil ve yeniden ekle.",
+  "@plannerEditCaloriesHint": {
+    "description": "Edit entry hint about calories"
+  },
+  "plannerGenerateSubtitle": "Koçun tam bir haftayı taslak olarak hazırlar. Aşağıdaki ayrıntıları düzenle — tümü isteğe bağlı.",
+  "@plannerGenerateSubtitle": {
+    "description": "Generate sheet subtitle"
+  },
+  "plannerDietaryPref": "Diyet tercihi (isteğe bağlı)",
+  "@plannerDietaryPref": {
+    "description": "Dietary preference field label"
+  },
+  "plannerAvoidIngredients": "Kaçınılacak malzemeler (virgülle ayrılmış)",
+  "@plannerAvoidIngredients": {
+    "description": "Avoid ingredients field label"
+  },
+  "plannerDailyCalorieTarget": "Günlük kalori hedefi (isteğe bağlı)",
+  "@plannerDailyCalorieTarget": {
+    "description": "Daily calorie target field label"
+  },
+  "plannerMealsPerDay": "Günlük öğün sayısı",
+  "@plannerMealsPerDay": {
+    "description": "Meals per day label"
+  },
+  "plannerAnythingElse": "Başka bir şey? (isteğe bağlı)",
+  "@plannerAnythingElse": {
+    "description": "Anything else field label"
+  },
+  "plannerCalorieTargetError": "Kalori hedefi 800–6000 arasında olmalıdır",
+  "@plannerCalorieTargetError": {
+    "description": "Calorie target validation error"
+  },
+  "plannerGenerating": "Oluşturuluyor…",
+  "@plannerGenerating": {
+    "description": "Generating state label"
+  },
+  "plannerGeneratePlan": "Plan oluştur",
+  "@plannerGeneratePlan": {
+    "description": "Generate plan button"
+  },
+  "plannerMealsCreated": "Haftanız için {n} öğün planlandı.",
+  "@plannerMealsCreated": {
+    "description": "Meals created snackbar ({n} placeholder)",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Alışveriş listesi",
+  "@plannerGroceryList": {
+    "description": "Grocery list sheet title"
+  },
+  "plannerGroceryLoadError": "Alışveriş listesi yüklenemedi",
+  "@plannerGroceryLoadError": {
+    "description": "Grocery load error"
+  },
+  "plannerGroceryEmpty": "Henüz alışveriş listesi yok — plana bir tarif ekle.",
+  "@plannerGroceryEmpty": {
+    "description": "Grocery list empty state"
+  },
+  "plannerGroceryUsedIn": "{n} tarifte kullanıldı",
+  "@plannerGroceryUsedIn": {
+    "description": "Grocery item used-in label ({n} placeholder)",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../dashboard/widgets/meal_entry_sheet.dart';
 import '../providers/meal_scan_controller.dart';
 
@@ -12,6 +13,7 @@ class ScanNotFoodView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final controller = ref.read(mealScanControllerProvider.notifier);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
@@ -36,9 +38,9 @@ class ScanNotFoodView extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Hmm, I couldn\'t see food',
-                    style: TextStyle(
+                  Text(
+                    l10n?.mealScanNotFoodTitle ?? 'Hmm, I couldn\'t see food',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -50,7 +52,8 @@ class ScanNotFoodView extends ConsumerWidget {
                     child: Text(
                       explanation?.isNotEmpty == true
                           ? explanation!
-                          : 'Try a clearer shot of your plate, or log this meal manually.',
+                          : (l10n?.mealScanNotFoodHint ??
+                              'Try a clearer shot of your plate, or log this meal manually.'),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Color(0xFFB8D4D2),
@@ -69,9 +72,9 @@ class ScanNotFoodView extends ConsumerWidget {
             child: ElevatedButton.icon(
               onPressed: controller.retake,
               icon: const Icon(Icons.camera_alt_rounded, color: Colors.white),
-              label: const Text(
-                'Try another photo',
-                style: TextStyle(
+              label: Text(
+                l10n?.mealScanTryAnotherPhoto ?? 'Try another photo',
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),
@@ -95,9 +98,9 @@ class ScanNotFoodView extends ConsumerWidget {
                 await MealEntrySheet.show(context);
               },
               icon: const Icon(Icons.edit_outlined, color: Colors.white),
-              label: const Text(
-                'Add manually',
-                style: TextStyle(
+              label: Text(
+                l10n?.mealScanAddManually ?? 'Add manually',
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),

@@ -2036,4 +2036,278 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get homeNoMealsScanHint =>
       'İlk öğününü eklemek için aşağıdaki \"Yemek Ekle\"ye dokun';
+
+  @override
+  String get mealScanScreenTitle => 'Yapay Zeka Yemek Taraması';
+
+  @override
+  String get mealScanIdleTitle => 'Yemeğini fotoğrafla';
+
+  @override
+  String get mealScanIdleSubtitle =>
+      'Kameranı tabağına doğrult. Nuveli\'nin yapay zekası birkaç saniyede kalori ve makroları tahmin edecek.';
+
+  @override
+  String get mealScanTakePhoto => 'Fotoğraf çek';
+
+  @override
+  String get mealScanChooseGallery => 'Galeriden seç';
+
+  @override
+  String get mealScanAnalyzingStep1 => 'Yemeğin analiz ediliyor...';
+
+  @override
+  String get mealScanAnalyzingStep2 => 'Yiyecekler tanımlanıyor...';
+
+  @override
+  String get mealScanAnalyzingStep3 => 'Porsiyonlar tahmin ediliyor...';
+
+  @override
+  String get mealScanAnalyzingStep4 => 'Makrolar hesaplanıyor...';
+
+  @override
+  String get mealScanAnalyzingStep5 => 'Neredeyse bitti...';
+
+  @override
+  String get mealScanSaving => 'Öğün kaydediliyor...';
+
+  @override
+  String get mealScanRateLimitTitle => 'Çok fazla tarama, çok hızlı';
+
+  @override
+  String get mealScanErrorTitle => 'Tarama başarısız';
+
+  @override
+  String get mealScanAddManuallyInstead => 'Manuel olarak ekle';
+
+  @override
+  String get mealScanNotFoodTitle => 'Hmm, yiyecek göremedim';
+
+  @override
+  String get mealScanNotFoodHint =>
+      'Tabağın daha net bir fotoğrafını çekmeyi dene ya da bu öğünü manuel olarak kaydet.';
+
+  @override
+  String get mealScanTryAnotherPhoto => 'Başka bir fotoğraf dene';
+
+  @override
+  String get mealScanAddManually => 'Manuel ekle';
+
+  @override
+  String get mealScanRetake => 'Yeniden çek';
+
+  @override
+  String mealScanConfidentScore(int score) {
+    return '%$score güven';
+  }
+
+  @override
+  String get mealScanDetectedFoods => 'Tespit edilen yiyecekler';
+
+  @override
+  String get mealScanPortionSize => 'Porsiyon boyutu';
+
+  @override
+  String get mealScanDiscard => 'Sil';
+
+  @override
+  String get mealScanAiTip => 'YZ ipucu';
+
+  @override
+  String get mealScanRemoveTooltip => 'Kaldır';
+
+  @override
+  String get mealScanImageLoadError => 'Görsel yüklenemedi';
+
+  @override
+  String get mealScanEditFood => 'Yiyeceği düzenle';
+
+  @override
+  String get mealScanSaveChanges => 'Değişiklikleri kaydet';
+
+  @override
+  String get mealScanFieldName => 'Ad';
+
+  @override
+  String get plannerScreenTitle => 'Yemek Planı';
+
+  @override
+  String get plannerGroceryListTooltip => 'Alışveriş listesi';
+
+  @override
+  String get plannerThisWeek => 'Bu hafta';
+
+  @override
+  String get plannerNextWeek => 'Gelecek hafta';
+
+  @override
+  String get plannerLastWeek => 'Geçen hafta';
+
+  @override
+  String plannerInWeeks(int n) {
+    return '$n hafta içinde';
+  }
+
+  @override
+  String plannerWeeksAgo(int n) {
+    return '$n hafta önce';
+  }
+
+  @override
+  String get plannerPrevWeekTooltip => 'Önceki hafta';
+
+  @override
+  String get plannerNextWeekTooltip => 'Sonraki hafta';
+
+  @override
+  String plannerTotalsBanner(int kcal, int days) {
+    return '$days gün için $kcal kcal planlandı';
+  }
+
+  @override
+  String get plannerEmptyTitle => 'Bu hafta için henüz plan yok';
+
+  @override
+  String get plannerEmptyAiHint =>
+      'YZ koçun saniyeler içinde tam bir hafta taslağı hazırlasın.';
+
+  @override
+  String get plannerEmptyPremiumHint =>
+      'YZ haftalık planlar Premium özelliğidir. Kilitliği açmak için yükselt.';
+
+  @override
+  String get plannerAddMealManually => 'Öğünü manuel ekle';
+
+  @override
+  String get plannerGenerateAiPlan => 'YZ planı oluştur';
+
+  @override
+  String get plannerUnlockAiPlan => 'YZ plan oluşturmanın kilidini aç';
+
+  @override
+  String get plannerPremiumFeature => 'Premium özellik';
+
+  @override
+  String get plannerPaywallTitle => 'Bu haftanın ötesini gör ve planla';
+
+  @override
+  String get plannerPaywallBody =>
+      'Ücretsiz planlar yalnızca mevcut haftayı kapsar. Gelecek haftalara bakabilmek, tekrarlayan planlar oluşturabilmek ve YZ ile tam hafta planı oluşturabilmek için yükselt.';
+
+  @override
+  String get plannerSeePremium => 'Premium\'u Gör';
+
+  @override
+  String get plannerBackToThisWeek => 'Bu haftaya dön';
+
+  @override
+  String get plannerLoadError => 'Planın yüklenemedi';
+
+  @override
+  String get plannerEditNameNote => 'Ad / notu düzenle';
+
+  @override
+  String get plannerRemoveFromPlan => 'Plandan kaldır';
+
+  @override
+  String get plannerRemoveEntryTitle => 'Giriş kaldırılsın mı?';
+
+  @override
+  String plannerRemoveEntryBody(String name) {
+    return '\"$name\" bu plandan kaldırılsın mı?';
+  }
+
+  @override
+  String get plannerRemove => 'Kaldır';
+
+  @override
+  String get plannerToday => 'Bugün';
+
+  @override
+  String plannerDayStats(int meals, int kcal) {
+    return '$meals planlandı · $kcal kcal';
+  }
+
+  @override
+  String get plannerAddMealTooltip => 'Öğün ekle';
+
+  @override
+  String plannerServingsCount(String n) {
+    return '$n porsiyon';
+  }
+
+  @override
+  String get plannerAddToPlan => 'Plana ekle';
+
+  @override
+  String get plannerMealName => 'Öğün adı';
+
+  @override
+  String get plannerServings => 'Porsiyon';
+
+  @override
+  String get plannerNoteOptional => 'Not (isteğe bağlı)';
+
+  @override
+  String get plannerMealNameRequired => 'Öğün adı gereklidir';
+
+  @override
+  String get plannerServingsError => 'Porsiyon 0\'dan büyük olmalıdır';
+
+  @override
+  String get plannerEditEntry => 'Girişi düzenle';
+
+  @override
+  String get plannerEditCaloriesHint =>
+      'Kalori veya porsiyon değiştirmek için bu girişi sil ve yeniden ekle.';
+
+  @override
+  String get plannerGenerateSubtitle =>
+      'Koçun tam bir haftayı taslak olarak hazırlar. Aşağıdaki ayrıntıları düzenle — tümü isteğe bağlı.';
+
+  @override
+  String get plannerDietaryPref => 'Diyet tercihi (isteğe bağlı)';
+
+  @override
+  String get plannerAvoidIngredients =>
+      'Kaçınılacak malzemeler (virgülle ayrılmış)';
+
+  @override
+  String get plannerDailyCalorieTarget => 'Günlük kalori hedefi (isteğe bağlı)';
+
+  @override
+  String get plannerMealsPerDay => 'Günlük öğün sayısı';
+
+  @override
+  String get plannerAnythingElse => 'Başka bir şey? (isteğe bağlı)';
+
+  @override
+  String get plannerCalorieTargetError =>
+      'Kalori hedefi 800–6000 arasında olmalıdır';
+
+  @override
+  String get plannerGenerating => 'Oluşturuluyor…';
+
+  @override
+  String get plannerGeneratePlan => 'Plan oluştur';
+
+  @override
+  String plannerMealsCreated(int n) {
+    return 'Haftanız için $n öğün planlandı.';
+  }
+
+  @override
+  String get plannerGroceryList => 'Alışveriş listesi';
+
+  @override
+  String get plannerGroceryLoadError => 'Alışveriş listesi yüklenemedi';
+
+  @override
+  String get plannerGroceryEmpty =>
+      'Henüz alışveriş listesi yok — plana bir tarif ekle.';
+
+  @override
+  String plannerGroceryUsedIn(int n) {
+    return '$n tarifte kullanıldı';
+  }
 }

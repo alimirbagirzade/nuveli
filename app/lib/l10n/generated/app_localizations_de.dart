@@ -2043,4 +2043,278 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get homeNoMealsScanHint =>
       'Tippe unten auf \"Essen hinzufügen\", um deine erste Mahlzeit zu erfassen';
+
+  @override
+  String get mealScanScreenTitle => 'KI-Mahlzeit-Scan';
+
+  @override
+  String get mealScanIdleTitle => 'Fotografiere deine Mahlzeit';
+
+  @override
+  String get mealScanIdleSubtitle =>
+      'Richte deine Kamera auf deinen Teller. Nuveli\'s KI schätzt Kalorien und Makros in wenigen Sekunden.';
+
+  @override
+  String get mealScanTakePhoto => 'Foto aufnehmen';
+
+  @override
+  String get mealScanChooseGallery => 'Aus Galerie wählen';
+
+  @override
+  String get mealScanAnalyzingStep1 => 'Mahlzeit wird analysiert...';
+
+  @override
+  String get mealScanAnalyzingStep2 => 'Lebensmittel werden erkannt...';
+
+  @override
+  String get mealScanAnalyzingStep3 => 'Portionen werden geschätzt...';
+
+  @override
+  String get mealScanAnalyzingStep4 => 'Makros werden berechnet...';
+
+  @override
+  String get mealScanAnalyzingStep5 => 'Fast fertig...';
+
+  @override
+  String get mealScanSaving => 'Mahlzeit wird gespeichert...';
+
+  @override
+  String get mealScanRateLimitTitle => 'Zu viele Scans, zu schnell';
+
+  @override
+  String get mealScanErrorTitle => 'Scan fehlgeschlagen';
+
+  @override
+  String get mealScanAddManuallyInstead => 'Stattdessen manuell hinzufügen';
+
+  @override
+  String get mealScanNotFoodTitle => 'Hmm, kein Essen erkannt';
+
+  @override
+  String get mealScanNotFoodHint =>
+      'Versuche ein klareres Foto deines Tellers oder trage die Mahlzeit manuell ein.';
+
+  @override
+  String get mealScanTryAnotherPhoto => 'Anderes Foto versuchen';
+
+  @override
+  String get mealScanAddManually => 'Manuell hinzufügen';
+
+  @override
+  String get mealScanRetake => 'Erneut aufnehmen';
+
+  @override
+  String mealScanConfidentScore(int score) {
+    return '$score% Konfidenz';
+  }
+
+  @override
+  String get mealScanDetectedFoods => 'Erkannte Lebensmittel';
+
+  @override
+  String get mealScanPortionSize => 'Portionsgröße';
+
+  @override
+  String get mealScanDiscard => 'Verwerfen';
+
+  @override
+  String get mealScanAiTip => 'KI-Tipp';
+
+  @override
+  String get mealScanRemoveTooltip => 'Entfernen';
+
+  @override
+  String get mealScanImageLoadError => 'Bild konnte nicht geladen werden';
+
+  @override
+  String get mealScanEditFood => 'Lebensmittel bearbeiten';
+
+  @override
+  String get mealScanSaveChanges => 'Änderungen speichern';
+
+  @override
+  String get mealScanFieldName => 'Name';
+
+  @override
+  String get plannerScreenTitle => 'Mahlzeitenplan';
+
+  @override
+  String get plannerGroceryListTooltip => 'Einkaufsliste';
+
+  @override
+  String get plannerThisWeek => 'Diese Woche';
+
+  @override
+  String get plannerNextWeek => 'Nächste Woche';
+
+  @override
+  String get plannerLastWeek => 'Letzte Woche';
+
+  @override
+  String plannerInWeeks(int n) {
+    return 'In $n Wochen';
+  }
+
+  @override
+  String plannerWeeksAgo(int n) {
+    return 'Vor $n Wochen';
+  }
+
+  @override
+  String get plannerPrevWeekTooltip => 'Vorherige Woche';
+
+  @override
+  String get plannerNextWeekTooltip => 'Nächste Woche';
+
+  @override
+  String plannerTotalsBanner(int kcal, int days) {
+    return '$kcal kcal für $days Tage geplant';
+  }
+
+  @override
+  String get plannerEmptyTitle => 'Noch kein Plan für diese Woche';
+
+  @override
+  String get plannerEmptyAiHint =>
+      'Dein KI-Coach entwirft eine ganze Woche in Sekunden.';
+
+  @override
+  String get plannerEmptyPremiumHint =>
+      'KI-Wochenpläne sind Teil von Premium. Upgrade zum Freischalten.';
+
+  @override
+  String get plannerAddMealManually => 'Mahlzeit manuell hinzufügen';
+
+  @override
+  String get plannerGenerateAiPlan => 'KI-Plan erstellen';
+
+  @override
+  String get plannerUnlockAiPlan => 'KI-Plangenerierung freischalten';
+
+  @override
+  String get plannerPremiumFeature => 'Premium-Funktion';
+
+  @override
+  String get plannerPaywallTitle => 'Über diese Woche hinaus sehen und planen';
+
+  @override
+  String get plannerPaywallBody =>
+      'Freie Pläne decken die aktuelle Woche ab. Upgrade, um voraus zu planen, wiederkehrende Pläne zu erstellen und die KI eine ganze Woche generieren zu lassen.';
+
+  @override
+  String get plannerSeePremium => 'Premium ansehen';
+
+  @override
+  String get plannerBackToThisWeek => 'Zurück zu dieser Woche';
+
+  @override
+  String get plannerLoadError => 'Plan konnte nicht geladen werden';
+
+  @override
+  String get plannerEditNameNote => 'Name / Notiz bearbeiten';
+
+  @override
+  String get plannerRemoveFromPlan => 'Aus Plan entfernen';
+
+  @override
+  String get plannerRemoveEntryTitle => 'Eintrag entfernen?';
+
+  @override
+  String plannerRemoveEntryBody(String name) {
+    return '\"$name\" aus diesem Plan entfernen?';
+  }
+
+  @override
+  String get plannerRemove => 'Entfernen';
+
+  @override
+  String get plannerToday => 'Heute';
+
+  @override
+  String plannerDayStats(int meals, int kcal) {
+    return '$meals geplant · $kcal kcal';
+  }
+
+  @override
+  String get plannerAddMealTooltip => 'Mahlzeit hinzufügen';
+
+  @override
+  String plannerServingsCount(String n) {
+    return '$n Portionen';
+  }
+
+  @override
+  String get plannerAddToPlan => 'Zum Plan hinzufügen';
+
+  @override
+  String get plannerMealName => 'Mahlzeitname';
+
+  @override
+  String get plannerServings => 'Portionen';
+
+  @override
+  String get plannerNoteOptional => 'Notiz (optional)';
+
+  @override
+  String get plannerMealNameRequired => 'Mahlzeitname ist erforderlich';
+
+  @override
+  String get plannerServingsError => 'Portionen müssen größer als 0 sein';
+
+  @override
+  String get plannerEditEntry => 'Eintrag bearbeiten';
+
+  @override
+  String get plannerEditCaloriesHint =>
+      'Um Kalorien oder Portionen zu ändern, lösche diesen Eintrag und füge ihn erneut hinzu.';
+
+  @override
+  String get plannerGenerateSubtitle =>
+      'Dein Coach entwirft eine vollständige Woche. Passe die Details unten an – alles optional.';
+
+  @override
+  String get plannerDietaryPref => 'Ernährungspräferenz (optional)';
+
+  @override
+  String get plannerAvoidIngredients => 'Zutaten vermeiden (kommagetrennt)';
+
+  @override
+  String get plannerDailyCalorieTarget => 'Tägliches Kalorienziel (optional)';
+
+  @override
+  String get plannerMealsPerDay => 'Mahlzeiten pro Tag';
+
+  @override
+  String get plannerAnythingElse => 'Noch etwas? (optional)';
+
+  @override
+  String get plannerCalorieTargetError =>
+      'Kalorienziel muss zwischen 800 und 6000 liegen';
+
+  @override
+  String get plannerGenerating => 'Wird erstellt…';
+
+  @override
+  String get plannerGeneratePlan => 'Plan erstellen';
+
+  @override
+  String plannerMealsCreated(int n) {
+    return '$n Mahlzeiten für Ihre Woche geplant.';
+  }
+
+  @override
+  String get plannerGroceryList => 'Einkaufsliste';
+
+  @override
+  String get plannerGroceryLoadError =>
+      'Einkaufsliste konnte nicht geladen werden';
+
+  @override
+  String get plannerGroceryEmpty =>
+      'Noch keine Einkäufe — füge ein Rezept zum Plan hinzu.';
+
+  @override
+  String plannerGroceryUsedIn(int n) {
+    return 'In $n Rezepten verwendet';
+  }
 }

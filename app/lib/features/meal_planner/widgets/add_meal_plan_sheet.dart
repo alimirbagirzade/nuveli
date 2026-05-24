@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/repositories/meal_planner_repository.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../providers/planner_providers.dart';
 import 'planner_form_fields.dart';
 
@@ -87,19 +88,23 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
   Future<void> _save() async {
     if (_isSaving) return;
 
+    final l10n = AppLocalizations.of(context);
     final name = _nameCtrl.text.trim();
     final calories = int.tryParse(_caloriesCtrl.text.trim());
     if (name.isEmpty) {
-      setState(() => _formError = 'Meal name is required');
+      setState(() => _formError =
+          l10n?.plannerMealNameRequired ?? 'Meal name is required');
       return;
     }
     if (calories == null || calories <= 0) {
-      setState(() => _formError = 'Enter a calorie value (> 0)');
+      setState(() => _formError =
+          l10n?.homeCaloriesRequired ?? 'Enter a calorie value (> 0)');
       return;
     }
     final servings = double.tryParse(_servingsCtrl.text.trim().replaceAll(',', '.'));
     if (servings == null || servings <= 0) {
-      setState(() => _formError = 'Servings must be greater than 0');
+      setState(() => _formError =
+          l10n?.plannerServingsError ?? 'Servings must be greater than 0');
       return;
     }
 
@@ -135,6 +140,7 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -147,7 +153,9 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PlannerSheetHeader(title: 'Add to plan'),
+            PlannerSheetHeader(
+              title: l10n?.plannerAddToPlan ?? 'Add to plan',
+            ),
             const SizedBox(height: 16),
             _DateRow(date: _date, onTap: _pickDate),
             const SizedBox(height: 16),
@@ -157,7 +165,7 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
             ),
             const SizedBox(height: 16),
             PlannerLabeledField(
-              label: 'Meal name',
+              label: l10n?.plannerMealName ?? 'Meal name',
               hint: 'e.g. Grilled chicken salad',
               controller: _nameCtrl,
               autofocus: true,
@@ -170,7 +178,7 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
                 Expanded(
                   flex: 2,
                   child: PlannerLabeledField(
-                    label: 'Calories (kcal)',
+                    label: l10n?.homeCaloriesKcal ?? 'Calories (kcal)',
                     hint: 'e.g. 450',
                     controller: _caloriesCtrl,
                     keyboardType: TextInputType.number,
@@ -180,7 +188,7 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: PlannerLabeledField(
-                    label: 'Servings',
+                    label: l10n?.plannerServings ?? 'Servings',
                     hint: '1',
                     controller: _servingsCtrl,
                     keyboardType:
@@ -195,16 +203,25 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: _macroField('Protein (g)', _proteinCtrl)),
+                Expanded(
+                  child: _macroField(
+                    l10n?.macroProteinG ?? 'Protein (g)', _proteinCtrl),
+                ),
                 const SizedBox(width: 8),
-                Expanded(child: _macroField('Carbs (g)', _carbsCtrl)),
+                Expanded(
+                  child: _macroField(
+                    l10n?.macroCarbsG ?? 'Carbs (g)', _carbsCtrl),
+                ),
                 const SizedBox(width: 8),
-                Expanded(child: _macroField('Fat (g)', _fatCtrl)),
+                Expanded(
+                  child: _macroField(
+                    l10n?.macroFatG ?? 'Fat (g)', _fatCtrl),
+                ),
               ],
             ),
             const SizedBox(height: 12),
             PlannerLabeledField(
-              label: 'Note (optional)',
+              label: l10n?.plannerNoteOptional ?? 'Note (optional)',
               hint: 'e.g. meal prep on Sunday',
               controller: _noteCtrl,
               maxLength: 200,
@@ -234,9 +251,9 @@ class _AddMealPlanSheetState extends ConsumerState<AddMealPlanSheet> {
                           valueColor: AlwaysStoppedAnimation(Colors.white),
                         ),
                       )
-                    : const Text(
-                        'Add to plan',
-                        style: TextStyle(
+                    : Text(
+                        l10n?.plannerAddToPlan ?? 'Add to plan',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,

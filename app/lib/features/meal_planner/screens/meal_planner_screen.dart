@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/repositories/meal_planner_repository.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../premium/premium_paywall_screen.dart';
 import '../models/weekly_plan.dart';
 import '../providers/planner_providers.dart';
@@ -40,9 +41,9 @@ class MealPlannerScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Meal Plan',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)?.plannerScreenTitle ?? 'Meal Plan',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -50,7 +51,8 @@ class MealPlannerScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-            tooltip: 'Grocery list',
+            tooltip: AppLocalizations.of(context)?.plannerGroceryListTooltip ??
+                'Grocery list',
             icon: const Icon(Icons.shopping_cart_outlined,
                 color: Colors.white),
             onPressed: () => GroceryListSheet.show(context),
@@ -126,6 +128,7 @@ class MealPlannerScreen extends ConsumerWidget {
     WidgetRef ref,
     MealPlanEntry entry,
   ) async {
+    final l10n = AppLocalizations.of(context);
     final action = await showModalBottomSheet<_EntryAction>(
       context: context,
       backgroundColor: const Color(0xFF142346),
@@ -152,16 +155,20 @@ class MealPlannerScreen extends ConsumerWidget {
             ),
             ListTile(
               leading: const Icon(Icons.edit_outlined, color: Colors.white),
-              title: const Text('Edit name / note',
-                  style: TextStyle(color: Colors.white)),
+              title: Text(
+                l10n?.plannerEditNameNote ?? 'Edit name / note',
+                style: const TextStyle(color: Colors.white),
+              ),
               onTap: () =>
                   Navigator.of(sheetContext).pop(_EntryAction.edit),
             ),
             ListTile(
               leading: const Icon(Icons.delete_outline,
                   color: AppColors.error),
-              title: const Text('Remove from plan',
-                  style: TextStyle(color: AppColors.error)),
+              title: Text(
+                l10n?.plannerRemoveFromPlan ?? 'Remove from plan',
+                style: const TextStyle(color: AppColors.error),
+              ),
               onTap: () =>
                   Navigator.of(sheetContext).pop(_EntryAction.delete),
             ),
@@ -184,27 +191,35 @@ class MealPlannerScreen extends ConsumerWidget {
     WidgetRef ref,
     MealPlanEntry entry,
   ) async {
+    final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         backgroundColor: const Color(0xFF142346),
-        title: const Text('Remove entry?',
-            style: TextStyle(color: Colors.white)),
+        title: Text(
+          l10n?.plannerRemoveEntryTitle ?? 'Remove entry?',
+          style: const TextStyle(color: Colors.white),
+        ),
         content: Text(
-          'Remove "${entry.displayName}" from this plan?',
+          l10n?.plannerRemoveEntryBody(entry.displayName) ??
+              'Remove "${entry.displayName}" from this plan?',
           style: const TextStyle(color: Color(0xFFB8C5D6)),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel',
-                style: TextStyle(color: AppColors.primary)),
+            child: Text(
+              l10n?.commonCancel ?? 'Cancel',
+              style: const TextStyle(color: AppColors.primary),
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Remove',
-                style: TextStyle(
-                    color: AppColors.error, fontWeight: FontWeight.w600)),
+            child: Text(
+              l10n?.plannerRemove ?? 'Remove',
+              style: const TextStyle(
+                  color: AppColors.error, fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),
@@ -303,7 +318,11 @@ class _PlanBody extends StatelessWidget {
               color: Colors.white,
             ),
             label: Text(
-              canGenerate ? 'Generate AI plan' : 'Unlock AI plan generation',
+              canGenerate
+                  ? (AppLocalizations.of(context)?.plannerGenerateAiPlan ??
+                      'Generate AI plan')
+                  : (AppLocalizations.of(context)?.plannerUnlockAiPlan ??
+                      'Unlock AI plan generation'),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -346,7 +365,8 @@ class _WeekNavigator extends StatelessWidget {
       children: [
         IconButton(
           onPressed: onPrev,
-          tooltip: 'Previous week',
+          tooltip: AppLocalizations.of(context)?.plannerPrevWeekTooltip ??
+              'Previous week',
           icon: const Icon(Icons.chevron_left_rounded, color: Colors.white),
         ),
         Expanded(
@@ -355,7 +375,10 @@ class _WeekNavigator extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  offset == 0 ? 'This week' : _weekLabel(offset),
+                  offset == 0
+                      ? (AppLocalizations.of(context)?.plannerThisWeek ??
+                          'This week')
+                      : _weekLabel(context, offset),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -376,7 +399,8 @@ class _WeekNavigator extends StatelessWidget {
         ),
         IconButton(
           onPressed: onNext,
-          tooltip: 'Next week',
+          tooltip: AppLocalizations.of(context)?.plannerNextWeekTooltip ??
+              'Next week',
           icon: const Icon(Icons.chevron_right_rounded, color: Colors.white),
         ),
       ],
@@ -401,11 +425,12 @@ class _WeekNavigator extends StatelessWidget {
     return '${months[d.month - 1]} ${d.day}';
   }
 
-  static String _weekLabel(int offset) {
-    if (offset == 1) return 'Next week';
-    if (offset == -1) return 'Last week';
-    if (offset > 1) return 'In $offset weeks';
-    return '${offset.abs()} weeks ago';
+  static String _weekLabel(BuildContext context, int offset) {
+    final l10n = AppLocalizations.of(context);
+    if (offset == 1) return l10n?.plannerNextWeek ?? 'Next week';
+    if (offset == -1) return l10n?.plannerLastWeek ?? 'Last week';
+    if (offset > 1) return l10n?.plannerInWeeks(offset) ?? 'In $offset weeks';
+    return l10n?.plannerWeeksAgo(offset.abs()) ?? '${offset.abs()} weeks ago';
   }
 }
 
@@ -416,6 +441,7 @@ class _TotalsBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
@@ -430,7 +456,8 @@ class _TotalsBanner extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              '$totalCalories kcal planned across $dayCount days',
+              l10n?.plannerTotalsBanner(totalCalories, dayCount) ??
+                  '$totalCalories kcal planned across $dayCount days',
               style: const TextStyle(
                 color: Color(0xFFE8F3F1),
                 fontSize: 13,
@@ -456,6 +483,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
@@ -474,9 +502,9 @@ class _EmptyState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 18),
-          const Text(
-            'No plan for this week yet',
-            style: TextStyle(
+          Text(
+            l10n?.plannerEmptyTitle ?? 'No plan for this week yet',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w700,
@@ -487,8 +515,10 @@ class _EmptyState extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
               canGenerate
-                  ? 'Let your AI coach draft a full week in seconds.'
-                  : 'AI weekly plans are part of Premium. Upgrade to unlock.',
+                  ? (l10n?.plannerEmptyAiHint ??
+                      'Let your AI coach draft a full week in seconds.')
+                  : (l10n?.plannerEmptyPremiumHint ??
+                      'AI weekly plans are part of Premium. Upgrade to unlock.'),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xFFB8D4D2),
@@ -502,9 +532,9 @@ class _EmptyState extends StatelessWidget {
             TextButton.icon(
               onPressed: onAddManually,
               icon: const Icon(Icons.add_rounded, color: AppColors.primary),
-              label: const Text(
-                'Add a meal manually',
-                style: TextStyle(
+              label: Text(
+                l10n?.plannerAddMealManually ?? 'Add a meal manually',
+                style: const TextStyle(
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600,
                 ),
@@ -524,6 +554,7 @@ class _PaywallBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(20, 32, 20, 24),
@@ -538,14 +569,14 @@ class _PaywallBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.workspace_premium_rounded,
+                  const Icon(Icons.workspace_premium_rounded,
                       color: AppColors.primary, size: 18),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
-                    'Premium feature',
-                    style: TextStyle(
+                    l10n?.plannerPremiumFeature ?? 'Premium feature',
+                    style: const TextStyle(
                       color: AppColors.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -554,20 +585,21 @@ class _PaywallBody extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8),
-              const Text(
-                'See and plan beyond this week',
-                style: TextStyle(
+              Text(
+                l10n?.plannerPaywallTitle ?? 'See and plan beyond this week',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 6),
-              const Text(
-                'Free plans cover the current week. Upgrade to look '
-                'ahead, draft repeating plans, and let AI generate a '
-                'full week for you.',
-                style: TextStyle(
+              Text(
+                l10n?.plannerPaywallBody ??
+                    'Free plans cover the current week. Upgrade to look '
+                    'ahead, draft repeating plans, and let AI generate a '
+                    'full week for you.',
+                style: const TextStyle(
                   color: Color(0xFFB8D4D2),
                   fontSize: 13,
                   height: 1.5,
@@ -586,9 +618,9 @@ class _PaywallBody extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'See Premium',
-                    style: TextStyle(
+                  child: Text(
+                    l10n?.plannerSeePremium ?? 'See Premium',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -608,9 +640,9 @@ class _PaywallBody extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'Back to this week',
-                    style: TextStyle(
+                  child: Text(
+                    l10n?.plannerBackToThisWeek ?? 'Back to this week',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -661,6 +693,7 @@ class _ErrorBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(20, 60, 20, 24),
@@ -668,10 +701,10 @@ class _ErrorBody extends StatelessWidget {
         const Icon(Icons.error_outline_rounded,
             color: AppColors.error, size: 56),
         const SizedBox(height: 12),
-        const Text(
-          'Could not load your plan',
+        Text(
+          l10n?.plannerLoadError ?? 'Could not load your plan',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w700,
@@ -688,8 +721,10 @@ class _ErrorBody extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh_rounded, color: Colors.white),
-            label: const Text('Try again',
-                style: TextStyle(color: Colors.white)),
+            label: Text(
+              l10n?.commonRetry ?? 'Try again',
+              style: const TextStyle(color: Colors.white),
+            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               elevation: 0,

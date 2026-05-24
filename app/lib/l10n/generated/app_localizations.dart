@@ -3905,6 +3905,498 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İlk öğününü eklemek için aşağıdaki \"Yemek Ekle\"ye dokun'**
   String get homeNoMealsScanHint;
+
+  /// AI Meal Scan screen title
+  ///
+  /// In tr, this message translates to:
+  /// **'Yapay Zeka Yemek Taraması'**
+  String get mealScanScreenTitle;
+
+  /// Idle state title on scan screen
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemeğini fotoğrafla'**
+  String get mealScanIdleTitle;
+
+  /// Idle state subtitle on scan screen
+  ///
+  /// In tr, this message translates to:
+  /// **'Kameranı tabağına doğrult. Nuveli\'nin yapay zekası birkaç saniyede kalori ve makroları tahmin edecek.'**
+  String get mealScanIdleSubtitle;
+
+  /// Take photo CTA
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf çek'**
+  String get mealScanTakePhoto;
+
+  /// Choose from gallery CTA
+  ///
+  /// In tr, this message translates to:
+  /// **'Galeriden seç'**
+  String get mealScanChooseGallery;
+
+  /// Loading step 1
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemeğin analiz ediliyor...'**
+  String get mealScanAnalyzingStep1;
+
+  /// Loading step 2
+  ///
+  /// In tr, this message translates to:
+  /// **'Yiyecekler tanımlanıyor...'**
+  String get mealScanAnalyzingStep2;
+
+  /// Loading step 3
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyonlar tahmin ediliyor...'**
+  String get mealScanAnalyzingStep3;
+
+  /// Loading step 4
+  ///
+  /// In tr, this message translates to:
+  /// **'Makrolar hesaplanıyor...'**
+  String get mealScanAnalyzingStep4;
+
+  /// Loading step 5
+  ///
+  /// In tr, this message translates to:
+  /// **'Neredeyse bitti...'**
+  String get mealScanAnalyzingStep5;
+
+  /// Saving state label
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün kaydediliyor...'**
+  String get mealScanSaving;
+
+  /// Rate limit error title
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok fazla tarama, çok hızlı'**
+  String get mealScanRateLimitTitle;
+
+  /// Generic scan error title
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarama başarısız'**
+  String get mealScanErrorTitle;
+
+  /// Add manually fallback button (long)
+  ///
+  /// In tr, this message translates to:
+  /// **'Manuel olarak ekle'**
+  String get mealScanAddManuallyInstead;
+
+  /// Not food state title
+  ///
+  /// In tr, this message translates to:
+  /// **'Hmm, yiyecek göremedim'**
+  String get mealScanNotFoodTitle;
+
+  /// Not food state hint
+  ///
+  /// In tr, this message translates to:
+  /// **'Tabağın daha net bir fotoğrafını çekmeyi dene ya da bu öğünü manuel olarak kaydet.'**
+  String get mealScanNotFoodHint;
+
+  /// Retake button in not-food view
+  ///
+  /// In tr, this message translates to:
+  /// **'Başka bir fotoğraf dene'**
+  String get mealScanTryAnotherPhoto;
+
+  /// Add manually button (short)
+  ///
+  /// In tr, this message translates to:
+  /// **'Manuel ekle'**
+  String get mealScanAddManually;
+
+  /// Retake button in preview view
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden çek'**
+  String get mealScanRetake;
+
+  /// Confidence score chip ({score} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'%{score} güven'**
+  String mealScanConfidentScore(int score);
+
+  /// Section header for detected foods
+  ///
+  /// In tr, this message translates to:
+  /// **'Tespit edilen yiyecekler'**
+  String get mealScanDetectedFoods;
+
+  /// Portion size slider label
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyon boyutu'**
+  String get mealScanPortionSize;
+
+  /// Discard button
+  ///
+  /// In tr, this message translates to:
+  /// **'Sil'**
+  String get mealScanDiscard;
+
+  /// AI insight card label
+  ///
+  /// In tr, this message translates to:
+  /// **'YZ ipucu'**
+  String get mealScanAiTip;
+
+  /// Remove food tooltip
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaldır'**
+  String get mealScanRemoveTooltip;
+
+  /// Image load error placeholder
+  ///
+  /// In tr, this message translates to:
+  /// **'Görsel yüklenemedi'**
+  String get mealScanImageLoadError;
+
+  /// Edit food sheet title
+  ///
+  /// In tr, this message translates to:
+  /// **'Yiyeceği düzenle'**
+  String get mealScanEditFood;
+
+  /// Save changes button
+  ///
+  /// In tr, this message translates to:
+  /// **'Değişiklikleri kaydet'**
+  String get mealScanSaveChanges;
+
+  /// Name field label in edit food sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad'**
+  String get mealScanFieldName;
+
+  /// Meal planner screen title
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemek Planı'**
+  String get plannerScreenTitle;
+
+  /// Grocery list icon tooltip
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışveriş listesi'**
+  String get plannerGroceryListTooltip;
+
+  /// Week navigator — current week label
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hafta'**
+  String get plannerThisWeek;
+
+  /// Week navigator — next week label
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelecek hafta'**
+  String get plannerNextWeek;
+
+  /// Week navigator — last week label
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçen hafta'**
+  String get plannerLastWeek;
+
+  /// Week navigator — in N weeks ({n} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} hafta içinde'**
+  String plannerInWeeks(int n);
+
+  /// Week navigator — N weeks ago ({n} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} hafta önce'**
+  String plannerWeeksAgo(int n);
+
+  /// Previous week button tooltip
+  ///
+  /// In tr, this message translates to:
+  /// **'Önceki hafta'**
+  String get plannerPrevWeekTooltip;
+
+  /// Next week button tooltip
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonraki hafta'**
+  String get plannerNextWeekTooltip;
+
+  /// Totals banner ({kcal} and {days} placeholders)
+  ///
+  /// In tr, this message translates to:
+  /// **'{days} gün için {kcal} kcal planlandı'**
+  String plannerTotalsBanner(int kcal, int days);
+
+  /// Empty state title
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hafta için henüz plan yok'**
+  String get plannerEmptyTitle;
+
+  /// Empty state AI hint
+  ///
+  /// In tr, this message translates to:
+  /// **'YZ koçun saniyeler içinde tam bir hafta taslağı hazırlasın.'**
+  String get plannerEmptyAiHint;
+
+  /// Empty state premium hint
+  ///
+  /// In tr, this message translates to:
+  /// **'YZ haftalık planlar Premium özelliğidir. Kilitliği açmak için yükselt.'**
+  String get plannerEmptyPremiumHint;
+
+  /// Add meal manually button in empty state
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğünü manuel ekle'**
+  String get plannerAddMealManually;
+
+  /// Generate AI plan button
+  ///
+  /// In tr, this message translates to:
+  /// **'YZ planı oluştur'**
+  String get plannerGenerateAiPlan;
+
+  /// Unlock AI plan generation button
+  ///
+  /// In tr, this message translates to:
+  /// **'YZ plan oluşturmanın kilidini aç'**
+  String get plannerUnlockAiPlan;
+
+  /// Premium feature chip label
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium özellik'**
+  String get plannerPremiumFeature;
+
+  /// Paywall title
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu haftanın ötesini gör ve planla'**
+  String get plannerPaywallTitle;
+
+  /// Paywall body
+  ///
+  /// In tr, this message translates to:
+  /// **'Ücretsiz planlar yalnızca mevcut haftayı kapsar. Gelecek haftalara bakabilmek, tekrarlayan planlar oluşturabilmek ve YZ ile tam hafta planı oluşturabilmek için yükselt.'**
+  String get plannerPaywallBody;
+
+  /// See premium button
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium\'u Gör'**
+  String get plannerSeePremium;
+
+  /// Back to this week button
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu haftaya dön'**
+  String get plannerBackToThisWeek;
+
+  /// Load error message
+  ///
+  /// In tr, this message translates to:
+  /// **'Planın yüklenemedi'**
+  String get plannerLoadError;
+
+  /// Edit name/note action
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad / notu düzenle'**
+  String get plannerEditNameNote;
+
+  /// Remove from plan action
+  ///
+  /// In tr, this message translates to:
+  /// **'Plandan kaldır'**
+  String get plannerRemoveFromPlan;
+
+  /// Remove entry dialog title
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş kaldırılsın mı?'**
+  String get plannerRemoveEntryTitle;
+
+  /// Remove entry dialog body ({name} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'\"{name}\" bu plandan kaldırılsın mı?'**
+  String plannerRemoveEntryBody(String name);
+
+  /// Remove button
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaldır'**
+  String get plannerRemove;
+
+  /// Today badge on day card
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün'**
+  String get plannerToday;
+
+  /// Day stats subtitle ({meals} and {kcal} placeholders)
+  ///
+  /// In tr, this message translates to:
+  /// **'{meals} planlandı · {kcal} kcal'**
+  String plannerDayStats(int meals, int kcal);
+
+  /// Add meal icon tooltip on day card
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün ekle'**
+  String get plannerAddMealTooltip;
+
+  /// Servings count ({n} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} porsiyon'**
+  String plannerServingsCount(String n);
+
+  /// Add to plan sheet title and button
+  ///
+  /// In tr, this message translates to:
+  /// **'Plana ekle'**
+  String get plannerAddToPlan;
+
+  /// Meal name field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün adı'**
+  String get plannerMealName;
+
+  /// Servings field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyon'**
+  String get plannerServings;
+
+  /// Note field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Not (isteğe bağlı)'**
+  String get plannerNoteOptional;
+
+  /// Meal name validation error
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün adı gereklidir'**
+  String get plannerMealNameRequired;
+
+  /// Servings validation error
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyon 0\'dan büyük olmalıdır'**
+  String get plannerServingsError;
+
+  /// Edit entry sheet title
+  ///
+  /// In tr, this message translates to:
+  /// **'Girişi düzenle'**
+  String get plannerEditEntry;
+
+  /// Edit entry hint about calories
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori veya porsiyon değiştirmek için bu girişi sil ve yeniden ekle.'**
+  String get plannerEditCaloriesHint;
+
+  /// Generate sheet subtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun tam bir haftayı taslak olarak hazırlar. Aşağıdaki ayrıntıları düzenle — tümü isteğe bağlı.'**
+  String get plannerGenerateSubtitle;
+
+  /// Dietary preference field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Diyet tercihi (isteğe bağlı)'**
+  String get plannerDietaryPref;
+
+  /// Avoid ingredients field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaçınılacak malzemeler (virgülle ayrılmış)'**
+  String get plannerAvoidIngredients;
+
+  /// Daily calorie target field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük kalori hedefi (isteğe bağlı)'**
+  String get plannerDailyCalorieTarget;
+
+  /// Meals per day label
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük öğün sayısı'**
+  String get plannerMealsPerDay;
+
+  /// Anything else field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Başka bir şey? (isteğe bağlı)'**
+  String get plannerAnythingElse;
+
+  /// Calorie target validation error
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori hedefi 800–6000 arasında olmalıdır'**
+  String get plannerCalorieTargetError;
+
+  /// Generating state label
+  ///
+  /// In tr, this message translates to:
+  /// **'Oluşturuluyor…'**
+  String get plannerGenerating;
+
+  /// Generate plan button
+  ///
+  /// In tr, this message translates to:
+  /// **'Plan oluştur'**
+  String get plannerGeneratePlan;
+
+  /// Meals created snackbar ({n} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftanız için {n} öğün planlandı.'**
+  String plannerMealsCreated(int n);
+
+  /// Grocery list sheet title
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışveriş listesi'**
+  String get plannerGroceryList;
+
+  /// Grocery load error
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışveriş listesi yüklenemedi'**
+  String get plannerGroceryLoadError;
+
+  /// Grocery list empty state
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz alışveriş listesi yok — plana bir tarif ekle.'**
+  String get plannerGroceryEmpty;
+
+  /// Grocery item used-in label ({n} placeholder)
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} tarifte kullanıldı'**
+  String plannerGroceryUsedIn(int n);
 }
 
 class _AppLocalizationsDelegate

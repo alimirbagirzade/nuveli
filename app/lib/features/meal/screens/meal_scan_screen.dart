@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../../coach/mood/providers/mood_bubble_controller.dart';
 import '../../coach/mood/widgets/mood_bubble.dart';
 import '../../profile/providers/profile_provider.dart'
@@ -57,9 +58,9 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'AI Meal Scan',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)?.mealScanScreenTitle ?? 'AI Meal Scan',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,

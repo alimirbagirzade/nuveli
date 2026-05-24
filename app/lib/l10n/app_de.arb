@@ -765,5 +765,156 @@
   "homeWaterLogFailed": "Wasser konnte nicht erfasst werden. Zum Wiederholen tippen.",
   "homePlannerCtaTitle": "Plane deine Woche",
   "homePlannerCtaSubtitle": "Geplante Mahlzeiten + Einkaufsliste ansehen",
-  "homeNoMealsScanHint": "Tippe unten auf \"Essen hinzufügen\", um deine erste Mahlzeit zu erfassen"
+  "homeNoMealsScanHint": "Tippe unten auf \"Essen hinzufügen\", um deine erste Mahlzeit zu erfassen",
+  "mealScanScreenTitle": "KI-Mahlzeit-Scan",
+  "mealScanIdleTitle": "Fotografiere deine Mahlzeit",
+  "mealScanIdleSubtitle": "Richte deine Kamera auf deinen Teller. Nuveli's KI schätzt Kalorien und Makros in wenigen Sekunden.",
+  "mealScanTakePhoto": "Foto aufnehmen",
+  "mealScanChooseGallery": "Aus Galerie wählen",
+  "mealScanAnalyzingStep1": "Mahlzeit wird analysiert...",
+  "mealScanAnalyzingStep2": "Lebensmittel werden erkannt...",
+  "mealScanAnalyzingStep3": "Portionen werden geschätzt...",
+  "mealScanAnalyzingStep4": "Makros werden berechnet...",
+  "mealScanAnalyzingStep5": "Fast fertig...",
+  "mealScanSaving": "Mahlzeit wird gespeichert...",
+  "mealScanRateLimitTitle": "Zu viele Scans, zu schnell",
+  "mealScanErrorTitle": "Scan fehlgeschlagen",
+  "mealScanAddManuallyInstead": "Stattdessen manuell hinzufügen",
+  "mealScanNotFoodTitle": "Hmm, kein Essen erkannt",
+  "mealScanNotFoodHint": "Versuche ein klareres Foto deines Tellers oder trage die Mahlzeit manuell ein.",
+  "mealScanTryAnotherPhoto": "Anderes Foto versuchen",
+  "mealScanAddManually": "Manuell hinzufügen",
+  "mealScanRetake": "Erneut aufnehmen",
+  "mealScanConfidentScore": "{score}% Konfidenz",
+  "@mealScanConfidentScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Erkannte Lebensmittel",
+  "mealScanPortionSize": "Portionsgröße",
+  "mealScanDiscard": "Verwerfen",
+  "mealScanAiTip": "KI-Tipp",
+  "mealScanRemoveTooltip": "Entfernen",
+  "mealScanImageLoadError": "Bild konnte nicht geladen werden",
+  "mealScanEditFood": "Lebensmittel bearbeiten",
+  "mealScanSaveChanges": "Änderungen speichern",
+  "mealScanFieldName": "Name",
+  "plannerScreenTitle": "Mahlzeitenplan",
+  "plannerGroceryListTooltip": "Einkaufsliste",
+  "plannerThisWeek": "Diese Woche",
+  "plannerNextWeek": "Nächste Woche",
+  "plannerLastWeek": "Letzte Woche",
+  "plannerInWeeks": "In {n} Wochen",
+  "@plannerInWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "Vor {n} Wochen",
+  "@plannerWeeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Vorherige Woche",
+  "plannerNextWeekTooltip": "Nächste Woche",
+  "plannerTotalsBanner": "{kcal} kcal für {days} Tage geplant",
+  "@plannerTotalsBanner": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "Noch kein Plan für diese Woche",
+  "plannerEmptyAiHint": "Dein KI-Coach entwirft eine ganze Woche in Sekunden.",
+  "plannerEmptyPremiumHint": "KI-Wochenpläne sind Teil von Premium. Upgrade zum Freischalten.",
+  "plannerAddMealManually": "Mahlzeit manuell hinzufügen",
+  "plannerGenerateAiPlan": "KI-Plan erstellen",
+  "plannerUnlockAiPlan": "KI-Plangenerierung freischalten",
+  "plannerPremiumFeature": "Premium-Funktion",
+  "plannerPaywallTitle": "Über diese Woche hinaus sehen und planen",
+  "plannerPaywallBody": "Freie Pläne decken die aktuelle Woche ab. Upgrade, um voraus zu planen, wiederkehrende Pläne zu erstellen und die KI eine ganze Woche generieren zu lassen.",
+  "plannerSeePremium": "Premium ansehen",
+  "plannerBackToThisWeek": "Zurück zu dieser Woche",
+  "plannerLoadError": "Plan konnte nicht geladen werden",
+  "plannerEditNameNote": "Name / Notiz bearbeiten",
+  "plannerRemoveFromPlan": "Aus Plan entfernen",
+  "plannerRemoveEntryTitle": "Eintrag entfernen?",
+  "plannerRemoveEntryBody": "\"{name}\" aus diesem Plan entfernen?",
+  "@plannerRemoveEntryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Entfernen",
+  "plannerToday": "Heute",
+  "plannerDayStats": "{meals} geplant · {kcal} kcal",
+  "@plannerDayStats": {
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Mahlzeit hinzufügen",
+  "plannerServingsCount": "{n} Portionen",
+  "@plannerServingsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Zum Plan hinzufügen",
+  "plannerMealName": "Mahlzeitname",
+  "plannerServings": "Portionen",
+  "plannerNoteOptional": "Notiz (optional)",
+  "plannerMealNameRequired": "Mahlzeitname ist erforderlich",
+  "plannerServingsError": "Portionen müssen größer als 0 sein",
+  "plannerEditEntry": "Eintrag bearbeiten",
+  "plannerEditCaloriesHint": "Um Kalorien oder Portionen zu ändern, lösche diesen Eintrag und füge ihn erneut hinzu.",
+  "plannerGenerateSubtitle": "Dein Coach entwirft eine vollständige Woche. Passe die Details unten an – alles optional.",
+  "plannerDietaryPref": "Ernährungspräferenz (optional)",
+  "plannerAvoidIngredients": "Zutaten vermeiden (kommagetrennt)",
+  "plannerDailyCalorieTarget": "Tägliches Kalorienziel (optional)",
+  "plannerMealsPerDay": "Mahlzeiten pro Tag",
+  "plannerAnythingElse": "Noch etwas? (optional)",
+  "plannerCalorieTargetError": "Kalorienziel muss zwischen 800 und 6000 liegen",
+  "plannerGenerating": "Wird erstellt…",
+  "plannerGeneratePlan": "Plan erstellen",
+  "plannerMealsCreated": "{n} Mahlzeiten für Ihre Woche geplant.",
+  "@plannerMealsCreated": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Einkaufsliste",
+  "plannerGroceryLoadError": "Einkaufsliste konnte nicht geladen werden",
+  "plannerGroceryEmpty": "Noch keine Einkäufe — füge ein Rezept zum Plan hinzu.",
+  "plannerGroceryUsedIn": "In {n} Rezepten verwendet",
+  "@plannerGroceryUsedIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

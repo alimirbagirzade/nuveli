@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/meal_scan_models.dart';
 
 /// Bottom sheet: edit one detected food's name + kcal/macros.
@@ -72,6 +73,7 @@ class _EditFoodSheetState extends State<EditFoodSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     return Padding(
       padding: EdgeInsets.only(bottom: bottomInset),
@@ -92,26 +94,48 @@ class _EditFoodSheetState extends State<EditFoodSheet> {
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Edit food',
-              style: TextStyle(
+            Text(
+              l10n?.mealScanEditFood ?? 'Edit food',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 16),
-            _Field(label: 'Name', controller: _name),
+            _Field(label: l10n?.mealScanFieldName ?? 'Name', controller: _name),
             const SizedBox(height: 12),
-            _Field(label: 'Calories (kcal)', controller: _calories, numeric: true),
+            _Field(
+              label: l10n?.homeCaloriesKcal ?? 'Calories (kcal)',
+              controller: _calories,
+              numeric: true,
+            ),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(child: _Field(label: 'Protein (g)', controller: _protein, decimal: true)),
+                Expanded(
+                  child: _Field(
+                    label: l10n?.macroProteinG ?? 'Protein (g)',
+                    controller: _protein,
+                    decimal: true,
+                  ),
+                ),
                 const SizedBox(width: 8),
-                Expanded(child: _Field(label: 'Carbs (g)', controller: _carbs, decimal: true)),
+                Expanded(
+                  child: _Field(
+                    label: l10n?.macroCarbsG ?? 'Carbs (g)',
+                    controller: _carbs,
+                    decimal: true,
+                  ),
+                ),
                 const SizedBox(width: 8),
-                Expanded(child: _Field(label: 'Fat (g)', controller: _fat, decimal: true)),
+                Expanded(
+                  child: _Field(
+                    label: l10n?.macroFatG ?? 'Fat (g)',
+                    controller: _fat,
+                    decimal: true,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 20),
@@ -126,9 +150,9 @@ class _EditFoodSheetState extends State<EditFoodSheet> {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: const Text(
-                  'Save changes',
-                  style: TextStyle(
+                child: Text(
+                  l10n?.mealScanSaveChanges ?? 'Save changes',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w600,

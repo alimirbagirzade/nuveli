@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/weekly_plan.dart';
 
 /// One day of the weekly plan view. Header is the date + day total,
@@ -33,6 +34,7 @@ class DayPlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -77,7 +79,7 @@ class DayPlanCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _weekdayLabel(day.planDate),
+                        _weekdayLabel(context, day.planDate),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -85,7 +87,9 @@ class DayPlanCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${day.mealCount} planned · ${day.totalCalories} kcal',
+                        l10n?.plannerDayStats(
+                                day.mealCount, day.totalCalories) ??
+                            '${day.mealCount} planned · ${day.totalCalories} kcal',
                         style: const TextStyle(
                           color: Color(0xFFB8D4D2),
                           fontSize: 12,
@@ -102,9 +106,9 @@ class DayPlanCard extends StatelessWidget {
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(99),
                     ),
-                    child: const Text(
-                      'Today',
-                      style: TextStyle(
+                    child: Text(
+                      l10n?.plannerToday ?? 'Today',
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
@@ -114,7 +118,7 @@ class DayPlanCard extends StatelessWidget {
                 if (onAddMeal != null)
                   IconButton(
                     onPressed: () => onAddMeal!(day.planDate),
-                    tooltip: 'Add meal',
+                    tooltip: l10n?.plannerAddMealTooltip ?? 'Add meal',
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(Icons.add_circle_outline_rounded,
                         color: AppColors.primary, size: 22),
@@ -147,15 +151,16 @@ class DayPlanCard extends StatelessWidget {
     );
   }
 
-  static String _weekdayLabel(DateTime d) {
-    const names = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
+  static String _weekdayLabel(BuildContext context, DateTime d) {
+    final l10n = AppLocalizations.of(context);
+    final names = [
+      l10n?.weekdayMon ?? 'Monday',
+      l10n?.weekdayTue ?? 'Tuesday',
+      l10n?.weekdayWed ?? 'Wednesday',
+      l10n?.weekdayThu ?? 'Thursday',
+      l10n?.weekdayFri ?? 'Friday',
+      l10n?.weekdaySat ?? 'Saturday',
+      l10n?.weekdaySun ?? 'Sunday',
     ];
     return names[d.weekday - 1];
   }
@@ -168,6 +173,7 @@ class _MealRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Row(
       children: [
         Container(
@@ -202,7 +208,9 @@ class _MealRow extends StatelessWidget {
               ),
               if (entry.servings != 1.0)
                 Text(
-                  '${entry.servings.toStringAsFixed(1)} servings',
+                  l10n?.plannerServingsCount(
+                          entry.servings.toStringAsFixed(1)) ??
+                      '${entry.servings.toStringAsFixed(1)} servings',
                   style: const TextStyle(
                     color: Color(0xFFB8D4D2),
                     fontSize: 11,
