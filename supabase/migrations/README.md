@@ -218,5 +218,5 @@ SELECT
 ---
 
 **Hazırlayan:** Claude (Anthropic) — Chat 13
-**Repo:** github.com/alimirbagirzade/nuveli_test
+**Repo:** github.com/alimirbagirzade/nuveli
 **Sonraki:** Chat 14 — Backend API Integration

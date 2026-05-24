@@ -1,7 +1,7 @@
 # 🌊 Nuveli — Master Development Plan
 
 **Proje:** Nuveli AI Calorie Coach (Flutter + FastAPI + Supabase + OpenAI)
-**Repo:** github.com/alimirbagirzade/nuveli_test
+**Repo:** github.com/alimirbagirzade/nuveli
 **Backend URL:** https://nuveli-api.onrender.com
 **Son Güncelleme:** 21 Mayıs 2026 (Chat 24 FINAL — Polish round 1+2 + DashboardScreen widget tests unblocked; 252 tests, 26 PR)
 **Hazırlayan:** Claude (Anthropic) + Ali
