@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_typography.dart';
+import '../../../../../l10n/generated/app_localizations.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../widgets/auth_primary_button.dart';
 
@@ -41,18 +42,19 @@ class _Step3State extends ConsumerState<Step3BodyMetrics> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Your body metrics',
+            l10n?.onboardingStep3Title ?? 'Your body metrics',
             style: AppTypography.heading28.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
-            "Don't worry, you can update these anytime.",
+            l10n?.onboardingStep3Subtitle ?? "Don't worry, you can update these anytime.",
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
             ),
@@ -62,7 +64,7 @@ class _Step3State extends ConsumerState<Step3BodyMetrics> {
             child: ListView(
               children: [
                 _MetricSlider(
-                  label: 'Height',
+                  label: l10n?.onboardingHeight ?? 'Height',
                   value: _height,
                   unit: 'cm',
                   min: 140,
@@ -73,7 +75,7 @@ class _Step3State extends ConsumerState<Step3BodyMetrics> {
                 ),
                 const SizedBox(height: 32),
                 _MetricSlider(
-                  label: 'Current weight',
+                  label: l10n?.onboardingCurrentWeight ?? 'Current weight',
                   value: _weight,
                   unit: 'kg',
                   min: 40,
@@ -86,7 +88,7 @@ class _Step3State extends ConsumerState<Step3BodyMetrics> {
             ),
           ),
           const SizedBox(height: 16),
-          AuthPrimaryButton(label: 'Continue', onPressed: _continue),
+          AuthPrimaryButton(label: l10n?.onboardingContinue ?? 'Continue', onPressed: _continue),
           const SizedBox(height: 24),
         ],
       ),

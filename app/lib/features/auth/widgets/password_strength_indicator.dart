@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 class PasswordStrength {
   final int score; // 0..4
@@ -107,6 +108,12 @@ class PasswordStrengthIndicator extends StatelessWidget {
 
     if (password.isEmpty) return const SizedBox.shrink();
 
+    final l10n = AppLocalizations.of(context);
+    final localizedLabel = _localizedLabel(strength.score, l10n);
+    final localizedSuggestion = strength.suggestions.isEmpty
+        ? null
+        : _localizedSuggestion(strength.suggestions.first, l10n);
+
     return Padding(
       padding: const EdgeInsets.only(top: 8, left: 4, right: 4),
       child: Column(
@@ -129,22 +136,22 @@ class PasswordStrengthIndicator extends StatelessWidget {
               );
             }),
           ),
-          if (strength.label.isNotEmpty) ...[
+          if (localizedLabel.isNotEmpty) ...[
             const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  strength.label,
+                  localizedLabel,
                   style: AppTypography.caption12.copyWith(
                     color: strength.color,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                if (strength.suggestions.isNotEmpty)
+                if (localizedSuggestion != null)
                   Expanded(
                     child: Text(
-                      strength.suggestions.first,
+                      localizedSuggestion,
                       textAlign: TextAlign.right,
                       style: AppTypography.caption12.copyWith(
                         color: AppColors.tertiaryText,
@@ -157,5 +164,21 @@ class PasswordStrengthIndicator extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _localizedLabel(int score, AppLocalizations? l10n) => switch (score) {
+        0 => '',
+        1 => l10n?.passwordStrengthWeak ?? 'Weak',
+        2 => l10n?.passwordStrengthFair ?? 'Fair',
+        3 => l10n?.passwordStrengthStrong ?? 'Strong',
+        _ => l10n?.passwordStrengthVeryStrong ?? 'Very strong',
+      };
+
+  String _localizedSuggestion(String original, AppLocalizations? l10n) {
+    if (original == 'Use at least 8 characters') return l10n?.passwordStrengthSuggestLength ?? original;
+    if (original == 'Add a number') return l10n?.passwordStrengthSuggestNumber ?? original;
+    if (original == 'Mix uppercase & lowercase') return l10n?.passwordStrengthSuggestCase ?? original;
+    if (original.startsWith('Add a symbol')) return l10n?.passwordStrengthSuggestSymbol ?? original;
+    return original;
   }
 }

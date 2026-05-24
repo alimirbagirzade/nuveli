@@ -2609,4 +2609,311 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileEditUpdated => 'Profile updated';
+
+  @override
+  String get welcomeGetStarted => 'Get Started';
+
+  @override
+  String get loginWelcomeBack => 'Welcome back';
+
+  @override
+  String get loginSubtitle => 'Sign in to continue your journey';
+
+  @override
+  String get loginForgotPasswordFull => 'Forgot password?';
+
+  @override
+  String get loginSignIn => 'Sign in';
+
+  @override
+  String get loginDontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get loginSignUp => 'Sign up';
+
+  @override
+  String get signupCreateAccount => 'Create account';
+
+  @override
+  String get signupNutritionJourney => 'Let\'s start your nutrition journey';
+
+  @override
+  String get signupConfirmPassword => 'Confirm password';
+
+  @override
+  String get signupTermsAgree => 'I agree to the ';
+
+  @override
+  String get signupTermsOfService => 'Terms of Service';
+
+  @override
+  String get signupTermsAnd => ' and ';
+
+  @override
+  String get signupPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get signupAcceptTermsError => 'Please accept the Terms to continue.';
+
+  @override
+  String get signupAlreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get signupSignIn => 'Sign in';
+
+  @override
+  String get forgotPasswordTitle => 'Reset password';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Enter your email and we\'ll send you a link to reset your password.';
+
+  @override
+  String get forgotPasswordSendLink => 'Send reset link';
+
+  @override
+  String get forgotPasswordRemember => 'Remember your password?';
+
+  @override
+  String get forgotPasswordCheckEmail => 'Check your email';
+
+  @override
+  String forgotPasswordSentLink(String email) {
+    return 'We\'ve sent a password reset link to\n$email';
+  }
+
+  @override
+  String get forgotPasswordBackToSignIn => 'Back to sign in';
+
+  @override
+  String get verifyEmailSentLinkTo => 'We\'ve sent a verification link to';
+
+  @override
+  String get verifyEmailOpenOnDevice => 'Open it on this device to continue.';
+
+  @override
+  String get verifyEmailResendEmail => 'Resend email';
+
+  @override
+  String verifyEmailResendInSeconds(int seconds) {
+    return 'Resend in $seconds s';
+  }
+
+  @override
+  String get verifyEmailWrongEmail => 'Wrong email?';
+
+  @override
+  String get verifyEmailGoBack => 'Go back';
+
+  @override
+  String get resetPasswordTitle => 'Set new password';
+
+  @override
+  String get resetPasswordSubtitle =>
+      'Choose a strong password for your account.';
+
+  @override
+  String get resetPasswordNewPassword => 'New password';
+
+  @override
+  String get resetPasswordConfirmPassword => 'Confirm password';
+
+  @override
+  String get resetPasswordUpdate => 'Update password';
+
+  @override
+  String get resetPasswordUpdated => 'Password updated';
+
+  @override
+  String get resetPasswordCanNowSignIn =>
+      'You can now sign in with your new password.';
+
+  @override
+  String onboardingStepOf(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get onboardingSignOutTooltip => 'Sign out';
+
+  @override
+  String get onboardingSignOutTitle => 'Sign out?';
+
+  @override
+  String get onboardingSignOutBody =>
+      'Your progress will be saved. You can continue setup later.';
+
+  @override
+  String get onboardingCompleteStepsError =>
+      'Please complete all steps before continuing.';
+
+  @override
+  String get onboardingSaveError =>
+      'Could not save your profile. Please try again.';
+
+  @override
+  String get onboardingStep1Title => 'Hi! Let\'s get to know you';
+
+  @override
+  String get onboardingStep1Body =>
+      'We\'ll personalize your nutrition coaching based on your body, lifestyle, and goals. It only takes a minute.';
+
+  @override
+  String get onboardingStep2Title => 'Tell us about yourself';
+
+  @override
+  String get onboardingStep2Subtitle =>
+      'This helps us calculate your daily needs.';
+
+  @override
+  String get onboardingYourName => 'Your name';
+
+  @override
+  String get onboardingNameHint => 'How should we call you?';
+
+  @override
+  String get onboardingNameRequired => 'Name is required';
+
+  @override
+  String get onboardingDateOfBirth => 'Date of birth';
+
+  @override
+  String get onboardingSelectDate => 'Select date';
+
+  @override
+  String get onboardingSelectDob => 'Please select your date of birth';
+
+  @override
+  String get onboardingSelectGender => 'Please select your gender';
+
+  @override
+  String get onboardingStep3Title => 'Your body metrics';
+
+  @override
+  String get onboardingStep3Subtitle =>
+      'Don\'t worry, you can update these anytime.';
+
+  @override
+  String get onboardingHeight => 'Height';
+
+  @override
+  String get onboardingCurrentWeight => 'Current weight';
+
+  @override
+  String get onboardingStep4Title => 'Your goals';
+
+  @override
+  String get onboardingStep4Subtitle =>
+      'We\'ll tailor your daily targets accordingly.';
+
+  @override
+  String get onboardingActivityLevelLabel => 'Activity level';
+
+  @override
+  String get onboardingYourGoalLabel => 'Your goal';
+
+  @override
+  String get onboardingTargetWeight => 'Target weight';
+
+  @override
+  String get onboardingToLose => 'to lose';
+
+  @override
+  String get onboardingToGain => 'to gain';
+
+  @override
+  String get onboardingSelectActivityError =>
+      'Please select your activity level';
+
+  @override
+  String get onboardingSelectGoalError => 'Please select a goal';
+
+  @override
+  String get onboardingStep5Title => 'Your daily targets';
+
+  @override
+  String get onboardingStep5Subtitle =>
+      'Personalized to your body, lifestyle, and goal.';
+
+  @override
+  String get onboardingDailyCalories => 'DAILY CALORIES';
+
+  @override
+  String get onboardingMacros => 'Macros';
+
+  @override
+  String get onboardingProtein => 'Protein';
+
+  @override
+  String get onboardingCarbs => 'Carbs';
+
+  @override
+  String get onboardingFat => 'Fat';
+
+  @override
+  String get onboardingDailyWater => 'Daily water';
+
+  @override
+  String get onboardingCompleteSetup => 'Complete Setup';
+
+  @override
+  String get onboardingAdjustAnytime =>
+      'You can adjust these anytime in Settings.';
+
+  @override
+  String get authContinueWithApple => 'Continue with Apple';
+
+  @override
+  String get authContinueWithGoogle => 'Continue with Google';
+
+  @override
+  String get authValidatorEmailRequired => 'Email is required';
+
+  @override
+  String get authValidatorEmailInvalid => 'Enter a valid email';
+
+  @override
+  String get authValidatorPasswordRequired => 'Password is required';
+
+  @override
+  String get authValidatorPasswordLength => 'At least 8 characters';
+
+  @override
+  String get authValidatorPasswordNumber => 'Include at least one number';
+
+  @override
+  String get authValidatorPasswordSimpleLength => 'At least 6 characters';
+
+  @override
+  String get authValidatorConfirmRequired => 'Please confirm password';
+
+  @override
+  String get authValidatorPasswordsNoMatch => 'Passwords do not match';
+
+  @override
+  String get passwordStrengthWeak => 'Weak';
+
+  @override
+  String get passwordStrengthFair => 'Fair';
+
+  @override
+  String get passwordStrengthStrong => 'Strong';
+
+  @override
+  String get passwordStrengthVeryStrong => 'Very strong';
+
+  @override
+  String get passwordStrengthSuggestLength => 'Use at least 8 characters';
+
+  @override
+  String get passwordStrengthSuggestNumber => 'Add a number';
+
+  @override
+  String get passwordStrengthSuggestCase => 'Mix uppercase & lowercase';
+
+  @override
+  String get passwordStrengthSuggestSymbol => 'Add a symbol (!@#\\\$%)';
+
+  @override
+  String get authOrDivider => 'or';
 }

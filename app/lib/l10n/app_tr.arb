@@ -1566,5 +1566,407 @@
   "profileEditWeightKg": "Kilo (kg)",
   "profileEditActivityLevel": "Aktivite seviyesi",
   "profileEditDietaryPref": "Beslenme tercihi",
-  "profileEditUpdated": "Profil güncellendi"
+  "profileEditUpdated": "Profil güncellendi",
+  "welcomeGetStarted": "Başlayalım",
+  "@welcomeGetStarted": {
+    "description": "welcomeGetStarted"
+  },
+  "loginWelcomeBack": "Tekrar hoş geldin",
+  "@loginWelcomeBack": {
+    "description": "loginWelcomeBack"
+  },
+  "loginSubtitle": "Yolculuğuna devam etmek için giriş yap",
+  "@loginSubtitle": {
+    "description": "loginSubtitle"
+  },
+  "loginForgotPasswordFull": "Şifreni mi unuttun?",
+  "@loginForgotPasswordFull": {
+    "description": "loginForgotPasswordFull"
+  },
+  "loginSignIn": "Giriş yap",
+  "@loginSignIn": {
+    "description": "loginSignIn"
+  },
+  "loginDontHaveAccount": "Hesabın yok mu?",
+  "@loginDontHaveAccount": {
+    "description": "loginDontHaveAccount"
+  },
+  "loginSignUp": "Kayıt ol",
+  "@loginSignUp": {
+    "description": "loginSignUp"
+  },
+  "signupCreateAccount": "Hesap oluştur",
+  "@signupCreateAccount": {
+    "description": "signupCreateAccount"
+  },
+  "signupNutritionJourney": "Beslenme yolculuğuna başlayalım",
+  "@signupNutritionJourney": {
+    "description": "signupNutritionJourney"
+  },
+  "signupConfirmPassword": "Şifreyi onayla",
+  "@signupConfirmPassword": {
+    "description": "signupConfirmPassword"
+  },
+  "signupTermsAgree": "Kabul ediyorum: ",
+  "@signupTermsAgree": {
+    "description": "signupTermsAgree"
+  },
+  "signupTermsOfService": "Kullanım Koşulları",
+  "@signupTermsOfService": {
+    "description": "signupTermsOfService"
+  },
+  "signupTermsAnd": " ve ",
+  "@signupTermsAnd": {
+    "description": "signupTermsAnd"
+  },
+  "signupPrivacyPolicy": "Gizlilik Politikası",
+  "@signupPrivacyPolicy": {
+    "description": "signupPrivacyPolicy"
+  },
+  "signupAcceptTermsError": "Devam etmek için Koşulları kabul edin.",
+  "@signupAcceptTermsError": {
+    "description": "signupAcceptTermsError"
+  },
+  "signupAlreadyHaveAccount": "Zaten hesabın var mı?",
+  "@signupAlreadyHaveAccount": {
+    "description": "signupAlreadyHaveAccount"
+  },
+  "signupSignIn": "Giriş yap",
+  "@signupSignIn": {
+    "description": "signupSignIn"
+  },
+  "forgotPasswordTitle": "Şifreyi sıfırla",
+  "@forgotPasswordTitle": {
+    "description": "forgotPasswordTitle"
+  },
+  "forgotPasswordSubtitle": "E-postanı gir, şifre sıfırlama bağlantısı gönderelim.",
+  "@forgotPasswordSubtitle": {
+    "description": "forgotPasswordSubtitle"
+  },
+  "forgotPasswordSendLink": "Sıfırlama bağlantısı gönder",
+  "@forgotPasswordSendLink": {
+    "description": "forgotPasswordSendLink"
+  },
+  "forgotPasswordRemember": "Şifreni hatırladın mı?",
+  "@forgotPasswordRemember": {
+    "description": "forgotPasswordRemember"
+  },
+  "forgotPasswordCheckEmail": "E-postanı kontrol et",
+  "@forgotPasswordCheckEmail": {
+    "description": "forgotPasswordCheckEmail"
+  },
+  "forgotPasswordSentLink": "{email} adresine şifre sıfırlama bağlantısı gönderdik.",
+  "@forgotPasswordSentLink": {
+    "description": "Password reset link sent confirmation",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordBackToSignIn": "Girişe geri dön",
+  "@forgotPasswordBackToSignIn": {
+    "description": "forgotPasswordBackToSignIn"
+  },
+  "verifyEmailSentLinkTo": "Doğrulama bağlantısı şu adrese gönderildi:",
+  "@verifyEmailSentLinkTo": {
+    "description": "verifyEmailSentLinkTo"
+  },
+  "verifyEmailOpenOnDevice": "Devam etmek için bu cihazda aç.",
+  "@verifyEmailOpenOnDevice": {
+    "description": "verifyEmailOpenOnDevice"
+  },
+  "verifyEmailResendEmail": "E-postayı yeniden gönder",
+  "@verifyEmailResendEmail": {
+    "description": "verifyEmailResendEmail"
+  },
+  "verifyEmailResendInSeconds": "{seconds} sn sonra tekrar gönder",
+  "@verifyEmailResendInSeconds": {
+    "description": "Resend countdown",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailWrongEmail": "Yanlış e-posta mı?",
+  "@verifyEmailWrongEmail": {
+    "description": "verifyEmailWrongEmail"
+  },
+  "verifyEmailGoBack": "Geri dön",
+  "@verifyEmailGoBack": {
+    "description": "verifyEmailGoBack"
+  },
+  "resetPasswordTitle": "Yeni şifre belirle",
+  "@resetPasswordTitle": {
+    "description": "resetPasswordTitle"
+  },
+  "resetPasswordSubtitle": "Hesabın için güçlü bir şifre seç.",
+  "@resetPasswordSubtitle": {
+    "description": "resetPasswordSubtitle"
+  },
+  "resetPasswordNewPassword": "Yeni şifre",
+  "@resetPasswordNewPassword": {
+    "description": "resetPasswordNewPassword"
+  },
+  "resetPasswordConfirmPassword": "Şifreyi onayla",
+  "@resetPasswordConfirmPassword": {
+    "description": "resetPasswordConfirmPassword"
+  },
+  "resetPasswordUpdate": "Şifreyi güncelle",
+  "@resetPasswordUpdate": {
+    "description": "resetPasswordUpdate"
+  },
+  "resetPasswordUpdated": "Şifre güncellendi",
+  "@resetPasswordUpdated": {
+    "description": "resetPasswordUpdated"
+  },
+  "resetPasswordCanNowSignIn": "Artık yeni şifrenle giriş yapabilirsin.",
+  "@resetPasswordCanNowSignIn": {
+    "description": "resetPasswordCanNowSignIn"
+  },
+  "onboardingStepOf": "Adım {current} / {total}",
+  "@onboardingStepOf": {
+    "description": "Step progress indicator",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingSignOutTooltip": "Çıkış yap",
+  "@onboardingSignOutTooltip": {
+    "description": "onboardingSignOutTooltip"
+  },
+  "onboardingSignOutTitle": "Çıkış yapılsın mı?",
+  "@onboardingSignOutTitle": {
+    "description": "onboardingSignOutTitle"
+  },
+  "onboardingSignOutBody": "İlerlemeniz kaydedildi. Kuruluma daha sonra devam edebilirsiniz.",
+  "@onboardingSignOutBody": {
+    "description": "onboardingSignOutBody"
+  },
+  "onboardingCompleteStepsError": "Devam etmeden önce tüm adımları tamamlayın.",
+  "@onboardingCompleteStepsError": {
+    "description": "onboardingCompleteStepsError"
+  },
+  "onboardingSaveError": "Profilin kaydedilemedi. Lütfen tekrar deneyin.",
+  "@onboardingSaveError": {
+    "description": "onboardingSaveError"
+  },
+  "onboardingStep1Title": "Merhaba! Seni tanıyalım",
+  "@onboardingStep1Title": {
+    "description": "onboardingStep1Title"
+  },
+  "onboardingStep1Body": "Vücuduna, yaşam tarzına ve hedeflerine göre beslenme koçluğunu kişiselleştireceğiz. Sadece bir dakika sürer.",
+  "@onboardingStep1Body": {
+    "description": "onboardingStep1Body"
+  },
+  "onboardingStep2Title": "Bize kendinizden bahsedin",
+  "@onboardingStep2Title": {
+    "description": "onboardingStep2Title"
+  },
+  "onboardingStep2Subtitle": "Bu, günlük ihtiyaçlarını hesaplamamıza yardımcı olur.",
+  "@onboardingStep2Subtitle": {
+    "description": "onboardingStep2Subtitle"
+  },
+  "onboardingYourName": "Adın",
+  "@onboardingYourName": {
+    "description": "onboardingYourName"
+  },
+  "onboardingNameHint": "Seni nasıl çağıralım?",
+  "@onboardingNameHint": {
+    "description": "onboardingNameHint"
+  },
+  "onboardingNameRequired": "İsim zorunludur",
+  "@onboardingNameRequired": {
+    "description": "onboardingNameRequired"
+  },
+  "onboardingDateOfBirth": "Doğum tarihi",
+  "@onboardingDateOfBirth": {
+    "description": "onboardingDateOfBirth"
+  },
+  "onboardingSelectDate": "Tarih seç",
+  "@onboardingSelectDate": {
+    "description": "onboardingSelectDate"
+  },
+  "onboardingSelectDob": "Lütfen doğum tarihinizi seçin",
+  "@onboardingSelectDob": {
+    "description": "onboardingSelectDob"
+  },
+  "onboardingSelectGender": "Lütfen cinsiyetinizi seçin",
+  "@onboardingSelectGender": {
+    "description": "onboardingSelectGender"
+  },
+  "onboardingStep3Title": "Vücut ölçülerin",
+  "@onboardingStep3Title": {
+    "description": "onboardingStep3Title"
+  },
+  "onboardingStep3Subtitle": "Endişelenme, bunları istediğin zaman güncelleyebilirsin.",
+  "@onboardingStep3Subtitle": {
+    "description": "onboardingStep3Subtitle"
+  },
+  "onboardingHeight": "Boy",
+  "@onboardingHeight": {
+    "description": "onboardingHeight"
+  },
+  "onboardingCurrentWeight": "Mevcut ağırlık",
+  "@onboardingCurrentWeight": {
+    "description": "onboardingCurrentWeight"
+  },
+  "onboardingStep4Title": "Hedeflerin",
+  "@onboardingStep4Title": {
+    "description": "onboardingStep4Title"
+  },
+  "onboardingStep4Subtitle": "Günlük hedeflerini buna göre belirleyeceğiz.",
+  "@onboardingStep4Subtitle": {
+    "description": "onboardingStep4Subtitle"
+  },
+  "onboardingActivityLevelLabel": "Aktivite düzeyi",
+  "@onboardingActivityLevelLabel": {
+    "description": "onboardingActivityLevelLabel"
+  },
+  "onboardingYourGoalLabel": "Hedefin",
+  "@onboardingYourGoalLabel": {
+    "description": "onboardingYourGoalLabel"
+  },
+  "onboardingTargetWeight": "Hedef ağırlık",
+  "@onboardingTargetWeight": {
+    "description": "onboardingTargetWeight"
+  },
+  "onboardingToLose": "vermek",
+  "@onboardingToLose": {
+    "description": "onboardingToLose"
+  },
+  "onboardingToGain": "almak",
+  "@onboardingToGain": {
+    "description": "onboardingToGain"
+  },
+  "onboardingSelectActivityError": "Lütfen aktivite düzeyinizi seçin",
+  "@onboardingSelectActivityError": {
+    "description": "onboardingSelectActivityError"
+  },
+  "onboardingSelectGoalError": "Lütfen bir hedef seçin",
+  "@onboardingSelectGoalError": {
+    "description": "onboardingSelectGoalError"
+  },
+  "onboardingStep5Title": "Günlük hedeflerin",
+  "@onboardingStep5Title": {
+    "description": "onboardingStep5Title"
+  },
+  "onboardingStep5Subtitle": "Vücuduna, yaşam tarzına ve hedefine göre kişiselleştirildi.",
+  "@onboardingStep5Subtitle": {
+    "description": "onboardingStep5Subtitle"
+  },
+  "onboardingDailyCalories": "GÜNLÜK KALORİ",
+  "@onboardingDailyCalories": {
+    "description": "onboardingDailyCalories"
+  },
+  "onboardingMacros": "Makrolar",
+  "@onboardingMacros": {
+    "description": "onboardingMacros"
+  },
+  "onboardingProtein": "Protein",
+  "@onboardingProtein": {
+    "description": "onboardingProtein"
+  },
+  "onboardingCarbs": "Karbonhidrat",
+  "@onboardingCarbs": {
+    "description": "onboardingCarbs"
+  },
+  "onboardingFat": "Yağ",
+  "@onboardingFat": {
+    "description": "onboardingFat"
+  },
+  "onboardingDailyWater": "Günlük su",
+  "@onboardingDailyWater": {
+    "description": "onboardingDailyWater"
+  },
+  "onboardingCompleteSetup": "Kurulumu Tamamla",
+  "@onboardingCompleteSetup": {
+    "description": "onboardingCompleteSetup"
+  },
+  "onboardingAdjustAnytime": "Bunları istediğin zaman Ayarlar'da düzenleyebilirsin.",
+  "@onboardingAdjustAnytime": {
+    "description": "onboardingAdjustAnytime"
+  },
+  "authContinueWithApple": "Apple ile devam et",
+  "@authContinueWithApple": {
+    "description": "authContinueWithApple"
+  },
+  "authContinueWithGoogle": "Google ile devam et",
+  "@authContinueWithGoogle": {
+    "description": "authContinueWithGoogle"
+  },
+  "authValidatorEmailRequired": "E-posta zorunludur",
+  "@authValidatorEmailRequired": {
+    "description": "authValidatorEmailRequired"
+  },
+  "authValidatorEmailInvalid": "Geçerli bir e-posta girin",
+  "@authValidatorEmailInvalid": {
+    "description": "authValidatorEmailInvalid"
+  },
+  "authValidatorPasswordRequired": "Şifre zorunludur",
+  "@authValidatorPasswordRequired": {
+    "description": "authValidatorPasswordRequired"
+  },
+  "authValidatorPasswordLength": "En az 8 karakter",
+  "@authValidatorPasswordLength": {
+    "description": "authValidatorPasswordLength"
+  },
+  "authValidatorPasswordNumber": "En az bir rakam ekleyin",
+  "@authValidatorPasswordNumber": {
+    "description": "authValidatorPasswordNumber"
+  },
+  "authValidatorPasswordSimpleLength": "En az 6 karakter",
+  "@authValidatorPasswordSimpleLength": {
+    "description": "authValidatorPasswordSimpleLength"
+  },
+  "authValidatorConfirmRequired": "Lütfen şifreyi onaylayın",
+  "@authValidatorConfirmRequired": {
+    "description": "authValidatorConfirmRequired"
+  },
+  "authValidatorPasswordsNoMatch": "Şifreler eşleşmiyor",
+  "@authValidatorPasswordsNoMatch": {
+    "description": "authValidatorPasswordsNoMatch"
+  },
+  "passwordStrengthWeak": "Zayıf",
+  "@passwordStrengthWeak": {
+    "description": "passwordStrengthWeak"
+  },
+  "passwordStrengthFair": "Orta",
+  "@passwordStrengthFair": {
+    "description": "passwordStrengthFair"
+  },
+  "passwordStrengthStrong": "Güçlü",
+  "@passwordStrengthStrong": {
+    "description": "passwordStrengthStrong"
+  },
+  "passwordStrengthVeryStrong": "Çok güçlü",
+  "@passwordStrengthVeryStrong": {
+    "description": "passwordStrengthVeryStrong"
+  },
+  "passwordStrengthSuggestLength": "En az 8 karakter kullanın",
+  "@passwordStrengthSuggestLength": {
+    "description": "passwordStrengthSuggestLength"
+  },
+  "passwordStrengthSuggestNumber": "Bir rakam ekleyin",
+  "@passwordStrengthSuggestNumber": {
+    "description": "passwordStrengthSuggestNumber"
+  },
+  "passwordStrengthSuggestCase": "Büyük ve küçük harf karıştırın",
+  "@passwordStrengthSuggestCase": {
+    "description": "passwordStrengthSuggestCase"
+  },
+  "passwordStrengthSuggestSymbol": "Sembol ekleyin (!@#\\$%)",
+  "@passwordStrengthSuggestSymbol": {
+    "description": "passwordStrengthSuggestSymbol"
+  },
+  "authOrDivider": "veya",
+  "@authOrDivider": {
+    "description": "authOrDivider"
+  }
 }

@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../models/auth_errors.dart';
 import '../providers/auth_provider.dart';
@@ -64,7 +65,7 @@ class _EmailVerificationScreenState
           .read(authServiceProvider)
           .resendVerificationEmail(widget.email);
       if (mounted) {
-        setState(() => _info = 'Verification email sent again.');
+        setState(() => _info = AppLocalizations.of(context)?.verifyEmailResent ?? 'Verification email sent again.');
         _startCooldown();
       }
     } on NuveliAuthException catch (e) {
@@ -81,6 +82,7 @@ class _EmailVerificationScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return NuveliBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -113,14 +115,14 @@ class _EmailVerificationScreenState
                 ),
                 const SizedBox(height: 32),
                 Text(
-                  'Verify your email',
+                  l10n?.verifyEmailTitle ?? 'Verify your email',
                   textAlign: TextAlign.center,
                   style:
                       AppTypography.heading32Bold.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  "We've sent a verification link to",
+                  l10n?.verifyEmailSentLinkTo ?? "We've sent a verification link to",
                   textAlign: TextAlign.center,
                   style: AppTypography.body14.copyWith(
                     color: AppColors.secondaryText,
@@ -137,7 +139,7 @@ class _EmailVerificationScreenState
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Open it on this device to continue.',
+                  l10n?.verifyEmailOpenOnDevice ?? 'Open it on this device to continue.',
                   textAlign: TextAlign.center,
                   style: AppTypography.caption12.copyWith(
                     color: AppColors.tertiaryText,
@@ -157,15 +159,15 @@ class _EmailVerificationScreenState
                 const SizedBox(height: 40),
                 AuthPrimaryButton(
                   label: _resendCooldown > 0
-                      ? 'Resend in $_resendCooldown s'
-                      : 'Resend email',
+                      ? (l10n?.verifyEmailResendInSeconds(_resendCooldown) ?? 'Resend in $_resendCooldown s')
+                      : (l10n?.verifyEmailResendEmail ?? 'Resend email'),
                   isLoading: _resending,
                   onPressed: _resendCooldown > 0 ? null : _resend,
                 ),
                 const SizedBox(height: 16),
                 AuthLinkText(
-                  prefix: 'Wrong email?',
-                  linkText: 'Go back',
+                  prefix: l10n?.verifyEmailWrongEmail ?? 'Wrong email?',
+                  linkText: l10n?.verifyEmailGoBack ?? 'Go back',
                   onTap: () {
                     // Sign out + welcome
                     ref.read(authProvider.notifier).signOut();

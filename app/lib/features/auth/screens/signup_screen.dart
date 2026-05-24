@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../models/auth_errors.dart';
 import '../providers/auth_provider.dart';
@@ -54,7 +55,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   Future<void> _signup() async {
     if (!_formKey.currentState!.validate()) return;
     if (!_acceptTerms) {
-      setState(() => _error = 'Please accept the Terms to continue.');
+      final l10n = AppLocalizations.of(context);
+      setState(() => _error = l10n?.signupAcceptTermsError ?? 'Please accept the Terms to continue.');
       return;
     }
     setState(() {
@@ -119,6 +121,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final showApple = Platform.isIOS || Platform.isMacOS;
+    final l10n = AppLocalizations.of(context);
 
     return NuveliBackground(
       child: Scaffold(
@@ -141,14 +144,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 children: [
                   const SizedBox(height: 16),
                   Text(
-                    'Create account',
+                    l10n?.signupCreateAccount ?? 'Create account',
                     style: AppTypography.heading32Bold.copyWith(
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Let's start your nutrition journey",
+                    l10n?.signupNutritionJourney ?? "Let's start your nutrition journey",
                     style: AppTypography.body14.copyWith(
                       color: AppColors.secondaryText,
                     ),
@@ -156,31 +159,45 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   const SizedBox(height: 32),
                   AuthTextField(
                     controller: _emailCtl,
-                    label: 'Email',
+                    label: l10n?.loginEmail ?? 'Email',
                     hint: 'you@example.com',
                     prefixIcon: Icons.mail_outline,
                     keyboardType: TextInputType.emailAddress,
-                    validator: AuthValidators.email,
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) return l10n?.authValidatorEmailRequired ?? 'Email is required';
+                      final regex = RegExp(r'^[\w\.\-\+]+@([\w\-]+\.)+[a-zA-Z]{2,}$');
+                      if (!regex.hasMatch(v.trim())) return l10n?.authValidatorEmailInvalid ?? 'Enter a valid email';
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   AuthTextField(
                     controller: _passCtl,
-                    label: 'Password',
+                    label: l10n?.loginPassword ?? 'Password',
                     prefixIcon: Icons.lock_outline,
                     obscureText: true,
-                    validator: AuthValidators.password,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) return l10n?.authValidatorPasswordRequired ?? 'Password is required';
+                      if (v.length < 8) return l10n?.authValidatorPasswordLength ?? 'At least 8 characters';
+                      if (!v.contains(RegExp(r'\d'))) return l10n?.authValidatorPasswordNumber ?? 'Include at least one number';
+                      return null;
+                    },
                     onChanged: (v) => setState(() => _liveTypedPass = v),
                   ),
                   PasswordStrengthIndicator(password: _liveTypedPass),
                   const SizedBox(height: 16),
                   AuthTextField(
                     controller: _confirmCtl,
-                    label: 'Confirm password',
+                    label: l10n?.signupConfirmPassword ?? 'Confirm password',
                     prefixIcon: Icons.lock_outline,
                     obscureText: true,
                     textInputAction: TextInputAction.done,
                     onSubmitted: _signup,
-                    validator: AuthValidators.confirmPassword(_passCtl),
+                    validator: (v) {
+                      if (v == null || v.isEmpty) return l10n?.authValidatorConfirmRequired ?? 'Please confirm password';
+                      if (v != _passCtl.text) return l10n?.authValidatorPasswordsNoMatch ?? 'Passwords do not match';
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   _TermsCheckbox(
@@ -197,7 +214,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ],
                   const SizedBox(height: 24),
                   AuthPrimaryButton(
-                    label: 'Create account',
+                    label: l10n?.signupCreateAccount ?? 'Create account',
                     isLoading: _loading,
                     onPressed: _signup,
                   ),
@@ -219,8 +236,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ),
                   const SizedBox(height: 32),
                   AuthLinkText(
-                    prefix: 'Already have an account?',
-                    linkText: 'Sign in',
+                    prefix: l10n?.signupAlreadyHaveAccount ?? 'Already have an account?',
+                    linkText: l10n?.signupSignIn ?? 'Sign in',
                     onTap: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -293,6 +310,7 @@ class _TermsCheckboxState extends State<_TermsCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -323,13 +341,13 @@ class _TermsCheckboxState extends State<_TermsCheckbox> {
                 ..onTap = () => widget.onChanged(!widget.value),
               children: [
                 TextSpan(
-                  text: 'I agree to the ',
+                  text: l10n?.signupTermsAgree ?? 'I agree to the ',
                   style: AppTypography.caption12.copyWith(
                     color: AppColors.secondaryText,
                   ),
                 ),
                 TextSpan(
-                  text: 'Terms of Service',
+                  text: l10n?.signupTermsOfService ?? 'Terms of Service',
                   style: AppTypography.caption12.copyWith(
                     color: AppColors.primaryCyan,
                     fontWeight: FontWeight.w600,
@@ -338,13 +356,13 @@ class _TermsCheckboxState extends State<_TermsCheckbox> {
                   recognizer: _termsRecognizer,
                 ),
                 TextSpan(
-                  text: ' and ',
+                  text: l10n?.signupTermsAnd ?? ' and ',
                   style: AppTypography.caption12.copyWith(
                     color: AppColors.secondaryText,
                   ),
                 ),
                 TextSpan(
-                  text: 'Privacy Policy',
+                  text: l10n?.signupPrivacyPolicy ?? 'Privacy Policy',
                   style: AppTypography.caption12.copyWith(
                     color: AppColors.primaryCyan,
                     fontWeight: FontWeight.w600,

@@ -2630,4 +2630,311 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileEditUpdated => 'Профиль обновлён';
+
+  @override
+  String get welcomeGetStarted => 'Начать';
+
+  @override
+  String get loginWelcomeBack => 'С возвращением';
+
+  @override
+  String get loginSubtitle => 'Войди, чтобы продолжить путь';
+
+  @override
+  String get loginForgotPasswordFull => 'Забыли пароль?';
+
+  @override
+  String get loginSignIn => 'Войти';
+
+  @override
+  String get loginDontHaveAccount => 'Нет аккаунта?';
+
+  @override
+  String get loginSignUp => 'Зарегистрироваться';
+
+  @override
+  String get signupCreateAccount => 'Создать аккаунт';
+
+  @override
+  String get signupNutritionJourney => 'Начнём твой путь к правильному питанию';
+
+  @override
+  String get signupConfirmPassword => 'Подтвердите пароль';
+
+  @override
+  String get signupTermsAgree => 'Я принимаю ';
+
+  @override
+  String get signupTermsOfService => 'Условия использования';
+
+  @override
+  String get signupTermsAnd => ' и ';
+
+  @override
+  String get signupPrivacyPolicy => 'Политика конфиденциальности';
+
+  @override
+  String get signupAcceptTermsError => 'Примите условия, чтобы продолжить.';
+
+  @override
+  String get signupAlreadyHaveAccount => 'Уже есть аккаунт?';
+
+  @override
+  String get signupSignIn => 'Войти';
+
+  @override
+  String get forgotPasswordTitle => 'Сброс пароля';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Введите email, и мы отправим ссылку для сброса пароля.';
+
+  @override
+  String get forgotPasswordSendLink => 'Отправить ссылку для сброса';
+
+  @override
+  String get forgotPasswordRemember => 'Вспомнили пароль?';
+
+  @override
+  String get forgotPasswordCheckEmail => 'Проверьте почту';
+
+  @override
+  String forgotPasswordSentLink(String email) {
+    return 'Ссылка для сброса пароля отправлена на\n$email';
+  }
+
+  @override
+  String get forgotPasswordBackToSignIn => 'Вернуться ко входу';
+
+  @override
+  String get verifyEmailSentLinkTo => 'Ссылка для подтверждения отправлена на:';
+
+  @override
+  String get verifyEmailOpenOnDevice =>
+      'Откройте на этом устройстве, чтобы продолжить.';
+
+  @override
+  String get verifyEmailResendEmail => 'Отправить снова';
+
+  @override
+  String verifyEmailResendInSeconds(int seconds) {
+    return 'Отправить снова через $seconds с';
+  }
+
+  @override
+  String get verifyEmailWrongEmail => 'Неверный email?';
+
+  @override
+  String get verifyEmailGoBack => 'Назад';
+
+  @override
+  String get resetPasswordTitle => 'Установить новый пароль';
+
+  @override
+  String get resetPasswordSubtitle =>
+      'Выберите надёжный пароль для своего аккаунта.';
+
+  @override
+  String get resetPasswordNewPassword => 'Новый пароль';
+
+  @override
+  String get resetPasswordConfirmPassword => 'Подтвердите пароль';
+
+  @override
+  String get resetPasswordUpdate => 'Обновить пароль';
+
+  @override
+  String get resetPasswordUpdated => 'Пароль обновлён';
+
+  @override
+  String get resetPasswordCanNowSignIn => 'Теперь можно войти с новым паролем.';
+
+  @override
+  String onboardingStepOf(int current, int total) {
+    return 'Шаг $current из $total';
+  }
+
+  @override
+  String get onboardingSignOutTooltip => 'Выйти';
+
+  @override
+  String get onboardingSignOutTitle => 'Выйти?';
+
+  @override
+  String get onboardingSignOutBody =>
+      'Прогресс сохранён. Настройку можно продолжить позже.';
+
+  @override
+  String get onboardingCompleteStepsError =>
+      'Выполните все шаги перед продолжением.';
+
+  @override
+  String get onboardingSaveError =>
+      'Не удалось сохранить профиль. Попробуйте ещё раз.';
+
+  @override
+  String get onboardingStep1Title => 'Привет! Давайте познакомимся';
+
+  @override
+  String get onboardingStep1Body =>
+      'Мы настроим ваш нутриционный коучинг с учётом вашего тела, образа жизни и целей. Это займёт всего минуту.';
+
+  @override
+  String get onboardingStep2Title => 'Расскажите о себе';
+
+  @override
+  String get onboardingStep2Subtitle =>
+      'Это поможет рассчитать ваши ежедневные потребности.';
+
+  @override
+  String get onboardingYourName => 'Ваше имя';
+
+  @override
+  String get onboardingNameHint => 'Как нам вас называть?';
+
+  @override
+  String get onboardingNameRequired => 'Имя обязательно';
+
+  @override
+  String get onboardingDateOfBirth => 'Дата рождения';
+
+  @override
+  String get onboardingSelectDate => 'Выберите дату';
+
+  @override
+  String get onboardingSelectDob => 'Выберите дату рождения';
+
+  @override
+  String get onboardingSelectGender => 'Выберите пол';
+
+  @override
+  String get onboardingStep3Title => 'Параметры тела';
+
+  @override
+  String get onboardingStep3Subtitle =>
+      'Не волнуйтесь, их можно обновить в любое время.';
+
+  @override
+  String get onboardingHeight => 'Рост';
+
+  @override
+  String get onboardingCurrentWeight => 'Текущий вес';
+
+  @override
+  String get onboardingStep4Title => 'Ваши цели';
+
+  @override
+  String get onboardingStep4Subtitle =>
+      'Мы настроим ваши ежедневные цели соответственно.';
+
+  @override
+  String get onboardingActivityLevelLabel => 'Уровень активности';
+
+  @override
+  String get onboardingYourGoalLabel => 'Ваша цель';
+
+  @override
+  String get onboardingTargetWeight => 'Целевой вес';
+
+  @override
+  String get onboardingToLose => 'сбросить';
+
+  @override
+  String get onboardingToGain => 'набрать';
+
+  @override
+  String get onboardingSelectActivityError => 'Выберите уровень активности';
+
+  @override
+  String get onboardingSelectGoalError => 'Выберите цель';
+
+  @override
+  String get onboardingStep5Title => 'Ваши ежедневные цели';
+
+  @override
+  String get onboardingStep5Subtitle =>
+      'Персонализировано под ваше тело, образ жизни и цель.';
+
+  @override
+  String get onboardingDailyCalories => 'ДНЕВНЫЕ КАЛОРИИ';
+
+  @override
+  String get onboardingMacros => 'Макросы';
+
+  @override
+  String get onboardingProtein => 'Белок';
+
+  @override
+  String get onboardingCarbs => 'Углеводы';
+
+  @override
+  String get onboardingFat => 'Жиры';
+
+  @override
+  String get onboardingDailyWater => 'Ежедневная вода';
+
+  @override
+  String get onboardingCompleteSetup => 'Завершить настройку';
+
+  @override
+  String get onboardingAdjustAnytime =>
+      'Их можно изменить в любое время в Настройках.';
+
+  @override
+  String get authContinueWithApple => 'Продолжить с Apple';
+
+  @override
+  String get authContinueWithGoogle => 'Продолжить с Google';
+
+  @override
+  String get authValidatorEmailRequired => 'Email обязателен';
+
+  @override
+  String get authValidatorEmailInvalid => 'Введите корректный email';
+
+  @override
+  String get authValidatorPasswordRequired => 'Пароль обязателен';
+
+  @override
+  String get authValidatorPasswordLength => 'Не менее 8 символов';
+
+  @override
+  String get authValidatorPasswordNumber => 'Включите хотя бы одну цифру';
+
+  @override
+  String get authValidatorPasswordSimpleLength => 'Не менее 6 символов';
+
+  @override
+  String get authValidatorConfirmRequired => 'Подтвердите пароль';
+
+  @override
+  String get authValidatorPasswordsNoMatch => 'Пароли не совпадают';
+
+  @override
+  String get passwordStrengthWeak => 'Слабый';
+
+  @override
+  String get passwordStrengthFair => 'Средний';
+
+  @override
+  String get passwordStrengthStrong => 'Надёжный';
+
+  @override
+  String get passwordStrengthVeryStrong => 'Очень надёжный';
+
+  @override
+  String get passwordStrengthSuggestLength => 'Используйте не менее 8 символов';
+
+  @override
+  String get passwordStrengthSuggestNumber => 'Добавьте цифру';
+
+  @override
+  String get passwordStrengthSuggestCase =>
+      'Используйте заглавные и строчные буквы';
+
+  @override
+  String get passwordStrengthSuggestSymbol => 'Добавьте символ (!@#\\\$%)';
+
+  @override
+  String get authOrDivider => 'или';
 }
