@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/app_colors.dart';
+import '../../coach/mood/providers/mood_bubble_controller.dart';
+import '../../coach/mood/widgets/mood_bubble.dart';
+import '../../profile/providers/profile_provider.dart'
+    show dashboardSummaryProvider;
 import '../providers/meal_scan_controller.dart';
 import '../providers/scan_count_provider.dart';
 import '../widgets/scan_error_view.dart';
@@ -33,24 +36,13 @@ class MealScanScreen extends ConsumerStatefulWidget {
 class _MealScanScreenState extends ConsumerState<MealScanScreen> {
   @override
   Widget build(BuildContext context) {
-    // Show snackbar on save, then reset to idle so the screen is fresh
-    // next time the tab is opened. Refresh scan counter so the badge
-    // updates immediately.
+    // On save: fire a persona mood bubble (replaces the old generic
+    // "Meal logged" snackbar), then reset to idle so the screen is fresh
+    // next time the tab is opened.
     ref.listen<MealScanState>(mealScanControllerProvider, (prev, next) {
       if (prev?.phase != MealScanPhase.saved &&
           next.phase == MealScanPhase.saved) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              backgroundColor: AppColors.success,
-              behavior: SnackBarBehavior.floating,
-              content: Text(
-                'Meal logged — ${next.totalCalories} kcal',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          );
+        _showMealMoodBubble();
         Future.microtask(() {
           if (!mounted) return;
           ref.read(mealScanControllerProvider.notifier).reset();
@@ -77,6 +69,27 @@ class _MealScanScreenState extends ConsumerState<MealScanScreen> {
       ),
       body: SafeArea(child: _buildBody(state)),
     );
+  }
+
+  /// Awaits the freshly-invalidated dashboard summary (the save flow
+  /// already invalidated `dashboardSummaryProvider`), then shows a mood
+  /// bubble whose situation reflects today's *post-save* totals. The
+  /// bubble is cosmetic, so any failure is swallowed silently.
+  Future<void> _showMealMoodBubble() async {
+    try {
+      final summary = await ref.read(dashboardSummaryProvider.future);
+      if (!mounted) return;
+      final today = summary.todaySummary;
+      final situation = MoodBubbleLogic.mealSituation(
+        caloriesConsumed: today.caloriesConsumed,
+        caloriesTarget: today.caloriesTarget,
+        // mealsLogged already includes the meal just saved.
+        mealsLoggedBefore: today.mealsLogged - 1,
+      );
+      showMoodBubble(context, ref, situation);
+    } catch (_) {
+      // Network/parse failure: skip the bubble rather than block the flow.
+    }
   }
 
   Widget _buildBody(MealScanState state) {

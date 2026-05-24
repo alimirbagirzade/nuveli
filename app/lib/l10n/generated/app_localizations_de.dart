@@ -1781,4 +1781,100 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get verifyEmailSignOut => 'Andere E-Mail / Abmelden';
+
+  @override
+  String get coachBubbleGentleMealUnder =>
+      'Achtsam eingetragen. Du hast heute noch Spielraum, ganz ohne Eile.';
+
+  @override
+  String get coachBubbleGentleMealOver =>
+      'Eingetragen. Eine Mahlzeit bestimmt nicht deinen Tag. Sei gut zu dir.';
+
+  @override
+  String get coachBubbleGentleMealOnTrack =>
+      'Schöne Balance heute. Du hörst auf deinen Körper.';
+
+  @override
+  String get coachBubbleGentleWaterLow =>
+      'Ein Schluck Wasser würde jetzt guttun, wann immer du magst.';
+
+  @override
+  String get coachBubbleGentleStreakMilestone =>
+      'Du bist jeden Tag sanft dabei. Das ist echt.';
+
+  @override
+  String get coachBubbleGentleFirstMeal =>
+      'Erste Mahlzeit drin. Ein sanfter, ruhiger Start in den Tag.';
+
+  @override
+  String get coachBubbleFunnyMealUnder =>
+      'Eingetragen! Noch viel Startbahn frei — die Gabel darf abheben.';
+
+  @override
+  String get coachBubbleFunnyMealOver =>
+      'Große Mahlzeit, große Freude. Morgen wartet das nächste leckere Kapitel.';
+
+  @override
+  String get coachBubbleFunnyMealOnTrack =>
+      'Chef\'s Kiss. Du und Balance seid jetzt quasi beste Freunde.';
+
+  @override
+  String get coachBubbleFunnyWaterLow =>
+      'Deine Wasserflasche fühlt sich etwas ignoriert. Nur so.';
+
+  @override
+  String get coachBubbleFunnyStreakMilestone =>
+      'Serie läuft stark — da ist jemand in Fahrt!';
+
+  @override
+  String get coachBubbleFunnyFirstMeal =>
+      'Frühstücks-Club meldet sich. Der Tag startet lecker.';
+
+  @override
+  String get coachBubbleDirectMealUnder =>
+      'Eingetragen. Noch Platz für den Rest des Tages — plane gut.';
+
+  @override
+  String get coachBubbleDirectMealOver =>
+      'Eingetragen, etwas drüber. Kein Drama — passe die nächsten Mahlzeiten an.';
+
+  @override
+  String get coachBubbleDirectMealOnTrack =>
+      'Eingetragen. Genau im Plan. Bleib dran.';
+
+  @override
+  String get coachBubbleDirectWaterLow =>
+      'Wasser hängt heute hinterher. Hol dir ein Glas.';
+
+  @override
+  String get coachBubbleDirectStreakMilestone =>
+      'Serie hält. Konstanz macht die Arbeit.';
+
+  @override
+  String get coachBubbleDirectFirstMeal =>
+      'Erste Mahlzeit eingetragen. Gut — gib dem Tag den Ton vor.';
+
+  @override
+  String get coachBubbleCalmMealUnder =>
+      'Notiert. Es liegt noch Raum vor dir. Geh dein eigenes Tempo.';
+
+  @override
+  String get coachBubbleCalmMealOver =>
+      'Notiert. Bewusstsein zählt. Die nächste Mahlzeit gehört dir.';
+
+  @override
+  String get coachBubbleCalmMealOnTrack =>
+      'Notiert. Ruhig und gleichmäßig — ein gelassener Fortschritt.';
+
+  @override
+  String get coachBubbleCalmWaterLow =>
+      'Wasser ist etwas niedrig. Kein Druck — trink, wenn es passt.';
+
+  @override
+  String get coachBubbleCalmStreakMilestone =>
+      'Stille Konstanz, Tag für Tag. Das zählt.';
+
+  @override
+  String get coachBubbleCalmFirstMeal =>
+      'Erste Mahlzeit notiert. Ein ruhiger Beginn des Tages.';
 }

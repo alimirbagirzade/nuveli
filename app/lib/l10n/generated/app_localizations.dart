@@ -3449,6 +3449,150 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Farklı email kullan / Çıkış'**
   String get verifyEmailSignOut;
+
+  /// Mood bubble after logging a meal while still under the daily calorie target.
+  ///
+  /// In tr, this message translates to:
+  /// **'Özenle kaydedildi. Bugün hâlâ alanın var, acelesi yok.'**
+  String get coachBubbleGentleMealUnder;
+
+  /// Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi. Tek bir öğün gününü tanımlamaz. Kendine nazik ol.'**
+  String get coachBubbleGentleMealOver;
+
+  /// Mood bubble after logging a meal that leaves the day near target (balanced).
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün güzel bir denge. Bedenini dinliyorsun.'**
+  String get coachBubbleGentleMealOnTrack;
+
+  /// Mood bubble nudging the user when water intake is behind for the time of day.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi biraz su iyi gelirdi, hazır olduğunda.'**
+  String get coachBubbleGentleWaterLow;
+
+  /// Mood bubble celebrating a logging-streak milestone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her gün usulca buradasın. İşte bu gerçek.'**
+  String get coachBubbleGentleStreakMilestone;
+
+  /// Mood bubble after the first meal of the day is logged (fresh-start framing).
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk öğün girildi. Güne yumuşak, sakin bir başlangıç.'**
+  String get coachBubbleGentleFirstMeal;
+
+  /// Mood bubble after logging a meal while still under the daily calorie target.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi! Daha çok yerin var — çatal kalkışa hazır.'**
+  String get coachBubbleFunnyMealUnder;
+
+  /// Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bol öğün, bol keyif. Yarın yine lezzetli bir sayfa.'**
+  String get coachBubbleFunnyMealOver;
+
+  /// Mood bubble after logging a meal that leaves the day near target (balanced).
+  ///
+  /// In tr, this message translates to:
+  /// **'Şefin öpücüğü. Dengeyle artık can ciğersiniz.'**
+  String get coachBubbleFunnyMealOnTrack;
+
+  /// Mood bubble nudging the user when water intake is behind for the time of day.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su şişen biraz küsmüş gibi. Söylemeden geçmeyeyim.'**
+  String get coachBubbleFunnyWaterLow;
+
+  /// Mood bubble celebrating a logging-streak milestone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seri sağlam gidiyor — birileri formda!'**
+  String get coachBubbleFunnyStreakMilestone;
+
+  /// Mood bubble after the first meal of the day is logged (fresh-start framing).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kahvaltı kulübü bildiriyor. Güne lezzetli bir başlangıç.'**
+  String get coachBubbleFunnyFirstMeal;
+
+  /// Mood bubble after logging a meal while still under the daily calorie target.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi. Günün kalanına yer var — iyi planla.'**
+  String get coachBubbleDirectMealUnder;
+
+  /// Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi, biraz fazla. Dert değil — sonraki öğünleri ayarla.'**
+  String get coachBubbleDirectMealOver;
+
+  /// Mood bubble after logging a meal that leaves the day near target (balanced).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi. Tam yolunda. Böyle devam.'**
+  String get coachBubbleDirectMealOnTrack;
+
+  /// Mood bubble nudging the user when water intake is behind for the time of day.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su bugün geride. Bir bardak al.'**
+  String get coachBubbleDirectWaterLow;
+
+  /// Mood bubble celebrating a logging-streak milestone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seri tutuyor. İşi yapan istikrar.'**
+  String get coachBubbleDirectStreakMilestone;
+
+  /// Mood bubble after the first meal of the day is logged (fresh-start framing).
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk öğün girildi. Güzel — günün tonunu belirle.'**
+  String get coachBubbleDirectFirstMeal;
+
+  /// Mood bubble after logging a meal while still under the daily calorie target.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not edildi. İlerisi açık. Kendi temponla ilerle.'**
+  String get coachBubbleCalmMealUnder;
+
+  /// Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not edildi. Önemli olan farkındalık. Sonraki öğün senin.'**
+  String get coachBubbleCalmMealOver;
+
+  /// Mood bubble after logging a meal that leaves the day near target (balanced).
+  ///
+  /// In tr, this message translates to:
+  /// **'Not edildi. Dengeli ve sakin — huzurlu bir ilerleme.'**
+  String get coachBubbleCalmMealOnTrack;
+
+  /// Mood bubble nudging the user when water intake is behind for the time of day.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su biraz az. Baskı yok — uygun olduğunda yudumla.'**
+  String get coachBubbleCalmWaterLow;
+
+  /// Mood bubble celebrating a logging-streak milestone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her gün sessiz bir istikrar. Bu sayılır.'**
+  String get coachBubbleCalmStreakMilestone;
+
+  /// Mood bubble after the first meal of the day is logged (fresh-start framing).
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk öğün not edildi. Güne sakin bir başlangıç.'**
+  String get coachBubbleCalmFirstMeal;
 }
 
 class _AppLocalizationsDelegate

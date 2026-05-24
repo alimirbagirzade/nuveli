@@ -1782,4 +1782,100 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get verifyEmailSignOut => 'Другой email / Выйти';
+
+  @override
+  String get coachBubbleGentleMealUnder =>
+      'Бережно записано. На сегодня ещё есть запас, без спешки.';
+
+  @override
+  String get coachBubbleGentleMealOver =>
+      'Записано. Один приём пищи не определяет твой день. Будь добр к себе.';
+
+  @override
+  String get coachBubbleGentleMealOnTrack =>
+      'Сегодня хороший баланс. Ты слышишь своё тело.';
+
+  @override
+  String get coachBubbleGentleWaterLow =>
+      'Немного воды сейчас было бы кстати, когда будешь готов.';
+
+  @override
+  String get coachBubbleGentleStreakMilestone =>
+      'Ты мягко появляешься каждый день. Это дорогого стоит.';
+
+  @override
+  String get coachBubbleGentleFirstMeal =>
+      'Первый приём пищи внесён. Мягкое, спокойное начало дня.';
+
+  @override
+  String get coachBubbleFunnyMealUnder =>
+      'Записано! Полоса ещё свободна — вилка готова к взлёту.';
+
+  @override
+  String get coachBubbleFunnyMealOver =>
+      'Большая еда — большая радость. Завтра новая вкусная глава.';
+
+  @override
+  String get coachBubbleFunnyMealOnTrack =>
+      'Поцелуй шефа. Ты и баланс теперь лучшие друзья.';
+
+  @override
+  String get coachBubbleFunnyWaterLow =>
+      'Твоя бутылка с водой чувствует себя забытой. Просто говорю.';
+
+  @override
+  String get coachBubbleFunnyStreakMilestone =>
+      'Серия держится крепко — кто-то на ходу!';
+
+  @override
+  String get coachBubbleFunnyFirstMeal =>
+      'Клуб завтраков на связи. День начинается вкусно.';
+
+  @override
+  String get coachBubbleDirectMealUnder =>
+      'Записано. Есть запас на остаток дня — спланируй с умом.';
+
+  @override
+  String get coachBubbleDirectMealOver =>
+      'Записано, немного больше. Без драмы — поправь следующие приёмы пищи.';
+
+  @override
+  String get coachBubbleDirectMealOnTrack =>
+      'Записано. Точно в графике. Держи ритм.';
+
+  @override
+  String get coachBubbleDirectWaterLow =>
+      'Вода сегодня отстаёт. Возьми стакан.';
+
+  @override
+  String get coachBubbleDirectStreakMilestone =>
+      'Серия держится. Работает постоянство.';
+
+  @override
+  String get coachBubbleDirectFirstMeal =>
+      'Первый приём пищи записан. Хорошо — задай тон дню.';
+
+  @override
+  String get coachBubbleCalmMealUnder =>
+      'Отмечено. Впереди есть пространство. Двигайся в своём темпе.';
+
+  @override
+  String get coachBubbleCalmMealOver =>
+      'Отмечено. Важна осознанность. Следующий приём пищи — твой.';
+
+  @override
+  String get coachBubbleCalmMealOnTrack =>
+      'Отмечено. Ровно и спокойно — неспешный прогресс.';
+
+  @override
+  String get coachBubbleCalmWaterLow =>
+      'Воды немного мало. Без давления — пей, когда удобно.';
+
+  @override
+  String get coachBubbleCalmStreakMilestone =>
+      'Тихое постоянство, день за днём. Это важно.';
+
+  @override
+  String get coachBubbleCalmFirstMeal =>
+      'Первый приём пищи отмечен. Спокойное начало дня.';
 }

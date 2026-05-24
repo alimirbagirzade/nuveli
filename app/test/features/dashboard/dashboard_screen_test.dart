@@ -25,10 +25,13 @@ import 'package:nuveli/features/dashboard/widgets/add_food_button.dart';
 import 'package:nuveli/features/dashboard/widgets/macros_row.dart';
 import 'package:nuveli/features/habits/models/habit.dart';
 import 'package:nuveli/features/habits/providers/habits_providers.dart';
+import 'package:nuveli/features/notifications/providers/notifications_provider.dart'
+    show sharedPreferencesProvider;
 import 'package:nuveli/features/profile/models/weekly_analytics.dart';
 import 'package:nuveli/features/profile/providers/profile_provider.dart';
 import 'package:nuveli/shared/widgets/app_error_view.dart';
 import 'package:nuveli/shared/widgets/skeleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 AuthUser _fakeUser() => AuthUser(
       id: 'fake-uid',
@@ -58,9 +61,14 @@ Future<void> _pump(
   required AsyncValue<DashboardSummary> summary,
   AsyncValue<List<Meal>>? meals,
 }) async {
+  // The dashboard's streak-milestone mood bubble reads MoodSeenStore, which
+  // resolves sharedPreferencesProvider — override it with a mock instance.
+  SharedPreferences.setMockInitialValues(<String, Object>{});
+  final prefs = await SharedPreferences.getInstance();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
         currentAuthUserProvider.overrideWith((ref) => _fakeUser()),
         dashboardSummaryProvider.overrideWith(
           (ref) => switch (summary) {
