@@ -26,10 +26,16 @@ class ProfileBase(BaseModel):
     dietary_preference: Optional[DietaryPreference] = None
     timezone: Optional[str] = "UTC"
     locale: Optional[str] = "en"
+    language: Optional[str] = None
 
 
 class ProfileUpdate(ProfileBase):
-    """All fields optional for PATCH."""
+    """All fields optional for PATCH.
+
+    `language` inherits from ProfileBase (Optional[str] = None).
+    The profiles router persists it when present and tolerates the column
+    being absent in prod (drift-safe via exclude_unset=True).
+    """
     pass
 
 
@@ -65,3 +71,4 @@ class ProfileResponse(ProfileBase):
     onboarding_completed: bool = False
     created_at: datetime
     updated_at: Optional[datetime] = None
+    # language is already declared in ProfileBase (Optional[str] = None)

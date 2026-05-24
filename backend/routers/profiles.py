@@ -105,12 +105,40 @@ async def update_me(
         raise ValidationError("Empty update payload")
 
     payload["updated_at"] = datetime.utcnow().isoformat()
-    res = (
-        supabase.table("user_profiles")
-        .update(payload)
-        .eq("user_id", user_id)
-        .execute()
-    )
+
+    # Attempt the full update first. If the `language` column doesn't yet
+    # exist in prod (schema drift), retry without it so other fields still
+    # persist. We catch only the specific PostgREST/Supabase error strings
+    # that indicate an unknown column rather than a broader catch-all.
+    language_value = payload.get("language")
+    try:
+        res = (
+            supabase.table("user_profiles")
+            .update(payload)
+            .eq("user_id", user_id)
+            .execute()
+        )
+    except Exception as e:
+        err_str = str(e).lower()
+        if "language" in err_str and language_value is not None:
+            # Column missing in prod — retry without it.
+            logger.warning(
+                f"user_profiles.language column absent in prod; "
+                f"updating without it for user {user_id}"
+            )
+            payload_no_lang = {k: v for k, v in payload.items() if k != "language"}
+            if not payload_no_lang or list(payload_no_lang.keys()) == ["updated_at"]:
+                # Nothing meaningful left to update.
+                raise ValidationError("language column not yet available in prod schema") from e
+            res = (
+                supabase.table("user_profiles")
+                .update(payload_no_lang)
+                .eq("user_id", user_id)
+                .execute()
+            )
+        else:
+            raise
+
     if not res.data:
         raise NotFound("Profile")
     return res.data[0]
