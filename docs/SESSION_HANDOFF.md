@@ -1,4 +1,4 @@
-# Nuveli — Session Handoff (last updated 2026-05-23, late afternoon)
+# Nuveli — Session Handoff (last updated 2026-05-24, ~13:30 TRT)
 
 > **Bu doküman**: bir Claude Code oturumundan diğerine geçişi temiz tutar.
 > Yeni chat açıldığında okunur, "neredeyiz, sırada ne var" net olur.
@@ -12,149 +12,151 @@
 
 ## Şu anda neredeyiz
 
-**Sprint A artık tamam — 3 büyük UI gap'i de PR'da.** Backend + infrastructure zaten %100. UI tarafında F1 (Meal Scan), F2 (AI Coach insight-only), F4 (Meal Planner v0) hepsi stacked PR olarak açık ve merge bekliyor. F3 (Analytics) + F5 (Habits) önceden shipped.
+**Sprint A + canlı QA + Coach pipeline + Profile edit hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix main'de. v1.0.0+2 → v1.1.0+15.
 
-### Bu öğleden sonraki sesyonda (2026-05-23 PM) main'e merge edilen PR'lar
-
-```
-PR #129  feat(planner): weekly meal plan view (F4 v0)        squash-merged
-PR #128  feat(coach): AI Coach daily-insight UI (F2 v0)      squash-merged
-PR #124  feat(meal): AI meal scan UI (F1)                    squash-merged
-```
-
-Not: #125 ve #126 başlangıçta stacked PR olarak açılmıştı; base branch'leri squash-merge'de silinince GitHub otomatik kapattı. #128 ve #129 onların main üzerine rebase edilmiş yenileri (aynı diff).
-
-Bu üç merge'de toplam 51 yeni test (410 → 461 host), analyze temiz (pre-existing 4 warning aynı).
-
-### F2 v0 önemli daralma
-
-Design doc'taki `/coach/chat` + `/coach/audio` backend'de **yok** — `backend/routers/ai_coach.py` sadece `GET /coach/today` + `POST /coach/generate` + `POST /coach/apply-tip` ship'liyor. F2 v0 bu yüzden **insight-only**: günlük cached insight + nutrition score arc + tip listesi + recommended action apply. Chat/TTS/persona display deferred. Design questions Q11-Q21 backend gerçeğine göre güncellendi (#128 commit'inde).
-
-Ali talebi: **lokal mood-bubble katmanı** (OpenAI'siz, persona × situation copy bank) → ayrı sesyon. Bu sesyonda dokunulmadı, sadece yol haritasına yazıldı.
-
-### Bu sabah / dün gece shipped olan PR'lar (sesyon başında main'de olanlar)
+### Önceki sesyonda shipped (2026-05-23 PM)
 
 ```
-5aec41a  #122  docs: design questions for F1 Meal Scan + F2 AI Coach
-1fe15bb  #121  feat(habits): dashboard'da "Today's habits"
-fe36aa6  #120  feat(analytics): gerçek Analytics ekranı
-c94b6b9  #119  feat(dashboard): 7 günlük su grafiği
-ddc0fe7  #118  feat(dashboard): gerçek Add Food modal
-8ff661c  #117  feat(dashboard): su portion picker (100-750ml + custom)
-9fbcb9e  #116  docs: honest launch gap analysis
-33816d5  #115  fix(insights): structured ai_insights write
-e57760d  #114  fix(analytics): direct nutrition_score read
-04cf0c7  #113  fix(profile): LayoutBuilder _InlineError
-bd91881  #112  fix: signup trigger + weight_goals adapter
-e9223d2  #111  test cleanup (Keychain pollution fix)
-e17d877  #110  ops: assetlinks.json 2nd fingerprint
-5e21b19  #109  fix(android): release build unblock
-0e555bd  #108  feat(ios): Universal Links entitlement (paused)
+PR #129  feat(planner): meal planner v0 (F4)        squash-merged
+PR #128  feat(coach): AI Coach daily-insight (F2)   squash-merged
+PR #127  docs: session handoff Sprint A             squash-merged
+PR #124  feat(meal): AI meal scan UI (F1)           squash-merged
 ```
 
-### Geçen daha önceki sessions'larda shipped
+### Bu sesyonda (2026-05-23 → 2026-05-24, ~17 saat) shipped
 
-#96-#107 (security top-5: secure session storage, prompt injection guards, JWKS cache TTL, deep link validator + listener, .env out of build, integration tests, App Links activation, notification route validation, scheduler allowlist audit, more).
+**Schema drift / production fixes:**
+- PR #130 `fix(auth)` — Supabase SMTP bypass (`POST /auth/signup` admin API auto-confirm). Mail SMTP rate-limit'i artık launch blocker değil.
+- RC iOS native fatal guard'ları (`Purchases.*` calls `_initialized` check)
+- Auth screens `popUntil(isFirst)` (AuthGate görünmüyordu)
+- Habits adapter (`title`/`display_order`/`schedule_type`/`days_of_week`/`habit_type` drift)
+- Habits enum normalize (`target_type='check'` not in Literal)
+- `insights_generation_service` habits.name → habits.id
+- Meals POST `notes` column drift strip
+- Weight goals `status='cancelled'` → `'abandoned'` (check constraint)
+- Coach `ai_insights.daily_recap` NOT NULL → dump payload as placeholder
+- Dashboard TodaySummary field names (`consumed_*` vs `calories_*`)
+- Water portion-picker freeze fix (TextField removed, 11 presets)
 
-### Test counts (PR'lar merge edilince main'de olacak)
+**Yeni özellikler:**
+- Profile edit screen (PATCH /me, settings gear wire)
+- Coach pipeline cron (APScheduler 02:00 UTC daily) + FCM push backend
+- `services/fcm_service.py` (FCM v1 + token pruning)
+- `/me/device-tokens` POST + DELETE endpoints
+- Flutter `fcm_token_register.dart` glue (auth listener wire)
+- `docs/ops/cron.md` (Render Cron Service alternative + FCM env setup)
 
-- Flutter: **461 host-side + 5 device-level integration** (410 → +51 bu sesyonda)
-- Backend: **139 pytest active + 8 skipped** (değişmedi)
-- analyze: clean (4 pre-existing warnings in `lib/main_integration_snippet.dart`)
+**Render env eklendi (Ali, 2026-05-24 öğle):**
+- `FIREBASE_PROJECT_ID=nuveli`
+- `FIREBASE_SERVICE_ACCOUNT_JSON_B64=<3145 chars>`
+
+**Live state son log (Render, 2026-05-24 10:15 UTC):**
+```
+GET /me 200, /analytics/dashboard 200, /coach/today 200,
+/habits 200, /meals?date=... 200, /water/weekly 200,
+/weight/goal 200, /analytics/weekly 200, /me/onboarding 200
+```
+Tüm critical endpoint'ler artık 200.
+
+**Test counts**: 410 → 460 host tests passing. analyze: pre-existing 4 warning (main_integration_snippet noise).
+
+**Versions**: pubspec `1.0.0+2 → 1.1.0+15`. CHANGELOG `app/CHANGELOG.md` tüm bu sesyonun fix'lerini kategorize eder.
+
+### F2 Coach mimari notu
+
+Backend `/coach/today` insight-only (chat/TTS yok — sen istemedin, mood-bubble ayrı). Cron her gün 02:00 UTC GPT-4o ile fresh insight üretir. APScheduler in-process (Render free tier sleep'te miss edebilir → Render Cron Service alternatif kurulumu `docs/ops/cron.md`).
+
+FCM push backend HAZIR + Render env LIVE. **iOS Simulator FCM destek**lemez (APNS yok) → gerçek push test için iPhone gerek. Real device + Apple Developer enrollment ($99) gelince zero-code-change çalışır.
 
 ---
 
-## Sırada ne var
+## Sırada ne var (yeni sesyonda öncelik)
 
-### 1. Cihaz QA — üç feature de
-Sırasıyla yürü:
-- **F1**: Scan tab → kamera/galeri → preview → analyze → result düzenle → save → dashboard'da görünür mü, "N/5" sayacı düşüyor mu, 6. tıklamada paywall açılıyor mu
-- **F2**: Coach tab → günlük insight render mı, "Regenerate (1 free / day)" 1 kez çalışıp upgrade'e dönüyor mu, recommended action butonu (varsa) snackbar veriyor mu
-- **F4**: Dashboard "Plan your week" tile → planner ekranı, hafta navigatörü, free user next-week paywall'a düşüyor mu, grocery sheet açılıyor mu
+### 1. Lokal mood-bubble katmanı (sen 2 kez ertelendin, en üst öncelik)
+- Persona × situation copy-bank (gentle/direct/funny/calm × under-target/over/streak-broken/water-low/...)
+- LOKAL (no-OpenAI), anlık feedback meal log save / water low / streak milestone'da
+- ~yarım gün iş
+- Memory: `project_mood_bubble_planned.md`
+- Sıfır OpenAI maliyet — Coach AI daily insight üstüne katman
 
-### 2. Mood-bubble v0 (Ali talebi — ayrı sesyon)
-Backend `/coach/today` zaten zengin insight üretiyor. Bunun **üstüne** lokal mood-bubble katmanı: persona × durum copy bank, meal log / water düşük / streak milestone anlarında anlık metin. Sıfır OpenAI maliyeti. Bir yarım gün iş.
+### 2. Debug exception leak revert (PR sonra)
+- `backend/main.py` 500 handler şu an `_debug_exc` (exception class + truncated message) leak ediyor — QA için intentional
+- Production submit ÖNCESİ revert şart (memory'de: feedback_version_bump_per_fix + task #43)
+- 2 satır revert + version bump + CHANGELOG
 
-### 3. F4 v0.1 polish
-- Add-meal-to-plan modal (manual entry → `POST /meal-plans`)
-- AI generate dietary preferences sheet → repo metodu hazır, sadece UI lazım
-- Edit/delete plan entries
+### 3. Settings tab QA (sen 3 kez sordun, hiç screenshot atmadın)
+- Senin "Settings çalışmıyor" iddian → ben investigator agent ile dosyayı audit ettim, gerçek bug bulunmadı
+- Sim'de Settings tab açıp screenshot atarsan diagnose ederim
+- Risk: Coach offline + meal save errors gibi UI'da bir şey olabilir, log lazım
+
+### 4. Cihaz QA (real iPhone)
+- Sim ile yapamadığımız:
+  - FCM push real-end-to-end (APNS only on device)
+  - Camera shot for Meal Scan (sim no camera)
+  - Apple Sign In (sim limited)
+  - Performance / battery / animations real frame rate
+- iOS App Store submission gelince: Apple Developer enrollment ($99) → TestFlight build → real device QA
+
+### 5. Render Cron Service kurulumu (opsiyonel)
+- Şu an APScheduler in-process (`APP_ENABLE_INTERNAL_CRON=true` default)
+- Render free tier 15dk sleep → cron miss edebilir
+- Reliable trigger için: `docs/ops/cron.md` Option B (web UI'da Cron Job kurma, 5dk)
+
+### 6. F4 v0.1 — Meal Planner write side
+- Add-meal-to-plan modal (manual POST /meal-plans)
+- AI generate dietary preferences sheet (repo metodu hazır)
 - Recipe browser
+- Edit/delete plan entries
 
-### 4. S3 — go_router refactor (notif deep link'leri için)
-Şu an `notification_service.dart` payload route `/coach` veya `/meals/scan` döndürüyor, ama router yok → tap navigate etmiyor. Push notif tıklayan kullanıcı dashboard'a düşüyor. Refactor büyük (her tab + her ekran), Sprint C için bekliyor.
-
-### 5. Operasyonel
-- ✅ Migration 018 (Ali applied 2026-05-22 night)
-- ⏳ assetlinks.json cPanel upload — sideload test için, App Store deploy için zorunlu değil
-- ⏳ Apple Developer enrollment (paused, $99, sonra)
-- ⏳ Yeni APK build + Play Console Internal Testing upload (F1+F2+F4 main'de — versionCode bump et ve build al)
+### 7. Açık issue'lar (memory'de mevcut)
+- Schema drift endemic (`project_schema_drift_endemic.md`) — yeni endpoint yazınca prod cols verify et
+- weight_goals onboarding insert race (duplicate idx_weight_goals_one_active) — geri planda warning, UX etkisiz, ileride fix
 
 ---
 
-## Yeni chat açıldığında ilk komutlar
+## Memory state (önemli sesyon karşılaşmaları)
 
-### Komut 1 — handoff'u oku
-```
-Read docs/SESSION_HANDOFF.md and the linked launch-gaps + design-questions docs.
-What's the next concrete task you'd recommend?
-```
-
-### Komut 2 — F1 veya F2'ye başla (design questions cevapladıktan sonra)
-```
-docs/product/design-questions-2026-05-23.md tasarım sorularına cevaplarımı yazdım.
-F1 Meal Scan UI'ı başlatabilir misin? Yarım gün gibi iş yapalım, durduğun yerde özet bırak.
-```
-
-veya:
-
-```
-F2 AI Coach UI üzerinde çalışalım — design questions doc'taki cevaplarımı oku, planla,
-sonra implement et. Saat geç olursa durup özet bırak.
-```
-
-### Komut 3 — sadece bug fix istiyorsan
-```
-Uygulamayı cihazda test ettim, şu sorun var: [açıkla]. Düzelt.
-```
-
----
-
-## Kritik referans dokümanlar
-
-| Dosya | İçerik |
+| Memory | Özet |
 |---|---|
-| `docs/product/launch-gaps-2026-05-23.md` | Tüm UI gap'leri + B/F/O/S numaralı sınıflandırma + Sprint A/B/C |
-| `docs/product/design-questions-2026-05-23.md` | F1 + F2 için 21 tasarım sorusu + öneriler |
-| `docs/SESSION_HANDOFF.md` | Bu dosya |
-| `CLAUDE.md` | Proje kimliği + sabit kurallar |
-| `app/CLAUDE.md` | Flutter-specific kurallar |
+| `user_ali.md` | Solo dev, Android-first launch, iOS paused |
+| `feedback_version_bump_per_fix.md` | **Her fix sonrası version bump + CHANGELOG + agent kullan** (bugün öğrendi) |
+| `feedback_squash_merge.md` | `... (#NN)` convention |
+| `feedback_no_bash_confirmation.md` | Komutu çalıştır, "should I" sorma |
+| `project_coach_backend_insight_only.md` | `/coach/chat` ve `/coach/audio` YOK; backend insight-only |
+| `project_mood_bubble_planned.md` | Lokal katman, OpenAI'siz, ayrı sesyon |
+| `project_schema_drift_endemic.md` | Prod migration ≠ repo migration; her zaman `information_schema` doğrula |
+| `project_launch_state_real.md` | "PR merged" ≠ "production ready"; cihaz QA olmadan asla "bitti" deme |
+
+---
+
+## Yeni sesyon ilk komutu
+
+```
+Read docs/SESSION_HANDOFF.md and pick the next task from "Sırada ne var".
+Default to #1 (mood-bubble) unless I say otherwise.
+```
+
+Ya da spesifik:
+```
+docs/SESSION_HANDOFF.md'i oku. Mood-bubble katmanını uygula —
+persona × situation copy bank, no-OpenAI, anlık feedback hooks.
+```
 
 ---
 
 ## Açık riskler
 
-1. **Schema drift endemic** — repo migrations vs prod DB sürekli kayıyor. Yeni feature ekleyince ilk önce `mcp__supabase__execute_sql` ile `information_schema.columns` doğrulanmalı. Tekrar yanılma. (Memory `project_schema_drift_endemic.md`)
+1. **Schema drift hâlâ devam edebilir** — bu sesyonda 4 farklı tablo'da drift bulduk (habits, meals, weight_goals, ai_insights). Başka tablolarda da olabilir. **Her yeni endpoint için ilk `information_schema.columns` ile doğrula**, sonra kod yaz.
 
-2. **Local main ara sıra divergent** — Ali manuel commit'ler atınca origin'le ayrışıyor (örn. `chore: require gstack` commit'i bir kez orijinde varken localda ayrı kaldı). `git pull --rebase` ile düzelt; Podfile.lock stash etmek gerek.
+2. **Debug exc leak hala live** — `backend/main.py` 500 handler `_debug_exc` field'ı production response'a koyuyor. Launch öncesi revert.
 
-3. **iOS paused but staged** — entitlement vs. ekledim, Apple Developer enrollment olunca aktive olur. Yanlışlıkla iOS özelliklerini "yok" sayıp silme.
+3. **iOS not staged** — Apple enrollment $99 paused. iOS shipped olmayacak ama kod hazır. FCM push iOS sim'de test edilemiyor (APNS yok).
 
-4. **AI Coach yok = launch blocker** — Uygulamanın adında olan feature shipped olmadan App Store'a göndermek anlamsız. F2 sprintinin tamamlanması launch'ın kritik yolu.
+4. **Cron miss riski** — APScheduler in-process Render free tier 15min sleep'inde miss edebilir. Eğer "kullanıcı her sabah insight görmeli" critical ise, Render Cron Service ($7/ay) gerek.
 
----
-
-## Acil iletişim — Ali sana doğrudan ne demeli
-
-| Senin durumun | Ne yazmalısın |
-|---|---|
-| Yeni başlıyorum, durum bilmiyorum | `Read docs/SESSION_HANDOFF.md` |
-| Design soruları cevapladım | `design-questions doc'u oku, F1/F2 implement et` |
-| Cihazda bug buldum | `[ekran adı + ne yaptığım + ne olduğu]` |
-| Yarınki sprint plana karar veremedim | `launch-gaps doc'u oku, Sprint A/B/C'den bana öneri yap` |
-| Schema problemi yaşıyorum | Reach for `mcp__supabase__execute_sql` + `information_schema.columns` |
+5. **AuthGate `error → OnboardingScreen` fallback yanlış** — JWT expired olunca user onboarding step 1'de başlıyor. Doğrusu: hatayı surface et + retry / re-login butonu. Yeni sesyon küçük UX fix olabilir.
 
 ---
 
-**Hazırlandı:** 2026-05-23 (öğleden sonra, F1+F2+F4 PR'ları açıldıktan sonra)
-**Bir sonraki güncelleme:** üç PR main'e land edince + cihaz QA tamamlanınca
+**Hazırlandı:** 2026-05-24 (öğle, Coach pipeline live + Render env eklendi sonrası)
+**Bir sonraki güncelleme:** mood-bubble shipped olunca veya prod launch'tan önce

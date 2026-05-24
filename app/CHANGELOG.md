@@ -1,5 +1,21 @@
 # Nuveli Changelog
 
+## [1.1.1+16] - 2026-05-24 - Session handoff doc refresh
+
+### Docs
+- `docs/SESSION_HANDOFF.md` rewritten as of 2026-05-24 ~13:30 TRT:
+  enumerate every fix this session shipped (schema drifts, signup
+  bypass, auth popUntil, water freeze, RC iOS guards, profile edit,
+  Coach pipeline cron + FCM, dashboard kcal parse), Render env state
+  after Firebase setup, full live-endpoint smoke log, and a 7-item
+  next-session priority list. Mood-bubble flagged as #1 (Ali asked
+  twice). Debug exc revert flagged as launch-blocker #2.
+- Memory: `project_coach_pipeline_live.md` snapshot — what's wired,
+  what env is set on Render, and the iOS-sim APNS gap so next session
+  doesn't think push is broken.
+
+No code changes.
+
 ## [1.1.0+15] - 2026-05-24 - Coach pipeline: cron + push (A→B→C)
 
 ### Backend
