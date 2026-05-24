@@ -765,5 +765,156 @@
   "homeWaterLogFailed": "Could not log water. Tap to retry.",
   "homePlannerCtaTitle": "Plan your week",
   "homePlannerCtaSubtitle": "See planned meals + grocery list",
-  "homeNoMealsScanHint": "Tap \"Add Food\" below to log your first meal"
+  "homeNoMealsScanHint": "Tap \"Add Food\" below to log your first meal",
+  "mealScanScreenTitle": "AI Meal Scan",
+  "mealScanIdleTitle": "Snap your meal",
+  "mealScanIdleSubtitle": "Point your camera at your plate. Nuveli's AI will estimate calories and macros in a few seconds.",
+  "mealScanTakePhoto": "Take photo",
+  "mealScanChooseGallery": "Choose from gallery",
+  "mealScanAnalyzingStep1": "Analyzing your meal...",
+  "mealScanAnalyzingStep2": "Identifying foods...",
+  "mealScanAnalyzingStep3": "Estimating portions...",
+  "mealScanAnalyzingStep4": "Calculating macros...",
+  "mealScanAnalyzingStep5": "Almost there...",
+  "mealScanSaving": "Saving meal...",
+  "mealScanRateLimitTitle": "Too many scans, too fast",
+  "mealScanErrorTitle": "Scan failed",
+  "mealScanAddManuallyInstead": "Add manually instead",
+  "mealScanNotFoodTitle": "Hmm, I couldn't see food",
+  "mealScanNotFoodHint": "Try a clearer shot of your plate, or log this meal manually.",
+  "mealScanTryAnotherPhoto": "Try another photo",
+  "mealScanAddManually": "Add manually",
+  "mealScanRetake": "Retake",
+  "mealScanConfidentScore": "{score}% confident",
+  "@mealScanConfidentScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Detected foods",
+  "mealScanPortionSize": "Portion size",
+  "mealScanDiscard": "Discard",
+  "mealScanAiTip": "AI tip",
+  "mealScanRemoveTooltip": "Remove",
+  "mealScanImageLoadError": "Could not load image",
+  "mealScanEditFood": "Edit food",
+  "mealScanSaveChanges": "Save changes",
+  "mealScanFieldName": "Name",
+  "plannerScreenTitle": "Meal Plan",
+  "plannerGroceryListTooltip": "Grocery list",
+  "plannerThisWeek": "This week",
+  "plannerNextWeek": "Next week",
+  "plannerLastWeek": "Last week",
+  "plannerInWeeks": "In {n} weeks",
+  "@plannerInWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "{n} weeks ago",
+  "@plannerWeeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Previous week",
+  "plannerNextWeekTooltip": "Next week",
+  "plannerTotalsBanner": "{kcal} kcal planned across {days} days",
+  "@plannerTotalsBanner": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "No plan for this week yet",
+  "plannerEmptyAiHint": "Let your AI coach draft a full week in seconds.",
+  "plannerEmptyPremiumHint": "AI weekly plans are part of Premium. Upgrade to unlock.",
+  "plannerAddMealManually": "Add a meal manually",
+  "plannerGenerateAiPlan": "Generate AI plan",
+  "plannerUnlockAiPlan": "Unlock AI plan generation",
+  "plannerPremiumFeature": "Premium feature",
+  "plannerPaywallTitle": "See and plan beyond this week",
+  "plannerPaywallBody": "Free plans cover the current week. Upgrade to look ahead, draft repeating plans, and let AI generate a full week for you.",
+  "plannerSeePremium": "See Premium",
+  "plannerBackToThisWeek": "Back to this week",
+  "plannerLoadError": "Could not load your plan",
+  "plannerEditNameNote": "Edit name / note",
+  "plannerRemoveFromPlan": "Remove from plan",
+  "plannerRemoveEntryTitle": "Remove entry?",
+  "plannerRemoveEntryBody": "Remove \"{name}\" from this plan?",
+  "@plannerRemoveEntryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Remove",
+  "plannerToday": "Today",
+  "plannerDayStats": "{meals} planned · {kcal} kcal",
+  "@plannerDayStats": {
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Add meal",
+  "plannerServingsCount": "{n} servings",
+  "@plannerServingsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Add to plan",
+  "plannerMealName": "Meal name",
+  "plannerServings": "Servings",
+  "plannerNoteOptional": "Note (optional)",
+  "plannerMealNameRequired": "Meal name is required",
+  "plannerServingsError": "Servings must be greater than 0",
+  "plannerEditEntry": "Edit entry",
+  "plannerEditCaloriesHint": "To change calories or servings, delete this entry and add it again.",
+  "plannerGenerateSubtitle": "Your coach drafts a full week. Tweak the details below — all optional.",
+  "plannerDietaryPref": "Dietary preference (optional)",
+  "plannerAvoidIngredients": "Avoid ingredients (comma-separated)",
+  "plannerDailyCalorieTarget": "Daily calorie target (optional)",
+  "plannerMealsPerDay": "Meals per day",
+  "plannerAnythingElse": "Anything else? (optional)",
+  "plannerCalorieTargetError": "Calorie target must be 800–6000",
+  "plannerGenerating": "Generating…",
+  "plannerGeneratePlan": "Generate plan",
+  "plannerMealsCreated": "{n} meals planned for your week.",
+  "@plannerMealsCreated": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Grocery list",
+  "plannerGroceryLoadError": "Could not load groceries",
+  "plannerGroceryEmpty": "No groceries yet — add a recipe to the plan.",
+  "plannerGroceryUsedIn": "Used in {n} recipes",
+  "@plannerGroceryUsedIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

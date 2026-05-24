@@ -765,5 +765,156 @@
   "homeWaterLogFailed": "Impossible d'enregistrer l'eau. Touche pour réessayer.",
   "homePlannerCtaTitle": "Planifie ta semaine",
   "homePlannerCtaSubtitle": "Voir les repas planifiés + liste de courses",
-  "homeNoMealsScanHint": "Touche \"Ajouter un repas\" ci-dessous pour enregistrer ton premier repas"
+  "homeNoMealsScanHint": "Touche \"Ajouter un repas\" ci-dessous pour enregistrer ton premier repas",
+  "mealScanScreenTitle": "Scanner de repas IA",
+  "mealScanIdleTitle": "Photographiez votre repas",
+  "mealScanIdleSubtitle": "Pointez votre caméra vers votre assiette. L'IA de Nuveli estimera les calories et les macros en quelques secondes.",
+  "mealScanTakePhoto": "Prendre une photo",
+  "mealScanChooseGallery": "Choisir dans la galerie",
+  "mealScanAnalyzingStep1": "Analyse de votre repas...",
+  "mealScanAnalyzingStep2": "Identification des aliments...",
+  "mealScanAnalyzingStep3": "Estimation des portions...",
+  "mealScanAnalyzingStep4": "Calcul des macros...",
+  "mealScanAnalyzingStep5": "Presque terminé...",
+  "mealScanSaving": "Sauvegarde du repas...",
+  "mealScanRateLimitTitle": "Trop de scans, trop vite",
+  "mealScanErrorTitle": "Échec du scan",
+  "mealScanAddManuallyInstead": "Ajouter manuellement",
+  "mealScanNotFoodTitle": "Hmm, je n'ai pas vu de nourriture",
+  "mealScanNotFoodHint": "Essayez une photo plus nette de votre assiette ou enregistrez ce repas manuellement.",
+  "mealScanTryAnotherPhoto": "Essayer une autre photo",
+  "mealScanAddManually": "Ajouter manuellement",
+  "mealScanRetake": "Reprendre",
+  "mealScanConfidentScore": "{score}% de confiance",
+  "@mealScanConfidentScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Aliments détectés",
+  "mealScanPortionSize": "Taille de la portion",
+  "mealScanDiscard": "Ignorer",
+  "mealScanAiTip": "Conseil IA",
+  "mealScanRemoveTooltip": "Supprimer",
+  "mealScanImageLoadError": "Impossible de charger l'image",
+  "mealScanEditFood": "Modifier l'aliment",
+  "mealScanSaveChanges": "Enregistrer les modifications",
+  "mealScanFieldName": "Nom",
+  "plannerScreenTitle": "Plan de repas",
+  "plannerGroceryListTooltip": "Liste de courses",
+  "plannerThisWeek": "Cette semaine",
+  "plannerNextWeek": "Semaine prochaine",
+  "plannerLastWeek": "Semaine dernière",
+  "plannerInWeeks": "Dans {n} semaines",
+  "@plannerInWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "Il y a {n} semaines",
+  "@plannerWeeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Semaine précédente",
+  "plannerNextWeekTooltip": "Semaine suivante",
+  "plannerTotalsBanner": "{kcal} kcal planifiées sur {days} jours",
+  "@plannerTotalsBanner": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "Pas encore de plan pour cette semaine",
+  "plannerEmptyAiHint": "Votre coach IA rédige une semaine complète en quelques secondes.",
+  "plannerEmptyPremiumHint": "Les plans hebdomadaires IA font partie de Premium. Mettez à niveau pour débloquer.",
+  "plannerAddMealManually": "Ajouter un repas manuellement",
+  "plannerGenerateAiPlan": "Générer un plan IA",
+  "plannerUnlockAiPlan": "Débloquer la génération de plan IA",
+  "plannerPremiumFeature": "Fonctionnalité Premium",
+  "plannerPaywallTitle": "Voir et planifier au-delà de cette semaine",
+  "plannerPaywallBody": "Les plans gratuits couvrent la semaine en cours. Mettez à niveau pour regarder en avant, créer des plans répétitifs et laisser l'IA générer une semaine complète.",
+  "plannerSeePremium": "Voir Premium",
+  "plannerBackToThisWeek": "Retour à cette semaine",
+  "plannerLoadError": "Impossible de charger votre plan",
+  "plannerEditNameNote": "Modifier nom / note",
+  "plannerRemoveFromPlan": "Supprimer du plan",
+  "plannerRemoveEntryTitle": "Supprimer l'entrée ?",
+  "plannerRemoveEntryBody": "Supprimer \"{name}\" de ce plan ?",
+  "@plannerRemoveEntryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Supprimer",
+  "plannerToday": "Aujourd'hui",
+  "plannerDayStats": "{meals} planifiés · {kcal} kcal",
+  "@plannerDayStats": {
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Ajouter un repas",
+  "plannerServingsCount": "{n} portions",
+  "@plannerServingsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Ajouter au plan",
+  "plannerMealName": "Nom du repas",
+  "plannerServings": "Portions",
+  "plannerNoteOptional": "Note (facultatif)",
+  "plannerMealNameRequired": "Le nom du repas est obligatoire",
+  "plannerServingsError": "Les portions doivent être supérieures à 0",
+  "plannerEditEntry": "Modifier l'entrée",
+  "plannerEditCaloriesHint": "Pour modifier les calories ou les portions, supprimez cette entrée et ajoutez-la à nouveau.",
+  "plannerGenerateSubtitle": "Votre coach rédige une semaine complète. Ajustez les détails ci-dessous — tout est facultatif.",
+  "plannerDietaryPref": "Préférence alimentaire (facultatif)",
+  "plannerAvoidIngredients": "Éviter les ingrédients (séparés par des virgules)",
+  "plannerDailyCalorieTarget": "Objectif calorique quotidien (facultatif)",
+  "plannerMealsPerDay": "Repas par jour",
+  "plannerAnythingElse": "Autre chose ? (facultatif)",
+  "plannerCalorieTargetError": "L'objectif calorique doit être entre 800 et 6000",
+  "plannerGenerating": "Génération en cours…",
+  "plannerGeneratePlan": "Générer le plan",
+  "plannerMealsCreated": "{n} repas planifiés pour votre semaine.",
+  "@plannerMealsCreated": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Liste de courses",
+  "plannerGroceryLoadError": "Impossible de charger la liste de courses",
+  "plannerGroceryEmpty": "Pas encore de courses — ajoutez une recette au plan.",
+  "plannerGroceryUsedIn": "Utilisé dans {n} recettes",
+  "@plannerGroceryUsedIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

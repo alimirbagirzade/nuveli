@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/repositories/meal_planner_repository.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/weekly_plan.dart';
 import '../providers/planner_providers.dart';
 import 'planner_form_fields.dart';
@@ -60,9 +61,11 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
 
   Future<void> _save() async {
     if (_isSaving) return;
+    final l10n = AppLocalizations.of(context);
     final name = _nameCtrl.text.trim();
     if (!_isRecipe && name.isEmpty) {
-      setState(() => _formError = 'Meal name is required');
+      setState(() => _formError =
+          l10n?.plannerMealNameRequired ?? 'Meal name is required');
       return;
     }
 
@@ -92,6 +95,7 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -104,7 +108,9 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PlannerSheetHeader(title: 'Edit entry'),
+            PlannerSheetHeader(
+              title: l10n?.plannerEditEntry ?? 'Edit entry',
+            ),
             const SizedBox(height: 16),
             if (_isRecipe)
               Padding(
@@ -120,7 +126,7 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
               )
             else
               PlannerLabeledField(
-                label: 'Meal name',
+                label: l10n?.plannerMealName ?? 'Meal name',
                 hint: 'e.g. Grilled chicken salad',
                 controller: _nameCtrl,
                 autofocus: true,
@@ -128,16 +134,17 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
               ),
             const SizedBox(height: 12),
             PlannerLabeledField(
-              label: 'Note (optional)',
+              label: l10n?.plannerNoteOptional ?? 'Note (optional)',
               hint: 'e.g. swap for leftovers',
               controller: _noteCtrl,
               maxLength: 200,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'To change calories or servings, delete this entry and add it '
-              'again.',
-              style: TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+            Text(
+              l10n?.plannerEditCaloriesHint ??
+                  'To change calories or servings, delete this entry and add it '
+                  'again.',
+              style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
             ),
             if (_formError != null) ...[
               const SizedBox(height: 12),
@@ -164,9 +171,9 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
                           valueColor: AlwaysStoppedAnimation(Colors.white),
                         ),
                       )
-                    : const Text(
-                        'Save changes',
-                        style: TextStyle(
+                    : Text(
+                        l10n?.mealScanSaveChanges ?? 'Save changes',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,

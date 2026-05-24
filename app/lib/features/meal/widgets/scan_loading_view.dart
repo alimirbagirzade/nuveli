@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 enum ScanLoadingMode { analyzing, saving }
 
@@ -17,17 +18,16 @@ class ScanLoadingView extends StatefulWidget {
 }
 
 class _ScanLoadingViewState extends State<ScanLoadingView> {
-  static const _analyzingSteps = [
-    'Analyzing your meal...',
-    'Identifying foods...',
-    'Estimating portions...',
-    'Calculating macros...',
-    'Almost there...',
-  ];
-  static const _savingSteps = ['Saving meal...'];
-
   int _index = 0;
   Timer? _timer;
+
+  List<String> _analyzingSteps(AppLocalizations? l10n) => [
+        l10n?.mealScanAnalyzingStep1 ?? 'Analyzing your meal...',
+        l10n?.mealScanAnalyzingStep2 ?? 'Identifying foods...',
+        l10n?.mealScanAnalyzingStep3 ?? 'Estimating portions...',
+        l10n?.mealScanAnalyzingStep4 ?? 'Calculating macros...',
+        l10n?.mealScanAnalyzingStep5 ?? 'Almost there...',
+      ];
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ScanLoadingViewState extends State<ScanLoadingView> {
       _timer = Timer.periodic(const Duration(seconds: 3), (_) {
         if (!mounted) return;
         setState(() {
-          _index = (_index + 1) % _analyzingSteps.length;
+          _index = (_index + 1) % 5;
         });
       });
     }
@@ -50,9 +50,10 @@ class _ScanLoadingViewState extends State<ScanLoadingView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final steps = widget.mode == ScanLoadingMode.analyzing
-        ? _analyzingSteps
-        : _savingSteps;
+        ? _analyzingSteps(l10n)
+        : [l10n?.mealScanSaving ?? 'Saving meal...'];
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -69,8 +70,8 @@ class _ScanLoadingViewState extends State<ScanLoadingView> {
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: Text(
-              steps[_index],
-              key: ValueKey(steps[_index]),
+              steps[_index.clamp(0, steps.length - 1)],
+              key: ValueKey(steps[_index.clamp(0, steps.length - 1)]),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,

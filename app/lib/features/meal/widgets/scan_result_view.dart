@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/meal_scan_models.dart';
 import '../providers/meal_scan_controller.dart';
 import 'edit_food_sheet.dart';
@@ -17,6 +18,7 @@ class ScanResultView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final state = ref.watch(mealScanControllerProvider);
     final controller = ref.read(mealScanControllerProvider.notifier);
     final foods = state.effectiveFoods;
@@ -46,9 +48,9 @@ class ScanResultView extends ConsumerWidget {
                 onChanged: controller.setScale,
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Detected foods',
-                style: TextStyle(
+              Text(
+                l10n?.mealScanDetectedFoods ?? 'Detected foods',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -84,9 +86,9 @@ class ScanResultView extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: const Text(
-                    'Discard',
-                    style: TextStyle(
+                  child: Text(
+                    l10n?.mealScanDiscard ?? 'Discard',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -99,9 +101,9 @@ class ScanResultView extends ConsumerWidget {
                 child: ElevatedButton.icon(
                   onPressed: foods.isEmpty ? null : () => controller.save(),
                   icon: const Icon(Icons.check_rounded, color: Colors.white),
-                  label: const Text(
-                    'Save meal',
-                    style: TextStyle(
+                  label: Text(
+                    l10n?.homeSaveMeal ?? 'Save meal',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -216,6 +218,7 @@ class _ConfidenceChip extends StatelessWidget {
     } else {
       tint = AppColors.error;
     }
+    final l10n = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -224,7 +227,7 @@ class _ConfidenceChip extends StatelessWidget {
         border: Border.all(color: tint.withValues(alpha: 0.4)),
       ),
       child: Text(
-        '$score% confident',
+        l10n?.mealScanConfidentScore(score) ?? '$score% confident',
         style: TextStyle(
           color: tint,
           fontSize: 11,
@@ -338,9 +341,10 @@ class _ScaleSlider extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
-                'Portion size',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)?.mealScanPortionSize ??
+                    'Portion size',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -433,7 +437,8 @@ class _FoodRow extends StatelessWidget {
                   icon: const Icon(Icons.close_rounded,
                       color: Color(0xFF7A95A0), size: 18),
                   onPressed: onRemove,
-                  tooltip: 'Remove',
+                  tooltip: AppLocalizations.of(context)?.mealScanRemoveTooltip ??
+                      'Remove',
                 ),
               ],
             ),
@@ -460,14 +465,14 @@ class _InsightCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.tips_and_updates_outlined,
+              const Icon(Icons.tips_and_updates_outlined,
                   color: AppColors.primary, size: 16),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Text(
-                'AI tip',
-                style: TextStyle(
+                AppLocalizations.of(context)?.mealScanAiTip ?? 'AI tip',
+                style: const TextStyle(
                   color: AppColors.primary,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,

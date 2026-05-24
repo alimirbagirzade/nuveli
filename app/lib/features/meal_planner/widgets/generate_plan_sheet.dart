@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/repositories/meal_planner_repository.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../profile/providers/profile_provider.dart';
 import '../providers/planner_providers.dart';
 import 'planner_form_fields.dart';
@@ -66,10 +67,12 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
 
   Future<void> _generate() async {
     if (_isGenerating) return;
+    final l10n = AppLocalizations.of(context);
 
     int? target = int.tryParse(_targetCtrl.text.trim());
     if (target != null && (target < 800 || target > 6000)) {
-      setState(() => _formError = 'Calorie target must be 800–6000');
+      setState(() => _formError = l10n?.plannerCalorieTargetError ??
+          'Calorie target must be 800–6000');
       return;
     }
 
@@ -100,6 +103,7 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
       // context is defunct. The messenger lives above the modal route, so
       // the snackbar still shows on the planner screen.
       final messenger = ScaffoldMessenger.of(context);
+      final l10nSnack = AppLocalizations.of(context);
       Navigator.pop(context);
       messenger
         ..hideCurrentSnackBar()
@@ -108,7 +112,8 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
             backgroundColor: AppColors.primary,
             behavior: SnackBarBehavior.floating,
             content: Text(
-              '${result.plansCreated} meals planned for your week.',
+              l10nSnack?.plannerMealsCreated(result.plansCreated) ??
+                  '${result.plansCreated} meals planned for your week.',
               style: const TextStyle(color: Colors.white),
             ),
           ),
@@ -124,6 +129,7 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -136,39 +142,45 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const PlannerSheetHeader(title: 'Generate AI plan'),
+            PlannerSheetHeader(
+              title: l10n?.plannerGenerateAiPlan ?? 'Generate AI plan',
+            ),
             const SizedBox(height: 6),
-            const Text(
-              'Your coach drafts a full week. Tweak the details below — all '
-              'optional.',
-              style: TextStyle(color: Color(0xFFB8D4D2), fontSize: 13),
+            Text(
+              l10n?.plannerGenerateSubtitle ??
+                  'Your coach drafts a full week. Tweak the details below — all '
+                  'optional.',
+              style: const TextStyle(color: Color(0xFFB8D4D2), fontSize: 13),
             ),
             const SizedBox(height: 16),
             PlannerLabeledField(
-              label: 'Dietary preference (optional)',
+              label: l10n?.plannerDietaryPref ??
+                  'Dietary preference (optional)',
               hint: 'e.g. high-protein, vegetarian, Mediterranean',
               controller: _dietCtrl,
               maxLength: 200,
             ),
             const SizedBox(height: 12),
             PlannerLabeledField(
-              label: 'Avoid ingredients (comma-separated)',
+              label: l10n?.plannerAvoidIngredients ??
+                  'Avoid ingredients (comma-separated)',
               hint: 'e.g. peanuts, shellfish',
               controller: _avoidCtrl,
               maxLength: 200,
             ),
             const SizedBox(height: 12),
             PlannerLabeledField(
-              label: 'Daily calorie target (optional)',
+              label: l10n?.plannerDailyCalorieTarget ??
+                  'Daily calorie target (optional)',
               hint: 'e.g. 2000',
               controller: _targetCtrl,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Meals per day',
-              style: TextStyle(
+            Text(
+              l10n?.plannerMealsPerDay ?? 'Meals per day',
+              style: const TextStyle(
                 color: Color(0xFFB8D4D2),
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -210,7 +222,7 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
             ),
             const SizedBox(height: 12),
             PlannerLabeledField(
-              label: 'Anything else? (optional)',
+              label: l10n?.plannerAnythingElse ?? 'Anything else? (optional)',
               hint: 'e.g. quick breakfasts, batch-cook dinners',
               controller: _noteCtrl,
               maxLength: 500,
@@ -236,7 +248,9 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
                     : const Icon(Icons.auto_awesome_rounded,
                         color: Colors.white),
                 label: Text(
-                  _isGenerating ? 'Generating…' : 'Generate plan',
+                  _isGenerating
+                      ? (l10n?.plannerGenerating ?? 'Generating…')
+                      : (l10n?.plannerGeneratePlan ?? 'Generate plan'),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../providers/planner_providers.dart';
 
 /// Aggregated grocery list for the currently-viewed planner week.
@@ -23,6 +24,7 @@ class GroceryListSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final groceryAsync = ref.watch(groceryProvider);
     final maxHeight = MediaQuery.of(context).size.height * 0.75;
 
@@ -45,14 +47,14 @@ class GroceryListSheet extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 14),
-            const Row(
+            Row(
               children: [
-                Icon(Icons.shopping_cart_outlined,
+                const Icon(Icons.shopping_cart_outlined,
                     color: AppColors.primary, size: 20),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
-                  'Grocery list',
-                  style: TextStyle(
+                  l10n?.plannerGroceryList ?? 'Grocery list',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -74,18 +76,19 @@ class GroceryListSheet extends ConsumerWidget {
                 error: (e, _) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 32),
                   child: Text(
-                    'Could not load groceries: ${e.toString()}',
+                    '${l10n?.plannerGroceryLoadError ?? 'Could not load groceries'}: ${e.toString()}',
                     style: const TextStyle(color: Color(0xFFB8D4D2)),
                   ),
                 ),
                 data: (grocery) {
                   if (grocery.isEmpty) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 40),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40),
                       child: Center(
                         child: Text(
-                          'No groceries yet — add a recipe to the plan.',
-                          style: TextStyle(color: Color(0xFFB8D4D2)),
+                          l10n?.plannerGroceryEmpty ??
+                              'No groceries yet — add a recipe to the plan.',
+                          style: const TextStyle(color: Color(0xFFB8D4D2)),
                         ),
                       ),
                     );
@@ -120,7 +123,9 @@ class GroceryListSheet extends ConsumerWidget {
                                   ),
                                   if (item.usedInRecipes > 1)
                                     Text(
-                                      'Used in ${item.usedInRecipes} recipes',
+                                      l10n?.plannerGroceryUsedIn(
+                                              item.usedInRecipes) ??
+                                          'Used in ${item.usedInRecipes} recipes',
                                       style: const TextStyle(
                                         color: Color(0xFF7A95A0),
                                         fontSize: 11,

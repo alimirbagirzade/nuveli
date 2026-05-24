@@ -765,5 +765,156 @@
   "homeWaterLogFailed": "Impossibile registrare l'acqua. Tocca per riprovare.",
   "homePlannerCtaTitle": "Pianifica la settimana",
   "homePlannerCtaSubtitle": "Vedi pasti pianificati + lista della spesa",
-  "homeNoMealsScanHint": "Tocca \"Aggiungi cibo\" qui sotto per registrare il primo pasto"
+  "homeNoMealsScanHint": "Tocca \"Aggiungi cibo\" qui sotto per registrare il primo pasto",
+  "mealScanScreenTitle": "Scanner pasto IA",
+  "mealScanIdleTitle": "Fotografa il tuo pasto",
+  "mealScanIdleSubtitle": "Punta la fotocamera verso il tuo piatto. L'IA di Nuveli stimerà calorie e macro in pochi secondi.",
+  "mealScanTakePhoto": "Scatta foto",
+  "mealScanChooseGallery": "Scegli dalla galleria",
+  "mealScanAnalyzingStep1": "Analisi del pasto...",
+  "mealScanAnalyzingStep2": "Identificazione degli alimenti...",
+  "mealScanAnalyzingStep3": "Stima delle porzioni...",
+  "mealScanAnalyzingStep4": "Calcolo dei macro...",
+  "mealScanAnalyzingStep5": "Quasi pronto...",
+  "mealScanSaving": "Salvataggio pasto...",
+  "mealScanRateLimitTitle": "Troppi scan, troppo velocemente",
+  "mealScanErrorTitle": "Scansione fallita",
+  "mealScanAddManuallyInstead": "Aggiungi manualmente",
+  "mealScanNotFoodTitle": "Hmm, non ho visto cibo",
+  "mealScanNotFoodHint": "Prova con una foto più nitida del tuo piatto o registra questo pasto manualmente.",
+  "mealScanTryAnotherPhoto": "Prova un'altra foto",
+  "mealScanAddManually": "Aggiungi manualmente",
+  "mealScanRetake": "Rifare",
+  "mealScanConfidentScore": "{score}% di confidenza",
+  "@mealScanConfidentScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Alimenti rilevati",
+  "mealScanPortionSize": "Dimensione porzione",
+  "mealScanDiscard": "Scarta",
+  "mealScanAiTip": "Suggerimento IA",
+  "mealScanRemoveTooltip": "Rimuovi",
+  "mealScanImageLoadError": "Impossibile caricare l'immagine",
+  "mealScanEditFood": "Modifica alimento",
+  "mealScanSaveChanges": "Salva modifiche",
+  "mealScanFieldName": "Nome",
+  "plannerScreenTitle": "Piano pasti",
+  "plannerGroceryListTooltip": "Lista della spesa",
+  "plannerThisWeek": "Questa settimana",
+  "plannerNextWeek": "Settimana prossima",
+  "plannerLastWeek": "Settimana scorsa",
+  "plannerInWeeks": "Tra {n} settimane",
+  "@plannerInWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "{n} settimane fa",
+  "@plannerWeeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Settimana precedente",
+  "plannerNextWeekTooltip": "Settimana successiva",
+  "plannerTotalsBanner": "{kcal} kcal pianificate per {days} giorni",
+  "@plannerTotalsBanner": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "Nessun piano per questa settimana",
+  "plannerEmptyAiHint": "Il tuo coach IA redige una settimana intera in pochi secondi.",
+  "plannerEmptyPremiumHint": "I piani settimanali IA fanno parte di Premium. Aggiorna per sbloccare.",
+  "plannerAddMealManually": "Aggiungi pasto manualmente",
+  "plannerGenerateAiPlan": "Genera piano IA",
+  "plannerUnlockAiPlan": "Sblocca la generazione del piano IA",
+  "plannerPremiumFeature": "Funzione Premium",
+  "plannerPaywallTitle": "Guarda e pianifica oltre questa settimana",
+  "plannerPaywallBody": "I piani gratuiti coprono la settimana corrente. Aggiorna per guardare avanti, creare piani ripetuti e lasciare che l'IA generi un'intera settimana.",
+  "plannerSeePremium": "Vedi Premium",
+  "plannerBackToThisWeek": "Torna a questa settimana",
+  "plannerLoadError": "Impossibile caricare il tuo piano",
+  "plannerEditNameNote": "Modifica nome / nota",
+  "plannerRemoveFromPlan": "Rimuovi dal piano",
+  "plannerRemoveEntryTitle": "Rimuovere la voce?",
+  "plannerRemoveEntryBody": "Rimuovere \"{name}\" da questo piano?",
+  "@plannerRemoveEntryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Rimuovi",
+  "plannerToday": "Oggi",
+  "plannerDayStats": "{meals} pianificati · {kcal} kcal",
+  "@plannerDayStats": {
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Aggiungi pasto",
+  "plannerServingsCount": "{n} porzioni",
+  "@plannerServingsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Aggiungi al piano",
+  "plannerMealName": "Nome del pasto",
+  "plannerServings": "Porzioni",
+  "plannerNoteOptional": "Nota (opzionale)",
+  "plannerMealNameRequired": "Il nome del pasto è obbligatorio",
+  "plannerServingsError": "Le porzioni devono essere maggiori di 0",
+  "plannerEditEntry": "Modifica voce",
+  "plannerEditCaloriesHint": "Per modificare calorie o porzioni, elimina questa voce e aggiungila di nuovo.",
+  "plannerGenerateSubtitle": "Il tuo coach redige una settimana completa. Regola i dettagli qui sotto — tutto opzionale.",
+  "plannerDietaryPref": "Preferenza dietetica (opzionale)",
+  "plannerAvoidIngredients": "Evita ingredienti (separati da virgola)",
+  "plannerDailyCalorieTarget": "Obiettivo calorico giornaliero (opzionale)",
+  "plannerMealsPerDay": "Pasti al giorno",
+  "plannerAnythingElse": "Altro? (opzionale)",
+  "plannerCalorieTargetError": "L'obiettivo calorico deve essere tra 800 e 6000",
+  "plannerGenerating": "Generazione in corso…",
+  "plannerGeneratePlan": "Genera piano",
+  "plannerMealsCreated": "{n} pasti pianificati per la tua settimana.",
+  "@plannerMealsCreated": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Lista della spesa",
+  "plannerGroceryLoadError": "Impossibile caricare la lista della spesa",
+  "plannerGroceryEmpty": "Nessun acquisto ancora — aggiungi una ricetta al piano.",
+  "plannerGroceryUsedIn": "Usato in {n} ricette",
+  "@plannerGroceryUsedIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

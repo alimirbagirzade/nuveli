@@ -765,5 +765,156 @@
   "homeWaterLogFailed": "No se pudo registrar el agua. Toca para reintentar.",
   "homePlannerCtaTitle": "Planifica tu semana",
   "homePlannerCtaSubtitle": "Ver comidas planificadas + lista de compra",
-  "homeNoMealsScanHint": "Toca \"Añadir comida\" abajo para registrar tu primera comida"
+  "homeNoMealsScanHint": "Toca \"Añadir comida\" abajo para registrar tu primera comida",
+  "mealScanScreenTitle": "Escáner de comida IA",
+  "mealScanIdleTitle": "Fotografía tu comida",
+  "mealScanIdleSubtitle": "Apunta la cámara a tu plato. La IA de Nuveli estimará calorías y macros en segundos.",
+  "mealScanTakePhoto": "Tomar foto",
+  "mealScanChooseGallery": "Elegir de la galería",
+  "mealScanAnalyzingStep1": "Analizando tu comida...",
+  "mealScanAnalyzingStep2": "Identificando alimentos...",
+  "mealScanAnalyzingStep3": "Estimando porciones...",
+  "mealScanAnalyzingStep4": "Calculando macros...",
+  "mealScanAnalyzingStep5": "Casi listo...",
+  "mealScanSaving": "Guardando comida...",
+  "mealScanRateLimitTitle": "Demasiados escaneos, muy rápido",
+  "mealScanErrorTitle": "Escaneo fallido",
+  "mealScanAddManuallyInstead": "Agregar manualmente",
+  "mealScanNotFoodTitle": "Hmm, no pude ver comida",
+  "mealScanNotFoodHint": "Intenta con una foto más clara de tu plato o registra esta comida manualmente.",
+  "mealScanTryAnotherPhoto": "Probar con otra foto",
+  "mealScanAddManually": "Agregar manualmente",
+  "mealScanRetake": "Repetir foto",
+  "mealScanConfidentScore": "{score}% de confianza",
+  "@mealScanConfidentScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Alimentos detectados",
+  "mealScanPortionSize": "Tamaño de porción",
+  "mealScanDiscard": "Descartar",
+  "mealScanAiTip": "Consejo IA",
+  "mealScanRemoveTooltip": "Eliminar",
+  "mealScanImageLoadError": "No se pudo cargar la imagen",
+  "mealScanEditFood": "Editar alimento",
+  "mealScanSaveChanges": "Guardar cambios",
+  "mealScanFieldName": "Nombre",
+  "plannerScreenTitle": "Plan de comidas",
+  "plannerGroceryListTooltip": "Lista de compras",
+  "plannerThisWeek": "Esta semana",
+  "plannerNextWeek": "Próxima semana",
+  "plannerLastWeek": "Semana pasada",
+  "plannerInWeeks": "En {n} semanas",
+  "@plannerInWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "Hace {n} semanas",
+  "@plannerWeeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Semana anterior",
+  "plannerNextWeekTooltip": "Próxima semana",
+  "plannerTotalsBanner": "{kcal} kcal planificadas para {days} días",
+  "@plannerTotalsBanner": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "Sin plan para esta semana todavía",
+  "plannerEmptyAiHint": "Tu coach IA redacta una semana completa en segundos.",
+  "plannerEmptyPremiumHint": "Los planes semanales de IA son parte de Premium. Actualiza para desbloquear.",
+  "plannerAddMealManually": "Agregar comida manualmente",
+  "plannerGenerateAiPlan": "Generar plan IA",
+  "plannerUnlockAiPlan": "Desbloquear generación de plan IA",
+  "plannerPremiumFeature": "Función Premium",
+  "plannerPaywallTitle": "Ver y planificar más allá de esta semana",
+  "plannerPaywallBody": "Los planes gratuitos cubren la semana actual. Actualiza para ver hacia adelante, crear planes repetidos y dejar que la IA genere una semana completa.",
+  "plannerSeePremium": "Ver Premium",
+  "plannerBackToThisWeek": "Volver a esta semana",
+  "plannerLoadError": "No se pudo cargar tu plan",
+  "plannerEditNameNote": "Editar nombre / nota",
+  "plannerRemoveFromPlan": "Eliminar del plan",
+  "plannerRemoveEntryTitle": "¿Eliminar entrada?",
+  "plannerRemoveEntryBody": "¿Eliminar \"{name}\" de este plan?",
+  "@plannerRemoveEntryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Eliminar",
+  "plannerToday": "Hoy",
+  "plannerDayStats": "{meals} planificadas · {kcal} kcal",
+  "@plannerDayStats": {
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Agregar comida",
+  "plannerServingsCount": "{n} porciones",
+  "@plannerServingsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Agregar al plan",
+  "plannerMealName": "Nombre de la comida",
+  "plannerServings": "Porciones",
+  "plannerNoteOptional": "Nota (opcional)",
+  "plannerMealNameRequired": "El nombre de la comida es obligatorio",
+  "plannerServingsError": "Las porciones deben ser mayor que 0",
+  "plannerEditEntry": "Editar entrada",
+  "plannerEditCaloriesHint": "Para cambiar calorías o porciones, elimina esta entrada y agrégala de nuevo.",
+  "plannerGenerateSubtitle": "Tu coach redacta una semana completa. Ajusta los detalles a continuación — todo opcional.",
+  "plannerDietaryPref": "Preferencia dietética (opcional)",
+  "plannerAvoidIngredients": "Evitar ingredientes (separados por comas)",
+  "plannerDailyCalorieTarget": "Objetivo calórico diario (opcional)",
+  "plannerMealsPerDay": "Comidas por día",
+  "plannerAnythingElse": "¿Algo más? (opcional)",
+  "plannerCalorieTargetError": "El objetivo calórico debe estar entre 800 y 6000",
+  "plannerGenerating": "Generando…",
+  "plannerGeneratePlan": "Generar plan",
+  "plannerMealsCreated": "{n} comidas planificadas para tu semana.",
+  "@plannerMealsCreated": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Lista de compras",
+  "plannerGroceryLoadError": "No se pudo cargar la lista de compras",
+  "plannerGroceryEmpty": "Sin compras todavía — agrega una receta al plan.",
+  "plannerGroceryUsedIn": "Usado en {n} recetas",
+  "@plannerGroceryUsedIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

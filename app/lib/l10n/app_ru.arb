@@ -806,5 +806,156 @@
   "homeWaterLogFailed": "Не удалось записать воду. Нажми, чтобы повторить.",
   "homePlannerCtaTitle": "Спланируй неделю",
   "homePlannerCtaSubtitle": "Планы питания + список покупок",
-  "homeNoMealsScanHint": "Нажми \"Добавить еду\" ниже, чтобы записать первый приём пищи"
+  "homeNoMealsScanHint": "Нажми \"Добавить еду\" ниже, чтобы записать первый приём пищи",
+  "mealScanScreenTitle": "ИИ-сканер блюд",
+  "mealScanIdleTitle": "Сфотографируйте блюдо",
+  "mealScanIdleSubtitle": "Направьте камеру на тарелку. ИИ Nuveli оценит калории и макросы за несколько секунд.",
+  "mealScanTakePhoto": "Сделать фото",
+  "mealScanChooseGallery": "Выбрать из галереи",
+  "mealScanAnalyzingStep1": "Анализируем блюдо...",
+  "mealScanAnalyzingStep2": "Распознаём продукты...",
+  "mealScanAnalyzingStep3": "Оцениваем порции...",
+  "mealScanAnalyzingStep4": "Рассчитываем макросы...",
+  "mealScanAnalyzingStep5": "Почти готово...",
+  "mealScanSaving": "Сохранение блюда...",
+  "mealScanRateLimitTitle": "Слишком много сканирований, слишком быстро",
+  "mealScanErrorTitle": "Ошибка сканирования",
+  "mealScanAddManuallyInstead": "Добавить вручную",
+  "mealScanNotFoodTitle": "Хмм, еду не вижу",
+  "mealScanNotFoodHint": "Попробуйте сделать более чёткое фото тарелки или введите блюдо вручную.",
+  "mealScanTryAnotherPhoto": "Попробовать другое фото",
+  "mealScanAddManually": "Добавить вручную",
+  "mealScanRetake": "Переснять",
+  "mealScanConfidentScore": "{score}% уверенности",
+  "@mealScanConfidentScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "mealScanDetectedFoods": "Обнаруженные продукты",
+  "mealScanPortionSize": "Размер порции",
+  "mealScanDiscard": "Отменить",
+  "mealScanAiTip": "Совет ИИ",
+  "mealScanRemoveTooltip": "Удалить",
+  "mealScanImageLoadError": "Не удалось загрузить изображение",
+  "mealScanEditFood": "Редактировать продукт",
+  "mealScanSaveChanges": "Сохранить изменения",
+  "mealScanFieldName": "Название",
+  "plannerScreenTitle": "План питания",
+  "plannerGroceryListTooltip": "Список покупок",
+  "plannerThisWeek": "На этой неделе",
+  "plannerNextWeek": "На следующей неделе",
+  "plannerLastWeek": "На прошлой неделе",
+  "plannerInWeeks": "Через {n} недели",
+  "@plannerInWeeks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerWeeksAgo": "{n} недели назад",
+  "@plannerWeeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerPrevWeekTooltip": "Предыдущая неделя",
+  "plannerNextWeekTooltip": "Следующая неделя",
+  "plannerTotalsBanner": "{kcal} ккал запланировано на {days} дней",
+  "@plannerTotalsBanner": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerEmptyTitle": "Пока нет плана на эту неделю",
+  "plannerEmptyAiHint": "Ваш ИИ-тренер составит план на всю неделю за секунды.",
+  "plannerEmptyPremiumHint": "Недельные ИИ-планы входят в Premium. Обновитесь для разблокировки.",
+  "plannerAddMealManually": "Добавить блюдо вручную",
+  "plannerGenerateAiPlan": "Создать план с ИИ",
+  "plannerUnlockAiPlan": "Разблокировать создание плана с ИИ",
+  "plannerPremiumFeature": "Функция Premium",
+  "plannerPaywallTitle": "Смотрите и планируйте дальше этой недели",
+  "plannerPaywallBody": "Бесплатные планы охватывают текущую неделю. Обновитесь, чтобы планировать наперёд, создавать повторяющиеся планы и позволить ИИ составить целую неделю.",
+  "plannerSeePremium": "Посмотреть Premium",
+  "plannerBackToThisWeek": "Вернуться к этой неделе",
+  "plannerLoadError": "Не удалось загрузить план",
+  "plannerEditNameNote": "Изменить название / заметку",
+  "plannerRemoveFromPlan": "Удалить из плана",
+  "plannerRemoveEntryTitle": "Удалить запись?",
+  "plannerRemoveEntryBody": "Удалить \"{name}\" из этого плана?",
+  "@plannerRemoveEntryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerRemove": "Удалить",
+  "plannerToday": "Сегодня",
+  "plannerDayStats": "{meals} запланировано · {kcal} ккал",
+  "@plannerDayStats": {
+    "placeholders": {
+      "meals": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerAddMealTooltip": "Добавить блюдо",
+  "plannerServingsCount": "{n} порций",
+  "@plannerServingsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "plannerAddToPlan": "Добавить в план",
+  "plannerMealName": "Название блюда",
+  "plannerServings": "Порции",
+  "plannerNoteOptional": "Заметка (необязательно)",
+  "plannerMealNameRequired": "Название блюда обязательно",
+  "plannerServingsError": "Порции должны быть больше 0",
+  "plannerEditEntry": "Редактировать запись",
+  "plannerEditCaloriesHint": "Чтобы изменить калории или порции, удалите эту запись и добавьте снова.",
+  "plannerGenerateSubtitle": "Ваш тренер составляет план на всю неделю. Настройте детали ниже — всё необязательно.",
+  "plannerDietaryPref": "Диетические предпочтения (необязательно)",
+  "plannerAvoidIngredients": "Избегать ингредиентов (через запятую)",
+  "plannerDailyCalorieTarget": "Дневная цель по калориям (необязательно)",
+  "plannerMealsPerDay": "Блюд в день",
+  "plannerAnythingElse": "Что-то ещё? (необязательно)",
+  "plannerCalorieTargetError": "Цель по калориям должна быть от 800 до 6000",
+  "plannerGenerating": "Создание…",
+  "plannerGeneratePlan": "Создать план",
+  "plannerMealsCreated": "{n} блюд запланировано на вашу неделю.",
+  "@plannerMealsCreated": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "plannerGroceryList": "Список покупок",
+  "plannerGroceryLoadError": "Не удалось загрузить список покупок",
+  "plannerGroceryEmpty": "Пока нет покупок — добавьте рецепт в план.",
+  "plannerGroceryUsedIn": "Используется в {n} рецептах",
+  "@plannerGroceryUsedIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

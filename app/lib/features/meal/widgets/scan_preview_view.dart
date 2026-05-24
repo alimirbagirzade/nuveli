@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../providers/meal_scan_controller.dart';
 
 /// User just picked a photo. Show it, let them retake (or scan).
@@ -13,6 +14,7 @@ class ScanPreviewView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final controller = ref.read(mealScanControllerProvider.notifier);
 
     return Padding(
@@ -43,9 +45,9 @@ class ScanPreviewView extends ConsumerWidget {
                 child: OutlinedButton.icon(
                   onPressed: controller.retake,
                   icon: const Icon(Icons.refresh_rounded, color: Colors.white),
-                  label: const Text(
-                    'Retake',
-                    style: TextStyle(
+                  label: Text(
+                    l10n?.mealScanRetake ?? 'Retake',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -67,9 +69,9 @@ class ScanPreviewView extends ConsumerWidget {
                   onPressed: controller.analyze,
                   icon: const Icon(Icons.auto_awesome_rounded,
                       color: Colors.white),
-                  label: const Text(
-                    'Analyze',
-                    style: TextStyle(
+                  label: Text(
+                    l10n?.mealAnalyze ?? 'Analyze',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
@@ -97,12 +99,13 @@ class _ImageErrorPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    final l10n = AppLocalizations.of(context);
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Text(
-          'Could not load image',
-          style: TextStyle(color: Colors.white70),
+          l10n?.mealScanImageLoadError ?? 'Could not load image',
+          style: const TextStyle(color: Colors.white70),
         ),
       ),
     );
