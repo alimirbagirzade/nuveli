@@ -1878,4 +1878,17 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get coachBubbleCalmFirstMeal =>
       'Первый приём пищи отмечен. Спокойное начало дня.';
+
+  @override
+  String get mealHistoryTitle => 'История приёмов пищи';
+
+  @override
+  String get historyYesterday => 'Вчера';
+
+  @override
+  String get mealHistoryEmptyTitle => 'Пока нет записей о приёмах пищи';
+
+  @override
+  String get mealHistoryEmptyBody =>
+      'Записанные приёмы пищи появятся здесь, сгруппированные по дням.';
 }

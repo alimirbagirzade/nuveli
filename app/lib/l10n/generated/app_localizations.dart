@@ -3593,6 +3593,30 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İlk öğün not edildi. Güne sakin bir başlangıç.'**
   String get coachBubbleCalmFirstMeal;
+
+  /// Meal history screen app-bar title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün Geçmişi'**
+  String get mealHistoryTitle;
+
+  /// Day-group header for the previous day in meal history.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dün'**
+  String get historyYesterday;
+
+  /// Empty-state title on the meal history screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz öğün eklenmedi'**
+  String get mealHistoryEmptyTitle;
+
+  /// Empty-state body on the meal history screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eklediğin öğünler burada güne göre gruplanır.'**
+  String get mealHistoryEmptyBody;
 }
 
 class _AppLocalizationsDelegate

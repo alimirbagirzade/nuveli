@@ -1877,4 +1877,17 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get coachBubbleCalmFirstMeal =>
       'Erste Mahlzeit notiert. Ein ruhiger Beginn des Tages.';
+
+  @override
+  String get mealHistoryTitle => 'Mahlzeiten-Verlauf';
+
+  @override
+  String get historyYesterday => 'Gestern';
+
+  @override
+  String get mealHistoryEmptyTitle => 'Noch keine Mahlzeiten erfasst';
+
+  @override
+  String get mealHistoryEmptyBody =>
+      'Deine erfassten Mahlzeiten erscheinen hier, nach Tag gruppiert.';
 }

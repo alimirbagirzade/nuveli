@@ -69,6 +69,20 @@ class MealsRepository extends BaseRepository {
     return Meal.fromJson(response);
   }
 
+  /// Paginated meal history across all days (newest first — backend
+  /// orders by `consumed_at` desc). No date filter. [limit] capped at
+  /// 200 server-side.
+  Future<List<Meal>> getMealHistory({int limit = 100, int offset = 0}) async {
+    final response = await apiClient.get<List<dynamic>>(
+      ApiEndpoints.meals,
+      queryParameters: {'limit': limit, 'offset': offset},
+    );
+    return response
+        .cast<Map<String, dynamic>>()
+        .map(Meal.fromJson)
+        .toList(growable: false);
+  }
+
   Future<void> deleteMeal(String id) {
     return apiClient.delete(ApiEndpoints.mealById(id));
   }

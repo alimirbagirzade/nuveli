@@ -9,6 +9,7 @@ import '../coach/mood/models/mood_situation.dart';
 import '../coach/mood/providers/mood_bubble_controller.dart';
 import '../coach/mood/providers/mood_seen_store.dart';
 import '../coach/mood/widgets/mood_bubble.dart';
+import '../meal/screens/meal_history_screen.dart';
 import 'providers/dashboard_provider.dart';
 import '../habits/widgets/habits_today_section.dart';
 import '../meal_planner/screens/meal_planner_screen.dart';
@@ -129,10 +130,7 @@ class DashboardScreen extends ConsumerWidget {
                         error: (_, __) => const SizedBox.shrink(),
                         data: (meals) => MealsSection(
                           meals: meals,
-                          onSeeAll: () => _showComingSoon(
-                            context,
-                            'Full meal history lands in Chat 17 (Navigation).',
-                          ),
+                          onSeeAll: () => MealHistoryScreen.open(context),
                         ),
                       ),
                       // Today's habits — read GET /habits, tap to
@@ -163,19 +161,6 @@ class DashboardScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _showComingSoon(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: const Color(0xFF142346),
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 2),
-        ),
-      );
   }
 }
 

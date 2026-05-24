@@ -1,5 +1,30 @@
 # Nuveli Changelog
 
+## [1.4.0+20] - 2026-05-24 - Meal history + placeholder polish + i18n slice
+
+### Features
+- **Meal history screen** — the dashboard "See all" now opens a full meal
+  history (was a "Chat 17 coming soon" toast). `GET /meals` paginated
+  (newest first), grouped by day with per-day totals, swipe-to-delete with
+  a confirm dialog and dashboard refresh. New repo `getMealHistory`.
+
+### Polish
+- **Welcome logo** uses the real brand mark (`assets/icons/splash_logo.png`)
+  instead of the water-drop placeholder (graceful fallback if it can't load).
+- **Google sign-in button** gets a clean white-circle "G" badge instead of
+  the thin `g_mobiledata` glyph.
+
+### i18n (incremental)
+- Localized the new meal-history screen across all 7 locales (4 new
+  `mealHistory*`/`historyYesterday` keys; delete dialog + Today reuse
+  existing keys). First slice of the broader hardcoded-string migration now
+  that l10n is active — meal-planner sheets, settings, and dashboard remain
+  hardcoded EN and are the next incremental targets.
+
+### Tests
+- +4 host tests: `getMealHistory` pagination contract + `groupMealsByDay`.
+  493 → 497 passing.
+
 ## [1.3.0+19] - 2026-05-24 - Meal Planner write side (F4 v0.1)
 
 ### Features
