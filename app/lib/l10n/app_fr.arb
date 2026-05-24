@@ -1205,5 +1205,13 @@
   "passwordStrengthSuggestNumber": "Ajoute un chiffre",
   "passwordStrengthSuggestCase": "Mélange majuscules et minuscules",
   "passwordStrengthSuggestSymbol": "Ajoute un symbole (!@#\\$%)",
-  "authOrDivider": "ou"
+  "authOrDivider": "ou",
+  "navDashboard": "Tableau",
+  "navScan": "Scanner",
+  "navAnalytics": "Analyses",
+  "homeTodaySummary": "Résumé du jour",
+  "homeKcalRemaining": "{count} kcal restantes",
+  "homeKcalOver": "{count} kcal de trop",
+  "homeOfKcalTarget": "sur {count} kcal",
+  "homeOfGlasses": "sur {count} verres"
 }

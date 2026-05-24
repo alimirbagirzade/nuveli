@@ -5525,6 +5525,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'veya'**
   String get authOrDivider;
+
+  /// nav/home: navDashboard
+  ///
+  /// In tr, this message translates to:
+  /// **'Panel'**
+  String get navDashboard;
+
+  /// nav/home: navScan
+  ///
+  /// In tr, this message translates to:
+  /// **'Tara'**
+  String get navScan;
+
+  /// nav/home: navAnalytics
+  ///
+  /// In tr, this message translates to:
+  /// **'Analiz'**
+  String get navAnalytics;
+
+  /// nav/home: homeTodaySummary
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünün Özeti'**
+  String get homeTodaySummary;
+
+  /// No description provided for @homeKcalRemaining.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} kcal kaldı'**
+  String homeKcalRemaining(String count);
+
+  /// No description provided for @homeKcalOver.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} kcal fazla'**
+  String homeKcalOver(String count);
+
+  /// No description provided for @homeOfKcalTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'/ {count} kcal'**
+  String homeOfKcalTarget(String count);
+
+  /// No description provided for @homeOfGlasses.
+  ///
+  /// In tr, this message translates to:
+  /// **'/ {count} bardak'**
+  String homeOfGlasses(String count);
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../l10n/generated/app_localizations.dart';
 import '../analytics/analytics_screen.dart';
 import '../coach/screens/coach_screen.dart';
 import '../dashboard/dashboard_screen.dart';
@@ -32,17 +33,30 @@ class MainShellScreen extends ConsumerStatefulWidget {
 class _MainShellScreenState extends ConsumerState<MainShellScreen> {
   int _index = 0;
 
-  static const _tabs = <_TabSpec>[
-    _TabSpec(icon: Icons.dashboard_rounded, label: 'Dashboard'),
-    _TabSpec(icon: Icons.camera_alt_outlined, label: 'Scan'),
-    _TabSpec(icon: Icons.auto_awesome_rounded, label: 'Coach'),
-    _TabSpec(icon: Icons.insights_outlined, label: 'Analytics'),
-    _TabSpec(icon: Icons.person_outline, label: 'Profile'),
-    _TabSpec(icon: Icons.settings_outlined, label: 'Settings'),
+  static const _icons = <IconData>[
+    Icons.dashboard_rounded,
+    Icons.camera_alt_outlined,
+    Icons.auto_awesome_rounded,
+    Icons.insights_outlined,
+    Icons.person_outline,
+    Icons.settings_outlined,
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final labels = <String>[
+      l10n?.navDashboard ?? 'Dashboard',
+      l10n?.navScan ?? 'Scan',
+      l10n?.navCoach ?? 'Coach',
+      l10n?.navAnalytics ?? 'Analytics',
+      l10n?.navProfile ?? 'Profile',
+      l10n?.navSettings ?? 'Settings',
+    ];
+    final tabs = <_TabSpec>[
+      for (var i = 0; i < _icons.length; i++)
+        _TabSpec(icon: _icons[i], label: labels[i]),
+    ];
     return Scaffold(
       backgroundColor: const Color(0xFF050A1F),
       body: IndexedStack(
@@ -58,7 +72,7 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
       ),
       bottomNavigationBar: _NuveliBottomNav(
         index: _index,
-        tabs: _tabs,
+        tabs: tabs,
         onTap: (i) => setState(() => _index = i),
       ),
     );
