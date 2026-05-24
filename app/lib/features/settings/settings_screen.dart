@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/network/api_exception.dart';
 import '../../core/theme/app_colors.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../auth/providers/auth_provider.dart';
+import '../coach/mood/models/coach_persona.dart';
+import '../coach/mood/providers/coach_persona_provider.dart';
 import 'providers/account_delete_provider.dart';
 import 'providers/data_export_provider.dart';
 
@@ -32,6 +35,10 @@ class SettingsScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: const [
+            _Section(
+              title: 'Coach',
+              child: _CoachPersonaTile(),
+            ),
             _Section(
               title: 'Your data',
               child: _ExportDataTile(),
@@ -137,6 +144,132 @@ class _ExportDataTile extends ConsumerWidget {
               // no extra UI needed.
             },
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Coach persona picker — drives the local mood-bubble voice. Local-only
+// (SharedPreferences); never round-trips to the backend.
+// ---------------------------------------------------------------------------
+
+String _personaLabel(AppLocalizations l, CoachPersona p) {
+  switch (p) {
+    case CoachPersona.gentle:
+      return l.personaGentle;
+    case CoachPersona.funny:
+      return l.personaFunny;
+    case CoachPersona.direct:
+      return l.personaDirect;
+    case CoachPersona.calm:
+      return l.personaCalm;
+  }
+}
+
+String _personaDesc(AppLocalizations l, CoachPersona p) {
+  switch (p) {
+    case CoachPersona.gentle:
+      return l.personaGentleDesc;
+    case CoachPersona.funny:
+      return l.personaFunnyDesc;
+    case CoachPersona.direct:
+      return l.personaDirectDesc;
+    case CoachPersona.calm:
+      return l.personaCalmDesc;
+  }
+}
+
+class _CoachPersonaTile extends ConsumerWidget {
+  const _CoachPersonaTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final persona = ref.watch(coachPersonaProvider);
+    return ListTile(
+      leading: const Icon(Icons.spa_rounded, color: AppColors.primaryCyan),
+      title: Text(
+        l10n?.coachToneQuestion ?? 'Coach tone',
+        style: const TextStyle(color: Colors.white),
+      ),
+      subtitle: Text(
+        l10n != null ? _personaLabel(l10n, persona) : persona.code,
+        style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+      ),
+      trailing: const Icon(Icons.chevron_right, color: Color(0xFF8FA0B8)),
+      onTap: l10n == null ? null : () => _showPicker(context, ref, persona),
+    );
+  }
+
+  Future<void> _showPicker(
+    BuildContext context,
+    WidgetRef ref,
+    CoachPersona current,
+  ) async {
+    final selected = await showModalBottomSheet<CoachPersona>(
+      context: context,
+      backgroundColor: const Color(0xFF142346),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetContext) {
+        final l10n = AppLocalizations.of(sheetContext)!;
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    l10n.coachToneQuestion,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              RadioGroup<CoachPersona>(
+                groupValue: current,
+                onChanged: (value) => Navigator.of(sheetContext).pop(value),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final p in CoachPersona.values)
+                      RadioListTile<CoachPersona>(
+                        value: p,
+                        activeColor: AppColors.primaryCyan,
+                        controlAffinity: ListTileControlAffinity.trailing,
+                        title: Text(
+                          _personaLabel(l10n, p),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Text(
+                          _personaDesc(l10n, p),
+                          style: const TextStyle(
+                            color: Color(0xFF8FA0B8),
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (selected != null) {
+      await ref.read(coachPersonaProvider.notifier).setPersona(selected);
+    }
   }
 }
 

@@ -5,6 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/network/app_error.dart';
 import '../../shared/widgets/app_error_view.dart';
 import '../../shared/widgets/skeleton.dart';
+import '../coach/mood/models/mood_situation.dart';
+import '../coach/mood/providers/mood_bubble_controller.dart';
+import '../coach/mood/providers/mood_seen_store.dart';
+import '../coach/mood/widgets/mood_bubble.dart';
 import 'providers/dashboard_provider.dart';
 import '../habits/widgets/habits_today_section.dart';
 import '../meal_planner/screens/meal_planner_screen.dart';
@@ -37,6 +41,24 @@ class DashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Celebrate a logging-streak milestone with a one-shot mood bubble.
+    // De-duped via MoodSeenStore so it fires once per streak value, not on
+    // every refresh. Deferred to post-frame so we never show a SnackBar
+    // mid-build.
+    ref.listen(dashboardSummaryProvider, (_, next) {
+      final summary = next.valueOrNull;
+      if (summary == null) return;
+      final store = ref.read(moodSeenStoreProvider);
+      if (MoodBubbleLogic.isStreakMilestone(summary.streakDays) &&
+          store.shouldCelebrateStreak(summary.streakDays)) {
+        store.markStreakCelebrated(summary.streakDays);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!context.mounted) return;
+          showMoodBubble(context, ref, MoodSituation.streakMilestone);
+        });
+      }
+    });
+
     final summaryAsync = ref.watch(dashboardSummaryProvider);
     final mealsAsync = ref.watch(todayMealsProvider);
 
@@ -73,6 +95,21 @@ class DashboardScreen extends ConsumerWidget {
                               targetMl: summary.dailyWaterTargetMl,
                               onAddWater: (amount) async {
                                 await ref.read(logWaterProvider)(amount);
+                                if (!context.mounted) return;
+                                // If hydration is still meaningfully behind
+                                // late in the day even after this add, nudge.
+                                final low = MoodBubbleLogic.isWaterLow(
+                                  totalMl: summary.consumedWaterMl + amount,
+                                  targetMl: summary.dailyWaterTargetMl,
+                                  hourOfDay: DateTime.now().hour,
+                                );
+                                if (low) {
+                                  showMoodBubble(
+                                    context,
+                                    ref,
+                                    MoodSituation.waterLow,
+                                  );
+                                }
                               },
                             ),
                             // 7-day water bar chart. Hidden on failure

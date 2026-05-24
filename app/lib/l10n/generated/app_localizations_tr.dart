@@ -1776,4 +1776,99 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get verifyEmailSignOut => 'Farklı email kullan / Çıkış';
+
+  @override
+  String get coachBubbleGentleMealUnder =>
+      'Özenle kaydedildi. Bugün hâlâ alanın var, acelesi yok.';
+
+  @override
+  String get coachBubbleGentleMealOver =>
+      'Kaydedildi. Tek bir öğün gününü tanımlamaz. Kendine nazik ol.';
+
+  @override
+  String get coachBubbleGentleMealOnTrack =>
+      'Bugün güzel bir denge. Bedenini dinliyorsun.';
+
+  @override
+  String get coachBubbleGentleWaterLow =>
+      'Şimdi biraz su iyi gelirdi, hazır olduğunda.';
+
+  @override
+  String get coachBubbleGentleStreakMilestone =>
+      'Her gün usulca buradasın. İşte bu gerçek.';
+
+  @override
+  String get coachBubbleGentleFirstMeal =>
+      'İlk öğün girildi. Güne yumuşak, sakin bir başlangıç.';
+
+  @override
+  String get coachBubbleFunnyMealUnder =>
+      'Kaydedildi! Daha çok yerin var — çatal kalkışa hazır.';
+
+  @override
+  String get coachBubbleFunnyMealOver =>
+      'Bol öğün, bol keyif. Yarın yine lezzetli bir sayfa.';
+
+  @override
+  String get coachBubbleFunnyMealOnTrack =>
+      'Şefin öpücüğü. Dengeyle artık can ciğersiniz.';
+
+  @override
+  String get coachBubbleFunnyWaterLow =>
+      'Su şişen biraz küsmüş gibi. Söylemeden geçmeyeyim.';
+
+  @override
+  String get coachBubbleFunnyStreakMilestone =>
+      'Seri sağlam gidiyor — birileri formda!';
+
+  @override
+  String get coachBubbleFunnyFirstMeal =>
+      'Kahvaltı kulübü bildiriyor. Güne lezzetli bir başlangıç.';
+
+  @override
+  String get coachBubbleDirectMealUnder =>
+      'Kaydedildi. Günün kalanına yer var — iyi planla.';
+
+  @override
+  String get coachBubbleDirectMealOver =>
+      'Kaydedildi, biraz fazla. Dert değil — sonraki öğünleri ayarla.';
+
+  @override
+  String get coachBubbleDirectMealOnTrack =>
+      'Kaydedildi. Tam yolunda. Böyle devam.';
+
+  @override
+  String get coachBubbleDirectWaterLow => 'Su bugün geride. Bir bardak al.';
+
+  @override
+  String get coachBubbleDirectStreakMilestone =>
+      'Seri tutuyor. İşi yapan istikrar.';
+
+  @override
+  String get coachBubbleDirectFirstMeal =>
+      'İlk öğün girildi. Güzel — günün tonunu belirle.';
+
+  @override
+  String get coachBubbleCalmMealUnder =>
+      'Not edildi. İlerisi açık. Kendi temponla ilerle.';
+
+  @override
+  String get coachBubbleCalmMealOver =>
+      'Not edildi. Önemli olan farkındalık. Sonraki öğün senin.';
+
+  @override
+  String get coachBubbleCalmMealOnTrack =>
+      'Not edildi. Dengeli ve sakin — huzurlu bir ilerleme.';
+
+  @override
+  String get coachBubbleCalmWaterLow =>
+      'Su biraz az. Baskı yok — uygun olduğunda yudumla.';
+
+  @override
+  String get coachBubbleCalmStreakMilestone =>
+      'Her gün sessiz bir istikrar. Bu sayılır.';
+
+  @override
+  String get coachBubbleCalmFirstMeal =>
+      'İlk öğün not edildi. Güne sakin bir başlangıç.';
 }

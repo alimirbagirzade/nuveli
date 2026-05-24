@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:nuveli/core/auth/secure_session_storage.dart';
 import 'package:nuveli/core/config/app_config.dart';
+import 'package:nuveli/core/i18n/language_provider.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
 import 'package:nuveli/core/network/authed_dio_provider.dart';
 import 'package:nuveli/core/notifications/fcm_token_register.dart';
@@ -16,6 +17,7 @@ import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/routing/deep_link_listener.dart';
 import 'package:nuveli/core/routing/deep_link_validator.dart';
 import 'package:nuveli/core/theme/app_theme.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 import 'package:nuveli/features/auth/screens/auth_gate.dart';
 import 'package:nuveli/features/notifications/providers/notifications_provider.dart';
 import 'package:nuveli/features/premium/services/revenue_cat_service.dart';
@@ -79,6 +81,11 @@ Future<void> main() async {
   // SharedPreferences needs to be ready before Riverpod scope so the
   // notification settings provider can read persisted toggles synchronously.
   final prefs = await SharedPreferences.getInstance();
+
+  // Load the persisted app language into globalLanguageNotifier before the
+  // first frame so MaterialApp resolves the correct locale on launch. The
+  // in-app language switcher (Settings) drives this same notifier.
+  await preloadLanguage();
 
   // Start the deep-link listener. Every nuveli:// or https://nuveli.com.tr
   // URI the OS hands us flows through DeepLinkValidator first; rejections
@@ -215,11 +222,22 @@ class _NuveliAppState extends ConsumerState<NuveliApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Nuveli',
-      theme: AppTheme.dark(),
-      home: const AuthGate(),
+    // Rebuild MaterialApp whenever the user changes language in Settings.
+    // AppLanguage.system carries a null locale, which lets Flutter resolve
+    // from the device locale against supportedLocales.
+    return ValueListenableBuilder<AppLanguage>(
+      valueListenable: globalLanguageNotifier,
+      builder: (context, language, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Nuveli',
+          theme: AppTheme.dark(),
+          locale: language.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const AuthGate(),
+        );
+      },
     );
   }
 }

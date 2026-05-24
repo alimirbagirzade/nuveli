@@ -703,5 +703,101 @@
     }
   },
   "verifyEmailResent": "Yeni doğrulama emaili gönderildi.",
-  "verifyEmailSignOut": "Farklı email kullan / Çıkış"
+  "verifyEmailSignOut": "Farklı email kullan / Çıkış",
+  "coachBubbleGentleMealUnder": "Özenle kaydedildi. Bugün hâlâ alanın var, acelesi yok.",
+  "@coachBubbleGentleMealUnder": {
+    "description": "Mood bubble after logging a meal while still under the daily calorie target."
+  },
+  "coachBubbleGentleMealOver": "Kaydedildi. Tek bir öğün gününü tanımlamaz. Kendine nazik ol.",
+  "@coachBubbleGentleMealOver": {
+    "description": "Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation."
+  },
+  "coachBubbleGentleMealOnTrack": "Bugün güzel bir denge. Bedenini dinliyorsun.",
+  "@coachBubbleGentleMealOnTrack": {
+    "description": "Mood bubble after logging a meal that leaves the day near target (balanced)."
+  },
+  "coachBubbleGentleWaterLow": "Şimdi biraz su iyi gelirdi, hazır olduğunda.",
+  "@coachBubbleGentleWaterLow": {
+    "description": "Mood bubble nudging the user when water intake is behind for the time of day."
+  },
+  "coachBubbleGentleStreakMilestone": "Her gün usulca buradasın. İşte bu gerçek.",
+  "@coachBubbleGentleStreakMilestone": {
+    "description": "Mood bubble celebrating a logging-streak milestone."
+  },
+  "coachBubbleGentleFirstMeal": "İlk öğün girildi. Güne yumuşak, sakin bir başlangıç.",
+  "@coachBubbleGentleFirstMeal": {
+    "description": "Mood bubble after the first meal of the day is logged (fresh-start framing)."
+  },
+  "coachBubbleFunnyMealUnder": "Kaydedildi! Daha çok yerin var — çatal kalkışa hazır.",
+  "@coachBubbleFunnyMealUnder": {
+    "description": "Mood bubble after logging a meal while still under the daily calorie target."
+  },
+  "coachBubbleFunnyMealOver": "Bol öğün, bol keyif. Yarın yine lezzetli bir sayfa.",
+  "@coachBubbleFunnyMealOver": {
+    "description": "Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation."
+  },
+  "coachBubbleFunnyMealOnTrack": "Şefin öpücüğü. Dengeyle artık can ciğersiniz.",
+  "@coachBubbleFunnyMealOnTrack": {
+    "description": "Mood bubble after logging a meal that leaves the day near target (balanced)."
+  },
+  "coachBubbleFunnyWaterLow": "Su şişen biraz küsmüş gibi. Söylemeden geçmeyeyim.",
+  "@coachBubbleFunnyWaterLow": {
+    "description": "Mood bubble nudging the user when water intake is behind for the time of day."
+  },
+  "coachBubbleFunnyStreakMilestone": "Seri sağlam gidiyor — birileri formda!",
+  "@coachBubbleFunnyStreakMilestone": {
+    "description": "Mood bubble celebrating a logging-streak milestone."
+  },
+  "coachBubbleFunnyFirstMeal": "Kahvaltı kulübü bildiriyor. Güne lezzetli bir başlangıç.",
+  "@coachBubbleFunnyFirstMeal": {
+    "description": "Mood bubble after the first meal of the day is logged (fresh-start framing)."
+  },
+  "coachBubbleDirectMealUnder": "Kaydedildi. Günün kalanına yer var — iyi planla.",
+  "@coachBubbleDirectMealUnder": {
+    "description": "Mood bubble after logging a meal while still under the daily calorie target."
+  },
+  "coachBubbleDirectMealOver": "Kaydedildi, biraz fazla. Dert değil — sonraki öğünleri ayarla.",
+  "@coachBubbleDirectMealOver": {
+    "description": "Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation."
+  },
+  "coachBubbleDirectMealOnTrack": "Kaydedildi. Tam yolunda. Böyle devam.",
+  "@coachBubbleDirectMealOnTrack": {
+    "description": "Mood bubble after logging a meal that leaves the day near target (balanced)."
+  },
+  "coachBubbleDirectWaterLow": "Su bugün geride. Bir bardak al.",
+  "@coachBubbleDirectWaterLow": {
+    "description": "Mood bubble nudging the user when water intake is behind for the time of day."
+  },
+  "coachBubbleDirectStreakMilestone": "Seri tutuyor. İşi yapan istikrar.",
+  "@coachBubbleDirectStreakMilestone": {
+    "description": "Mood bubble celebrating a logging-streak milestone."
+  },
+  "coachBubbleDirectFirstMeal": "İlk öğün girildi. Güzel — günün tonunu belirle.",
+  "@coachBubbleDirectFirstMeal": {
+    "description": "Mood bubble after the first meal of the day is logged (fresh-start framing)."
+  },
+  "coachBubbleCalmMealUnder": "Not edildi. İlerisi açık. Kendi temponla ilerle.",
+  "@coachBubbleCalmMealUnder": {
+    "description": "Mood bubble after logging a meal while still under the daily calorie target."
+  },
+  "coachBubbleCalmMealOver": "Not edildi. Önemli olan farkındalık. Sonraki öğün senin.",
+  "@coachBubbleCalmMealOver": {
+    "description": "Mood bubble after logging a meal that puts the day over target. Must be non-judgmental, no shame, no compensation."
+  },
+  "coachBubbleCalmMealOnTrack": "Not edildi. Dengeli ve sakin — huzurlu bir ilerleme.",
+  "@coachBubbleCalmMealOnTrack": {
+    "description": "Mood bubble after logging a meal that leaves the day near target (balanced)."
+  },
+  "coachBubbleCalmWaterLow": "Su biraz az. Baskı yok — uygun olduğunda yudumla.",
+  "@coachBubbleCalmWaterLow": {
+    "description": "Mood bubble nudging the user when water intake is behind for the time of day."
+  },
+  "coachBubbleCalmStreakMilestone": "Her gün sessiz bir istikrar. Bu sayılır.",
+  "@coachBubbleCalmStreakMilestone": {
+    "description": "Mood bubble celebrating a logging-streak milestone."
+  },
+  "coachBubbleCalmFirstMeal": "İlk öğün not edildi. Güne sakin bir başlangıç.",
+  "@coachBubbleCalmFirstMeal": {
+    "description": "Mood bubble after the first meal of the day is logged (fresh-start framing)."
+  }
 }

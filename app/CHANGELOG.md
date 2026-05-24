@@ -1,5 +1,38 @@
 # Nuveli Changelog
 
+## [1.2.0+17] - 2026-05-24 - Local coach mood bubbles + i18n activation
+
+### Features
+- **Mood-bubble layer** (`lib/features/coach/mood/`) — a local,
+  zero-OpenAI persona layer on top of the daily Coach insight. Fires an
+  instant, on-device bubble at real user moments:
+  - **Meal save** — situation derived from today's post-save totals:
+    first meal / under target / on track / over target.
+  - **Water-low** — nudge after a water add if still behind target past
+    14:00.
+  - **Streak milestone** — celebrates 3/7/14/21/30/50/100/365-day
+    streaks, de-duped per value via `MoodSeenStore` so it fires once.
+  - 4 personas (gentle / funny / direct / calm) × 6 situations = 24
+    copy lines, localized in all 7 shipped locales. Over-target copy
+    follows the wellness boundary (no shame, no deficit drama, no
+    compensation framing).
+- **Coach persona picker** in Settings (`coachToneQuestion` + the
+  long-dormant `personaGentle/Funny/Direct/Calm` strings, finally wired).
+  Local-only (SharedPreferences); never round-trips to the backend.
+
+### Infrastructure
+- **Activated app-wide localization.** `MaterialApp` now wires
+  `localizationsDelegates` + `supportedLocales` + a `locale` driven by
+  `globalLanguageNotifier`, and `main()` calls `preloadLanguage()`. The
+  690 existing `.arb` keys and the in-app language switcher were built but
+  never connected to the runtime — they are now live. (Screens still
+  using hardcoded English strings are unaffected until individually
+  migrated.)
+
+### Tests
+- +24 host tests: situation detection (meal/water/streak), copy-bank
+  resolution across locales, persona persistence. 460 → 484 passing.
+
 ## [1.1.1+16] - 2026-05-24 - Session handoff doc refresh
 
 ### Docs

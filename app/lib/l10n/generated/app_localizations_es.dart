@@ -1779,4 +1779,100 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get verifyEmailSignOut => 'Otro email / Cerrar sesión';
+
+  @override
+  String get coachBubbleGentleMealUnder =>
+      'Registrado con cariño. Aún te queda margen hoy, sin prisa.';
+
+  @override
+  String get coachBubbleGentleMealOver =>
+      'Registrado. Una comida no define tu día. Sé amable contigo.';
+
+  @override
+  String get coachBubbleGentleMealOnTrack =>
+      'Bonito equilibrio hoy. Estás escuchando a tu cuerpo.';
+
+  @override
+  String get coachBubbleGentleWaterLow =>
+      'Un poco de agua sentaría bien ahora, cuando quieras.';
+
+  @override
+  String get coachBubbleGentleStreakMilestone =>
+      'Apareces con suavidad cada día. Eso es real.';
+
+  @override
+  String get coachBubbleGentleFirstMeal =>
+      'Primera comida lista. Un comienzo suave y sereno del día.';
+
+  @override
+  String get coachBubbleFunnyMealUnder =>
+      '¡Registrado! Queda mucha pista — tu tenedor tiene vía libre.';
+
+  @override
+  String get coachBubbleFunnyMealOver =>
+      'Gran comida, gran alegría. Mañana hay otro capítulo sabroso.';
+
+  @override
+  String get coachBubbleFunnyMealOnTrack =>
+      'Beso de chef. Tú y el equilibrio ya sois mejores amigos.';
+
+  @override
+  String get coachBubbleFunnyWaterLow =>
+      'Tu botella de agua se siente un poco ignorada. Solo digo.';
+
+  @override
+  String get coachBubbleFunnyStreakMilestone =>
+      'La racha va fuerte — ¡alguien está imparable!';
+
+  @override
+  String get coachBubbleFunnyFirstMeal =>
+      'El club del desayuno reporta. El día empieza sabroso.';
+
+  @override
+  String get coachBubbleDirectMealUnder =>
+      'Registrado. Queda margen para el resto del día — planifícalo bien.';
+
+  @override
+  String get coachBubbleDirectMealOver =>
+      'Registrado, un poco por encima. Sin dramas — ajusta las próximas comidas.';
+
+  @override
+  String get coachBubbleDirectMealOnTrack =>
+      'Registrado. Justo en el camino. Mantén el ritmo.';
+
+  @override
+  String get coachBubbleDirectWaterLow =>
+      'El agua va atrasada hoy. Toma un vaso.';
+
+  @override
+  String get coachBubbleDirectStreakMilestone =>
+      'La racha aguanta. La constancia hace el trabajo.';
+
+  @override
+  String get coachBubbleDirectFirstMeal =>
+      'Primera comida registrada. Bien — marca el tono del día.';
+
+  @override
+  String get coachBubbleCalmMealUnder =>
+      'Anotado. Hay espacio por delante. Ve a tu propio ritmo.';
+
+  @override
+  String get coachBubbleCalmMealOver =>
+      'Anotado. Lo que importa es la conciencia. La próxima comida es tuya.';
+
+  @override
+  String get coachBubbleCalmMealOnTrack =>
+      'Anotado. Estable y parejo — un progreso tranquilo.';
+
+  @override
+  String get coachBubbleCalmWaterLow =>
+      'El agua está algo baja. Sin presión — bebe cuando te venga bien.';
+
+  @override
+  String get coachBubbleCalmStreakMilestone =>
+      'Constancia tranquila, día tras día. Eso cuenta.';
+
+  @override
+  String get coachBubbleCalmFirstMeal =>
+      'Primera comida anotada. Un inicio sereno del día.';
 }
