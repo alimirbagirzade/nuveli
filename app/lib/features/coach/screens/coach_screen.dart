@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../premium/premium_paywall_screen.dart';
 import '../models/ai_insight.dart';
 import '../providers/coach_actions_controller.dart';
@@ -24,15 +25,16 @@ class CoachScreen extends ConsumerWidget {
     final actionState = ref.watch(coachActionsControllerProvider);
     final isRegenerating =
         actionState.phase == CoachActionPhase.regenerating;
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: const Color(0xFF050A1F),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Your Coach',
-          style: TextStyle(
+        title: Text(
+          l10n?.coachSettingsTitle ?? 'Your Coach',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -56,7 +58,7 @@ class CoachScreen extends ConsumerWidget {
             data: (insight) => _CoachContent(
               insight: insight,
               isRegenerating: isRegenerating,
-              regenLabel: gate.ctaLabel,
+              regenLabel: _regenLabel(l10n, gate),
               canRegenerate: gate.canRegenerate,
               onRegenerate: () async {
                 if (!gate.canRegenerate) {
@@ -78,6 +80,14 @@ class CoachScreen extends ConsumerWidget {
       ),
     );
   }
+
+  /// Localized regenerate-CTA label, mirroring CoachGateStatus.ctaLabel.
+  static String _regenLabel(AppLocalizations? l10n, CoachGateStatus gate) {
+    if (l10n == null) return gate.ctaLabel;
+    if (gate.isPremium) return l10n.coachRegenerate;
+    if (!gate.canRegenerate) return l10n.coachRegenerateUpgrade;
+    return l10n.coachRegenerateFree;
+  }
 }
 
 class _CoachContent extends StatelessWidget {
@@ -97,6 +107,7 @@ class _CoachContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
@@ -108,7 +119,7 @@ class _CoachContent extends StatelessWidget {
           const SizedBox(height: 16),
         ],
         if (insight.tips.isNotEmpty) ...[
-          const _SectionLabel('Today\'s tips'),
+          _SectionLabel(l10n?.coachTodaysTips ?? "Today's tips"),
           const SizedBox(height: 8),
           for (final tip in insight.tips) TipTile(tip: tip),
           const SizedBox(height: 6),
@@ -165,6 +176,7 @@ class _ScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -180,9 +192,9 @@ class _ScoreCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Nutrition score',
-                  style: TextStyle(
+                Text(
+                  l10n?.coachNutritionScore ?? 'Nutrition score',
+                  style: const TextStyle(
                     color: Color(0xFFB8D4D2),
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -190,7 +202,7 @@ class _ScoreCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _dateLabel(insight.insightDate),
+                  _dateLabel(l10n, insight.insightDate),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -199,7 +211,7 @@ class _ScoreCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  _subtitle(insight.nutritionScore),
+                  _subtitle(l10n, insight.nutritionScore),
                   style: const TextStyle(
                     color: Color(0xFFB8D4D2),
                     fontSize: 12.5,
@@ -214,19 +226,28 @@ class _ScoreCard extends StatelessWidget {
     );
   }
 
-  static String _dateLabel(DateTime d) {
+  static String _dateLabel(AppLocalizations? l10n, DateTime d) {
     final now = DateTime.now();
     if (d.year == now.year && d.month == now.month && d.day == now.day) {
-      return 'Today';
+      return l10n?.homeToday ?? 'Today';
     }
     return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
   }
 
-  static String _subtitle(int score) {
-    if (score >= 80) return 'Solid day — keep doing what you\'re doing.';
-    if (score >= 60) return 'Mostly on track. A small tweak goes a long way.';
-    if (score >= 40) return 'Mixed signals — let\'s focus on one thing today.';
-    return 'A gentle reset would help. Pick one tip below.';
+  static String _subtitle(AppLocalizations? l10n, int score) {
+    if (score >= 80) {
+      return l10n?.coachScoreHigh ?? "Solid day — keep doing what you're doing.";
+    }
+    if (score >= 60) {
+      return l10n?.coachScoreMid ??
+          'Mostly on track. A small tweak goes a long way.';
+    }
+    if (score >= 40) {
+      return l10n?.coachScoreMixed ??
+          "Mixed signals — let's focus on one thing today.";
+    }
+    return l10n?.coachScoreReset ??
+        'A gentle reset would help. Pick one tip below.';
   }
 }
 
@@ -318,6 +339,7 @@ class _CoachError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -338,9 +360,9 @@ class _CoachError extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Coach is offline',
-              style: TextStyle(
+            Text(
+              l10n?.coachOfflineTitle ?? 'Coach is offline',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -360,9 +382,9 @@ class _CoachError extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded, color: Colors.white),
-              label: const Text(
-                'Try again',
-                style: TextStyle(
+              label: Text(
+                l10n?.commonRetry ?? 'Try again',
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),

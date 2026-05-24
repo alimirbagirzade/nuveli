@@ -863,5 +863,85 @@
   "settingsLanguageRussian": "Rusça",
   "@settingsLanguageRussian": {
     "description": "Settings: settingsLanguageRussian"
+  },
+  "coachTodaysTips": "Bugünün ipuçları",
+  "@coachTodaysTips": {
+    "description": "Coach: coachTodaysTips"
+  },
+  "coachNutritionScore": "Beslenme puanı",
+  "@coachNutritionScore": {
+    "description": "Coach: coachNutritionScore"
+  },
+  "coachScoreHigh": "Sağlam bir gün — böyle devam.",
+  "@coachScoreHigh": {
+    "description": "Coach: coachScoreHigh"
+  },
+  "coachScoreMid": "Çoğunlukla yolunda. Küçük bir ayar çok şey değiştirir.",
+  "@coachScoreMid": {
+    "description": "Coach: coachScoreMid"
+  },
+  "coachScoreMixed": "Karışık sinyaller — bugün tek bir şeye odaklanalım.",
+  "@coachScoreMixed": {
+    "description": "Coach: coachScoreMixed"
+  },
+  "coachScoreReset": "Nazik bir sıfırlama iyi gelir. Aşağıdan bir ipucu seç.",
+  "@coachScoreReset": {
+    "description": "Coach: coachScoreReset"
+  },
+  "coachOfflineTitle": "Koç çevrimdışı",
+  "@coachOfflineTitle": {
+    "description": "Coach: coachOfflineTitle"
+  },
+  "coachRegenerate": "Yenile",
+  "@coachRegenerate": {
+    "description": "Coach: coachRegenerate"
+  },
+  "coachRegenerateUpgrade": "Yenilemek için yükselt",
+  "@coachRegenerateUpgrade": {
+    "description": "Coach: coachRegenerateUpgrade"
+  },
+  "coachRegenerateFree": "Yenile (günde 1 ücretsiz)",
+  "@coachRegenerateFree": {
+    "description": "Coach: coachRegenerateFree"
+  },
+  "coachScoreExcellent": "Mükemmel",
+  "@coachScoreExcellent": {
+    "description": "Coach: coachScoreExcellent"
+  },
+  "coachScoreOnTrack": "Yolunda",
+  "@coachScoreOnTrack": {
+    "description": "Coach: coachScoreOnTrack"
+  },
+  "coachScoreImprove": "Gelişebilir",
+  "@coachScoreImprove": {
+    "description": "Coach: coachScoreImprove"
+  },
+  "coachScoreNeedsCare": "Özen gerek",
+  "@coachScoreNeedsCare": {
+    "description": "Coach: coachScoreNeedsCare"
+  },
+  "coachRecommendedStep": "Önerilen sonraki adım",
+  "@coachRecommendedStep": {
+    "description": "Coach: coachRecommendedStep"
+  },
+  "coachActionHabitAdded": "Alışkanlık eklendi",
+  "@coachActionHabitAdded": {
+    "description": "Coach: coachActionHabitAdded"
+  },
+  "coachActionWaterLogged": "Su eklendi",
+  "@coachActionWaterLogged": {
+    "description": "Coach: coachActionWaterLogged"
+  },
+  "coachActionReminderSet": "Hatırlatıcı ayarlandı",
+  "@coachActionReminderSet": {
+    "description": "Coach: coachActionReminderSet"
+  },
+  "coachActionTargetUpdated": "Hedef güncellendi",
+  "@coachActionTargetUpdated": {
+    "description": "Coach: coachActionTargetUpdated"
+  },
+  "coachActionDone": "Tamam",
+  "@coachActionDone": {
+    "description": "Coach: coachActionDone"
   }
 }

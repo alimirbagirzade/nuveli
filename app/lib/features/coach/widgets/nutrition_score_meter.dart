@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// 0-100 nutrition score rendered as a sweep arc. Color follows the
 /// same thresholds the rest of the app uses for "doing well / could
@@ -24,15 +25,16 @@ class NutritionScoreMeter extends StatelessWidget {
     return AppColors.error;
   }
 
-  String get _label {
-    if (score >= 80) return 'Excellent';
-    if (score >= 60) return 'On track';
-    if (score >= 40) return 'Could improve';
-    return 'Needs care';
+  String _label(AppLocalizations? l10n) {
+    if (score >= 80) return l10n?.coachScoreExcellent ?? 'Excellent';
+    if (score >= 60) return l10n?.coachScoreOnTrack ?? 'On track';
+    if (score >= 40) return l10n?.coachScoreImprove ?? 'Could improve';
+    return l10n?.coachScoreNeedsCare ?? 'Needs care';
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SizedBox(
       width: size,
       height: size,
@@ -57,7 +59,7 @@ class NutritionScoreMeter extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                _label,
+                _label(l10n),
                 style: const TextStyle(
                   color: Color(0xFFB8D4D2),
                   fontSize: 11,

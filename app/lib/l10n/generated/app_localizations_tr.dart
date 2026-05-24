@@ -1923,4 +1923,67 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get settingsLanguageRussian => 'Rusça';
+
+  @override
+  String get coachTodaysTips => 'Bugünün ipuçları';
+
+  @override
+  String get coachNutritionScore => 'Beslenme puanı';
+
+  @override
+  String get coachScoreHigh => 'Sağlam bir gün — böyle devam.';
+
+  @override
+  String get coachScoreMid =>
+      'Çoğunlukla yolunda. Küçük bir ayar çok şey değiştirir.';
+
+  @override
+  String get coachScoreMixed =>
+      'Karışık sinyaller — bugün tek bir şeye odaklanalım.';
+
+  @override
+  String get coachScoreReset =>
+      'Nazik bir sıfırlama iyi gelir. Aşağıdan bir ipucu seç.';
+
+  @override
+  String get coachOfflineTitle => 'Koç çevrimdışı';
+
+  @override
+  String get coachRegenerate => 'Yenile';
+
+  @override
+  String get coachRegenerateUpgrade => 'Yenilemek için yükselt';
+
+  @override
+  String get coachRegenerateFree => 'Yenile (günde 1 ücretsiz)';
+
+  @override
+  String get coachScoreExcellent => 'Mükemmel';
+
+  @override
+  String get coachScoreOnTrack => 'Yolunda';
+
+  @override
+  String get coachScoreImprove => 'Gelişebilir';
+
+  @override
+  String get coachScoreNeedsCare => 'Özen gerek';
+
+  @override
+  String get coachRecommendedStep => 'Önerilen sonraki adım';
+
+  @override
+  String get coachActionHabitAdded => 'Alışkanlık eklendi';
+
+  @override
+  String get coachActionWaterLogged => 'Su eklendi';
+
+  @override
+  String get coachActionReminderSet => 'Hatırlatıcı ayarlandı';
+
+  @override
+  String get coachActionTargetUpdated => 'Hedef güncellendi';
+
+  @override
+  String get coachActionDone => 'Tamam';
 }
