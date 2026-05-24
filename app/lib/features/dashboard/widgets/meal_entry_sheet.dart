@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/repositories/meals_repository.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../profile/providers/profile_provider.dart';
 import '../providers/dashboard_provider.dart';
 
@@ -80,14 +81,17 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
   Future<void> _save() async {
     if (_isSaving) return;
 
+    final l10n = AppLocalizations.of(context);
     final name = _nameCtrl.text.trim();
     final calories = int.tryParse(_caloriesCtrl.text.trim());
     if (name.isEmpty) {
-      setState(() => _formError = 'Food name is required');
+      setState(() =>
+          _formError = l10n?.homeFoodNameRequired ?? 'Food name is required');
       return;
     }
     if (calories == null || calories <= 0) {
-      setState(() => _formError = 'Enter a calorie value (> 0)');
+      setState(() => _formError =
+          l10n?.homeCaloriesRequired ?? 'Enter a calorie value (> 0)');
       return;
     }
 
@@ -116,7 +120,9 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _formError = 'Could not save: ${e.toString().split('\n').first}';
+          _formError =
+              AppLocalizations.of(context)?.homeSaveFailed ??
+                  'Could not save your meal.';
           _isSaving = false;
         });
       }
@@ -125,6 +131,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -149,9 +156,9 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
               ),
             ),
             const SizedBox(height: 14),
-            const Text(
-              'Add Food',
-              style: TextStyle(
+            Text(
+              l10n?.homeAddFood ?? 'Add Food',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -165,7 +172,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
             ),
             const SizedBox(height: 16),
             _LabeledField(
-              label: 'What did you eat?',
+              label: l10n?.homeMealNameQuestion ?? 'What did you eat?',
               hint: 'e.g. Greek yogurt with berries',
               controller: _nameCtrl,
               keyboardType: TextInputType.text,
@@ -173,7 +180,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
             ),
             const SizedBox(height: 12),
             _LabeledField(
-              label: 'Calories (kcal)',
+              label: l10n?.homeCaloriesKcal ?? 'Calories (kcal)',
               hint: 'e.g. 180',
               controller: _caloriesCtrl,
               keyboardType: TextInputType.number,
@@ -184,7 +191,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
               children: [
                 Expanded(
                   child: _LabeledField(
-                    label: 'Protein (g)',
+                    label: l10n?.macroProteinG ?? 'Protein (g)',
                     hint: '0',
                     controller: _proteinCtrl,
                     keyboardType: const TextInputType.numberWithOptions(
@@ -198,7 +205,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: _LabeledField(
-                    label: 'Carbs (g)',
+                    label: l10n?.macroCarbsG ?? 'Carbs (g)',
                     hint: '0',
                     controller: _carbsCtrl,
                     keyboardType: const TextInputType.numberWithOptions(
@@ -212,7 +219,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: _LabeledField(
-                    label: 'Fat (g)',
+                    label: l10n?.macroFatG ?? 'Fat (g)',
                     hint: '0',
                     controller: _fatCtrl,
                     keyboardType: const TextInputType.numberWithOptions(
@@ -277,9 +284,9 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
                               AlwaysStoppedAnimation(Colors.white),
                         ),
                       )
-                    : const Text(
-                        'Save meal',
-                        style: TextStyle(
+                    : Text(
+                        l10n?.homeSaveMeal ?? 'Save meal',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 15,

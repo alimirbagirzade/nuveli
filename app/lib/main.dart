@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -84,8 +85,12 @@ Future<void> main() async {
 
   // Load the persisted app language into globalLanguageNotifier before the
   // first frame so MaterialApp resolves the correct locale on launch. The
-  // in-app language switcher (Settings) drives this same notifier.
+  // Settings language picker drives this same notifier.
   await preloadLanguage();
+
+  // Load locale-aware date symbols for every supported locale so
+  // DateFormat(..., locale) doesn't throw on non-en locales.
+  await initializeDateFormatting();
 
   // Start the deep-link listener. Every nuveli:// or https://nuveli.com.tr
   // URI the OS hands us flows through DeepLinkValidator first; rejections

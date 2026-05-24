@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/empty_state_view.dart';
 import '../models/meal.dart';
 
@@ -17,6 +18,7 @@ class MealsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Column(
@@ -24,10 +26,10 @@ class MealsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  "Today's meals",
-                  style: TextStyle(
+                  l10n?.homeTodayMeals ?? "Today's meals",
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -38,9 +40,9 @@ class MealsSection extends StatelessWidget {
               if (meals.isNotEmpty)
                 GestureDetector(
                   onTap: onSeeAll,
-                  child: const Text(
-                    'See all',
-                    style: TextStyle(
+                  child: Text(
+                    l10n?.homeSeeAll ?? 'See all',
+                    style: const TextStyle(
                       fontSize: 13,
                       color: Color(0xFF4DDBFF),
                       fontWeight: FontWeight.w500,
@@ -51,10 +53,11 @@ class MealsSection extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           if (meals.isEmpty)
-            const EmptyStateView(
+            EmptyStateView(
               icon: Icons.restaurant_outlined,
-              title: 'No meals logged yet',
-              message: 'Tap "Add Food" below to scan your first meal',
+              title: l10n?.homeNoMealsTitle ?? 'No meals logged yet',
+              message: l10n?.homeNoMealsScanHint ??
+                  'Tap "Add Food" below to log your first meal',
               compact: true,
             )
           else

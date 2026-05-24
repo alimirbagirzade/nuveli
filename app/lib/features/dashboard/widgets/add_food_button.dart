@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
+
 /// The big "Add Food" call-to-action that sits above the bottom nav.
-/// In Chat 5 this will open the AI Meal Scan flow.
 class AddFoodButton extends StatelessWidget {
   final VoidCallback onPressed;
   const AddFoodButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SizedBox(
       width: double.infinity,
       height: 56,
@@ -33,19 +35,19 @@ class AddFoodButton extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.add_circle_outline,
                     color: Colors.white,
                     size: 22,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
-                    'Add Food',
-                    style: TextStyle(
+                    l10n?.homeAddFood ?? 'Add Food',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,

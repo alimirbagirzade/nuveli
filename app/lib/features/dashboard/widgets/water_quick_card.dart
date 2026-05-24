@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
+
 /// Compact water tracker row on the dashboard.
 /// Shows glasses consumed / target and a "+250 ml" quick-add button.
 ///
@@ -63,7 +65,10 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
       if (mounted) {
         setState(() => _pendingMl -= amountMl);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not log water. Tap to retry.')),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)?.homeWaterLogFailed ??
+                'Could not log water. Tap to retry.'),
+          ),
         );
       }
     } finally {
@@ -93,6 +98,7 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final effectiveMl = widget.consumedMl + _pendingMl;
     final glasses = (effectiveMl / 250).floor();
     final glassesTarget = (widget.targetMl / 250).ceil().clamp(1, 99);
@@ -140,9 +146,9 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
               children: [
                 Row(
                   children: [
-                    const Text(
-                      'Water',
-                      style: TextStyle(
+                    Text(
+                      l10n?.homeWater ?? 'Water',
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Color(0xFFB8C5D6),
                         fontWeight: FontWeight.w500,
@@ -211,6 +217,7 @@ class _WaterPortionSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -235,9 +242,9 @@ class _WaterPortionSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-            const Text(
-              'Add water',
-              style: TextStyle(
+            Text(
+              l10n?.homeAddWater ?? 'Add water',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,

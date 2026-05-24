@@ -3809,6 +3809,102 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Tamam'**
   String get coachActionDone;
+
+  /// Home/dashboard: homeOpenSettings
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarları aç'**
+  String get homeOpenSettings;
+
+  /// Home/dashboard: homeAddFood
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemek Ekle'**
+  String get homeAddFood;
+
+  /// Home/dashboard: homeSeeAll
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümünü gör'**
+  String get homeSeeAll;
+
+  /// Home/dashboard: homeMealNameQuestion
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne yedin?'**
+  String get homeMealNameQuestion;
+
+  /// Home/dashboard: homeCaloriesKcal
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalori (kcal)'**
+  String get homeCaloriesKcal;
+
+  /// Home/dashboard: macroProteinG
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein (g)'**
+  String get macroProteinG;
+
+  /// Home/dashboard: macroCarbsG
+  ///
+  /// In tr, this message translates to:
+  /// **'Karbonhidrat (g)'**
+  String get macroCarbsG;
+
+  /// Home/dashboard: macroFatG
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ (g)'**
+  String get macroFatG;
+
+  /// Home/dashboard: homeSaveMeal
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğünü kaydet'**
+  String get homeSaveMeal;
+
+  /// Home/dashboard: homeFoodNameRequired
+  ///
+  /// In tr, this message translates to:
+  /// **'Yemek adı gerekli'**
+  String get homeFoodNameRequired;
+
+  /// Home/dashboard: homeCaloriesRequired
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir kalori değeri gir (> 0)'**
+  String get homeCaloriesRequired;
+
+  /// Home/dashboard: homeSaveFailed
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün kaydedilemedi.'**
+  String get homeSaveFailed;
+
+  /// Home/dashboard: homeWaterLogFailed
+  ///
+  /// In tr, this message translates to:
+  /// **'Su eklenemedi. Tekrar denemek için dokun.'**
+  String get homeWaterLogFailed;
+
+  /// Home/dashboard: homePlannerCtaTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftanı planla'**
+  String get homePlannerCtaTitle;
+
+  /// Home/dashboard: homePlannerCtaSubtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Planlı öğünleri + alışveriş listesini gör'**
+  String get homePlannerCtaSubtitle;
+
+  /// Home/dashboard: homeNoMealsScanHint
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk öğününü eklemek için aşağıdaki \"Yemek Ekle\"ye dokun'**
+  String get homeNoMealsScanHint;
 }
 
 class _AppLocalizationsDelegate

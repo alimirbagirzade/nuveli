@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../settings/settings_screen.dart';
 
@@ -14,11 +15,11 @@ import '../../settings/settings_screen.dart';
 class DashboardHeader extends ConsumerWidget {
   const DashboardHeader({super.key});
 
-  String _greeting() {
+  String _greeting(AppLocalizations? l10n) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return l10n?.homeGreetingMorning ?? 'Good morning';
+    if (hour < 17) return l10n?.homeGreetingAfternoon ?? 'Good afternoon';
+    return l10n?.homeGreetingEvening ?? 'Good evening';
   }
 
   ({String displayName, String initial}) _resolveIdentity(WidgetRef ref) {
@@ -42,7 +43,9 @@ class DashboardHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateStr = DateFormat('EEEE, MMMM d').format(DateTime.now());
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final dateStr = DateFormat('EEEE, MMMM d', locale).format(DateTime.now());
     final identity = _resolveIdentity(ref);
 
     return Padding(
@@ -64,7 +67,7 @@ class DashboardHeader extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${_greeting()}, ${identity.displayName}',
+                  '${_greeting(l10n)}, ${identity.displayName}',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
@@ -81,7 +84,7 @@ class DashboardHeader extends ConsumerWidget {
           // Avatar doubles as the entry point into Settings. App Review reaches
           // the in-app account-deletion flow (Apple 5.1.1(v)) by tapping here.
           Semantics(
-            label: 'Open settings',
+            label: l10n?.homeOpenSettings ?? 'Open settings',
             button: true,
             child: GestureDetector(
               onTap: () => Navigator.of(context).push(

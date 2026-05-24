@@ -749,5 +749,21 @@
   "coachActionWaterLogged": "Eau enregistrée",
   "coachActionReminderSet": "Rappel défini",
   "coachActionTargetUpdated": "Objectif mis à jour",
-  "coachActionDone": "Terminé"
+  "coachActionDone": "Terminé",
+  "homeOpenSettings": "Ouvrir les réglages",
+  "homeAddFood": "Ajouter un repas",
+  "homeSeeAll": "Tout voir",
+  "homeMealNameQuestion": "Qu'as-tu mangé ?",
+  "homeCaloriesKcal": "Calories (kcal)",
+  "macroProteinG": "Protéines (g)",
+  "macroCarbsG": "Glucides (g)",
+  "macroFatG": "Lipides (g)",
+  "homeSaveMeal": "Enregistrer le repas",
+  "homeFoodNameRequired": "Le nom de l'aliment est requis",
+  "homeCaloriesRequired": "Saisis une valeur calorique (> 0)",
+  "homeSaveFailed": "Impossible d'enregistrer le repas.",
+  "homeWaterLogFailed": "Impossible d'enregistrer l'eau. Touche pour réessayer.",
+  "homePlannerCtaTitle": "Planifie ta semaine",
+  "homePlannerCtaSubtitle": "Voir les repas planifiés + liste de courses",
+  "homeNoMealsScanHint": "Touche \"Ajouter un repas\" ci-dessous pour enregistrer ton premier repas"
 }

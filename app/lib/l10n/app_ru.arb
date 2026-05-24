@@ -790,5 +790,21 @@
   "coachActionWaterLogged": "Вода записана",
   "coachActionReminderSet": "Напоминание установлено",
   "coachActionTargetUpdated": "Цель обновлена",
-  "coachActionDone": "Готово"
+  "coachActionDone": "Готово",
+  "homeOpenSettings": "Открыть настройки",
+  "homeAddFood": "Добавить еду",
+  "homeSeeAll": "Показать все",
+  "homeMealNameQuestion": "Что ты ел(а)?",
+  "homeCaloriesKcal": "Калории (ккал)",
+  "macroProteinG": "Белки (г)",
+  "macroCarbsG": "Углеводы (г)",
+  "macroFatG": "Жиры (г)",
+  "homeSaveMeal": "Сохранить приём пищи",
+  "homeFoodNameRequired": "Укажите название еды",
+  "homeCaloriesRequired": "Введите значение калорий (> 0)",
+  "homeSaveFailed": "Не удалось сохранить приём пищи.",
+  "homeWaterLogFailed": "Не удалось записать воду. Нажми, чтобы повторить.",
+  "homePlannerCtaTitle": "Спланируй неделю",
+  "homePlannerCtaSubtitle": "Планы питания + список покупок",
+  "homeNoMealsScanHint": "Нажми \"Добавить еду\" ниже, чтобы записать первый приём пищи"
 }

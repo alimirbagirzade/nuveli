@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/water_weekly.dart';
 
 /// Compact 7-day water bar chart that sits under the WaterQuickCard
@@ -22,6 +24,7 @@ class WaterWeeklyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
@@ -37,9 +40,9 @@ class WaterWeeklyChart extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
-                'This week',
-                style: TextStyle(
+              Text(
+                l10n?.homeThisWeek ?? 'This week',
+                style: const TextStyle(
                   color: _labelColor,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -73,7 +76,7 @@ class WaterWeeklyChart extends StatelessWidget {
                   (d) => Expanded(
                     child: Center(
                       child: Text(
-                        _weekdayLabel(d.day),
+                        _weekdayLabel(context, d.day),
                         style: TextStyle(
                           color: d.isToday
                               ? _barColorToday
@@ -94,10 +97,10 @@ class WaterWeeklyChart extends StatelessWidget {
     );
   }
 
-  static String _weekdayLabel(DateTime d) {
-    // Use the host locale's short-weekday convention. Days are 1=Mon..7=Sun.
-    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return labels[(d.weekday - 1).clamp(0, 6)];
+  static String _weekdayLabel(BuildContext context, DateTime d) {
+    // Localized short weekday name (Mon/Mon/Lun/…) for the active locale.
+    final locale = Localizations.localeOf(context).toString();
+    return DateFormat.E(locale).format(d);
   }
 }
 

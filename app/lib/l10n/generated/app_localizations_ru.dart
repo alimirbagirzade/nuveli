@@ -1993,4 +1993,54 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get coachActionDone => 'Готово';
+
+  @override
+  String get homeOpenSettings => 'Открыть настройки';
+
+  @override
+  String get homeAddFood => 'Добавить еду';
+
+  @override
+  String get homeSeeAll => 'Показать все';
+
+  @override
+  String get homeMealNameQuestion => 'Что ты ел(а)?';
+
+  @override
+  String get homeCaloriesKcal => 'Калории (ккал)';
+
+  @override
+  String get macroProteinG => 'Белки (г)';
+
+  @override
+  String get macroCarbsG => 'Углеводы (г)';
+
+  @override
+  String get macroFatG => 'Жиры (г)';
+
+  @override
+  String get homeSaveMeal => 'Сохранить приём пищи';
+
+  @override
+  String get homeFoodNameRequired => 'Укажите название еды';
+
+  @override
+  String get homeCaloriesRequired => 'Введите значение калорий (> 0)';
+
+  @override
+  String get homeSaveFailed => 'Не удалось сохранить приём пищи.';
+
+  @override
+  String get homeWaterLogFailed =>
+      'Не удалось записать воду. Нажми, чтобы повторить.';
+
+  @override
+  String get homePlannerCtaTitle => 'Спланируй неделю';
+
+  @override
+  String get homePlannerCtaSubtitle => 'Планы питания + список покупок';
+
+  @override
+  String get homeNoMealsScanHint =>
+      'Нажми \"Добавить еду\" ниже, чтобы записать первый приём пищи';
 }
