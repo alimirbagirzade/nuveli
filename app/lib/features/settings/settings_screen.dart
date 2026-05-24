@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/i18n/language_provider.dart';
 import '../../core/network/api_exception.dart';
+import '../../core/network/authed_dio_provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../auth/providers/auth_provider.dart';
@@ -295,11 +296,11 @@ String _languageLabel(AppLocalizations? l10n, AppLanguage lang) {
   return lang.label; // native name (Türkçe, English, Deutsch, …)
 }
 
-class _LanguageTile extends StatelessWidget {
+class _LanguageTile extends ConsumerWidget {
   const _LanguageTile();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     return ValueListenableBuilder<AppLanguage>(
       valueListenable: globalLanguageNotifier,
@@ -316,13 +317,17 @@ class _LanguageTile extends StatelessWidget {
             style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
           ),
           trailing: const Icon(Icons.chevron_right, color: Color(0xFF8FA0B8)),
-          onTap: () => _showPicker(context, current),
+          onTap: () => _showPicker(context, ref, current),
         );
       },
     );
   }
 
-  Future<void> _showPicker(BuildContext context, AppLanguage current) async {
+  Future<void> _showPicker(
+    BuildContext context,
+    WidgetRef ref,
+    AppLanguage current,
+  ) async {
     final selected = await showModalBottomSheet<AppLanguage>(
       context: context,
       backgroundColor: const Color(0xFF142346),
@@ -372,7 +377,14 @@ class _LanguageTile extends StatelessWidget {
       },
     );
     if (selected != null) {
-      await changeLanguage(selected);
+      // Grab dio before any async gap.
+      final dio = ref.read(authedDioProvider);
+      await changeLanguage(
+        selected,
+        patchBackend: (code) async {
+          await dio.patch<void>('/me', data: {'language': code});
+        },
+      );
     }
   }
 }
