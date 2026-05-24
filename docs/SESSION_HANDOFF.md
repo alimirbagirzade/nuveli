@@ -12,6 +12,20 @@
 
 ## Şu anda neredeyiz
 
+> **GECE BATCH (2026-05-25, otonom) — v1.6.0+23 main'de:**
+> - **Full 7-dil UI i18n** + **Settings dil seçici** (v1.5.0+22). iOS sim'de Türkçe gözle doğrulandı.
+> - **AI insight artık kullanıcı diline göre** (backend prompt; `profiles.language` + PATCH /me; dil değişince Flutter PATCH'liyor).
+> - **Cron hataları Sentry'ye** gidiyor (`capture_exception`).
+> - **Recipe browser** (meal planner, empty-safe) + **bildirim-tap → tab navigasyonu** (minimal, go_router yok).
+> - i18n artıkları temizlendi. Release siyah-ekran fix'i (boş RC_APPLE_KEY guard).
+> - Testler: 503 flutter / 155 pytest / analyze temiz. Yeni APK: `app/build/app/outputs/flutter-apk/app-release.apk` (RC **test** key gömülü).
+>
+> **⚠️ ELLE YAPILACAK (prod):** `020_profiles_language_column.sql` (== supabase `019_...`) **prod Supabase'e uygulanmalı** — yoksa insight İngilizce kalır (kod drift-safe, kırılmaz). Supabase Dashboard → SQL Editor.
+> **Pas geçilen (Ali dedi):** iOS Apple Developer ($99) + Paywall RC/Play ürün config (şu an RC Test Store key).
+> **Donanım bekleyen:** gerçek Android cihaz QA + FCM push real-device (kablo data taşımadı; APK Telegram'la kurulacak).
+
+## Şu anda neredeyiz
+
 **Sprint A + canlı QA + Coach pipeline + Profile edit + mood-bubble hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix + lokal mood-bubble katmanı + app-wide i18n aktivasyonu main'de. Debug exc leak revert edildi (launch blocker kapalı). Meal Planner write side (F4 v0.1) shipped. v1.0.0+2 → v1.3.0+19.
 
 > **Bu session (2026-05-24 PM) eklendi:** mood-bubble (#1) shipped + i18n aktive edildi (v1.2.0+17) ve debug exc leak revert edildi (#2, v1.2.1+18 — launch blocker kapandı). Bir sonraki öncelik artık #3 (Settings tab QA) / #4 (cihaz QA).
