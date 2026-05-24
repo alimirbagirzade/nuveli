@@ -3689,6 +3689,126 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Rusça'**
   String get settingsLanguageRussian;
+
+  /// Coach: coachTodaysTips
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünün ipuçları'**
+  String get coachTodaysTips;
+
+  /// Coach: coachNutritionScore
+  ///
+  /// In tr, this message translates to:
+  /// **'Beslenme puanı'**
+  String get coachNutritionScore;
+
+  /// Coach: coachScoreHigh
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlam bir gün — böyle devam.'**
+  String get coachScoreHigh;
+
+  /// Coach: coachScoreMid
+  ///
+  /// In tr, this message translates to:
+  /// **'Çoğunlukla yolunda. Küçük bir ayar çok şey değiştirir.'**
+  String get coachScoreMid;
+
+  /// Coach: coachScoreMixed
+  ///
+  /// In tr, this message translates to:
+  /// **'Karışık sinyaller — bugün tek bir şeye odaklanalım.'**
+  String get coachScoreMixed;
+
+  /// Coach: coachScoreReset
+  ///
+  /// In tr, this message translates to:
+  /// **'Nazik bir sıfırlama iyi gelir. Aşağıdan bir ipucu seç.'**
+  String get coachScoreReset;
+
+  /// Coach: coachOfflineTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Koç çevrimdışı'**
+  String get coachOfflineTitle;
+
+  /// Coach: coachRegenerate
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenile'**
+  String get coachRegenerate;
+
+  /// Coach: coachRegenerateUpgrade
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenilemek için yükselt'**
+  String get coachRegenerateUpgrade;
+
+  /// Coach: coachRegenerateFree
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenile (günde 1 ücretsiz)'**
+  String get coachRegenerateFree;
+
+  /// Coach: coachScoreExcellent
+  ///
+  /// In tr, this message translates to:
+  /// **'Mükemmel'**
+  String get coachScoreExcellent;
+
+  /// Coach: coachScoreOnTrack
+  ///
+  /// In tr, this message translates to:
+  /// **'Yolunda'**
+  String get coachScoreOnTrack;
+
+  /// Coach: coachScoreImprove
+  ///
+  /// In tr, this message translates to:
+  /// **'Gelişebilir'**
+  String get coachScoreImprove;
+
+  /// Coach: coachScoreNeedsCare
+  ///
+  /// In tr, this message translates to:
+  /// **'Özen gerek'**
+  String get coachScoreNeedsCare;
+
+  /// Coach: coachRecommendedStep
+  ///
+  /// In tr, this message translates to:
+  /// **'Önerilen sonraki adım'**
+  String get coachRecommendedStep;
+
+  /// Coach: coachActionHabitAdded
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışkanlık eklendi'**
+  String get coachActionHabitAdded;
+
+  /// Coach: coachActionWaterLogged
+  ///
+  /// In tr, this message translates to:
+  /// **'Su eklendi'**
+  String get coachActionWaterLogged;
+
+  /// Coach: coachActionReminderSet
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatıcı ayarlandı'**
+  String get coachActionReminderSet;
+
+  /// Coach: coachActionTargetUpdated
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef güncellendi'**
+  String get coachActionTargetUpdated;
+
+  /// Coach: coachActionDone
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamam'**
+  String get coachActionDone;
 }
 
 class _AppLocalizationsDelegate

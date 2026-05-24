@@ -1927,4 +1927,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsLanguageRussian => 'Ruso';
+
+  @override
+  String get coachTodaysTips => 'Consejos de hoy';
+
+  @override
+  String get coachNutritionScore => 'Puntuación nutricional';
+
+  @override
+  String get coachScoreHigh => 'Buen día — sigue así.';
+
+  @override
+  String get coachScoreMid =>
+      'Casi en el camino. Un pequeño ajuste ayuda mucho.';
+
+  @override
+  String get coachScoreMixed => 'Señales mixtas — centrémonos en una cosa hoy.';
+
+  @override
+  String get coachScoreReset =>
+      'Un reinicio suave ayudaría. Elige un consejo abajo.';
+
+  @override
+  String get coachOfflineTitle => 'El coach está desconectado';
+
+  @override
+  String get coachRegenerate => 'Regenerar';
+
+  @override
+  String get coachRegenerateUpgrade => 'Mejora para regenerar';
+
+  @override
+  String get coachRegenerateFree => 'Regenerar (1 gratis/día)';
+
+  @override
+  String get coachScoreExcellent => 'Excelente';
+
+  @override
+  String get coachScoreOnTrack => 'En camino';
+
+  @override
+  String get coachScoreImprove => 'Puede mejorar';
+
+  @override
+  String get coachScoreNeedsCare => 'Necesita atención';
+
+  @override
+  String get coachRecommendedStep => 'Siguiente paso recomendado';
+
+  @override
+  String get coachActionHabitAdded => 'Hábito añadido';
+
+  @override
+  String get coachActionWaterLogged => 'Agua registrada';
+
+  @override
+  String get coachActionReminderSet => 'Recordatorio configurado';
+
+  @override
+  String get coachActionTargetUpdated => 'Objetivo actualizado';
+
+  @override
+  String get coachActionDone => 'Hecho';
 }

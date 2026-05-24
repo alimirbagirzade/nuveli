@@ -1930,4 +1930,67 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsLanguageRussian => 'Русский';
+
+  @override
+  String get coachTodaysTips => 'Советы на сегодня';
+
+  @override
+  String get coachNutritionScore => 'Оценка питания';
+
+  @override
+  String get coachScoreHigh => 'Отличный день — продолжай в том же духе.';
+
+  @override
+  String get coachScoreMid =>
+      'В целом по плану. Небольшая поправка многое изменит.';
+
+  @override
+  String get coachScoreMixed =>
+      'Смешанные сигналы — сосредоточимся сегодня на одном.';
+
+  @override
+  String get coachScoreReset =>
+      'Поможет мягкая перезагрузка. Выбери совет ниже.';
+
+  @override
+  String get coachOfflineTitle => 'Тренер офлайн';
+
+  @override
+  String get coachRegenerate => 'Обновить';
+
+  @override
+  String get coachRegenerateUpgrade => 'Перейдите на Premium для обновления';
+
+  @override
+  String get coachRegenerateFree => 'Обновить (1 бесплатно/день)';
+
+  @override
+  String get coachScoreExcellent => 'Отлично';
+
+  @override
+  String get coachScoreOnTrack => 'По плану';
+
+  @override
+  String get coachScoreImprove => 'Можно лучше';
+
+  @override
+  String get coachScoreNeedsCare => 'Нужна забота';
+
+  @override
+  String get coachRecommendedStep => 'Рекомендуемый следующий шаг';
+
+  @override
+  String get coachActionHabitAdded => 'Привычка добавлена';
+
+  @override
+  String get coachActionWaterLogged => 'Вода записана';
+
+  @override
+  String get coachActionReminderSet => 'Напоминание установлено';
+
+  @override
+  String get coachActionTargetUpdated => 'Цель обновлена';
+
+  @override
+  String get coachActionDone => 'Готово';
 }

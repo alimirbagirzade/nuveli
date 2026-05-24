@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/ai_insight.dart';
 import '../providers/coach_actions_controller.dart';
 
@@ -23,6 +24,7 @@ class RecommendedActionButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final phase = ref.watch(coachActionsControllerProvider).phase;
     final isApplying = phase == CoachActionPhase.applyingTip;
+    final l10n = AppLocalizations.of(context);
 
     ref.listen<CoachActionState>(coachActionsControllerProvider, (prev, next) {
       if (prev?.lastAppliedAction != next.lastAppliedAction &&
@@ -34,7 +36,7 @@ class RecommendedActionButton extends ConsumerWidget {
               backgroundColor: AppColors.success,
               behavior: SnackBarBehavior.floating,
               content: Text(
-                _confirmationFor(next.lastAppliedAction!),
+                _confirmationFor(l10n, next.lastAppliedAction!),
                 style: const TextStyle(color: Colors.white),
               ),
             ),
@@ -52,14 +54,14 @@ class RecommendedActionButton extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.auto_awesome_rounded,
+              const Icon(Icons.auto_awesome_rounded,
                   color: AppColors.primary, size: 16),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Text(
-                'Recommended next step',
-                style: TextStyle(
+                l10n?.coachRecommendedStep ?? 'Recommended next step',
+                style: const TextStyle(
                   color: AppColors.primary,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
@@ -119,18 +121,18 @@ class RecommendedActionButton extends ConsumerWidget {
     );
   }
 
-  static String _confirmationFor(String actionTaken) {
+  static String _confirmationFor(AppLocalizations? l10n, String actionTaken) {
     switch (actionTaken) {
       case 'add_habit':
-        return 'Habit added';
+        return l10n?.coachActionHabitAdded ?? 'Habit added';
       case 'log_water':
-        return 'Water logged';
+        return l10n?.coachActionWaterLogged ?? 'Water logged';
       case 'adjust_reminder':
-        return 'Reminder set';
+        return l10n?.coachActionReminderSet ?? 'Reminder set';
       case 'increase_target':
-        return 'Target updated';
+        return l10n?.coachActionTargetUpdated ?? 'Target updated';
       default:
-        return 'Done';
+        return l10n?.coachActionDone ?? 'Done';
     }
   }
 }
