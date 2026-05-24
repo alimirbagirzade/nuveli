@@ -6,6 +6,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 import '../models/weight_goal.dart';
 import '../providers/profile_actions.dart';
@@ -88,23 +89,28 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
   }
 
   Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
     final target = double.tryParse(_targetCtrl.text.replaceAll(',', '.'));
     final start = double.tryParse(_startCtrl.text.replaceAll(',', '.'));
 
     if (target == null || target < 20 || target > 400) {
-      setState(() => _error = 'Enter a target weight between 20 and 400 kg');
+      setState(() => _error = l10n?.profileGoalErrorTarget ??
+          'Enter a target weight between 20 and 400 kg');
       return;
     }
     if (start == null || start < 20 || start > 400) {
-      setState(() => _error = 'Enter a starting weight between 20 and 400 kg');
+      setState(() => _error = l10n?.profileGoalErrorStart ??
+          'Enter a starting weight between 20 and 400 kg');
       return;
     }
     if (_direction == WeightGoalDirection.lose && target >= start) {
-      setState(() => _error = 'Target should be lower than starting weight');
+      setState(() => _error = l10n?.profileGoalErrorLoseLower ??
+          'Target should be lower than starting weight');
       return;
     }
     if (_direction == WeightGoalDirection.gain && target <= start) {
-      setState(() => _error = 'Target should be higher than starting weight');
+      setState(() => _error = l10n?.profileGoalErrorGainHigher ??
+          'Target should be higher than starting weight');
       return;
     }
 
@@ -124,7 +130,8 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
       if (mounted) {
         setState(() {
           _submitting = false;
-          _error = 'Could not save. Check your connection and try again.';
+          _error = l10n?.profileGoalSaveError ??
+              'Could not save. Check your connection and try again.';
         });
       }
     }
@@ -132,6 +139,7 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Padding(
@@ -163,7 +171,7 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
                 ),
                 const SizedBox(height: AppSpacing.s16),
                 Text(
-                  'Set your weight goal',
+                  l10n?.profileSetWeightGoalTitle ?? 'Set your weight goal',
                   style: AppTypography.sectionTitle.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -171,7 +179,8 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
                 ),
                 const SizedBox(height: AppSpacing.s4),
                 Text(
-                  'We\'ll track your progress and adjust suggestions.',
+                  l10n?.profileSetWeightGoalSubtitle ??
+                      'We\'ll track your progress and adjust suggestions.',
                   style: AppTypography.body.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -180,7 +189,7 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
 
                 // Direction selector
                 Text(
-                  'GOAL TYPE',
+                  l10n?.profileGoalType ?? 'GOAL TYPE',
                   style: AppTypography.caption.copyWith(
                     color: AppColors.textSecondary,
                     letterSpacing: 0.8,
@@ -190,12 +199,13 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
                 _DirectionSelector(
                   current: _direction,
                   onChanged: _onDirectionChange,
+                  l10n: l10n,
                 ),
                 const SizedBox(height: AppSpacing.s16),
 
                 // Starting weight
                 _NumberField(
-                  label: 'Starting weight',
+                  label: l10n?.profileStartingWeight ?? 'Starting weight',
                   controller: _startCtrl,
                   suffix: 'kg',
                 ),
@@ -204,8 +214,8 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
                 // Target weight
                 _NumberField(
                   label: _direction == WeightGoalDirection.maintain
-                      ? 'Maintain weight at'
-                      : 'Target weight',
+                      ? (l10n?.profileMaintainWeightAt ?? 'Maintain weight at')
+                      : (l10n?.profileTargetWeight ?? 'Target weight'),
                   controller: _targetCtrl,
                   suffix: 'kg',
                 ),
@@ -213,9 +223,10 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
 
                 // Target date
                 _DateField(
-                  label: 'Target date',
+                  label: l10n?.profileTargetDate ?? 'Target date',
                   value: _targetDate,
                   onTap: _pickDate,
+                  l10n: l10n,
                 ),
 
                 if (_error != null) ...[
@@ -255,7 +266,7 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
                             ),
                           )
                         : Text(
-                            'Save goal',
+                            l10n?.profileSaveGoal ?? 'Save goal',
                             style: AppTypography.cardTitle.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -270,7 +281,7 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
                         ? null
                         : () => Navigator.of(context).pop(),
                     child: Text(
-                      'Cancel',
+                      l10n?.commonCancel ?? 'Cancel',
                       style: AppTypography.body.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -289,8 +300,13 @@ class _SetWeightGoalSheetState extends ConsumerState<SetWeightGoalSheet> {
 class _DirectionSelector extends StatelessWidget {
   final WeightGoalDirection current;
   final ValueChanged<WeightGoalDirection> onChanged;
+  final AppLocalizations? l10n;
 
-  const _DirectionSelector({required this.current, required this.onChanged});
+  const _DirectionSelector({
+    required this.current,
+    required this.onChanged,
+    this.l10n,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -304,19 +320,19 @@ class _DirectionSelector extends StatelessWidget {
       child: Row(
         children: [
           _Tab(
-            label: 'Lose',
+            label: l10n?.profileGoalLose ?? 'Lose',
             icon: Icons.trending_down_rounded,
             selected: current == WeightGoalDirection.lose,
             onTap: () => onChanged(WeightGoalDirection.lose),
           ),
           _Tab(
-            label: 'Maintain',
+            label: l10n?.profileGoalMaintain ?? 'Maintain',
             icon: Icons.trending_flat_rounded,
             selected: current == WeightGoalDirection.maintain,
             onTap: () => onChanged(WeightGoalDirection.maintain),
           ),
           _Tab(
-            label: 'Gain',
+            label: l10n?.profileGoalGain ?? 'Gain',
             icon: Icons.trending_up_rounded,
             selected: current == WeightGoalDirection.gain,
             onTap: () => onChanged(WeightGoalDirection.gain),
@@ -449,11 +465,13 @@ class _DateField extends StatelessWidget {
   final String label;
   final DateTime? value;
   final VoidCallback onTap;
+  final AppLocalizations? l10n;
 
   const _DateField({
     required this.label,
     required this.value,
     required this.onTap,
+    this.l10n,
   });
 
   String _format(DateTime d) {
@@ -493,7 +511,9 @@ class _DateField extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    value == null ? 'Choose a date' : _format(value!),
+                    value == null
+                        ? (l10n?.profileChooseDate ?? 'Choose a date')
+                        : _format(value!),
                     style: AppTypography.cardTitle.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

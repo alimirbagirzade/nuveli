@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 import '../models/user_profile.dart';
 
@@ -22,6 +23,7 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.s24,
@@ -37,14 +39,15 @@ class ProfileHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Hi, ${profile.displayName}',
+                  l10n?.profileGreeting(profile.displayName) ??
+                      'Hi, ${profile.displayName}',
                   style: AppTypography.body.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.s4),
                 Text(
-                  'Your Goals',
+                  l10n?.profileYourGoals ?? 'Your Goals',
                   style: AppTypography.sectionTitle.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.w700,

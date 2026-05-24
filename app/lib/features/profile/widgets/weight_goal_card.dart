@@ -4,6 +4,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 import '../models/weight_goal.dart';
 import '../models/weight_trend.dart';
@@ -26,6 +27,7 @@ class WeightGoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final progress = (goal.progressPercent.clamp(0, 100)) / 100.0;
 
     return GestureDetector(
@@ -61,7 +63,7 @@ class WeightGoalCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.s8),
                 Expanded(
                   child: Text(
-                    'Weight Goal',
+                    l10n?.profileWeightGoal ?? 'Weight Goal',
                     style: AppTypography.caption.copyWith(
                       color: AppColors.textSecondary,
                       letterSpacing: 0.6,
@@ -132,7 +134,10 @@ class WeightGoalCard extends StatelessWidget {
                 height: 40,
                 alignment: Alignment.center,
                 child: Text(
-                  trend == null ? '—' : 'Log weight to see trend',
+                  trend == null
+                      ? '—'
+                      : (l10n?.profileLogWeightToSeeTrend ??
+                          'Log weight to see trend'),
                   style: AppTypography.caption.copyWith(
                     color: AppColors.textTertiary,
                   ),
@@ -145,7 +150,9 @@ class WeightGoalCard extends StatelessWidget {
             _ProgressBar(value: progress),
             const SizedBox(height: AppSpacing.s4),
             Text(
-              '${goal.progressPercent.toStringAsFixed(0)}% complete',
+              l10n?.profileProgressPercent(
+                      goal.progressPercent.toStringAsFixed(0)) ??
+                  '${goal.progressPercent.toStringAsFixed(0)}% complete',
               style: AppTypography.caption.copyWith(
                 color: AppColors.textTertiary,
               ),
@@ -170,6 +177,7 @@ class SetWeightGoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -200,7 +208,7 @@ class SetWeightGoalCard extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.s12),
             Text(
-              'Set your\nweight goal',
+              l10n?.profileSetWeightGoal ?? 'Set your\nweight goal',
               style: AppTypography.cardTitle.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -209,7 +217,7 @@ class SetWeightGoalCard extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.s4),
             Text(
-              'Tap to start tracking',
+              l10n?.profileTapToStartTracking ?? 'Tap to start tracking',
               style: AppTypography.caption.copyWith(
                 color: AppColors.textSecondary,
               ),

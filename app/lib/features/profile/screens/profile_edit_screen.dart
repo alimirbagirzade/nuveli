@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/user_profile.dart';
 import '../providers/profile_actions.dart';
 
@@ -146,14 +147,15 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
     try {
       await ref.read(profileActionsProvider).updateProfile(patch);
       if (!mounted) return;
+      final l10nSnack = AppLocalizations.of(context);
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
-        ..showSnackBar(const SnackBar(
+        ..showSnackBar(SnackBar(
           backgroundColor: AppColors.success,
           behavior: SnackBarBehavior.floating,
           content: Text(
-            'Profile updated',
-            style: TextStyle(color: Colors.white),
+            l10nSnack?.profileEditUpdated ?? 'Profile updated',
+            style: const TextStyle(color: Colors.white),
           ),
         ));
       Navigator.of(context).pop(true);
@@ -174,9 +176,9 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Edit profile',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)?.profileEditTitle ?? 'Edit profile',
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -194,13 +196,14 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 _ErrorBanner(message: _error!),
                 const SizedBox(height: 12),
               ],
-              const _Label('Name'),
+              _Label(AppLocalizations.of(context)?.profileEditName ?? 'Name'),
               _TextField(
                 controller: _nameCtl,
-                hintText: 'Your name',
+                hintText: AppLocalizations.of(context)?.profileEditNameHint ??
+                    'Your name',
               ),
               const SizedBox(height: 14),
-              const _Label('Sex'),
+              _Label(AppLocalizations.of(context)?.profileEditSex ?? 'Sex'),
               _ChoiceChips(
                 value: _sex,
                 options: _sexes,
@@ -208,8 +211,9 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 onChanged: (v) => setState(() => _sex = v),
               ),
               const SizedBox(height: 14),
-              const _Label('Date of birth'),
-              _DateField(value: _dob, onTap: _pickDob),
+              _Label(AppLocalizations.of(context)?.profileEditDob ??
+                  'Date of birth'),
+              _DateField(value: _dob, onTap: _pickDob, l10n: AppLocalizations.of(context)),
               const SizedBox(height: 14),
               Row(
                 children: [
@@ -217,7 +221,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const _Label('Height (cm)'),
+                        _Label(AppLocalizations.of(context)?.profileEditHeightCm ?? 'Height (cm)'),
                         _TextField(
                           controller: _heightCtl,
                           hintText: '170',
@@ -243,7 +247,7 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const _Label('Weight (kg)'),
+                        _Label(AppLocalizations.of(context)?.profileEditWeightKg ?? 'Weight (kg)'),
                         _TextField(
                           controller: _weightCtl,
                           hintText: '70',
@@ -267,7 +271,8 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 ],
               ),
               const SizedBox(height: 14),
-              const _Label('Activity level'),
+              _Label(AppLocalizations.of(context)?.profileEditActivityLevel ??
+                  'Activity level'),
               _DropdownField(
                 value: _activity,
                 options: _activities,
@@ -275,7 +280,8 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                 onChanged: (v) => setState(() => _activity = v),
               ),
               const SizedBox(height: 14),
-              const _Label('Dietary preference'),
+              _Label(AppLocalizations.of(context)?.profileEditDietaryPref ??
+                  'Dietary preference'),
               _DropdownField(
                 value: _diet,
                 options: _diets,
@@ -304,9 +310,10 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                                 AlwaysStoppedAnimation(Colors.white),
                           ),
                         )
-                      : const Text(
-                          'Save changes',
-                          style: TextStyle(
+                      : Text(
+                          AppLocalizations.of(context)?.mealScanSaveChanges ??
+                              'Save changes',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -450,9 +457,10 @@ class _ChoiceChips extends StatelessWidget {
 }
 
 class _DateField extends StatelessWidget {
-  const _DateField({required this.value, required this.onTap});
+  const _DateField({required this.value, required this.onTap, this.l10n});
   final DateTime? value;
   final VoidCallback onTap;
+  final AppLocalizations? l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -473,7 +481,7 @@ class _DateField extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               value == null
-                  ? 'Select date'
+                  ? (l10n?.profileEditSelectDate ?? 'Select date')
                   : '${value!.year}-${value!.month.toString().padLeft(2, '0')}-${value!.day.toString().padLeft(2, '0')}',
               style: TextStyle(
                 color: value == null ? const Color(0xFF6E7B91) : Colors.white,

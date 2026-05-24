@@ -916,5 +916,174 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyticsTitle": "Analysen",
+  "analyticsSubtitle": "Deine Woche auf einen Blick",
+  "analyticsErrorWeeklyBars": "Wochenbars konnten nicht geladen werden",
+  "analyticsErrorMacroBreakdown": "Makroaufschlüsselung konnte nicht geladen werden",
+  "analyticsErrorWeightTrend": "Gewichtstrend konnte nicht geladen werden",
+  "analyticsLast7Days": "Letzte 7 Tage",
+  "analyticsDaysOnTarget": "{n}/7 Tage im Zielbereich",
+  "@analyticsDaysOnTarget": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsKcalAvg": "{avg} kcal Ø",
+  "@analyticsKcalAvg": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "analyticsTarget": "· Ziel {target}",
+  "@analyticsTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeeklyEmpty": "Trage einige Mahlzeiten ein, um deinen Wochentrend zu sehen",
+  "analyticsMacroBreakdown": "Makro-Aufschlüsselung",
+  "analytics7DayAverage": "7-Tage-Durchschnitt",
+  "analyticsMacroEmpty": "Die Makro-Aufschlüsselung erscheint, sobald du eine Mahlzeit einträgst",
+  "analyticsMacroProtein": "Protein",
+  "analyticsMacroCarbs": "Kohlenhydrate",
+  "analyticsMacroFat": "Fett",
+  "analyticsWeightTrend": "Gewichtstrend",
+  "analyticsWeightTrendDays": "{n} Tage",
+  "@analyticsWeightTrendDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeightTrendEmpty": "Trage dein Gewicht ein, um den Trend zu sehen",
+  "profileGreeting": "Hallo, {name}",
+  "@profileGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileYourGoals": "Deine Ziele",
+  "profileCouldNotLoad": "Konnte nicht geladen werden",
+  "profileCouldNotLoadSection": "Dieser Abschnitt konnte nicht geladen werden",
+  "profileLogWeight": "Gewicht erfassen",
+  "profileDailyTarget": "Tagesziel",
+  "profileKcalLeftToday": "Noch {n} kcal heute",
+  "@profileKcalLeftToday": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDailyTargetReached": "Tagesziel erreicht",
+  "profileStreak": "Serie",
+  "profileStreakDays": " Tage",
+  "profileStreakKeepGoing": "Weiter so!",
+  "profileStreakStartToday": "Trage heute eine Mahlzeit ein, um zu starten",
+  "profileCaloriesVsTarget": "Kalorien vs. Ziel",
+  "profileProgressLast7Days": "Letzte 7 Tage",
+  "profileAvg": "Ø",
+  "profileWithinTarget": "Im Zielbereich",
+  "profileOffTarget": "Außerhalb des Ziels",
+  "profileDaysHit": "{n}/7 Tage Ziel erreicht",
+  "@profileDaysHit": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileProgressNoData": "Noch keine Daten",
+  "profileProgressNoDataHint": "Trage einige Tage lang Mahlzeiten ein, dann erscheint dein Trend hier.",
+  "profileRecommendedTitle": "Empfehlungen für dich",
+  "profileRecommendedSubtitle": "Personalisierte Tipps, die dir helfen, deine Ziele zu erreichen",
+  "profileRec1Title": "Trinke Wasser vor den Mahlzeiten",
+  "profileRec1Desc": "Hilft bei der Portionskontrolle und Hydration.",
+  "profileRec2Title": "Füge einen 30-Minuten-Spaziergang hinzu",
+  "profileRec2Desc": "Einfache Möglichkeit, deinen täglichen TDEE zu erreichen.",
+  "profileRec3Title": "7–8 Stunden schlafen",
+  "profileRec3Desc": "Bessere Erholung, bessere Hungerkontrolle.",
+  "profileWeightGoal": "Gewichtsziel",
+  "profileLogWeightToSeeTrend": "Gewicht erfassen, um Trend zu sehen",
+  "profileProgressPercent": "{n} % abgeschlossen",
+  "@profileProgressPercent": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileSetWeightGoal": "Lege dein\nGewichtsziel fest",
+  "profileTapToStartTracking": "Tippe, um mit dem Tracking zu beginnen",
+  "profileSetWeightGoalTitle": "Setze dein Gewichtsziel",
+  "profileSetWeightGoalSubtitle": "Wir verfolgen deinen Fortschritt und passen Vorschläge an.",
+  "profileGoalType": "ZIELTYP",
+  "profileGoalLose": "Abnehmen",
+  "profileGoalMaintain": "Halten",
+  "profileGoalGain": "Zunehmen",
+  "profileStartingWeight": "Startgewicht",
+  "profileTargetWeight": "Zielgewicht",
+  "profileMaintainWeightAt": "Gewicht halten bei",
+  "profileTargetDate": "Zieldatum",
+  "profileChooseDate": "Datum auswählen",
+  "profileSaveGoal": "Ziel speichern",
+  "profileGoalErrorTarget": "Gib ein Zielgewicht zwischen 20 und 400 kg ein",
+  "profileGoalErrorStart": "Gib ein Startgewicht zwischen 20 und 400 kg ein",
+  "profileGoalErrorLoseLower": "Das Zielgewicht sollte niedriger als das Startgewicht sein",
+  "profileGoalErrorGainHigher": "Das Zielgewicht sollte höher als das Startgewicht sein",
+  "profileGoalSaveError": "Konnte nicht gespeichert werden. Überprüfe deine Verbindung und versuche es erneut.",
+  "profileLogWeightTitle": "Gewicht erfassen",
+  "profileLogWeightSubtitle": "Verfolge deinen Fortschritt in Richtung deines Ziels",
+  "profileWeightLabel": "Gewicht",
+  "profileWeightNoteOptional": "Notiz (optional)",
+  "profileWeightNoteHint": "Nach dem Training, morgens usw.",
+  "profileWeightError": "Gib ein Gewicht zwischen 20 und 400 kg ein",
+  "profileSaveWeight": "Gewicht speichern",
+  "profileWeightSaving": "{kg} kg wird gespeichert...",
+  "@profileWeightSaving": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaved": "Gewicht gespeichert ({kg} kg)",
+  "@profileWeightSaved": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaveFailed": "{kg} kg konnte nicht gespeichert werden",
+  "@profileWeightSaveFailed": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSavedShort": "Gewicht gespeichert",
+  "profileWeightStillFailed": "Immer noch nicht gespeichert",
+  "profileEditTitle": "Profil bearbeiten",
+  "profileEditName": "Name",
+  "profileEditNameHint": "Dein Name",
+  "profileEditSex": "Geschlecht",
+  "profileEditDob": "Geburtsdatum",
+  "profileEditSelectDate": "Datum auswählen",
+  "profileEditHeightCm": "Größe (cm)",
+  "profileEditWeightKg": "Gewicht (kg)",
+  "profileEditActivityLevel": "Aktivitätsniveau",
+  "profileEditDietaryPref": "Ernährungspräferenz",
+  "profileEditUpdated": "Profil aktualisiert"
 }

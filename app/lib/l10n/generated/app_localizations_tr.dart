@@ -2310,4 +2310,314 @@ class AppLocalizationsTr extends AppLocalizations {
   String plannerGroceryUsedIn(int n) {
     return '$n tarifte kullanıldı';
   }
+
+  @override
+  String get analyticsTitle => 'Analizler';
+
+  @override
+  String get analyticsSubtitle => 'Haftana bir bakış';
+
+  @override
+  String get analyticsErrorWeeklyBars => 'Haftalık çubuklar yüklenemedi';
+
+  @override
+  String get analyticsErrorMacroBreakdown => 'Makro dağılımı yüklenemedi';
+
+  @override
+  String get analyticsErrorWeightTrend => 'Kilo trendi yüklenemedi';
+
+  @override
+  String get analyticsLast7Days => 'Son 7 gün';
+
+  @override
+  String analyticsDaysOnTarget(int n) {
+    return '$n/7 gün hedefe ulaşıldı';
+  }
+
+  @override
+  String analyticsKcalAvg(String avg) {
+    return '$avg kcal ort.';
+  }
+
+  @override
+  String analyticsTarget(int target) {
+    return '· hedef $target';
+  }
+
+  @override
+  String get analyticsWeeklyEmpty =>
+      'Haftalık trendini görmek için birkaç öğün gir';
+
+  @override
+  String get analyticsMacroBreakdown => 'Makro dağılımı';
+
+  @override
+  String get analytics7DayAverage => '7 günlük ortalama';
+
+  @override
+  String get analyticsMacroEmpty =>
+      'Bir öğün girdiğinde makro dağılımı burada görünür';
+
+  @override
+  String get analyticsMacroProtein => 'Protein';
+
+  @override
+  String get analyticsMacroCarbs => 'Karbonhidrat';
+
+  @override
+  String get analyticsMacroFat => 'Yağ';
+
+  @override
+  String get analyticsWeightTrend => 'Kilo trendi';
+
+  @override
+  String analyticsWeightTrendDays(int n) {
+    return '$n gün';
+  }
+
+  @override
+  String get analyticsWeightTrendEmpty => 'Trendi görmek için kilonu gir';
+
+  @override
+  String profileGreeting(String name) {
+    return 'Merhaba, $name';
+  }
+
+  @override
+  String get profileYourGoals => 'Hedefleriniz';
+
+  @override
+  String get profileCouldNotLoad => 'Yüklenemedi';
+
+  @override
+  String get profileCouldNotLoadSection => 'Bu bölüm yüklenemedi';
+
+  @override
+  String get profileLogWeight => 'Kilo gir';
+
+  @override
+  String get profileDailyTarget => 'Günlük Hedef';
+
+  @override
+  String profileKcalLeftToday(String n) {
+    return 'Bugün $n kcal kaldı';
+  }
+
+  @override
+  String get profileDailyTargetReached => 'Günlük hedefe ulaşıldı';
+
+  @override
+  String get profileStreak => 'Seri';
+
+  @override
+  String get profileStreakDays => ' gün';
+
+  @override
+  String get profileStreakKeepGoing => 'Devam et!';
+
+  @override
+  String get profileStreakStartToday => 'Başlamak için bugün bir öğün gir';
+
+  @override
+  String get profileCaloriesVsTarget => 'Kalori - Hedef Karşılaştırması';
+
+  @override
+  String get profileProgressLast7Days => 'Son 7 gün';
+
+  @override
+  String get profileAvg => 'Ort.';
+
+  @override
+  String get profileWithinTarget => 'Hedef dahilinde';
+
+  @override
+  String get profileOffTarget => 'Hedef dışında';
+
+  @override
+  String profileDaysHit(int n) {
+    return '$n/7 gün hedefe ulaşıldı';
+  }
+
+  @override
+  String get profileProgressNoData => 'Henüz veri yok';
+
+  @override
+  String get profileProgressNoDataHint =>
+      'Birkaç gün yemek logladığında trend buraya gelir.';
+
+  @override
+  String get profileRecommendedTitle => 'Sana Özel Öneriler';
+
+  @override
+  String get profileRecommendedSubtitle =>
+      'Hedeflerine ulaşmanı sağlayacak kişiselleştirilmiş ipuçları';
+
+  @override
+  String get profileRec1Title => 'Yemeklerden önce su iç';
+
+  @override
+  String get profileRec1Desc =>
+      'Porsiyon kontrolü ve hidrasyona yardımcı olur.';
+
+  @override
+  String get profileRec2Title => '30 dakikalık yürüyüş ekle';
+
+  @override
+  String get profileRec2Desc => 'Günlük TDEE\'ne ulaşmanın kolay yolu.';
+
+  @override
+  String get profileRec3Title => '7–8 saat uy';
+
+  @override
+  String get profileRec3Desc => 'Daha iyi toparlanma, daha iyi açlık kontrolü.';
+
+  @override
+  String get profileWeightGoal => 'Kilo Hedefi';
+
+  @override
+  String get profileLogWeightToSeeTrend => 'Trendi görmek için kilo gir';
+
+  @override
+  String profileProgressPercent(String n) {
+    return '%$n tamamlandı';
+  }
+
+  @override
+  String get profileSetWeightGoal => 'Kilo\nhedefini belirle';
+
+  @override
+  String get profileTapToStartTracking => 'Takibe başlamak için dokun';
+
+  @override
+  String get profileSetWeightGoalTitle => 'Kilo hedefini belirle';
+
+  @override
+  String get profileSetWeightGoalSubtitle =>
+      'İlerlemenizi takip edip önerileri düzenleyeceğiz.';
+
+  @override
+  String get profileGoalType => 'HEDEF TÜRÜ';
+
+  @override
+  String get profileGoalLose => 'Kaybet';
+
+  @override
+  String get profileGoalMaintain => 'Koru';
+
+  @override
+  String get profileGoalGain => 'Kazan';
+
+  @override
+  String get profileStartingWeight => 'Başlangıç kilosu';
+
+  @override
+  String get profileTargetWeight => 'Hedef kilo';
+
+  @override
+  String get profileMaintainWeightAt => 'Kiloyu koru';
+
+  @override
+  String get profileTargetDate => 'Hedef tarihi';
+
+  @override
+  String get profileChooseDate => 'Tarih seç';
+
+  @override
+  String get profileSaveGoal => 'Hedefi kaydet';
+
+  @override
+  String get profileGoalErrorTarget =>
+      '20 ile 400 kg arasında bir hedef kilo girin';
+
+  @override
+  String get profileGoalErrorStart =>
+      '20 ile 400 kg arasında bir başlangıç kilosu girin';
+
+  @override
+  String get profileGoalErrorLoseLower =>
+      'Hedef, başlangıç kilosundan düşük olmalı';
+
+  @override
+  String get profileGoalErrorGainHigher =>
+      'Hedef, başlangıç kilosundan yüksek olmalı';
+
+  @override
+  String get profileGoalSaveError =>
+      'Kaydedilemedi. Bağlantınızı kontrol edip tekrar deneyin.';
+
+  @override
+  String get profileLogWeightTitle => 'Kilonu gir';
+
+  @override
+  String get profileLogWeightSubtitle =>
+      'Hedefinize doğru ilerlemenizi takip edin';
+
+  @override
+  String get profileWeightLabel => 'Kilo';
+
+  @override
+  String get profileWeightNoteOptional => 'Not (isteğe bağlı)';
+
+  @override
+  String get profileWeightNoteHint => 'Egzersiz sonrası, sabah, vb.';
+
+  @override
+  String get profileWeightError => '20 ile 400 kg arasında bir kilo girin';
+
+  @override
+  String get profileSaveWeight => 'Kiloyu kaydet';
+
+  @override
+  String profileWeightSaving(String kg) {
+    return '$kg kg kaydediliyor...';
+  }
+
+  @override
+  String profileWeightSaved(String kg) {
+    return 'Kilo kaydedildi ($kg kg)';
+  }
+
+  @override
+  String profileWeightSaveFailed(String kg) {
+    return '$kg kg kaydedilemedi';
+  }
+
+  @override
+  String get profileWeightSavedShort => 'Kilo kaydedildi';
+
+  @override
+  String get profileWeightStillFailed => 'Hâlâ kaydedilemedi';
+
+  @override
+  String get profileEditTitle => 'Profili düzenle';
+
+  @override
+  String get profileEditName => 'Ad';
+
+  @override
+  String get profileEditNameHint => 'Adınız';
+
+  @override
+  String get profileEditSex => 'Cinsiyet';
+
+  @override
+  String get profileEditDob => 'Doğum tarihi';
+
+  @override
+  String get profileEditSelectDate => 'Tarih seçin';
+
+  @override
+  String get profileEditHeightCm => 'Boy (cm)';
+
+  @override
+  String get profileEditWeightKg => 'Kilo (kg)';
+
+  @override
+  String get profileEditActivityLevel => 'Aktivite seviyesi';
+
+  @override
+  String get profileEditDietaryPref => 'Beslenme tercihi';
+
+  @override
+  String get profileEditUpdated => 'Profil güncellendi';
 }

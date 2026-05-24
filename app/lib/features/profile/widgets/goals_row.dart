@@ -4,6 +4,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 
 /// Container that places two equal-height cards side by side.
 ///
@@ -49,6 +50,7 @@ class StreakDisplayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.all(AppSpacing.s16),
       decoration: BoxDecoration(
@@ -93,7 +95,7 @@ class StreakDisplayCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.s8),
               Expanded(
                 child: Text(
-                  'Streak',
+                  l10n?.profileStreak ?? 'Streak',
                   style: AppTypography.caption.copyWith(
                     color: AppColors.textSecondary,
                     letterSpacing: 0.6,
@@ -113,7 +115,9 @@ class StreakDisplayCard extends StatelessWidget {
               children: [
                 TextSpan(text: '$streakDays'),
                 TextSpan(
-                  text: streakDays == 1 ? ' day' : ' days',
+                  text: streakDays == 1
+                      ? ' ${l10n?.profileStreakDay ?? 'day'}'
+                      : ' ${l10n?.profileStreakDays ?? 'days'}',
                   style: AppTypography.body.copyWith(
                     color: AppColors.textSecondary,
                     fontWeight: FontWeight.w500,
@@ -125,8 +129,9 @@ class StreakDisplayCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.s4),
           Text(
             streakDays > 0
-                ? 'Keep it going!'
-                : 'Log a meal today to start',
+                ? (l10n?.profileStreakKeepGoing ?? 'Keep it going!')
+                : (l10n?.profileStreakStartToday ??
+                    'Log a meal today to start'),
             style: AppTypography.caption.copyWith(
               color: AppColors.textTertiary,
             ),

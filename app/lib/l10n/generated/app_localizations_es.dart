@@ -2314,4 +2314,319 @@ class AppLocalizationsEs extends AppLocalizations {
   String plannerGroceryUsedIn(int n) {
     return 'Usado en $n recetas';
   }
+
+  @override
+  String get analyticsTitle => 'Analíticas';
+
+  @override
+  String get analyticsSubtitle => 'Tu semana de un vistazo';
+
+  @override
+  String get analyticsErrorWeeklyBars =>
+      'No se pudieron cargar las barras semanales';
+
+  @override
+  String get analyticsErrorMacroBreakdown =>
+      'No se pudo cargar el desglose de macros';
+
+  @override
+  String get analyticsErrorWeightTrend =>
+      'No se pudo cargar la tendencia de peso';
+
+  @override
+  String get analyticsLast7Days => 'Últimos 7 días';
+
+  @override
+  String analyticsDaysOnTarget(int n) {
+    return '$n/7 días en objetivo';
+  }
+
+  @override
+  String analyticsKcalAvg(String avg) {
+    return '$avg kcal prom.';
+  }
+
+  @override
+  String analyticsTarget(int target) {
+    return '· objetivo $target';
+  }
+
+  @override
+  String get analyticsWeeklyEmpty =>
+      'Registra algunas comidas para ver tu tendencia semanal';
+
+  @override
+  String get analyticsMacroBreakdown => 'Desglose de macros';
+
+  @override
+  String get analytics7DayAverage => 'Promedio 7 días';
+
+  @override
+  String get analyticsMacroEmpty =>
+      'El desglose de macros aparecerá cuando registres una comida';
+
+  @override
+  String get analyticsMacroProtein => 'Proteína';
+
+  @override
+  String get analyticsMacroCarbs => 'Carbohidratos';
+
+  @override
+  String get analyticsMacroFat => 'Grasas';
+
+  @override
+  String get analyticsWeightTrend => 'Tendencia de peso';
+
+  @override
+  String analyticsWeightTrendDays(int n) {
+    return '$n días';
+  }
+
+  @override
+  String get analyticsWeightTrendEmpty =>
+      'Registra tu peso para ver la tendencia';
+
+  @override
+  String profileGreeting(String name) {
+    return 'Hola, $name';
+  }
+
+  @override
+  String get profileYourGoals => 'Tus objetivos';
+
+  @override
+  String get profileCouldNotLoad => 'No se pudo cargar';
+
+  @override
+  String get profileCouldNotLoadSection => 'No se pudo cargar esta sección';
+
+  @override
+  String get profileLogWeight => 'Registrar peso';
+
+  @override
+  String get profileDailyTarget => 'Objetivo diario';
+
+  @override
+  String profileKcalLeftToday(String n) {
+    return '$n kcal restantes hoy';
+  }
+
+  @override
+  String get profileDailyTargetReached => 'Objetivo diario alcanzado';
+
+  @override
+  String get profileStreak => 'Racha';
+
+  @override
+  String get profileStreakDays => ' días';
+
+  @override
+  String get profileStreakKeepGoing => '¡Sigue así!';
+
+  @override
+  String get profileStreakStartToday => 'Registra una comida hoy para empezar';
+
+  @override
+  String get profileCaloriesVsTarget => 'Calorías vs objetivo';
+
+  @override
+  String get profileProgressLast7Days => 'Últimos 7 días';
+
+  @override
+  String get profileAvg => 'Prom.';
+
+  @override
+  String get profileWithinTarget => 'Dentro del objetivo';
+
+  @override
+  String get profileOffTarget => 'Fuera del objetivo';
+
+  @override
+  String profileDaysHit(int n) {
+    return '$n/7 días cumplidos';
+  }
+
+  @override
+  String get profileProgressNoData => 'Aún no hay datos';
+
+  @override
+  String get profileProgressNoDataHint =>
+      'Registra comidas durante unos días y tu tendencia aparecerá aquí.';
+
+  @override
+  String get profileRecommendedTitle => 'Recomendado para ti';
+
+  @override
+  String get profileRecommendedSubtitle =>
+      'Consejos personalizados para ayudarte a alcanzar tus objetivos';
+
+  @override
+  String get profileRec1Title => 'Bebe agua antes de las comidas';
+
+  @override
+  String get profileRec1Desc =>
+      'Ayuda con el control de porciones y la hidratación.';
+
+  @override
+  String get profileRec2Title => 'Añade una caminata de 30 minutos';
+
+  @override
+  String get profileRec2Desc => 'Manera fácil de alcanzar tu TDEE diario.';
+
+  @override
+  String get profileRec3Title => 'Duerme 7–8 horas';
+
+  @override
+  String get profileRec3Desc => 'Mejor recuperación, mejor control del hambre.';
+
+  @override
+  String get profileWeightGoal => 'Objetivo de peso';
+
+  @override
+  String get profileLogWeightToSeeTrend =>
+      'Registra tu peso para ver la tendencia';
+
+  @override
+  String profileProgressPercent(String n) {
+    return '$n% completado';
+  }
+
+  @override
+  String get profileSetWeightGoal => 'Establece tu\nobjetivo de peso';
+
+  @override
+  String get profileTapToStartTracking => 'Toca para empezar a registrar';
+
+  @override
+  String get profileSetWeightGoalTitle => 'Establece tu objetivo de peso';
+
+  @override
+  String get profileSetWeightGoalSubtitle =>
+      'Haremos seguimiento de tu progreso y ajustaremos las sugerencias.';
+
+  @override
+  String get profileGoalType => 'TIPO DE OBJETIVO';
+
+  @override
+  String get profileGoalLose => 'Perder';
+
+  @override
+  String get profileGoalMaintain => 'Mantener';
+
+  @override
+  String get profileGoalGain => 'Ganar';
+
+  @override
+  String get profileStartingWeight => 'Peso inicial';
+
+  @override
+  String get profileTargetWeight => 'Peso objetivo';
+
+  @override
+  String get profileMaintainWeightAt => 'Mantener peso en';
+
+  @override
+  String get profileTargetDate => 'Fecha objetivo';
+
+  @override
+  String get profileChooseDate => 'Elegir una fecha';
+
+  @override
+  String get profileSaveGoal => 'Guardar objetivo';
+
+  @override
+  String get profileGoalErrorTarget =>
+      'Introduce un peso objetivo entre 20 y 400 kg';
+
+  @override
+  String get profileGoalErrorStart =>
+      'Introduce un peso inicial entre 20 y 400 kg';
+
+  @override
+  String get profileGoalErrorLoseLower =>
+      'El peso objetivo debe ser menor que el peso inicial';
+
+  @override
+  String get profileGoalErrorGainHigher =>
+      'El peso objetivo debe ser mayor que el peso inicial';
+
+  @override
+  String get profileGoalSaveError =>
+      'No se pudo guardar. Comprueba tu conexión e inténtalo de nuevo.';
+
+  @override
+  String get profileLogWeightTitle => 'Registra tu peso';
+
+  @override
+  String get profileLogWeightSubtitle => 'Sigue tu progreso hacia tu objetivo';
+
+  @override
+  String get profileWeightLabel => 'Peso';
+
+  @override
+  String get profileWeightNoteOptional => 'Nota (opcional)';
+
+  @override
+  String get profileWeightNoteHint =>
+      'Después del ejercicio, por la mañana, etc.';
+
+  @override
+  String get profileWeightError => 'Introduce un peso entre 20 y 400 kg';
+
+  @override
+  String get profileSaveWeight => 'Guardar peso';
+
+  @override
+  String profileWeightSaving(String kg) {
+    return 'Guardando $kg kg...';
+  }
+
+  @override
+  String profileWeightSaved(String kg) {
+    return 'Peso guardado ($kg kg)';
+  }
+
+  @override
+  String profileWeightSaveFailed(String kg) {
+    return 'No se pudo guardar $kg kg';
+  }
+
+  @override
+  String get profileWeightSavedShort => 'Peso guardado';
+
+  @override
+  String get profileWeightStillFailed => 'Aún no se pudo guardar';
+
+  @override
+  String get profileEditTitle => 'Editar perfil';
+
+  @override
+  String get profileEditName => 'Nombre';
+
+  @override
+  String get profileEditNameHint => 'Tu nombre';
+
+  @override
+  String get profileEditSex => 'Sexo';
+
+  @override
+  String get profileEditDob => 'Fecha de nacimiento';
+
+  @override
+  String get profileEditSelectDate => 'Seleccionar fecha';
+
+  @override
+  String get profileEditHeightCm => 'Altura (cm)';
+
+  @override
+  String get profileEditWeightKg => 'Peso (kg)';
+
+  @override
+  String get profileEditActivityLevel => 'Nivel de actividad';
+
+  @override
+  String get profileEditDietaryPref => 'Preferencia alimentaria';
+
+  @override
+  String get profileEditUpdated => 'Perfil actualizado';
 }

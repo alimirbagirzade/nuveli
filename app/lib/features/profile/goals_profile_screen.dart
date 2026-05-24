@@ -6,6 +6,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 import 'package:nuveli/shared/widgets/app_error_view.dart';
 
 import 'models/user_profile.dart';
@@ -190,7 +191,7 @@ class _LogWeightFab extends ConsumerWidget {
       elevation: 8,
       icon: const Icon(Icons.add_rounded),
       label: Text(
-        'Log weight',
+        AppLocalizations.of(context)?.profileLogWeight ?? 'Log weight',
         style: AppTypography.body.copyWith(
           color: Colors.white,
           fontWeight: FontWeight.w700,
@@ -265,6 +266,7 @@ class _InlineError extends StatelessWidget {
     // Result: a crash report on every render of this widget inside
     // GoalsRow. We approximate the slot width from MediaQuery instead
     // (each card gets ~half the screen minus padding).
+    final l10n = AppLocalizations.of(context);
     final screenW = MediaQuery.of(context).size.width;
     final compact = screenW < 440;
     return Builder(
@@ -288,7 +290,7 @@ class _InlineError extends StatelessWidget {
                         color: AppColors.danger, size: 18),
                     const SizedBox(height: AppSpacing.s8),
                     Text(
-                      "Couldn't load",
+                      l10n?.profileCouldNotLoad ?? "Couldn't load",
                       style: AppTypography.body.copyWith(
                         color: Colors.white,
                         fontSize: 13,
@@ -302,7 +304,7 @@ class _InlineError extends StatelessWidget {
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
                       child: Text(
-                        'Retry',
+                        l10n?.commonRetry ?? 'Retry',
                         style: AppTypography.body.copyWith(
                           color: AppColors.primaryCyan,
                           fontWeight: FontWeight.w700,
@@ -318,14 +320,16 @@ class _InlineError extends StatelessWidget {
                     const SizedBox(width: AppSpacing.s12),
                     Expanded(
                       child: Text(
-                        "Couldn't load this section",
-                        style: AppTypography.body.copyWith(color: Colors.white),
+                        l10n?.profileCouldNotLoadSection ??
+                            "Couldn't load this section",
+                        style:
+                            AppTypography.body.copyWith(color: Colors.white),
                       ),
                     ),
                     TextButton(
                       onPressed: onRetry,
                       child: Text(
-                        'Retry',
+                        l10n?.commonRetry ?? 'Retry',
                         style: AppTypography.body.copyWith(
                           color: AppColors.primaryCyan,
                           fontWeight: FontWeight.w700,

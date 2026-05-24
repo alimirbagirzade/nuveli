@@ -4,6 +4,7 @@ import 'package:nuveli/core/theme/app_colors.dart';
 import 'package:nuveli/core/theme/app_radius.dart';
 import 'package:nuveli/core/theme/app_spacing.dart';
 import 'package:nuveli/core/theme/app_typography.dart';
+import 'package:nuveli/l10n/generated/app_localizations.dart';
 import 'package:nuveli/shared/widgets/empty_state_view.dart';
 
 import '../models/weekly_analytics.dart';
@@ -20,6 +21,7 @@ class ProgressSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s24),
       child: Container(
@@ -39,7 +41,7 @@ class ProgressSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Calories vs Target',
+                        l10n?.profileCaloriesVsTarget ?? 'Calories vs Target',
                         style: AppTypography.cardTitle.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -47,7 +49,7 @@ class ProgressSection extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.s4),
                       Text(
-                        'Last 7 days',
+                        l10n?.profileProgressLast7Days ?? 'Last 7 days',
                         style: AppTypography.caption.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -56,7 +58,7 @@ class ProgressSection extends StatelessWidget {
                   ),
                 ),
                 _StatPill(
-                  label: 'Avg',
+                  label: l10n?.profileAvg ?? 'Avg',
                   value: '${analytics.avgDailyCalories} kcal',
                 ),
               ],
@@ -64,23 +66,24 @@ class ProgressSection extends StatelessWidget {
             const SizedBox(height: AppSpacing.s16),
             SizedBox(
               height: 140,
-              child: _CalorieBarChart(analytics: analytics),
+              child: _CalorieBarChart(analytics: analytics, l10n: l10n),
             ),
             const SizedBox(height: AppSpacing.s12),
             Row(
               children: [
-                const _LegendDot(
+                _LegendDot(
                   color: AppColors.primaryCyan,
-                  label: 'Within target',
+                  label: l10n?.profileWithinTarget ?? 'Within target',
                 ),
                 const SizedBox(width: AppSpacing.s16),
-                const _LegendDot(
+                _LegendDot(
                   color: AppColors.warning,
-                  label: 'Off target',
+                  label: l10n?.profileOffTarget ?? 'Off target',
                 ),
                 const Spacer(),
                 Text(
-                  '${analytics.daysWithinTarget}/7 days hit',
+                  l10n?.profileDaysHit(analytics.daysWithinTarget) ??
+                      '${analytics.daysWithinTarget}/7 days hit',
                   style: AppTypography.caption.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -96,16 +99,18 @@ class ProgressSection extends StatelessWidget {
 
 class _CalorieBarChart extends StatelessWidget {
   final WeeklyAnalytics analytics;
-  const _CalorieBarChart({required this.analytics});
+  final AppLocalizations? l10n;
+  const _CalorieBarChart({required this.analytics, this.l10n});
 
   @override
   Widget build(BuildContext context) {
     final days = analytics.days;
     if (days.isEmpty) {
-      return const EmptyStateView(
+      return EmptyStateView(
         icon: Icons.insights_outlined,
-        title: 'Henüz veri yok',
-        message: 'Birkaç gün yemek logladığında trend buraya gelir.',
+        title: l10n?.profileProgressNoData ?? 'No data yet',
+        message: l10n?.profileProgressNoDataHint ??
+            'Log meals for a few days and your trend will appear here.',
         compact: true,
       );
     }

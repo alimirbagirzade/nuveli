@@ -957,5 +957,174 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyticsTitle": "Аналитика",
+  "analyticsSubtitle": "Твоя неделя с первого взгляда",
+  "analyticsErrorWeeklyBars": "Не удалось загрузить недельные столбцы",
+  "analyticsErrorMacroBreakdown": "Не удалось загрузить разбивку по макронутриентам",
+  "analyticsErrorWeightTrend": "Не удалось загрузить динамику веса",
+  "analyticsLast7Days": "Последние 7 дней",
+  "analyticsDaysOnTarget": "{n}/7 дней в цели",
+  "@analyticsDaysOnTarget": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsKcalAvg": "{avg} ккал среднее",
+  "@analyticsKcalAvg": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "analyticsTarget": "· цель {target}",
+  "@analyticsTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeeklyEmpty": "Внеси несколько приёмов пищи, чтобы увидеть недельный тренд",
+  "analyticsMacroBreakdown": "Разбивка по макронутриентам",
+  "analytics7DayAverage": "Среднее за 7 дней",
+  "analyticsMacroEmpty": "Разбивка по макронутриентам появится после регистрации приёма пищи",
+  "analyticsMacroProtein": "Белки",
+  "analyticsMacroCarbs": "Углеводы",
+  "analyticsMacroFat": "Жиры",
+  "analyticsWeightTrend": "Динамика веса",
+  "analyticsWeightTrendDays": "{n} дней",
+  "@analyticsWeightTrendDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsWeightTrendEmpty": "Внеси свой вес, чтобы увидеть динамику",
+  "profileGreeting": "Привет, {name}",
+  "@profileGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "profileYourGoals": "Твои цели",
+  "profileCouldNotLoad": "Не удалось загрузить",
+  "profileCouldNotLoadSection": "Не удалось загрузить этот раздел",
+  "profileLogWeight": "Записать вес",
+  "profileDailyTarget": "Дневная цель",
+  "profileKcalLeftToday": "Осталось {n} ккал на сегодня",
+  "@profileKcalLeftToday": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDailyTargetReached": "Дневная цель достигнута",
+  "profileStreak": "Серия",
+  "profileStreakDays": " дней",
+  "profileStreakKeepGoing": "Продолжай в том же духе!",
+  "profileStreakStartToday": "Внеси приём пищи сегодня, чтобы начать",
+  "profileCaloriesVsTarget": "Калории и цель",
+  "profileProgressLast7Days": "Последние 7 дней",
+  "profileAvg": "Среднее",
+  "profileWithinTarget": "В пределах цели",
+  "profileOffTarget": "Вне цели",
+  "profileDaysHit": "{n}/7 дней в цели",
+  "@profileDaysHit": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profileProgressNoData": "Данных пока нет",
+  "profileProgressNoDataHint": "Вноси приёмы пищи несколько дней — тренд появится здесь.",
+  "profileRecommendedTitle": "Рекомендовано для тебя",
+  "profileRecommendedSubtitle": "Персонализированные советы для достижения твоих целей",
+  "profileRec1Title": "Пей воду перед едой",
+  "profileRec1Desc": "Помогает контролировать порции и поддерживать гидратацию.",
+  "profileRec2Title": "Добавь 30-минутную прогулку",
+  "profileRec2Desc": "Простой способ достичь своего дневного TDEE.",
+  "profileRec3Title": "Спи 7–8 часов",
+  "profileRec3Desc": "Лучшее восстановление, лучший контроль аппетита.",
+  "profileWeightGoal": "Цель по весу",
+  "profileLogWeightToSeeTrend": "Запиши вес, чтобы увидеть динамику",
+  "profileProgressPercent": "{n}% выполнено",
+  "@profileProgressPercent": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "profileSetWeightGoal": "Установи\nцель по весу",
+  "profileTapToStartTracking": "Нажми, чтобы начать отслеживание",
+  "profileSetWeightGoalTitle": "Установи цель по весу",
+  "profileSetWeightGoalSubtitle": "Мы будем отслеживать твой прогресс и корректировать рекомендации.",
+  "profileGoalType": "ТИП ЦЕЛИ",
+  "profileGoalLose": "Похудеть",
+  "profileGoalMaintain": "Удержать",
+  "profileGoalGain": "Набрать",
+  "profileStartingWeight": "Начальный вес",
+  "profileTargetWeight": "Целевой вес",
+  "profileMaintainWeightAt": "Удерживать вес на уровне",
+  "profileTargetDate": "Целевая дата",
+  "profileChooseDate": "Выбери дату",
+  "profileSaveGoal": "Сохранить цель",
+  "profileGoalErrorTarget": "Введи целевой вес от 20 до 400 кг",
+  "profileGoalErrorStart": "Введи начальный вес от 20 до 400 кг",
+  "profileGoalErrorLoseLower": "Целевой вес должен быть ниже начального",
+  "profileGoalErrorGainHigher": "Целевой вес должен быть выше начального",
+  "profileGoalSaveError": "Не удалось сохранить. Проверь соединение и попробуй снова.",
+  "profileLogWeightTitle": "Записать свой вес",
+  "profileLogWeightSubtitle": "Отслеживай свой прогресс к цели",
+  "profileWeightLabel": "Вес",
+  "profileWeightNoteOptional": "Заметка (необязательно)",
+  "profileWeightNoteHint": "После тренировки, утром и т.д.",
+  "profileWeightError": "Введи вес от 20 до 400 кг",
+  "profileSaveWeight": "Сохранить вес",
+  "profileWeightSaving": "Сохранение {kg} кг...",
+  "@profileWeightSaving": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaved": "Вес сохранён ({kg} кг)",
+  "@profileWeightSaved": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSaveFailed": "Не удалось сохранить {kg} кг",
+  "@profileWeightSaveFailed": {
+    "placeholders": {
+      "kg": {
+        "type": "String"
+      }
+    }
+  },
+  "profileWeightSavedShort": "Вес сохранён",
+  "profileWeightStillFailed": "По-прежнему не удаётся сохранить",
+  "profileEditTitle": "Редактировать профиль",
+  "profileEditName": "Имя",
+  "profileEditNameHint": "Твоё имя",
+  "profileEditSex": "Пол",
+  "profileEditDob": "Дата рождения",
+  "profileEditSelectDate": "Выбрать дату",
+  "profileEditHeightCm": "Рост (см)",
+  "profileEditWeightKg": "Вес (кг)",
+  "profileEditActivityLevel": "Уровень активности",
+  "profileEditDietaryPref": "Пищевые предпочтения",
+  "profileEditUpdated": "Профиль обновлён"
 }
