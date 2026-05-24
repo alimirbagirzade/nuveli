@@ -17,6 +17,8 @@ Render.com cron job:
 import asyncio
 from datetime import date, datetime
 
+import sentry_sdk
+
 from core.logging import setup_logging, get_logger
 from core.supabase_client import init_supabase, get_supabase
 from services.fcm_service import send_to_user
@@ -38,7 +40,7 @@ async def run_for_all_users(target_date: date | None = None) -> dict:
     # Use the user_profiles table as authoritative; filter by last_active_at if available.
     profiles_res = (
         supabase.table("user_profiles")
-        .select("user_id, last_active_at, is_premium")
+        .select("user_id, last_active_at, is_premium, language")
         .execute()
     )
     profiles = profiles_res.data or []
@@ -73,6 +75,7 @@ async def run_for_all_users(target_date: date | None = None) -> dict:
         except Exception as e:
             failures += 1
             logger.error(f"Insight generation failed for {user_id}: {e}")
+            sentry_sdk.capture_exception(e)
 
     summary = {
         "target_date": target_date.isoformat(),

@@ -14,6 +14,8 @@ Run manually:
 import asyncio
 from datetime import date, datetime, timedelta
 
+import sentry_sdk
+
 from core.logging import setup_logging, get_logger
 from core.supabase_client import init_supabase, get_supabase
 from services.streak_service import compute_user_streak
@@ -51,6 +53,7 @@ async def run() -> dict:
         except Exception as e:
             failures += 1
             logger.error(f"Streak compute failed for {user_id}: {e}")
+            sentry_sdk.capture_exception(e)
             continue
 
         # Only write if changed.
@@ -72,6 +75,7 @@ async def run() -> dict:
         except Exception as e:
             failures += 1
             logger.error(f"Profile update failed for {user_id}: {e}")
+            sentry_sdk.capture_exception(e)
 
     summary = {
         "date": today.isoformat(),
