@@ -10,10 +10,19 @@ class DayPlanCard extends StatelessWidget {
     super.key,
     required this.day,
     required this.plans,
+    this.onAddMeal,
+    this.onEntryTap,
   });
 
   final DailyPlanTotal day;
   final List<MealPlanEntry> plans;
+
+  /// Tapped the "+" on this day's header. Null = read-only (no add CTA).
+  final void Function(DateTime day)? onAddMeal;
+
+  /// Tapped an existing entry (opens edit / delete actions). Null =
+  /// entries are not interactive.
+  final void Function(MealPlanEntry entry)? onEntryTap;
 
   bool get _isToday {
     final now = DateTime.now();
@@ -102,6 +111,14 @@ class DayPlanCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                if (onAddMeal != null)
+                  IconButton(
+                    onPressed: () => onAddMeal!(day.planDate),
+                    tooltip: 'Add meal',
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.add_circle_outline_rounded,
+                        color: AppColors.primary, size: 22),
+                  ),
               ],
             ),
           ),
@@ -111,10 +128,19 @@ class DayPlanCard extends StatelessWidget {
               color: AppColors.border,
             ),
             for (final entry in plans)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
-                child: _MealRow(entry: entry),
-              ),
+              if (onEntryTap != null)
+                InkWell(
+                  onTap: () => onEntryTap!(entry),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                    child: _MealRow(entry: entry, interactive: true),
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                  child: _MealRow(entry: entry),
+                ),
           ],
         ],
       ),
@@ -136,8 +162,9 @@ class DayPlanCard extends StatelessWidget {
 }
 
 class _MealRow extends StatelessWidget {
-  const _MealRow({required this.entry});
+  const _MealRow({required this.entry, this.interactive = false});
   final MealPlanEntry entry;
+  final bool interactive;
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +219,11 @@ class _MealRow extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+        if (interactive) ...[
+          const SizedBox(width: 4),
+          const Icon(Icons.more_vert_rounded,
+              color: Color(0xFF7A95A0), size: 18),
+        ],
       ],
     );
   }

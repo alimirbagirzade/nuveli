@@ -34,6 +34,14 @@ final groceryProvider =
   return repo.getGrocery(weekStart: weekStartFor(offset));
 });
 
+/// Invalidate the planner's read providers after a write (add/edit/delete/
+/// generate) so the week view + grocery list re-fetch. Fire-and-forget —
+/// callers don't await the refetch so the sheet can close immediately.
+void refreshPlanner(WidgetRef ref) {
+  ref.invalidate(weeklyPlanProvider);
+  ref.invalidate(groceryProvider);
+}
+
 /// Gate snapshot for the displayed week.
 ///
 /// - Free users may view current week (offset 0). Any other offset shows

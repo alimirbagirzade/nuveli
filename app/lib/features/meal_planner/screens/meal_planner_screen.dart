@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/repositories/meal_planner_repository.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../premium/premium_paywall_screen.dart';
 import '../models/weekly_plan.dart';
 import '../providers/planner_providers.dart';
+import '../widgets/add_meal_plan_sheet.dart';
 import '../widgets/day_plan_card.dart';
+import '../widgets/edit_meal_plan_sheet.dart';
+import '../widgets/generate_plan_sheet.dart';
 import '../widgets/grocery_list_sheet.dart';
 
 /// F4 v0 — Weekly meal plan view.
@@ -82,6 +86,7 @@ class MealPlannerScreen extends ConsumerWidget {
                     plan: plan,
                     offset: offset,
                     canGenerate: gate.canGenerate,
+                    canEdit: gate.canViewWeek,
                     onPrev: () =>
                         ref.read(weekOffsetProvider.notifier).state = offset - 1,
                     onNext: () =>
@@ -89,6 +94,8 @@ class MealPlannerScreen extends ConsumerWidget {
                     onJumpToToday: () =>
                         ref.read(weekOffsetProvider.notifier).state = 0,
                     onGenerate: () => _onGenerate(context, ref, gate),
+                    onAddMeal: (day) => _onAddMeal(context, day),
+                    onEntryTap: (entry) => _onEntryTap(context, ref, entry),
                   ),
                 ),
         ),
@@ -106,42 +113,151 @@ class MealPlannerScreen extends ConsumerWidget {
       );
       return;
     }
-    // v0: backend call surface lives behind a follow-up sheet that
-    // collects dietary preferences. For now show a "coming soon" — the
-    // repo method is wired and ready for v0.1.
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          backgroundColor: AppColors.primary,
-          behavior: SnackBarBehavior.floating,
-          content: Text(
-            'AI plan generation launches in v0.1 — coming soon.',
-            style: TextStyle(color: Colors.white),
-          ),
+    GeneratePlanSheet.show(context, weekStart: weekStartFor(gate.weekOffset));
+  }
+
+  Future<void> _onAddMeal(BuildContext context, DateTime day) async {
+    await AddMealPlanSheet.show(context, day);
+  }
+
+  /// Tapping an entry opens an Edit / Delete action sheet.
+  Future<void> _onEntryTap(
+    BuildContext context,
+    WidgetRef ref,
+    MealPlanEntry entry,
+  ) async {
+    final action = await showModalBottomSheet<_EntryAction>(
+      context: context,
+      backgroundColor: const Color(0xFF142346),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  entry.displayName,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit_outlined, color: Colors.white),
+              title: const Text('Edit name / note',
+                  style: TextStyle(color: Colors.white)),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(_EntryAction.edit),
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline,
+                  color: AppColors.error),
+              title: const Text('Remove from plan',
+                  style: TextStyle(color: AppColors.error)),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(_EntryAction.delete),
+            ),
+            const SizedBox(height: 8),
+          ],
         ),
-      );
+      ),
+    );
+
+    if (action == null || !context.mounted) return;
+    if (action == _EntryAction.edit) {
+      await EditMealPlanSheet.show(context, entry);
+    } else {
+      await _confirmAndDelete(context, ref, entry);
+    }
+  }
+
+  Future<void> _confirmAndDelete(
+    BuildContext context,
+    WidgetRef ref,
+    MealPlanEntry entry,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: const Color(0xFF142346),
+        title: const Text('Remove entry?',
+            style: TextStyle(color: Colors.white)),
+        content: Text(
+          'Remove "${entry.displayName}" from this plan?',
+          style: const TextStyle(color: Color(0xFFB8C5D6)),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel',
+                style: TextStyle(color: AppColors.primary)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Remove',
+                style: TextStyle(
+                    color: AppColors.error, fontWeight: FontWeight.w600)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+
+    try {
+      await ref.read(mealPlannerRepositoryProvider).deletePlanEntry(entry.id);
+      refreshPlanner(ref);
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+            content: Text(
+              'Could not remove: ${e.toString().split('\n').first}',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+    }
   }
 }
+
+enum _EntryAction { edit, delete }
 
 class _PlanBody extends StatelessWidget {
   const _PlanBody({
     required this.plan,
     required this.offset,
     required this.canGenerate,
+    required this.canEdit,
     required this.onPrev,
     required this.onNext,
     required this.onJumpToToday,
     required this.onGenerate,
+    required this.onAddMeal,
+    required this.onEntryTap,
   });
 
   final WeeklyPlan plan;
   final int offset;
   final bool canGenerate;
+  final bool canEdit;
   final VoidCallback onPrev;
   final VoidCallback onNext;
   final VoidCallback onJumpToToday;
   final VoidCallback onGenerate;
+  final void Function(DateTime day) onAddMeal;
+  final void Function(MealPlanEntry entry) onEntryTap;
 
   @override
   Widget build(BuildContext context) {
@@ -161,10 +277,20 @@ class _PlanBody extends StatelessWidget {
         _TotalsBanner(totalCalories: plan.totalCalories, dayCount: plan.days.length),
         const SizedBox(height: 16),
         if (plan.isEmpty)
-          _EmptyState(canGenerate: canGenerate, onGenerate: onGenerate)
+          _EmptyState(
+            canGenerate: canGenerate,
+            onGenerate: onGenerate,
+            onAddManually:
+                canEdit ? () => onAddMeal(plan.weekStart) : null,
+          )
         else
           for (final day in plan.days)
-            DayPlanCard(day: day, plans: plan.plansFor(day.planDate)),
+            DayPlanCard(
+              day: day,
+              plans: plan.plansFor(day.planDate),
+              onAddMeal: canEdit ? onAddMeal : null,
+              onEntryTap: canEdit ? onEntryTap : null,
+            ),
         const SizedBox(height: 12),
         SizedBox(
           height: 50,
@@ -319,9 +445,14 @@ class _TotalsBanner extends StatelessWidget {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.canGenerate, required this.onGenerate});
+  const _EmptyState({
+    required this.canGenerate,
+    required this.onGenerate,
+    this.onAddManually,
+  });
   final bool canGenerate;
   final VoidCallback onGenerate;
+  final VoidCallback? onAddManually;
 
   @override
   Widget build(BuildContext context) {
@@ -366,6 +497,20 @@ class _EmptyState extends StatelessWidget {
               ),
             ),
           ),
+          if (onAddManually != null) ...[
+            const SizedBox(height: 18),
+            TextButton.icon(
+              onPressed: onAddManually,
+              icon: const Icon(Icons.add_rounded, color: AppColors.primary),
+              label: const Text(
+                'Add a meal manually',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
