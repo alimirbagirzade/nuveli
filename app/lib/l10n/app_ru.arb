@@ -1246,5 +1246,13 @@
   "passwordStrengthSuggestNumber": "Добавьте цифру",
   "passwordStrengthSuggestCase": "Используйте заглавные и строчные буквы",
   "passwordStrengthSuggestSymbol": "Добавьте символ (!@#\\$%)",
-  "authOrDivider": "или"
+  "authOrDivider": "или",
+  "navDashboard": "Главная",
+  "navScan": "Скан",
+  "navAnalytics": "Аналитика",
+  "homeTodaySummary": "Сводка за сегодня",
+  "homeKcalRemaining": "осталось {count} ккал",
+  "homeKcalOver": "{count} ккал сверх",
+  "homeOfKcalTarget": "из {count} ккал",
+  "homeOfGlasses": "из {count} стаканов"
 }

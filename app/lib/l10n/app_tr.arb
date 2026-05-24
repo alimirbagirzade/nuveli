@@ -1968,5 +1968,53 @@
   "authOrDivider": "veya",
   "@authOrDivider": {
     "description": "authOrDivider"
+  },
+  "navDashboard": "Panel",
+  "@navDashboard": {
+    "description": "nav/home: navDashboard"
+  },
+  "navScan": "Tara",
+  "@navScan": {
+    "description": "nav/home: navScan"
+  },
+  "navAnalytics": "Analiz",
+  "@navAnalytics": {
+    "description": "nav/home: navAnalytics"
+  },
+  "homeTodaySummary": "Bugünün Özeti",
+  "@homeTodaySummary": {
+    "description": "nav/home: homeTodaySummary"
+  },
+  "homeKcalRemaining": "{count} kcal kaldı",
+  "@homeKcalRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeKcalOver": "{count} kcal fazla",
+  "@homeKcalOver": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOfKcalTarget": "/ {count} kcal",
+  "@homeOfKcalTarget": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOfGlasses": "/ {count} bardak",
+  "@homeOfGlasses": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

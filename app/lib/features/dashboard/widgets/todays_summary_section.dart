@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/today_summary.dart';
 
 /// "Today's Summary" hero card — big calorie ring with consumed/target in center.
@@ -14,6 +15,7 @@ class TodaysSummarySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final consumed = summary.consumedCalories;
     final target = summary.dailyCalorieTarget;
     final remaining = summary.remainingCalories;
@@ -46,9 +48,9 @@ class TodaysSummarySection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            "Today's Summary",
-            style: TextStyle(
+          Text(
+            l10n?.homeTodaySummary ?? "Today's Summary",
+            style: const TextStyle(
               fontSize: 13,
               color: Color(0xFFB8C5D6),
               fontWeight: FontWeight.w500,
@@ -68,8 +70,10 @@ class TodaysSummarySection extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             remaining >= 0
-                ? '${_formatNumber(remaining)} kcal remaining'
-                : '${_formatNumber(remaining.abs())} kcal over',
+                ? (l10n?.homeKcalRemaining(_formatNumber(remaining)) ??
+                    '${_formatNumber(remaining)} kcal remaining')
+                : (l10n?.homeKcalOver(_formatNumber(remaining.abs())) ??
+                    '${_formatNumber(remaining.abs())} kcal over'),
             style: TextStyle(
               fontSize: 14,
               color: remaining >= 0
@@ -107,6 +111,7 @@ class _CalorieRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -129,7 +134,9 @@ class _CalorieRing extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              'of ${TodaysSummarySection._formatNumber(target)} kcal',
+              l10n?.homeOfKcalTarget(
+                      TodaysSummarySection._formatNumber(target)) ??
+                  'of ${TodaysSummarySection._formatNumber(target)} kcal',
               style: const TextStyle(
                 fontSize: 13,
                 color: Color(0xFFB8C5D6),

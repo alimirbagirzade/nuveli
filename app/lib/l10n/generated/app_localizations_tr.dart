@@ -2927,4 +2927,36 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get authOrDivider => 'veya';
+
+  @override
+  String get navDashboard => 'Panel';
+
+  @override
+  String get navScan => 'Tara';
+
+  @override
+  String get navAnalytics => 'Analiz';
+
+  @override
+  String get homeTodaySummary => 'Bugünün Özeti';
+
+  @override
+  String homeKcalRemaining(String count) {
+    return '$count kcal kaldı';
+  }
+
+  @override
+  String homeKcalOver(String count) {
+    return '$count kcal fazla';
+  }
+
+  @override
+  String homeOfKcalTarget(String count) {
+    return '/ $count kcal';
+  }
+
+  @override
+  String homeOfGlasses(String count) {
+    return '/ $count bardak';
+  }
 }

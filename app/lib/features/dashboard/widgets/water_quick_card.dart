@@ -167,7 +167,7 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
                             ),
                           ),
                           TextSpan(
-                            text: ' of $glassesTarget glasses',
+                            text: ' ${l10n?.homeOfGlasses('$glassesTarget') ?? 'of $glassesTarget glasses'}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: Color(0xFF6E7B91),

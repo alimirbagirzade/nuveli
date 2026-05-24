@@ -2937,4 +2937,36 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get authOrDivider => 'или';
+
+  @override
+  String get navDashboard => 'Главная';
+
+  @override
+  String get navScan => 'Скан';
+
+  @override
+  String get navAnalytics => 'Аналитика';
+
+  @override
+  String get homeTodaySummary => 'Сводка за сегодня';
+
+  @override
+  String homeKcalRemaining(String count) {
+    return 'осталось $count ккал';
+  }
+
+  @override
+  String homeKcalOver(String count) {
+    return '$count ккал сверх';
+  }
+
+  @override
+  String homeOfKcalTarget(String count) {
+    return 'из $count ккал';
+  }
+
+  @override
+  String homeOfGlasses(String count) {
+    return 'из $count стаканов';
+  }
 }

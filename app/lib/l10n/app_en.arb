@@ -1205,5 +1205,13 @@
   "passwordStrengthSuggestNumber": "Add a number",
   "passwordStrengthSuggestCase": "Mix uppercase & lowercase",
   "passwordStrengthSuggestSymbol": "Add a symbol (!@#\\$%)",
-  "authOrDivider": "or"
+  "authOrDivider": "or",
+  "navDashboard": "Dashboard",
+  "navScan": "Scan",
+  "navAnalytics": "Analytics",
+  "homeTodaySummary": "Today's Summary",
+  "homeKcalRemaining": "{count} kcal remaining",
+  "homeKcalOver": "{count} kcal over",
+  "homeOfKcalTarget": "of {count} kcal",
+  "homeOfGlasses": "of {count} glasses"
 }

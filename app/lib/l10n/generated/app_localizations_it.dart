@@ -2945,4 +2945,36 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get authOrDivider => 'o';
+
+  @override
+  String get navDashboard => 'Pannello';
+
+  @override
+  String get navScan => 'Scansiona';
+
+  @override
+  String get navAnalytics => 'Analisi';
+
+  @override
+  String get homeTodaySummary => 'Riepilogo di oggi';
+
+  @override
+  String homeKcalRemaining(String count) {
+    return '$count kcal rimaste';
+  }
+
+  @override
+  String homeKcalOver(String count) {
+    return '$count kcal in più';
+  }
+
+  @override
+  String homeOfKcalTarget(String count) {
+    return 'di $count kcal';
+  }
+
+  @override
+  String homeOfGlasses(String count) {
+    return 'di $count bicchieri';
+  }
 }
