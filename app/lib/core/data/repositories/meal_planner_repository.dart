@@ -16,10 +16,67 @@ import 'base_repository.dart';
 ///   - POST   /meal-plans/generate              → AI generate (premium)
 ///   - GET    /recipes / /recipes/{id} / POST /recipes
 ///
-/// v0 surfaces only the read paths + AI generate. Manual create/edit/delete
-/// land in v0.1.
+/// v0.1 adds manual create/edit/delete on top of v0's read + AI generate.
+/// Edit is name+note only (backend PATCH does not recompute totals on a
+/// servings change — calorie/serving edits go via delete + re-add).
 class MealPlannerRepository extends BaseRepository {
   MealPlannerRepository(super.apiClient);
+
+  /// Create one manual plan entry (custom food — no recipe link).
+  /// Mirrors `MealPlanCreate`. `calories`/macros are the **entry total**
+  /// (backend stores custom calories as-is; servings is metadata, not a
+  /// multiplier). Returns the created [MealPlanEntry].
+  Future<MealPlanEntry> createPlanEntry({
+    required DateTime planDate,
+    required String mealType,
+    required String customName,
+    required int customCalories,
+    double customProteinG = 0,
+    double customCarbsG = 0,
+    double customFatG = 0,
+    double servings = 1.0,
+    String? note,
+  }) async {
+    final response = await apiClient.post<Map<String, dynamic>>(
+      ApiEndpoints.mealPlans,
+      data: {
+        'plan_date': formatDateOnly(planDate),
+        'meal_type': mealType,
+        'custom_name': customName,
+        'custom_calories': customCalories,
+        'custom_protein_g': customProteinG,
+        'custom_carbs_g': customCarbsG,
+        'custom_fat_g': customFatG,
+        'servings': servings,
+        if (note != null && note.isNotEmpty) 'note': note,
+      },
+    );
+    return MealPlanEntry.fromJson(response);
+  }
+
+  /// Edit an existing entry. Backend `MealPlanUpdate` accepts
+  /// recipe_id/custom_name/servings/note, but the PATCH path does NOT
+  /// recompute `total_*` — so we only expose name + note here. Calorie/
+  /// serving changes are done via delete + re-add.
+  Future<MealPlanEntry> updatePlanEntry({
+    required String planId,
+    String? customName,
+    String? note,
+  }) async {
+    final response = await apiClient.patch<Map<String, dynamic>>(
+      '${ApiEndpoints.mealPlans}/$planId',
+      data: {
+        if (customName != null) 'custom_name': customName,
+        if (note != null) 'note': note,
+      },
+    );
+    return MealPlanEntry.fromJson(response);
+  }
+
+  /// Remove a plan entry. Backend returns 204 No Content.
+  Future<void> deletePlanEntry(String planId) async {
+    await apiClient.delete('${ApiEndpoints.mealPlans}/$planId');
+  }
 
   Future<WeeklyPlan> getWeeklyPlan({DateTime? weekStart}) async {
     final response = await apiClient.get<Map<String, dynamic>>(

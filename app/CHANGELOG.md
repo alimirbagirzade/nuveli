@@ -1,5 +1,34 @@
 # Nuveli Changelog
 
+## [1.3.0+19] - 2026-05-24 - Meal Planner write side (F4 v0.1)
+
+### Features
+- **Manual add-to-plan** — a "+" on each day (and an "Add manually" CTA on
+  the empty state) opens a sheet to add a custom meal: meal type, date,
+  name, calories (entry total), optional macros, servings, note →
+  `POST /meal-plans`.
+- **Edit entry** — tap an entry → Edit name/note (`PATCH /meal-plans/{id}`).
+  Servings/calorie changes go through delete + re-add, because the backend
+  PATCH path does not recompute totals on a servings change (documented in
+  the repo + edit sheet).
+- **Delete entry** — tap → Remove, with a confirm dialog (`DELETE`).
+- **AI generate sheet** — replaces the v0 "coming soon" snackbar with a
+  real dietary-preferences sheet (dietary preference, avoid ingredients,
+  calorie target prefilled from profile, meals/day) → `POST /meal-plans/generate`.
+  Premium-gated upstream.
+- Write actions are gated to weeks the user can view (free = current week);
+  the read paths, week navigator, and grocery list are unchanged.
+
+### Tests
+- +9 host tests: repository request-contract (POST/PATCH/DELETE payload
+  keys + paths, mocktail) and the add sheet (validation + typed create
+  call). 484 → 493 passing.
+
+### Notes
+- Recipe browser intentionally deferred — it only adds value once the
+  prod `recipes` table is confirmed populated (seeded in migration 013,
+  but prod state unverified). Custom entry covers the core need.
+
 ## [1.2.1+18] - 2026-05-24 - Revert debug exception leak (launch blocker)
 
 ### Security

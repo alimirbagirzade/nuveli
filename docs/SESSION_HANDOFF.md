@@ -12,7 +12,7 @@
 
 ## Şu anda neredeyiz
 
-**Sprint A + canlı QA + Coach pipeline + Profile edit + mood-bubble hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix + lokal mood-bubble katmanı + app-wide i18n aktivasyonu main'de. Debug exc leak revert edildi (launch blocker kapalı). v1.0.0+2 → v1.2.1+18.
+**Sprint A + canlı QA + Coach pipeline + Profile edit + mood-bubble hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix + lokal mood-bubble katmanı + app-wide i18n aktivasyonu main'de. Debug exc leak revert edildi (launch blocker kapalı). Meal Planner write side (F4 v0.1) shipped. v1.0.0+2 → v1.3.0+19.
 
 > **Bu session (2026-05-24 PM) eklendi:** mood-bubble (#1) shipped + i18n aktive edildi (v1.2.0+17) ve debug exc leak revert edildi (#2, v1.2.1+18 — launch blocker kapandı). Bir sonraki öncelik artık #3 (Settings tab QA) / #4 (cihaz QA).
 
@@ -103,11 +103,12 @@ FCM push backend HAZIR + Render env LIVE. **iOS Simulator FCM destek**lemez (APN
 - Render free tier 15dk sleep → cron miss edebilir
 - Reliable trigger için: `docs/ops/cron.md` Option B (web UI'da Cron Job kurma, 5dk)
 
-### 6. F4 v0.1 — Meal Planner write side
-- Add-meal-to-plan modal (manual POST /meal-plans)
-- AI generate dietary preferences sheet (repo metodu hazır)
-- Recipe browser
-- Edit/delete plan entries
+### 6. F4 v0.1 — Meal Planner write side — ✅ ÇOĞU SHIPPED 2026-05-24 (v1.3.0+19)
+- ✅ Add-meal-to-plan sheet (custom entry → POST /meal-plans) — per-day "+" + empty-state CTA
+- ✅ Edit (name+note PATCH) + delete (confirm → DELETE). NOT: PATCH servings/kcal totals'ı recompute etmiyor → edit name+note only, kalori/porsiyon değişimi = sil+ekle.
+- ✅ AI generate dietary-preferences sheet (POST /meal-plans/generate) — "coming soon" snackbar değişti
+- ⏳ **Recipe browser ERTELENDİ** — prod `recipes` tablosu dolu mu doğrulanmadı (013 seed'de var ama prod state bilinmiyor). Custom entry core ihtiyacı karşılıyor. Recipe browser ileride: önce Supabase'de `recipes` count verify et.
+- +9 test (484→493). Repo contract (POST/PATCH/DELETE payload keys, mocktail) + add sheet validation.
 
 ### 7. Açık issue'lar (memory'de mevcut)
 - Schema drift endemic (`project_schema_drift_endemic.md`) — yeni endpoint yazınca prod cols verify et
