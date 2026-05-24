@@ -13,6 +13,8 @@ Run manually:
 import asyncio
 from datetime import datetime
 
+import sentry_sdk
+
 from core.logging import setup_logging, get_logger
 from core.supabase_client import init_supabase, get_supabase
 from services.achievement_service import check_and_unlock
@@ -47,6 +49,7 @@ async def run_for_all_users() -> dict:
         except Exception as e:
             failures += 1
             logger.error(f"Achievement check failed for {user_id}: {e}")
+            sentry_sdk.capture_exception(e)
 
     summary = {
         "total_profiles": len(profiles),
