@@ -1,5 +1,44 @@
 # Nuveli Changelog
 
+## [1.1.0+15] - 2026-05-24 - Coach pipeline: cron + push (A→B→C)
+
+### Backend
+- **A.** APScheduler wired in `main.py` lifespan. Daily at 02:00 UTC
+  it calls `cron.daily_insights_job.run_for_all_users()` which generates
+  a fresh Coach insight for every active user. Default ON; turn off with
+  `APP_ENABLE_INTERNAL_CRON=false` if you switch to Option B (Render
+  Cron Service — see `docs/ops/cron.md`).
+- **B.** `docs/ops/cron.md` — Render Cron Service setup, smoke-test
+  command, env list, cost-guard math, and Phase-C wiring notes.
+- **C.** `services/fcm_service.py` — FCM v1 push helper. Gated on
+  `FIREBASE_PROJECT_ID` + `FIREBASE_SERVICE_ACCOUNT_JSON_B64`; no-ops
+  silently when env missing. Prunes UNREGISTERED / INVALID_ARGUMENT
+  tokens lazily. Daily-insights job calls `send_to_user` with
+  `data={"route": "/coach", "kind": "daily_insight"}` so the tap
+  payload can deep-link.
+- `POST /me/device-tokens` and `DELETE /me/device-tokens/{token}` —
+  Flutter calls these on sign-in / sign-out / `onTokenRefresh`. Dedup
+  is server-side: an existing token row is deleted before re-insert so
+  a token migrating users (rare but real) doesn't double-fire.
+- `google-auth==2.34.0` added to requirements (only required when FCM
+  env is present at runtime; httpx was already pinned).
+
+### Flutter
+- `core/notifications/fcm_token_register.dart` — minimal glue that
+  requests permission (iOS), fetches token, POSTs to backend, and
+  subscribes to `onTokenRefresh`. Cancels on sign-out and DELETEs the
+  token so the backend stops addressing the device.
+- `main.dart` `_wireAuthRevenueCatSync` now also fires FCM register /
+  unregister inside a separate try block — RC failure (dev build w/o
+  RC_APPLE_KEY) doesn't skip push registration.
+
+### What's still needed (one-time, Ali's hands)
+- Firebase Console → Project Settings → Service accounts →
+  Generate private key → base64 → set
+  `FIREBASE_PROJECT_ID` + `FIREBASE_SERVICE_ACCOUNT_JSON_B64` on the
+  Render backend service. Cron + Flutter side are both ready and idle
+  until those env vars land.
+
 ## [1.0.4+14] - 2026-05-23 - Profile edit + water-test rewrite
 
 ### Features

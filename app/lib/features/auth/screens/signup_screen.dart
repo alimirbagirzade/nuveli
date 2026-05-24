@@ -67,12 +67,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             password: _passCtl.text,
           );
       // Signup now returns a real session (backend auto-confirms then we
-      // signInWithPassword). The auth listener on the app shell sees the
-      // new session and routes to the onboarding wizard / dashboard, so
-      // we don't push anywhere — just bail out of this screen.
-      // If a future build re-enables real email verification, push
-      // EmailVerificationScreen here gated on response.session == null.
+      // signInWithPassword). AuthGate lives at the Navigator root and
+      // will swap to OnboardingScreen the moment authProvider's data
+      // changes, but the signup screen sits *on top* of it in the stack —
+      // so we have to pop back to the root before the gate becomes
+      // visible. Without this, signup looks like it does nothing.
       if (!mounted) return;
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on NuveliAuthException catch (e) {
       if (mounted) setState(() => _error = e.userMessage);
     } catch (e) {

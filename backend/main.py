@@ -73,7 +73,40 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.warning(f"Sentry init failed: {e}")
 
+    # Internal cron — daily Coach insight generation at 02:00 UTC.
+    # Disabled by default on multi-instance deployments (set
+    # APP_ENABLE_INTERNAL_CRON=false and use Render Cron Service instead;
+    # see docs/ops/cron.md). On a single Render web instance this is the
+    # simplest reliable trigger — Render's free tier sleeps after ~15min
+    # of inactivity though, so use the external Cron Service when zero
+    # missed days matters.
+    scheduler = None
+    if settings.app_enable_internal_cron:
+        try:
+            from apscheduler.schedulers.asyncio import AsyncIOScheduler
+            from apscheduler.triggers.cron import CronTrigger
+            from cron.daily_insights_job import run_for_all_users
+
+            scheduler = AsyncIOScheduler(timezone="UTC")
+            scheduler.add_job(
+                run_for_all_users,
+                CronTrigger(hour=2, minute=0),
+                id="daily_insights",
+                replace_existing=True,
+                misfire_grace_time=3600,  # tolerate a 1h late fire on cold-start
+            )
+            scheduler.start()
+            logger.info("Internal cron started: daily_insights @ 02:00 UTC")
+        except Exception as e:
+            logger.warning(f"Internal cron init failed: {e}")
+    else:
+        logger.info("Internal cron disabled (APP_ENABLE_INTERNAL_CRON=false)")
+
     yield
+
+    if scheduler is not None:
+        scheduler.shutdown(wait=False)
+        logger.info("Internal cron stopped")
     logger.info("Shutting down")
 
 

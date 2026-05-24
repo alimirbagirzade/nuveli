@@ -290,3 +290,68 @@ async def export_me(
 
     logger.info(f"User {user_id} exported data: {sum(len(v) for k, v in snapshot.items() if isinstance(v, list))} rows")
     return snapshot
+
+
+# --- Device tokens (FCM push) ---
+
+from pydantic import BaseModel, Field
+
+
+class DeviceTokenRegister(BaseModel):
+    token: str = Field(..., min_length=10, max_length=4096)
+    platform: str = Field(..., pattern="^(ios|android|web)$")
+
+
+@router.post(
+    "/device-tokens",
+    status_code=status.HTTP_201_CREATED,
+    summary="Register an FCM device token for push notifications",
+)
+async def register_device_token(
+    body: DeviceTokenRegister,
+    user_id: str = Depends(get_current_user),
+):
+    """
+    Flutter calls this once on first launch (after Firebase Messaging
+    `getToken()`) and again on `onTokenRefresh`. Idempotent — duplicate
+    `(user_id, token)` pairs are deduped server-side.
+    """
+    supabase = get_supabase()
+    # Dedup: delete any existing row for this token first (token may
+    # have migrated to a new user after sign-out / sign-in).
+    try:
+        supabase.table("device_tokens").delete().eq("token", body.token).execute()
+    except Exception:
+        # Non-fatal — proceed with insert.
+        pass
+    try:
+        supabase.table("device_tokens").insert(
+            {
+                "user_id": user_id,
+                "token": body.token,
+                "platform": body.platform,
+            }
+        ).execute()
+    except Exception as e:
+        logger.warning(f"device_tokens insert failed for {user_id}: {e}")
+        raise ValidationError("Could not register device token") from e
+    return {"status": "ok"}
+
+
+@router.delete(
+    "/device-tokens/{token}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Remove an FCM device token (sign-out / opt-out)",
+)
+async def delete_device_token(
+    token: str,
+    user_id: str = Depends(get_current_user),
+):
+    supabase = get_supabase()
+    try:
+        supabase.table("device_tokens").delete().eq("token", token).eq(
+            "user_id", user_id
+        ).execute()
+    except Exception as e:
+        logger.warning(f"device_tokens delete failed for {user_id}: {e}")
+    return None

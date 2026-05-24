@@ -36,6 +36,27 @@ class Settings(BaseSettings):
     # --- Sentry (optional) ---
     sentry_dsn: str | None = None
 
+    # --- FCM push (Coach insight notifications) ---
+    # Firebase project id (e.g. "nuveli-prod") + the full service
+    # account JSON base64-encoded. Grab JSON from:
+    # Firebase Console → Project Settings → Service accounts →
+    # Generate new private key. Then `base64 -i key.json | pbcopy`.
+    firebase_project_id: str | None = None
+    firebase_service_account_json_b64: str | None = None
+
+    @property
+    def fcm_enabled(self) -> bool:
+        return bool(
+            self.firebase_project_id and self.firebase_service_account_json_b64
+        )
+
+    # --- Internal cron ---
+    # In-process APScheduler trigger for daily Coach insight generation.
+    # Default ON in production (one Render web instance) — turn OFF if
+    # you wire a separate Render Cron Service (see docs/ops/cron.md) or
+    # scale to multiple instances (which would fire the job N times).
+    app_enable_internal_cron: bool = True
+
     # --- CORS ---
     cors_origins: str = "*"  # comma-separated; "*" in dev
 

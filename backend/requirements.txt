@@ -39,6 +39,11 @@ sentry-sdk[fastapi]==2.14.0
 # --- Env file loading ---
 python-dotenv==1.0.1
 
+# --- FCM v1 push (Coach insight notifications) ---
+# google-auth signs the OAuth2 JWT we exchange for an FCM bearer
+# token; httpx is already pinned above and handles the actual POST.
+google-auth==2.34.0
+
 # --- Testing ---
 pytest==8.3.3
 pytest-asyncio==0.24.0

@@ -9,6 +9,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:nuveli/core/auth/secure_session_storage.dart';
 import 'package:nuveli/core/config/app_config.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
+import 'package:nuveli/core/network/authed_dio_provider.dart';
+import 'package:nuveli/core/notifications/fcm_token_register.dart';
 import 'package:nuveli/core/notifications/notification_route_router.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/routing/deep_link_listener.dart';
@@ -148,6 +150,21 @@ class _NuveliAppState extends ConsumerState<NuveliApp> {
           }
         } catch (e, st) {
           debugPrint('RC auth sync failed: $e\n$st');
+        }
+
+        // FCM token registration. Wrapped separately so an RC failure
+        // (e.g. dev build without RC_APPLE_KEY) doesn't skip the push
+        // registration. Backend tolerates missing FCM env — the POST
+        // 5xx if Firebase isn't wired but never blocks the user.
+        try {
+          final dio = ref.read(authedDioProvider);
+          if (event == AuthChangeEvent.signedIn && session != null) {
+            await FcmTokenRegister.registerForCurrentUser(dio);
+          } else if (event == AuthChangeEvent.signedOut) {
+            await FcmTokenRegister.unregisterCurrent(dio);
+          }
+        } catch (e, st) {
+          debugPrint('FCM auth sync failed: $e\n$st');
         }
       },
     );

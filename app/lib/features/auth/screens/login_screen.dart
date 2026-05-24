@@ -54,7 +54,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             email: _emailCtl.text.trim(),
             password: _passCtl.text,
           );
-      // AuthGate otomatik yönlendirir, ekrandan çıkma gerekmez.
+      // AuthGate sits at the Navigator root; login screen is pushed on
+      // top. Pop back so the gate becomes visible with the new session.
+      if (!mounted) return;
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on NuveliAuthException catch (e) {
       if (mounted) setState(() => _error = e.userMessage);
     } catch (e) {
@@ -74,6 +77,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
     try {
       await ref.read(authProvider.notifier).signInWithApple();
+      if (!mounted) return;
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on NuveliAuthException catch (e) {
       if (e.type == AuthErrorType.appleSignInCanceled) return;
       if (mounted) setState(() => _error = e.userMessage);
@@ -89,6 +94,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
     try {
       await ref.read(authProvider.notifier).signInWithGoogle();
+      if (!mounted) return;
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } on NuveliAuthException catch (e) {
       if (e.type == AuthErrorType.googleSignInCanceled) return;
       if (mounted) setState(() => _error = e.userMessage);

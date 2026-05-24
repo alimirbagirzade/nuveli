@@ -19,6 +19,7 @@ from datetime import date, datetime
 
 from core.logging import setup_logging, get_logger
 from core.supabase_client import init_supabase, get_supabase
+from services.fcm_service import send_to_user
 from services.insights_generation_service import generate_daily_insight
 
 logger = get_logger(__name__)
@@ -56,6 +57,19 @@ async def run_for_all_users(target_date: date | None = None) -> dict:
         try:
             await generate_daily_insight(user_id, target_date=target_date)
             success += 1
+            # Best-effort push — send_to_user no-ops if FCM env is
+            # missing, so this is safe to call unconditionally.
+            try:
+                await send_to_user(
+                    user_id,
+                    title="Your daily insight is ready 🌱",
+                    body="Tap to see today's tips from your AI coach.",
+                    data={"route": "/coach", "kind": "daily_insight"},
+                )
+            except Exception as push_err:
+                # Never let a push failure mask an otherwise-successful
+                # insight — the user can still open the app and read it.
+                logger.warning(f"FCM push failed for {user_id}: {push_err}")
         except Exception as e:
             failures += 1
             logger.error(f"Insight generation failed for {user_id}: {e}")
