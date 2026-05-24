@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/notifications/notification_nav_notifier.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../analytics/analytics_screen.dart';
 import '../coach/screens/coach_screen.dart';
@@ -32,6 +33,29 @@ class MainShellScreen extends ConsumerStatefulWidget {
 
 class _MainShellScreenState extends ConsumerState<MainShellScreen> {
   int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen for notification-tap tab requests. The notifier is a singleton
+    // so this subscription is safe across hot restarts.
+    NotificationNavNotifier.instance.tabIndex.addListener(_onNotificationNav);
+  }
+
+  @override
+  void dispose() {
+    NotificationNavNotifier.instance.tabIndex
+        .removeListener(_onNotificationNav);
+    super.dispose();
+  }
+
+  void _onNotificationNav() {
+    final tab = NotificationNavNotifier.instance.tabIndex.value;
+    if (tab != null && mounted) {
+      setState(() => _index = tab);
+      NotificationNavNotifier.instance.consume();
+    }
+  }
 
   static const _icons = <IconData>[
     Icons.dashboard_rounded,
