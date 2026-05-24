@@ -1,5 +1,36 @@
 # Nuveli Changelog
 
+## [1.6.0+23] - 2026-05-25 - Multilingual AI insight, recipe browser, cron monitoring, deep-link nav
+
+### Backend
+- **AI insight now respects the user's language.** Added `profiles.language`
+  (migration `020`, drift-safe) + `PATCH /me` support; the daily/on-demand
+  coach insight prompt instructs the model to respond entirely in the user's
+  language (en/tr/de/es/fr/it/ru), falling back to English. (Migration must be
+  applied to prod Supabase manually; code degrades to English until then.)
+- **Cron errors now reach Sentry** — `daily_insights_job`, `achievement_checker`,
+  `streak_resetter` forward per-user/job exceptions via `capture_exception`
+  (previously logger-only). Backend suite: 139 → 155 passing.
+
+### Features
+- **Recipe browser** in the meal planner (`GET /recipes`, empty-safe) — tap a
+  recipe to add it to a plan day (`createPlanEntryFromRecipe`).
+- **App language now syncs to the backend** (`PATCH /me {language}`) when changed
+  in Settings, so server-generated insights match the UI language.
+- **Notification-tap navigation** — tapping a push/local notification switches to
+  the right bottom-nav tab (minimal `NotificationNavNotifier`, no router rewrite).
+
+### i18n
+- Migrated remaining stragglers (notification settings screen, habit error,
+  coach action CTAs). +66 keys × 7 locales.
+
+### Tests
+- flutter: 497 → **503**. analyze clean. pytest 155 passed / 8 skipped.
+
+### Notes
+- Dashboard (`/analytics/dashboard`) and Coach (`/coach/today`) intentionally
+  remain separate sources — no redundant fetch (documented in code).
+
 ## [1.5.0+22] - 2026-05-24 - Full 7-language UI (i18n migration)
 
 ### Features
