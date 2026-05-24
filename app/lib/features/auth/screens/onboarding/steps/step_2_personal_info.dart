@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_typography.dart';
+import '../../../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../widgets/auth_primary_button.dart';
@@ -75,11 +76,13 @@ class _Step2State extends ConsumerState<Step2PersonalInfo> {
     if (!_formKey.currentState!.validate()) return;
     final data = ref.read(onboardingDataProvider);
     if (data.dateOfBirth == null) {
-      _showSnack('Please select your date of birth');
+      final l10n = AppLocalizations.of(context);
+      _showSnack(l10n?.onboardingSelectDob ?? 'Please select your date of birth');
       return;
     }
     if (data.gender == null) {
-      _showSnack('Please select your gender');
+      final l10n = AppLocalizations.of(context);
+      _showSnack(l10n?.onboardingSelectGender ?? 'Please select your gender');
       return;
     }
     ref
@@ -98,6 +101,7 @@ class _Step2State extends ConsumerState<Step2PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     final data = ref.watch(onboardingDataProvider);
+    final l10n = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -107,12 +111,12 @@ class _Step2State extends ConsumerState<Step2PersonalInfo> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Tell us about yourself',
+              l10n?.onboardingStep2Title ?? 'Tell us about yourself',
               style: AppTypography.heading28.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 8),
             Text(
-              'This helps us calculate your daily needs.',
+              l10n?.onboardingStep2Subtitle ?? 'This helps us calculate your daily needs.',
               style: AppTypography.body14
                   .copyWith(color: AppColors.secondaryText),
             ),
@@ -122,24 +126,27 @@ class _Step2State extends ConsumerState<Step2PersonalInfo> {
                 children: [
                   AuthTextField(
                     controller: _nameCtl,
-                    label: 'Your name',
-                    hint: 'How should we call you?',
+                    label: l10n?.onboardingYourName ?? 'Your name',
+                    hint: l10n?.onboardingNameHint ?? 'How should we call you?',
                     prefixIcon: Icons.person_outline,
                     textInputAction: TextInputAction.done,
-                    validator: (v) => AuthValidators.required(
-                      v,
-                      fieldName: 'Name',
-                    ),
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return l10n?.onboardingNameRequired ?? 'Name is required';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   _DateField(
-                    label: 'Date of birth',
+                    label: l10n?.onboardingDateOfBirth ?? 'Date of birth',
                     date: data.dateOfBirth,
                     onTap: _pickDob,
+                    selectDateLabel: l10n?.onboardingSelectDate ?? 'Select date',
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Gender',
+                    l10n?.onboardingGender ?? 'Gender',
                     style: AppTypography.caption12.copyWith(
                       color: AppColors.secondaryText,
                       fontWeight: FontWeight.w500,
@@ -167,7 +174,7 @@ class _Step2State extends ConsumerState<Step2PersonalInfo> {
               ),
             ),
             const SizedBox(height: 16),
-            AuthPrimaryButton(label: 'Continue', onPressed: _continue),
+            AuthPrimaryButton(label: l10n?.onboardingContinue ?? 'Continue', onPressed: _continue),
             const SizedBox(height: 24),
           ],
         ),
@@ -184,11 +191,13 @@ class _DateField extends StatelessWidget {
   final String label;
   final DateTime? date;
   final VoidCallback onTap;
+  final String selectDateLabel;
 
   const _DateField({
     required this.label,
     required this.date,
     required this.onTap,
+    this.selectDateLabel = 'Select date',
   });
 
   @override
@@ -226,7 +235,7 @@ class _DateField extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   date == null
-                      ? 'Select date'
+                      ? selectDateLabel
                       : '${date!.day.toString().padLeft(2, '0')}/'
                           '${date!.month.toString().padLeft(2, '0')}/'
                           '${date!.year}',

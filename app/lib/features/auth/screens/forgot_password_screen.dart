@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../models/auth_errors.dart';
 import '../providers/auth_provider.dart';
@@ -83,6 +84,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   }
 
   Widget _form() {
+    final l10n = AppLocalizations.of(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -90,12 +92,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
         children: [
           const SizedBox(height: 16),
           Text(
-            'Reset password',
+            l10n?.forgotPasswordTitle ?? 'Reset password',
             style: AppTypography.heading32Bold.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
-            "Enter your email and we'll send you a link to reset your password.",
+            l10n?.forgotPasswordSubtitle ?? "Enter your email and we'll send you a link to reset your password.",
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
             ),
@@ -103,13 +105,18 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           const SizedBox(height: 32),
           AuthTextField(
             controller: _emailCtl,
-            label: 'Email',
+            label: l10n?.loginEmail ?? 'Email',
             hint: 'you@example.com',
             prefixIcon: Icons.mail_outline,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,
             onSubmitted: _send,
-            validator: AuthValidators.email,
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return l10n?.authValidatorEmailRequired ?? 'Email is required';
+              final regex = RegExp(r'^[\w\.\-\+]+@([\w\-]+\.)+[a-zA-Z]{2,}$');
+              if (!regex.hasMatch(v.trim())) return l10n?.authValidatorEmailInvalid ?? 'Enter a valid email';
+              return null;
+            },
           ),
           if (_error != null) ...[
             const SizedBox(height: 12),
@@ -120,14 +127,14 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           ],
           const SizedBox(height: 24),
           AuthPrimaryButton(
-            label: 'Send reset link',
+            label: l10n?.forgotPasswordSendLink ?? 'Send reset link',
             isLoading: _loading,
             onPressed: _send,
           ),
           const SizedBox(height: 24),
           AuthLinkText(
-            prefix: 'Remember your password?',
-            linkText: 'Sign in',
+            prefix: l10n?.forgotPasswordRemember ?? 'Remember your password?',
+            linkText: l10n?.loginSignIn ?? 'Sign in',
             onTap: () => Navigator.maybePop(context),
           ),
         ],
@@ -172,13 +179,14 @@ class _SuccessState extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         Text(
-          'Check your email',
+          AppLocalizations.of(context)?.forgotPasswordCheckEmail ?? 'Check your email',
           textAlign: TextAlign.center,
           style: AppTypography.heading32Bold.copyWith(color: Colors.white),
         ),
         const SizedBox(height: 12),
         Text(
-          "We've sent a password reset link to\n$email",
+          AppLocalizations.of(context)?.forgotPasswordSentLink(email) ??
+              "We've sent a password reset link to\n$email",
           textAlign: TextAlign.center,
           style: AppTypography.body14.copyWith(
             color: AppColors.secondaryText,
@@ -186,7 +194,7 @@ class _SuccessState extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         AuthPrimaryButton(
-          label: 'Back to sign in',
+          label: AppLocalizations.of(context)?.forgotPasswordBackToSignIn ?? 'Back to sign in',
           onPressed: () => Navigator.maybePop(context),
         ),
       ],

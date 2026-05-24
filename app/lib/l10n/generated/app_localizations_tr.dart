@@ -2620,4 +2620,311 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get profileEditUpdated => 'Profil güncellendi';
+
+  @override
+  String get welcomeGetStarted => 'Başlayalım';
+
+  @override
+  String get loginWelcomeBack => 'Tekrar hoş geldin';
+
+  @override
+  String get loginSubtitle => 'Yolculuğuna devam etmek için giriş yap';
+
+  @override
+  String get loginForgotPasswordFull => 'Şifreni mi unuttun?';
+
+  @override
+  String get loginSignIn => 'Giriş yap';
+
+  @override
+  String get loginDontHaveAccount => 'Hesabın yok mu?';
+
+  @override
+  String get loginSignUp => 'Kayıt ol';
+
+  @override
+  String get signupCreateAccount => 'Hesap oluştur';
+
+  @override
+  String get signupNutritionJourney => 'Beslenme yolculuğuna başlayalım';
+
+  @override
+  String get signupConfirmPassword => 'Şifreyi onayla';
+
+  @override
+  String get signupTermsAgree => 'Kabul ediyorum: ';
+
+  @override
+  String get signupTermsOfService => 'Kullanım Koşulları';
+
+  @override
+  String get signupTermsAnd => ' ve ';
+
+  @override
+  String get signupPrivacyPolicy => 'Gizlilik Politikası';
+
+  @override
+  String get signupAcceptTermsError => 'Devam etmek için Koşulları kabul edin.';
+
+  @override
+  String get signupAlreadyHaveAccount => 'Zaten hesabın var mı?';
+
+  @override
+  String get signupSignIn => 'Giriş yap';
+
+  @override
+  String get forgotPasswordTitle => 'Şifreyi sıfırla';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'E-postanı gir, şifre sıfırlama bağlantısı gönderelim.';
+
+  @override
+  String get forgotPasswordSendLink => 'Sıfırlama bağlantısı gönder';
+
+  @override
+  String get forgotPasswordRemember => 'Şifreni hatırladın mı?';
+
+  @override
+  String get forgotPasswordCheckEmail => 'E-postanı kontrol et';
+
+  @override
+  String forgotPasswordSentLink(String email) {
+    return '$email adresine şifre sıfırlama bağlantısı gönderdik.';
+  }
+
+  @override
+  String get forgotPasswordBackToSignIn => 'Girişe geri dön';
+
+  @override
+  String get verifyEmailSentLinkTo =>
+      'Doğrulama bağlantısı şu adrese gönderildi:';
+
+  @override
+  String get verifyEmailOpenOnDevice => 'Devam etmek için bu cihazda aç.';
+
+  @override
+  String get verifyEmailResendEmail => 'E-postayı yeniden gönder';
+
+  @override
+  String verifyEmailResendInSeconds(int seconds) {
+    return '$seconds sn sonra tekrar gönder';
+  }
+
+  @override
+  String get verifyEmailWrongEmail => 'Yanlış e-posta mı?';
+
+  @override
+  String get verifyEmailGoBack => 'Geri dön';
+
+  @override
+  String get resetPasswordTitle => 'Yeni şifre belirle';
+
+  @override
+  String get resetPasswordSubtitle => 'Hesabın için güçlü bir şifre seç.';
+
+  @override
+  String get resetPasswordNewPassword => 'Yeni şifre';
+
+  @override
+  String get resetPasswordConfirmPassword => 'Şifreyi onayla';
+
+  @override
+  String get resetPasswordUpdate => 'Şifreyi güncelle';
+
+  @override
+  String get resetPasswordUpdated => 'Şifre güncellendi';
+
+  @override
+  String get resetPasswordCanNowSignIn =>
+      'Artık yeni şifrenle giriş yapabilirsin.';
+
+  @override
+  String onboardingStepOf(int current, int total) {
+    return 'Adım $current / $total';
+  }
+
+  @override
+  String get onboardingSignOutTooltip => 'Çıkış yap';
+
+  @override
+  String get onboardingSignOutTitle => 'Çıkış yapılsın mı?';
+
+  @override
+  String get onboardingSignOutBody =>
+      'İlerlemeniz kaydedildi. Kuruluma daha sonra devam edebilirsiniz.';
+
+  @override
+  String get onboardingCompleteStepsError =>
+      'Devam etmeden önce tüm adımları tamamlayın.';
+
+  @override
+  String get onboardingSaveError =>
+      'Profilin kaydedilemedi. Lütfen tekrar deneyin.';
+
+  @override
+  String get onboardingStep1Title => 'Merhaba! Seni tanıyalım';
+
+  @override
+  String get onboardingStep1Body =>
+      'Vücuduna, yaşam tarzına ve hedeflerine göre beslenme koçluğunu kişiselleştireceğiz. Sadece bir dakika sürer.';
+
+  @override
+  String get onboardingStep2Title => 'Bize kendinizden bahsedin';
+
+  @override
+  String get onboardingStep2Subtitle =>
+      'Bu, günlük ihtiyaçlarını hesaplamamıza yardımcı olur.';
+
+  @override
+  String get onboardingYourName => 'Adın';
+
+  @override
+  String get onboardingNameHint => 'Seni nasıl çağıralım?';
+
+  @override
+  String get onboardingNameRequired => 'İsim zorunludur';
+
+  @override
+  String get onboardingDateOfBirth => 'Doğum tarihi';
+
+  @override
+  String get onboardingSelectDate => 'Tarih seç';
+
+  @override
+  String get onboardingSelectDob => 'Lütfen doğum tarihinizi seçin';
+
+  @override
+  String get onboardingSelectGender => 'Lütfen cinsiyetinizi seçin';
+
+  @override
+  String get onboardingStep3Title => 'Vücut ölçülerin';
+
+  @override
+  String get onboardingStep3Subtitle =>
+      'Endişelenme, bunları istediğin zaman güncelleyebilirsin.';
+
+  @override
+  String get onboardingHeight => 'Boy';
+
+  @override
+  String get onboardingCurrentWeight => 'Mevcut ağırlık';
+
+  @override
+  String get onboardingStep4Title => 'Hedeflerin';
+
+  @override
+  String get onboardingStep4Subtitle =>
+      'Günlük hedeflerini buna göre belirleyeceğiz.';
+
+  @override
+  String get onboardingActivityLevelLabel => 'Aktivite düzeyi';
+
+  @override
+  String get onboardingYourGoalLabel => 'Hedefin';
+
+  @override
+  String get onboardingTargetWeight => 'Hedef ağırlık';
+
+  @override
+  String get onboardingToLose => 'vermek';
+
+  @override
+  String get onboardingToGain => 'almak';
+
+  @override
+  String get onboardingSelectActivityError =>
+      'Lütfen aktivite düzeyinizi seçin';
+
+  @override
+  String get onboardingSelectGoalError => 'Lütfen bir hedef seçin';
+
+  @override
+  String get onboardingStep5Title => 'Günlük hedeflerin';
+
+  @override
+  String get onboardingStep5Subtitle =>
+      'Vücuduna, yaşam tarzına ve hedefine göre kişiselleştirildi.';
+
+  @override
+  String get onboardingDailyCalories => 'GÜNLÜK KALORİ';
+
+  @override
+  String get onboardingMacros => 'Makrolar';
+
+  @override
+  String get onboardingProtein => 'Protein';
+
+  @override
+  String get onboardingCarbs => 'Karbonhidrat';
+
+  @override
+  String get onboardingFat => 'Yağ';
+
+  @override
+  String get onboardingDailyWater => 'Günlük su';
+
+  @override
+  String get onboardingCompleteSetup => 'Kurulumu Tamamla';
+
+  @override
+  String get onboardingAdjustAnytime =>
+      'Bunları istediğin zaman Ayarlar\'da düzenleyebilirsin.';
+
+  @override
+  String get authContinueWithApple => 'Apple ile devam et';
+
+  @override
+  String get authContinueWithGoogle => 'Google ile devam et';
+
+  @override
+  String get authValidatorEmailRequired => 'E-posta zorunludur';
+
+  @override
+  String get authValidatorEmailInvalid => 'Geçerli bir e-posta girin';
+
+  @override
+  String get authValidatorPasswordRequired => 'Şifre zorunludur';
+
+  @override
+  String get authValidatorPasswordLength => 'En az 8 karakter';
+
+  @override
+  String get authValidatorPasswordNumber => 'En az bir rakam ekleyin';
+
+  @override
+  String get authValidatorPasswordSimpleLength => 'En az 6 karakter';
+
+  @override
+  String get authValidatorConfirmRequired => 'Lütfen şifreyi onaylayın';
+
+  @override
+  String get authValidatorPasswordsNoMatch => 'Şifreler eşleşmiyor';
+
+  @override
+  String get passwordStrengthWeak => 'Zayıf';
+
+  @override
+  String get passwordStrengthFair => 'Orta';
+
+  @override
+  String get passwordStrengthStrong => 'Güçlü';
+
+  @override
+  String get passwordStrengthVeryStrong => 'Çok güçlü';
+
+  @override
+  String get passwordStrengthSuggestLength => 'En az 8 karakter kullanın';
+
+  @override
+  String get passwordStrengthSuggestNumber => 'Bir rakam ekleyin';
+
+  @override
+  String get passwordStrengthSuggestCase => 'Büyük ve küçük harf karıştırın';
+
+  @override
+  String get passwordStrengthSuggestSymbol => 'Sembol ekleyin (!@#\\\$%)';
+
+  @override
+  String get authOrDivider => 'veya';
 }

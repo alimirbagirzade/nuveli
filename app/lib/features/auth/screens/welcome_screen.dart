@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../widgets/auth_link_text.dart';
 import '../widgets/auth_primary_button.dart';
@@ -52,6 +53,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return NuveliBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -87,7 +89,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'AI Calorie Coach',
+                          l10n?.appTagline ?? 'AI Calorie Coach',
                           style: AppTypography.body18.copyWith(
                             color: AppColors.secondaryText,
                           ),
@@ -102,7 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   child: Column(
                     children: [
                       AuthPrimaryButton(
-                        label: 'Get Started',
+                        label: l10n?.welcomeGetStarted ?? 'Get Started',
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -111,8 +113,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                       const SizedBox(height: 16),
                       AuthLinkText(
-                        prefix: 'Already have an account?',
-                        linkText: 'Sign in',
+                        prefix: l10n?.signupAlreadyHaveAccount ?? 'Already have an account?',
+                        linkText: l10n?.signupSignIn ?? 'Sign in',
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(

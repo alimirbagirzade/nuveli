@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../models/auth_errors.dart';
 import '../providers/auth_provider.dart';
@@ -79,6 +80,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   }
 
   Widget _form() {
+    final l10n = AppLocalizations.of(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -86,12 +88,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
         children: [
           const SizedBox(height: 32),
           Text(
-            'Set new password',
+            l10n?.resetPasswordTitle ?? 'Set new password',
             style: AppTypography.heading32Bold.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
-            'Choose a strong password for your account.',
+            l10n?.resetPasswordSubtitle ?? 'Choose a strong password for your account.',
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
             ),
@@ -99,22 +101,31 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           const SizedBox(height: 32),
           AuthTextField(
             controller: _passCtl,
-            label: 'New password',
+            label: l10n?.resetPasswordNewPassword ?? 'New password',
             prefixIcon: Icons.lock_outline,
             obscureText: true,
-            validator: AuthValidators.password,
+            validator: (v) {
+              if (v == null || v.isEmpty) return l10n?.authValidatorPasswordRequired ?? 'Password is required';
+              if (v.length < 8) return l10n?.authValidatorPasswordLength ?? 'At least 8 characters';
+              if (!v.contains(RegExp(r'\d'))) return l10n?.authValidatorPasswordNumber ?? 'Include at least one number';
+              return null;
+            },
             onChanged: (v) => setState(() => _liveTypedPass = v),
           ),
           PasswordStrengthIndicator(password: _liveTypedPass),
           const SizedBox(height: 16),
           AuthTextField(
             controller: _confirmCtl,
-            label: 'Confirm password',
+            label: l10n?.resetPasswordConfirmPassword ?? 'Confirm password',
             prefixIcon: Icons.lock_outline,
             obscureText: true,
             textInputAction: TextInputAction.done,
             onSubmitted: _submit,
-            validator: AuthValidators.confirmPassword(_passCtl),
+            validator: (v) {
+              if (v == null || v.isEmpty) return l10n?.authValidatorConfirmRequired ?? 'Please confirm password';
+              if (v != _passCtl.text) return l10n?.authValidatorPasswordsNoMatch ?? 'Passwords do not match';
+              return null;
+            },
           ),
           if (_error != null) ...[
             const SizedBox(height: 12),
@@ -125,7 +136,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
           ],
           const SizedBox(height: 24),
           AuthPrimaryButton(
-            label: 'Update password',
+            label: l10n?.resetPasswordUpdate ?? 'Update password',
             isLoading: _loading,
             onPressed: _submit,
           ),
@@ -135,6 +146,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   }
 
   Widget _success() {
+    final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -161,13 +173,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
         ),
         const SizedBox(height: 32),
         Text(
-          'Password updated',
+          l10n?.resetPasswordUpdated ?? 'Password updated',
           textAlign: TextAlign.center,
           style: AppTypography.heading32Bold.copyWith(color: Colors.white),
         ),
         const SizedBox(height: 12),
         Text(
-          'You can now sign in with your new password.',
+          l10n?.resetPasswordCanNowSignIn ?? 'You can now sign in with your new password.',
           textAlign: TextAlign.center,
           style: AppTypography.body14.copyWith(
             color: AppColors.secondaryText,
@@ -175,7 +187,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
         ),
         const SizedBox(height: 32),
         AuthPrimaryButton(
-          label: 'Continue',
+          label: l10n?.commonContinue ?? 'Continue',
           onPressed: () {
             // AuthGate logged-in user'ı otomatik Dashboard'a alır.
             // Stack'i temizle.

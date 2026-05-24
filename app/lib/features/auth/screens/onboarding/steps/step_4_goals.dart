@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_typography.dart';
+import '../../../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../widgets/auth_primary_button.dart';
@@ -32,12 +33,13 @@ class _Step4State extends ConsumerState<Step4Goals> {
 
   void _continue() {
     final data = ref.read(onboardingDataProvider);
+    final l10n = AppLocalizations.of(context);
     if (data.activityLevel == null) {
-      _showSnack('Please select your activity level');
+      _showSnack(l10n?.onboardingSelectActivityError ?? 'Please select your activity level');
       return;
     }
     if (data.goalType == null) {
-      _showSnack('Please select a goal');
+      _showSnack(l10n?.onboardingSelectGoalError ?? 'Please select a goal');
       return;
     }
     final needsTarget = data.goalType == GoalType.loseWeight ||
@@ -60,6 +62,7 @@ class _Step4State extends ConsumerState<Step4Goals> {
   @override
   Widget build(BuildContext context) {
     final data = ref.watch(onboardingDataProvider);
+    final l10n = AppLocalizations.of(context);
     final showTarget = data.goalType == GoalType.loseWeight ||
         data.goalType == GoalType.gainWeight;
 
@@ -69,12 +72,12 @@ class _Step4State extends ConsumerState<Step4Goals> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Your goals',
+            l10n?.onboardingStep4Title ?? 'Your goals',
             style: AppTypography.heading28.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
-            "We'll tailor your daily targets accordingly.",
+            l10n?.onboardingStep4Subtitle ?? "We'll tailor your daily targets accordingly.",
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
             ),
@@ -84,7 +87,7 @@ class _Step4State extends ConsumerState<Step4Goals> {
             child: ListView(
               children: [
                 Text(
-                  'Activity level',
+                  l10n?.onboardingActivityLevelLabel ?? 'Activity level',
                   style: AppTypography.body14.copyWith(
                     color: AppColors.secondaryText,
                     fontWeight: FontWeight.w500,
@@ -106,7 +109,7 @@ class _Step4State extends ConsumerState<Step4Goals> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Your goal',
+                  l10n?.onboardingYourGoalLabel ?? 'Your goal',
                   style: AppTypography.body14.copyWith(
                     color: AppColors.secondaryText,
                     fontWeight: FontWeight.w500,
@@ -137,13 +140,16 @@ class _Step4State extends ConsumerState<Step4Goals> {
                     current: data.currentWeightKg ?? 70,
                     value: _targetWeight ?? data.currentWeightKg ?? 70,
                     onChanged: (v) => setState(() => _targetWeight = v),
+                    targetWeightLabel: l10n?.onboardingTargetWeight ?? 'Target weight',
+                    toLoseLabel: l10n?.onboardingToLose ?? 'to lose',
+                    toGainLabel: l10n?.onboardingToGain ?? 'to gain',
                   ),
                 ],
               ],
             ),
           ),
           const SizedBox(height: 16),
-          AuthPrimaryButton(label: 'Continue', onPressed: _continue),
+          AuthPrimaryButton(label: l10n?.onboardingContinue ?? 'Continue', onPressed: _continue),
           const SizedBox(height: 24),
         ],
       ),
@@ -307,11 +313,17 @@ class _TargetWeightSlider extends StatelessWidget {
   final double current;
   final double value;
   final ValueChanged<double> onChanged;
+  final String targetWeightLabel;
+  final String toLoseLabel;
+  final String toGainLabel;
 
   const _TargetWeightSlider({
     required this.current,
     required this.value,
     required this.onChanged,
+    this.targetWeightLabel = 'Target weight',
+    this.toLoseLabel = 'to lose',
+    this.toGainLabel = 'to gain',
   });
 
   @override
@@ -327,7 +339,7 @@ class _TargetWeightSlider extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Target weight',
+            targetWeightLabel,
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
               fontWeight: FontWeight.w500,
@@ -354,7 +366,7 @@ class _TargetWeightSlider extends StatelessWidget {
               const Spacer(),
               Text(
                 '${(value - current).abs().toStringAsFixed(1)} kg '
-                '${value < current ? 'to lose' : 'to gain'}',
+                '${value < current ? toLoseLabel : toGainLabel}',
                 style: AppTypography.caption12.copyWith(
                   color: AppColors.secondaryText,
                 ),

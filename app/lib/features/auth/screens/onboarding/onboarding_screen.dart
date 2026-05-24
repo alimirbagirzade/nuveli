@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../l10n/generated/app_localizations.dart';
 import '../../../../shared/widgets/nuveli_background.dart';
 import '../../services/profile_service.dart';
 import '../../providers/auth_provider.dart';
@@ -67,7 +68,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Future<void> _completeOnboarding() async {
     final data = ref.read(onboardingDataProvider);
     if (!data.isComplete) {
-      setState(() => _submitError = 'Please complete all steps before continuing.');
+      final l10n = AppLocalizations.of(context);
+      setState(() => _submitError = l10n?.onboardingCompleteStepsError ?? 'Please complete all steps before continuing.');
       return;
     }
     setState(() {
@@ -87,8 +89,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       if (mounted) setState(() => _submitError = e.message);
     } catch (_) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context);
         setState(() =>
-            _submitError = 'Could not save your profile. Please try again.');
+            _submitError = l10n?.onboardingSaveError ?? 'Could not save your profile. Please try again.');
       }
     } finally {
       if (mounted) setState(() => _submitting = false);
@@ -98,27 +101,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Future<void> _signOut() async {
     final confirm = await showDialog<bool>(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF142346),
-        title: const Text(
-          'Sign out?',
-          style: TextStyle(color: Colors.white),
-        ),
-        content: const Text(
-          'Your progress will be saved. You can continue setup later.',
-          style: TextStyle(color: AppColors.secondaryText),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel', style: TextStyle(color: AppColors.secondaryText)),
+      builder: (ctx) {
+        final dl10n = AppLocalizations.of(ctx);
+        return AlertDialog(
+          backgroundColor: const Color(0xFF142346),
+          title: Text(
+            dl10n?.onboardingSignOutTitle ?? 'Sign out?',
+            style: const TextStyle(color: Colors.white),
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Sign out', style: TextStyle(color: AppColors.danger)),
+          content: Text(
+            dl10n?.onboardingSignOutBody ?? 'Your progress will be saved. You can continue setup later.',
+            style: const TextStyle(color: AppColors.secondaryText),
           ),
-        ],
-      ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(dl10n?.commonCancel ?? 'Cancel', style: const TextStyle(color: AppColors.secondaryText)),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(dl10n?.onboardingSignOutTooltip ?? 'Sign out', style: const TextStyle(color: AppColors.danger)),
+            ),
+          ],
+        );
+      },
     );
     if (confirm == true) {
       await ref.read(authProvider.notifier).signOut();
@@ -127,6 +133,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return NuveliBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -159,7 +166,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       child: IconButton(
                         icon: const Icon(Icons.logout,
                             color: Colors.white70, size: 18),
-                        tooltip: 'Sign out',
+                        tooltip: l10n?.onboardingSignOutTooltip ?? 'Sign out',
                         onPressed: _submitting ? null : _signOut,
                       ),
                     ),
@@ -171,7 +178,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'Step ${_currentStep + 1} of $_kTotalSteps',
+                  l10n?.onboardingStepOf(_currentStep + 1, _kTotalSteps) ?? 'Step ${_currentStep + 1} of $_kTotalSteps',
                   style: AppTypography.caption12.copyWith(
                     color: AppColors.tertiaryText,
                   ),

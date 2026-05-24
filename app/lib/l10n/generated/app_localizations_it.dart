@@ -2637,4 +2637,312 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get profileEditUpdated => 'Profilo aggiornato';
+
+  @override
+  String get welcomeGetStarted => 'Inizia';
+
+  @override
+  String get loginWelcomeBack => 'Bentornato';
+
+  @override
+  String get loginSubtitle => 'Accedi per continuare il tuo percorso';
+
+  @override
+  String get loginForgotPasswordFull => 'Password dimenticata?';
+
+  @override
+  String get loginSignIn => 'Accedi';
+
+  @override
+  String get loginDontHaveAccount => 'Non hai un account?';
+
+  @override
+  String get loginSignUp => 'Registrati';
+
+  @override
+  String get signupCreateAccount => 'Crea account';
+
+  @override
+  String get signupNutritionJourney => 'Iniziamo il tuo percorso nutrizionale';
+
+  @override
+  String get signupConfirmPassword => 'Conferma password';
+
+  @override
+  String get signupTermsAgree => 'Accetto i ';
+
+  @override
+  String get signupTermsOfService => 'Termini di Servizio';
+
+  @override
+  String get signupTermsAnd => ' e ';
+
+  @override
+  String get signupPrivacyPolicy => 'Informativa sulla privacy';
+
+  @override
+  String get signupAcceptTermsError => 'Accetta i Termini per continuare.';
+
+  @override
+  String get signupAlreadyHaveAccount => 'Hai già un account?';
+
+  @override
+  String get signupSignIn => 'Accedi';
+
+  @override
+  String get forgotPasswordTitle => 'Reimposta password';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Inserisci la tua email e ti invieremo un link per reimpostare la password.';
+
+  @override
+  String get forgotPasswordSendLink => 'Invia link di reset';
+
+  @override
+  String get forgotPasswordRemember => 'Ricordi la tua password?';
+
+  @override
+  String get forgotPasswordCheckEmail => 'Controlla la tua email';
+
+  @override
+  String forgotPasswordSentLink(String email) {
+    return 'Abbiamo inviato un link di reset a\n$email';
+  }
+
+  @override
+  String get forgotPasswordBackToSignIn => 'Torna all\'accesso';
+
+  @override
+  String get verifyEmailSentLinkTo => 'Abbiamo inviato un link di verifica a:';
+
+  @override
+  String get verifyEmailOpenOnDevice =>
+      'Aprilo su questo dispositivo per continuare.';
+
+  @override
+  String get verifyEmailResendEmail => 'Reinvia email';
+
+  @override
+  String verifyEmailResendInSeconds(int seconds) {
+    return 'Reinvia tra $seconds s';
+  }
+
+  @override
+  String get verifyEmailWrongEmail => 'Email sbagliata?';
+
+  @override
+  String get verifyEmailGoBack => 'Torna indietro';
+
+  @override
+  String get resetPasswordTitle => 'Imposta nuova password';
+
+  @override
+  String get resetPasswordSubtitle =>
+      'Scegli una password sicura per il tuo account.';
+
+  @override
+  String get resetPasswordNewPassword => 'Nuova password';
+
+  @override
+  String get resetPasswordConfirmPassword => 'Conferma password';
+
+  @override
+  String get resetPasswordUpdate => 'Aggiorna password';
+
+  @override
+  String get resetPasswordUpdated => 'Password aggiornata';
+
+  @override
+  String get resetPasswordCanNowSignIn =>
+      'Ora puoi accedere con la tua nuova password.';
+
+  @override
+  String onboardingStepOf(int current, int total) {
+    return 'Passaggio $current di $total';
+  }
+
+  @override
+  String get onboardingSignOutTooltip => 'Esci';
+
+  @override
+  String get onboardingSignOutTitle => 'Vuoi uscire?';
+
+  @override
+  String get onboardingSignOutBody =>
+      'Il tuo progresso verrà salvato. Puoi continuare la configurazione in seguito.';
+
+  @override
+  String get onboardingCompleteStepsError =>
+      'Completa tutti i passaggi prima di continuare.';
+
+  @override
+  String get onboardingSaveError =>
+      'Impossibile salvare il tuo profilo. Riprova.';
+
+  @override
+  String get onboardingStep1Title => 'Ciao! Facciamo la tua conoscenza';
+
+  @override
+  String get onboardingStep1Body =>
+      'Personalizzeremo il tuo coaching nutrizionale in base al tuo corpo, stile di vita e obiettivi. Ci vuole solo un minuto.';
+
+  @override
+  String get onboardingStep2Title => 'Parlaci di te';
+
+  @override
+  String get onboardingStep2Subtitle =>
+      'Questo ci aiuta a calcolare i tuoi bisogni quotidiani.';
+
+  @override
+  String get onboardingYourName => 'Il tuo nome';
+
+  @override
+  String get onboardingNameHint => 'Come dovremmo chiamarti?';
+
+  @override
+  String get onboardingNameRequired => 'Il nome è obbligatorio';
+
+  @override
+  String get onboardingDateOfBirth => 'Data di nascita';
+
+  @override
+  String get onboardingSelectDate => 'Seleziona data';
+
+  @override
+  String get onboardingSelectDob => 'Seleziona la tua data di nascita';
+
+  @override
+  String get onboardingSelectGender => 'Seleziona il tuo genere';
+
+  @override
+  String get onboardingStep3Title => 'Le tue misure corporee';
+
+  @override
+  String get onboardingStep3Subtitle =>
+      'Non preoccuparti, puoi aggiornarli in qualsiasi momento.';
+
+  @override
+  String get onboardingHeight => 'Altezza';
+
+  @override
+  String get onboardingCurrentWeight => 'Peso attuale';
+
+  @override
+  String get onboardingStep4Title => 'I tuoi obiettivi';
+
+  @override
+  String get onboardingStep4Subtitle =>
+      'Adatteremo i tuoi obiettivi quotidiani di conseguenza.';
+
+  @override
+  String get onboardingActivityLevelLabel => 'Livello di attività';
+
+  @override
+  String get onboardingYourGoalLabel => 'Il tuo obiettivo';
+
+  @override
+  String get onboardingTargetWeight => 'Peso obiettivo';
+
+  @override
+  String get onboardingToLose => 'da perdere';
+
+  @override
+  String get onboardingToGain => 'da guadagnare';
+
+  @override
+  String get onboardingSelectActivityError =>
+      'Seleziona il tuo livello di attività';
+
+  @override
+  String get onboardingSelectGoalError => 'Seleziona un obiettivo';
+
+  @override
+  String get onboardingStep5Title => 'I tuoi obiettivi quotidiani';
+
+  @override
+  String get onboardingStep5Subtitle =>
+      'Personalizzato in base al tuo corpo, stile di vita e obiettivo.';
+
+  @override
+  String get onboardingDailyCalories => 'CALORIE GIORNALIERE';
+
+  @override
+  String get onboardingMacros => 'Macro';
+
+  @override
+  String get onboardingProtein => 'Proteine';
+
+  @override
+  String get onboardingCarbs => 'Carboidrati';
+
+  @override
+  String get onboardingFat => 'Grassi';
+
+  @override
+  String get onboardingDailyWater => 'Acqua giornaliera';
+
+  @override
+  String get onboardingCompleteSetup => 'Completa la configurazione';
+
+  @override
+  String get onboardingAdjustAnytime =>
+      'Puoi regolarli in qualsiasi momento nelle Impostazioni.';
+
+  @override
+  String get authContinueWithApple => 'Continua con Apple';
+
+  @override
+  String get authContinueWithGoogle => 'Continua con Google';
+
+  @override
+  String get authValidatorEmailRequired => 'L\'email è obbligatoria';
+
+  @override
+  String get authValidatorEmailInvalid => 'Inserisci un\'email valida';
+
+  @override
+  String get authValidatorPasswordRequired => 'La password è obbligatoria';
+
+  @override
+  String get authValidatorPasswordLength => 'Almeno 8 caratteri';
+
+  @override
+  String get authValidatorPasswordNumber => 'Includi almeno un numero';
+
+  @override
+  String get authValidatorPasswordSimpleLength => 'Almeno 6 caratteri';
+
+  @override
+  String get authValidatorConfirmRequired => 'Conferma la password';
+
+  @override
+  String get authValidatorPasswordsNoMatch => 'Le password non coincidono';
+
+  @override
+  String get passwordStrengthWeak => 'Debole';
+
+  @override
+  String get passwordStrengthFair => 'Discreto';
+
+  @override
+  String get passwordStrengthStrong => 'Forte';
+
+  @override
+  String get passwordStrengthVeryStrong => 'Molto forte';
+
+  @override
+  String get passwordStrengthSuggestLength => 'Usa almeno 8 caratteri';
+
+  @override
+  String get passwordStrengthSuggestNumber => 'Aggiungi un numero';
+
+  @override
+  String get passwordStrengthSuggestCase => 'Mescola maiuscole e minuscole';
+
+  @override
+  String get passwordStrengthSuggestSymbol => 'Aggiungi un simbolo (!@#\\\$%)';
+
+  @override
+  String get authOrDivider => 'o';
 }

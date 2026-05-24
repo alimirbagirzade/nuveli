@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_typography.dart';
 import '../../../../../core/utils/calorie_calculator.dart';
+import '../../../../../l10n/generated/app_localizations.dart';
 import '../../../providers/onboarding_provider.dart';
 import '../../../widgets/auth_link_text.dart';
 import '../../../widgets/auth_primary_button.dart';
@@ -73,18 +74,19 @@ class _Step5State extends ConsumerState<Step5Targets> {
       );
     }
 
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Your daily targets',
+            l10n?.onboardingStep5Title ?? 'Your daily targets',
             style: AppTypography.heading28.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 8),
           Text(
-            'Personalized to your body, lifestyle, and goal.',
+            l10n?.onboardingStep5Subtitle ?? 'Personalized to your body, lifestyle, and goal.',
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
             ),
@@ -93,11 +95,23 @@ class _Step5State extends ConsumerState<Step5Targets> {
           Expanded(
             child: ListView(
               children: [
-                _CalorieHero(calories: calc.dailyCalorieTarget),
+                _CalorieHero(
+                  calories: calc.dailyCalorieTarget,
+                  label: l10n?.onboardingDailyCalories ?? 'DAILY CALORIES',
+                ),
                 const SizedBox(height: 16),
-                _MacroSummary(calc: calc),
+                _MacroSummary(
+                  calc: calc,
+                  macrosLabel: l10n?.onboardingMacros ?? 'Macros',
+                  proteinLabel: l10n?.onboardingProtein ?? 'Protein',
+                  carbsLabel: l10n?.onboardingCarbs ?? 'Carbs',
+                  fatLabel: l10n?.onboardingFat ?? 'Fat',
+                ),
                 const SizedBox(height: 16),
-                _WaterTarget(ml: calc.dailyWaterMl),
+                _WaterTarget(
+                  ml: calc.dailyWaterMl,
+                  label: l10n?.onboardingDailyWater ?? 'Daily water',
+                ),
                 const SizedBox(height: 16),
                 _MetaRow(
                   bmr: calc.bmr.round(),
@@ -111,13 +125,13 @@ class _Step5State extends ConsumerState<Step5Targets> {
           ),
           const SizedBox(height: 16),
           AuthPrimaryButton(
-            label: 'Complete Setup',
+            label: l10n?.onboardingCompleteSetup ?? 'Complete Setup',
             isLoading: widget.submitting,
             onPressed: widget.onComplete,
           ),
           const SizedBox(height: 8),
           Text(
-            "You can adjust these anytime in Settings.",
+            l10n?.onboardingAdjustAnytime ?? "You can adjust these anytime in Settings.",
             textAlign: TextAlign.center,
             style: AppTypography.caption12.copyWith(
               color: AppColors.tertiaryText,
@@ -136,7 +150,8 @@ class _Step5State extends ConsumerState<Step5Targets> {
 
 class _CalorieHero extends StatelessWidget {
   final int calories;
-  const _CalorieHero({required this.calories});
+  final String label;
+  const _CalorieHero({required this.calories, this.label = 'DAILY CALORIES'});
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +182,7 @@ class _CalorieHero extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'DAILY CALORIES',
+            label,
             style: AppTypography.caption12.copyWith(
               color: AppColors.primaryCyan,
               fontWeight: FontWeight.w600,
@@ -218,7 +233,17 @@ class _CalorieHero extends StatelessWidget {
 
 class _MacroSummary extends StatelessWidget {
   final CalorieCalculation calc;
-  const _MacroSummary({required this.calc});
+  final String macrosLabel;
+  final String proteinLabel;
+  final String carbsLabel;
+  final String fatLabel;
+  const _MacroSummary({
+    required this.calc,
+    this.macrosLabel = 'Macros',
+    this.proteinLabel = 'Protein',
+    this.carbsLabel = 'Carbs',
+    this.fatLabel = 'Fat',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +258,7 @@ class _MacroSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Macros',
+            macrosLabel,
             style: AppTypography.body14.copyWith(
               color: AppColors.secondaryText,
               fontWeight: FontWeight.w500,
@@ -244,7 +269,7 @@ class _MacroSummary extends StatelessWidget {
             children: [
               Expanded(
                 child: _MacroPill(
-                  label: 'Protein',
+                  label: proteinLabel,
                   grams: calc.proteinGrams,
                   percent: calc.proteinPercent,
                   color: const Color(0xFF3DDC97),
@@ -253,7 +278,7 @@ class _MacroSummary extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: _MacroPill(
-                  label: 'Carbs',
+                  label: carbsLabel,
                   grams: calc.carbsGrams,
                   percent: calc.carbsPercent,
                   color: const Color(0xFF6BCB77),
@@ -262,7 +287,7 @@ class _MacroSummary extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: _MacroPill(
-                  label: 'Fat',
+                  label: fatLabel,
                   grams: calc.fatGrams,
                   percent: calc.fatPercent,
                   color: const Color(0xFFFF9F45),
@@ -330,7 +355,8 @@ class _MacroPill extends StatelessWidget {
 
 class _WaterTarget extends StatelessWidget {
   final int ml;
-  const _WaterTarget({required this.ml});
+  final String label;
+  const _WaterTarget({required this.ml, this.label = 'Daily water'});
 
   @override
   Widget build(BuildContext context) {
@@ -362,7 +388,7 @@ class _WaterTarget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Daily water',
+                  label,
                   style: AppTypography.body14.copyWith(
                     color: AppColors.secondaryText,
                   ),

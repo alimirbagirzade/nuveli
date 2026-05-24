@@ -4949,6 +4949,582 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Profil güncellendi'**
   String get profileEditUpdated;
+
+  /// welcomeGetStarted
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlayalım'**
+  String get welcomeGetStarted;
+
+  /// loginWelcomeBack
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar hoş geldin'**
+  String get loginWelcomeBack;
+
+  /// loginSubtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Yolculuğuna devam etmek için giriş yap'**
+  String get loginSubtitle;
+
+  /// loginForgotPasswordFull
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreni mi unuttun?'**
+  String get loginForgotPasswordFull;
+
+  /// loginSignIn
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş yap'**
+  String get loginSignIn;
+
+  /// loginDontHaveAccount
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabın yok mu?'**
+  String get loginDontHaveAccount;
+
+  /// loginSignUp
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt ol'**
+  String get loginSignUp;
+
+  /// signupCreateAccount
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap oluştur'**
+  String get signupCreateAccount;
+
+  /// signupNutritionJourney
+  ///
+  /// In tr, this message translates to:
+  /// **'Beslenme yolculuğuna başlayalım'**
+  String get signupNutritionJourney;
+
+  /// signupConfirmPassword
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi onayla'**
+  String get signupConfirmPassword;
+
+  /// signupTermsAgree
+  ///
+  /// In tr, this message translates to:
+  /// **'Kabul ediyorum: '**
+  String get signupTermsAgree;
+
+  /// signupTermsOfService
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanım Koşulları'**
+  String get signupTermsOfService;
+
+  /// signupTermsAnd
+  ///
+  /// In tr, this message translates to:
+  /// **' ve '**
+  String get signupTermsAnd;
+
+  /// signupPrivacyPolicy
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik Politikası'**
+  String get signupPrivacyPolicy;
+
+  /// signupAcceptTermsError
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam etmek için Koşulları kabul edin.'**
+  String get signupAcceptTermsError;
+
+  /// signupAlreadyHaveAccount
+  ///
+  /// In tr, this message translates to:
+  /// **'Zaten hesabın var mı?'**
+  String get signupAlreadyHaveAccount;
+
+  /// signupSignIn
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş yap'**
+  String get signupSignIn;
+
+  /// forgotPasswordTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi sıfırla'**
+  String get forgotPasswordTitle;
+
+  /// forgotPasswordSubtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'E-postanı gir, şifre sıfırlama bağlantısı gönderelim.'**
+  String get forgotPasswordSubtitle;
+
+  /// forgotPasswordSendLink
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıfırlama bağlantısı gönder'**
+  String get forgotPasswordSendLink;
+
+  /// forgotPasswordRemember
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreni hatırladın mı?'**
+  String get forgotPasswordRemember;
+
+  /// forgotPasswordCheckEmail
+  ///
+  /// In tr, this message translates to:
+  /// **'E-postanı kontrol et'**
+  String get forgotPasswordCheckEmail;
+
+  /// Password reset link sent confirmation
+  ///
+  /// In tr, this message translates to:
+  /// **'{email} adresine şifre sıfırlama bağlantısı gönderdik.'**
+  String forgotPasswordSentLink(String email);
+
+  /// forgotPasswordBackToSignIn
+  ///
+  /// In tr, this message translates to:
+  /// **'Girişe geri dön'**
+  String get forgotPasswordBackToSignIn;
+
+  /// verifyEmailSentLinkTo
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama bağlantısı şu adrese gönderildi:'**
+  String get verifyEmailSentLinkTo;
+
+  /// verifyEmailOpenOnDevice
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam etmek için bu cihazda aç.'**
+  String get verifyEmailOpenOnDevice;
+
+  /// verifyEmailResendEmail
+  ///
+  /// In tr, this message translates to:
+  /// **'E-postayı yeniden gönder'**
+  String get verifyEmailResendEmail;
+
+  /// Resend countdown
+  ///
+  /// In tr, this message translates to:
+  /// **'{seconds} sn sonra tekrar gönder'**
+  String verifyEmailResendInSeconds(int seconds);
+
+  /// verifyEmailWrongEmail
+  ///
+  /// In tr, this message translates to:
+  /// **'Yanlış e-posta mı?'**
+  String get verifyEmailWrongEmail;
+
+  /// verifyEmailGoBack
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri dön'**
+  String get verifyEmailGoBack;
+
+  /// resetPasswordTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni şifre belirle'**
+  String get resetPasswordTitle;
+
+  /// resetPasswordSubtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabın için güçlü bir şifre seç.'**
+  String get resetPasswordSubtitle;
+
+  /// resetPasswordNewPassword
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni şifre'**
+  String get resetPasswordNewPassword;
+
+  /// resetPasswordConfirmPassword
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi onayla'**
+  String get resetPasswordConfirmPassword;
+
+  /// resetPasswordUpdate
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi güncelle'**
+  String get resetPasswordUpdate;
+
+  /// resetPasswordUpdated
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre güncellendi'**
+  String get resetPasswordUpdated;
+
+  /// resetPasswordCanNowSignIn
+  ///
+  /// In tr, this message translates to:
+  /// **'Artık yeni şifrenle giriş yapabilirsin.'**
+  String get resetPasswordCanNowSignIn;
+
+  /// Step progress indicator
+  ///
+  /// In tr, this message translates to:
+  /// **'Adım {current} / {total}'**
+  String onboardingStepOf(int current, int total);
+
+  /// onboardingSignOutTooltip
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get onboardingSignOutTooltip;
+
+  /// onboardingSignOutTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yapılsın mı?'**
+  String get onboardingSignOutTitle;
+
+  /// onboardingSignOutBody
+  ///
+  /// In tr, this message translates to:
+  /// **'İlerlemeniz kaydedildi. Kuruluma daha sonra devam edebilirsiniz.'**
+  String get onboardingSignOutBody;
+
+  /// onboardingCompleteStepsError
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam etmeden önce tüm adımları tamamlayın.'**
+  String get onboardingCompleteStepsError;
+
+  /// onboardingSaveError
+  ///
+  /// In tr, this message translates to:
+  /// **'Profilin kaydedilemedi. Lütfen tekrar deneyin.'**
+  String get onboardingSaveError;
+
+  /// onboardingStep1Title
+  ///
+  /// In tr, this message translates to:
+  /// **'Merhaba! Seni tanıyalım'**
+  String get onboardingStep1Title;
+
+  /// onboardingStep1Body
+  ///
+  /// In tr, this message translates to:
+  /// **'Vücuduna, yaşam tarzına ve hedeflerine göre beslenme koçluğunu kişiselleştireceğiz. Sadece bir dakika sürer.'**
+  String get onboardingStep1Body;
+
+  /// onboardingStep2Title
+  ///
+  /// In tr, this message translates to:
+  /// **'Bize kendinizden bahsedin'**
+  String get onboardingStep2Title;
+
+  /// onboardingStep2Subtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu, günlük ihtiyaçlarını hesaplamamıza yardımcı olur.'**
+  String get onboardingStep2Subtitle;
+
+  /// onboardingYourName
+  ///
+  /// In tr, this message translates to:
+  /// **'Adın'**
+  String get onboardingYourName;
+
+  /// onboardingNameHint
+  ///
+  /// In tr, this message translates to:
+  /// **'Seni nasıl çağıralım?'**
+  String get onboardingNameHint;
+
+  /// onboardingNameRequired
+  ///
+  /// In tr, this message translates to:
+  /// **'İsim zorunludur'**
+  String get onboardingNameRequired;
+
+  /// onboardingDateOfBirth
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğum tarihi'**
+  String get onboardingDateOfBirth;
+
+  /// onboardingSelectDate
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih seç'**
+  String get onboardingSelectDate;
+
+  /// onboardingSelectDob
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen doğum tarihinizi seçin'**
+  String get onboardingSelectDob;
+
+  /// onboardingSelectGender
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen cinsiyetinizi seçin'**
+  String get onboardingSelectGender;
+
+  /// onboardingStep3Title
+  ///
+  /// In tr, this message translates to:
+  /// **'Vücut ölçülerin'**
+  String get onboardingStep3Title;
+
+  /// onboardingStep3Subtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Endişelenme, bunları istediğin zaman güncelleyebilirsin.'**
+  String get onboardingStep3Subtitle;
+
+  /// onboardingHeight
+  ///
+  /// In tr, this message translates to:
+  /// **'Boy'**
+  String get onboardingHeight;
+
+  /// onboardingCurrentWeight
+  ///
+  /// In tr, this message translates to:
+  /// **'Mevcut ağırlık'**
+  String get onboardingCurrentWeight;
+
+  /// onboardingStep4Title
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedeflerin'**
+  String get onboardingStep4Title;
+
+  /// onboardingStep4Subtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük hedeflerini buna göre belirleyeceğiz.'**
+  String get onboardingStep4Subtitle;
+
+  /// onboardingActivityLevelLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite düzeyi'**
+  String get onboardingActivityLevelLabel;
+
+  /// onboardingYourGoalLabel
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefin'**
+  String get onboardingYourGoalLabel;
+
+  /// onboardingTargetWeight
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef ağırlık'**
+  String get onboardingTargetWeight;
+
+  /// onboardingToLose
+  ///
+  /// In tr, this message translates to:
+  /// **'vermek'**
+  String get onboardingToLose;
+
+  /// onboardingToGain
+  ///
+  /// In tr, this message translates to:
+  /// **'almak'**
+  String get onboardingToGain;
+
+  /// onboardingSelectActivityError
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen aktivite düzeyinizi seçin'**
+  String get onboardingSelectActivityError;
+
+  /// onboardingSelectGoalError
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen bir hedef seçin'**
+  String get onboardingSelectGoalError;
+
+  /// onboardingStep5Title
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük hedeflerin'**
+  String get onboardingStep5Title;
+
+  /// onboardingStep5Subtitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Vücuduna, yaşam tarzına ve hedefine göre kişiselleştirildi.'**
+  String get onboardingStep5Subtitle;
+
+  /// onboardingDailyCalories
+  ///
+  /// In tr, this message translates to:
+  /// **'GÜNLÜK KALORİ'**
+  String get onboardingDailyCalories;
+
+  /// onboardingMacros
+  ///
+  /// In tr, this message translates to:
+  /// **'Makrolar'**
+  String get onboardingMacros;
+
+  /// onboardingProtein
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein'**
+  String get onboardingProtein;
+
+  /// onboardingCarbs
+  ///
+  /// In tr, this message translates to:
+  /// **'Karbonhidrat'**
+  String get onboardingCarbs;
+
+  /// onboardingFat
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ'**
+  String get onboardingFat;
+
+  /// onboardingDailyWater
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük su'**
+  String get onboardingDailyWater;
+
+  /// onboardingCompleteSetup
+  ///
+  /// In tr, this message translates to:
+  /// **'Kurulumu Tamamla'**
+  String get onboardingCompleteSetup;
+
+  /// onboardingAdjustAnytime
+  ///
+  /// In tr, this message translates to:
+  /// **'Bunları istediğin zaman Ayarlar\'da düzenleyebilirsin.'**
+  String get onboardingAdjustAnytime;
+
+  /// authContinueWithApple
+  ///
+  /// In tr, this message translates to:
+  /// **'Apple ile devam et'**
+  String get authContinueWithApple;
+
+  /// authContinueWithGoogle
+  ///
+  /// In tr, this message translates to:
+  /// **'Google ile devam et'**
+  String get authContinueWithGoogle;
+
+  /// authValidatorEmailRequired
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta zorunludur'**
+  String get authValidatorEmailRequired;
+
+  /// authValidatorEmailInvalid
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçerli bir e-posta girin'**
+  String get authValidatorEmailInvalid;
+
+  /// authValidatorPasswordRequired
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre zorunludur'**
+  String get authValidatorPasswordRequired;
+
+  /// authValidatorPasswordLength
+  ///
+  /// In tr, this message translates to:
+  /// **'En az 8 karakter'**
+  String get authValidatorPasswordLength;
+
+  /// authValidatorPasswordNumber
+  ///
+  /// In tr, this message translates to:
+  /// **'En az bir rakam ekleyin'**
+  String get authValidatorPasswordNumber;
+
+  /// authValidatorPasswordSimpleLength
+  ///
+  /// In tr, this message translates to:
+  /// **'En az 6 karakter'**
+  String get authValidatorPasswordSimpleLength;
+
+  /// authValidatorConfirmRequired
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen şifreyi onaylayın'**
+  String get authValidatorConfirmRequired;
+
+  /// authValidatorPasswordsNoMatch
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreler eşleşmiyor'**
+  String get authValidatorPasswordsNoMatch;
+
+  /// passwordStrengthWeak
+  ///
+  /// In tr, this message translates to:
+  /// **'Zayıf'**
+  String get passwordStrengthWeak;
+
+  /// passwordStrengthFair
+  ///
+  /// In tr, this message translates to:
+  /// **'Orta'**
+  String get passwordStrengthFair;
+
+  /// passwordStrengthStrong
+  ///
+  /// In tr, this message translates to:
+  /// **'Güçlü'**
+  String get passwordStrengthStrong;
+
+  /// passwordStrengthVeryStrong
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok güçlü'**
+  String get passwordStrengthVeryStrong;
+
+  /// passwordStrengthSuggestLength
+  ///
+  /// In tr, this message translates to:
+  /// **'En az 8 karakter kullanın'**
+  String get passwordStrengthSuggestLength;
+
+  /// passwordStrengthSuggestNumber
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir rakam ekleyin'**
+  String get passwordStrengthSuggestNumber;
+
+  /// passwordStrengthSuggestCase
+  ///
+  /// In tr, this message translates to:
+  /// **'Büyük ve küçük harf karıştırın'**
+  String get passwordStrengthSuggestCase;
+
+  /// passwordStrengthSuggestSymbol
+  ///
+  /// In tr, this message translates to:
+  /// **'Sembol ekleyin (!@#\\\$%)'**
+  String get passwordStrengthSuggestSymbol;
+
+  /// authOrDivider
+  ///
+  /// In tr, this message translates to:
+  /// **'veya'**
+  String get authOrDivider;
 }
 
 class _AppLocalizationsDelegate

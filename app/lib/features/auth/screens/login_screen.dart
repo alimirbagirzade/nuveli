@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../models/auth_errors.dart';
 import '../providers/auth_provider.dart';
@@ -107,6 +108,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final showApple = Platform.isIOS || Platform.isMacOS;
+    final l10n = AppLocalizations.of(context);
 
     return NuveliBackground(
       child: Scaffold(
@@ -129,14 +131,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 children: [
                   const SizedBox(height: 16),
                   Text(
-                    'Welcome back',
+                    l10n?.loginWelcomeBack ?? 'Welcome back',
                     style: AppTypography.heading32Bold.copyWith(
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Sign in to continue your journey',
+                    l10n?.loginSubtitle ?? 'Sign in to continue your journey',
                     style: AppTypography.body14.copyWith(
                       color: AppColors.secondaryText,
                     ),
@@ -144,21 +146,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 32),
                   AuthTextField(
                     controller: _emailCtl,
-                    label: 'Email',
+                    label: l10n?.loginEmail ?? 'Email',
                     hint: 'you@example.com',
                     prefixIcon: Icons.mail_outline,
                     keyboardType: TextInputType.emailAddress,
-                    validator: AuthValidators.email,
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) return l10n?.authValidatorEmailRequired ?? 'Email is required';
+                      final regex = RegExp(r'^[\w\.\-\+]+@([\w\-]+\.)+[a-zA-Z]{2,}$');
+                      if (!regex.hasMatch(v.trim())) return l10n?.authValidatorEmailInvalid ?? 'Enter a valid email';
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   AuthTextField(
                     controller: _passCtl,
-                    label: 'Password',
+                    label: l10n?.loginPassword ?? 'Password',
                     prefixIcon: Icons.lock_outline,
                     obscureText: true,
                     textInputAction: TextInputAction.done,
                     onSubmitted: _login,
-                    validator: AuthValidators.passwordSimple,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) return l10n?.authValidatorPasswordRequired ?? 'Password is required';
+                      if (v.length < 6) return l10n?.authValidatorPasswordSimpleLength ?? 'At least 6 characters';
+                      return null;
+                    },
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -170,7 +181,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                       child: Text(
-                        'Forgot password?',
+                        l10n?.loginForgotPasswordFull ?? 'Forgot password?',
                         style: AppTypography.caption12.copyWith(
                           color: AppColors.primaryCyan,
                           fontWeight: FontWeight.w500,
@@ -187,7 +198,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                   const SizedBox(height: 24),
                   AuthPrimaryButton(
-                    label: 'Sign in',
+                    label: l10n?.loginSignIn ?? 'Sign in',
                     isLoading: _loading,
                     onPressed: _login,
                   ),
@@ -209,8 +220,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 32),
                   AuthLinkText(
-                    prefix: "Don't have an account?",
-                    linkText: 'Sign up',
+                    prefix: l10n?.loginDontHaveAccount ?? "Don't have an account?",
+                    linkText: l10n?.loginSignUp ?? 'Sign up',
                     onTap: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

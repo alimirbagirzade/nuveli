@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 enum SocialProvider {
   apple,
@@ -67,6 +68,10 @@ class AuthSocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final disabled = onPressed == null || isLoading;
+    final l10n = AppLocalizations.of(context);
+    final label = provider == SocialProvider.apple
+        ? (l10n?.authContinueWithApple ?? 'Continue with Apple')
+        : (l10n?.authContinueWithGoogle ?? 'Continue with Google');
 
     return SizedBox(
       width: double.infinity,
@@ -103,7 +108,7 @@ class AuthSocialButton extends StatelessWidget {
                         _SocialLeading(provider: provider),
                         const SizedBox(width: 12),
                         Text(
-                          provider.label,
+                          label,
                           style: AppTypography.body16.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -128,6 +133,7 @@ class AuthOrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Row(
       children: [
         Expanded(
@@ -139,7 +145,7 @@ class AuthOrDivider extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'or',
+            l10n?.authOrDivider ?? 'or',
             style: AppTypography.caption12.copyWith(
               color: AppColors.tertiaryText,
             ),
