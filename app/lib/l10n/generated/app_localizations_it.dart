@@ -2977,4 +2977,52 @@ class AppLocalizationsIt extends AppLocalizations {
   String homeOfGlasses(String count) {
     return 'di $count bicchieri';
   }
+
+  @override
+  String get recipeBrowserTitle => 'Sfoglia ricette';
+
+  @override
+  String get recipeBrowserSearchHint => 'Cerca ricette…';
+
+  @override
+  String get recipeBrowserEmpty => 'Nessuna ricetta trovata';
+
+  @override
+  String get recipeBrowserEmptyHint =>
+      'La libreria di ricette crescerà presto. Puoi aggiungere pasti manualmente.';
+
+  @override
+  String get recipeBrowserLoadError => 'Impossibile caricare le ricette';
+
+  @override
+  String recipeBrowserCaloriesPerServing(int n) {
+    return '$n kcal / porzione';
+  }
+
+  @override
+  String get recipeBrowserProtein => 'Proteine';
+
+  @override
+  String get recipeBrowserCarbs => 'Carboidrati';
+
+  @override
+  String get recipeBrowserFat => 'Grassi';
+
+  @override
+  String get recipeBrowserAddToPlan => 'Aggiungi al piano';
+
+  @override
+  String get recipeBrowserServingsLabel => 'Porzioni';
+
+  @override
+  String get recipeBrowserMealType => 'Tipo di pasto';
+
+  @override
+  String get recipeBrowserDay => 'Giorno';
+
+  @override
+  String get recipeBrowserAdded => 'Aggiunto al piano';
+
+  @override
+  String get recipeBrowserAddFailed => 'Impossibile aggiungere al piano';
 }

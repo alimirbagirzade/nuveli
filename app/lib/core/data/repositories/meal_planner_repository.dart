@@ -88,6 +88,47 @@ class MealPlannerRepository extends BaseRepository {
     return WeeklyPlan.fromJson(response);
   }
 
+  /// `GET /recipes` — full recipe catalogue.
+  ///
+  /// Returns an empty list when the backend recipes table is unseeded
+  /// (expected on fresh deployments; UI shows an empty state).
+  Future<List<RecipeResponse>> getRecipes({String? search}) async {
+    final response = await apiClient.get<List<dynamic>>(
+      ApiEndpoints.recipes,
+      queryParameters: search != null && search.isNotEmpty
+          ? {'search': search}
+          : null,
+    );
+    return response
+        .whereType<Map<String, dynamic>>()
+        .map(RecipeResponse.fromJson)
+        .toList(growable: false);
+  }
+
+  /// `POST /meal-plans` with a `recipe_id` — add a recipe to the plan.
+  ///
+  /// Backend multiplies `recipe.calories_per_serving * servings` to fill
+  /// `total_*` columns. Returns the created [MealPlanEntry].
+  Future<MealPlanEntry> createPlanEntryFromRecipe({
+    required DateTime planDate,
+    required String mealType,
+    required String recipeId,
+    double servings = 1.0,
+    String? note,
+  }) async {
+    final response = await apiClient.post<Map<String, dynamic>>(
+      ApiEndpoints.mealPlans,
+      data: {
+        'plan_date': formatDateOnly(planDate),
+        'meal_type': mealType,
+        'recipe_id': recipeId,
+        'servings': servings,
+        if (note != null && note.isNotEmpty) 'note': note,
+      },
+    );
+    return MealPlanEntry.fromJson(response);
+  }
+
   Future<GrocerySummary> getGrocery({DateTime? weekStart}) async {
     final response = await apiClient.get<Map<String, dynamic>>(
       ApiEndpoints.mealPlansGrocery,

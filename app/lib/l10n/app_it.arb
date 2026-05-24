@@ -1213,5 +1213,27 @@
   "homeKcalRemaining": "{count} kcal rimaste",
   "homeKcalOver": "{count} kcal in più",
   "homeOfKcalTarget": "di {count} kcal",
-  "homeOfGlasses": "di {count} bicchieri"
+  "homeOfGlasses": "di {count} bicchieri",
+  "recipeBrowserTitle": "Sfoglia ricette",
+  "recipeBrowserSearchHint": "Cerca ricette…",
+  "recipeBrowserEmpty": "Nessuna ricetta trovata",
+  "recipeBrowserEmptyHint": "La libreria di ricette crescerà presto. Puoi aggiungere pasti manualmente.",
+  "recipeBrowserLoadError": "Impossibile caricare le ricette",
+  "recipeBrowserCaloriesPerServing": "{n} kcal / porzione",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Proteine",
+  "recipeBrowserCarbs": "Carboidrati",
+  "recipeBrowserFat": "Grassi",
+  "recipeBrowserAddToPlan": "Aggiungi al piano",
+  "recipeBrowserServingsLabel": "Porzioni",
+  "recipeBrowserMealType": "Tipo di pasto",
+  "recipeBrowserDay": "Giorno",
+  "recipeBrowserAdded": "Aggiunto al piano",
+  "recipeBrowserAddFailed": "Impossibile aggiungere al piano"
 }

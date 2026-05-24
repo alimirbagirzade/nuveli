@@ -1213,5 +1213,27 @@
   "homeKcalRemaining": "{count} kcal restantes",
   "homeKcalOver": "{count} kcal de más",
   "homeOfKcalTarget": "de {count} kcal",
-  "homeOfGlasses": "de {count} vasos"
+  "homeOfGlasses": "de {count} vasos",
+  "recipeBrowserTitle": "Explorar recetas",
+  "recipeBrowserSearchHint": "Buscar recetas…",
+  "recipeBrowserEmpty": "No se encontraron recetas",
+  "recipeBrowserEmptyHint": "La biblioteca de recetas crecerá pronto. Puedes añadir comidas manualmente.",
+  "recipeBrowserLoadError": "No se pudieron cargar las recetas",
+  "recipeBrowserCaloriesPerServing": "{n} kcal / porción",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Proteínas",
+  "recipeBrowserCarbs": "Carbohidratos",
+  "recipeBrowserFat": "Grasas",
+  "recipeBrowserAddToPlan": "Añadir al plan",
+  "recipeBrowserServingsLabel": "Porciones",
+  "recipeBrowserMealType": "Tipo de comida",
+  "recipeBrowserDay": "Día",
+  "recipeBrowserAdded": "Añadido al plan",
+  "recipeBrowserAddFailed": "No se pudo añadir al plan"
 }

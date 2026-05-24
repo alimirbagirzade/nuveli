@@ -2969,4 +2969,52 @@ class AppLocalizationsRu extends AppLocalizations {
   String homeOfGlasses(String count) {
     return 'из $count стаканов';
   }
+
+  @override
+  String get recipeBrowserTitle => 'Просмотр рецептов';
+
+  @override
+  String get recipeBrowserSearchHint => 'Поиск рецептов…';
+
+  @override
+  String get recipeBrowserEmpty => 'Рецепты не найдены';
+
+  @override
+  String get recipeBrowserEmptyHint =>
+      'Библиотека рецептов скоро пополнится. Вы можете добавлять блюда вручную.';
+
+  @override
+  String get recipeBrowserLoadError => 'Не удалось загрузить рецепты';
+
+  @override
+  String recipeBrowserCaloriesPerServing(int n) {
+    return '$n ккал / порция';
+  }
+
+  @override
+  String get recipeBrowserProtein => 'Белки';
+
+  @override
+  String get recipeBrowserCarbs => 'Углеводы';
+
+  @override
+  String get recipeBrowserFat => 'Жиры';
+
+  @override
+  String get recipeBrowserAddToPlan => 'Добавить в план';
+
+  @override
+  String get recipeBrowserServingsLabel => 'Порции';
+
+  @override
+  String get recipeBrowserMealType => 'Тип приёма пищи';
+
+  @override
+  String get recipeBrowserDay => 'День';
+
+  @override
+  String get recipeBrowserAdded => 'Добавлено в план';
+
+  @override
+  String get recipeBrowserAddFailed => 'Не удалось добавить в план';
 }

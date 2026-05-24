@@ -202,6 +202,42 @@ class GroceryItem {
       );
 }
 
+/// Mirrors `RecipeResponse` from `backend/models/meal_plan.py`.
+///
+/// `GET /recipes` returns a list of these objects.
+class RecipeResponse {
+  final String id;
+  final String name;
+  final String? imageUrl;
+  final int caloriesPerServing;
+  final double proteinG;
+  final double carbsG;
+  final double fatG;
+  final double servings;
+
+  const RecipeResponse({
+    required this.id,
+    required this.name,
+    this.imageUrl,
+    required this.caloriesPerServing,
+    required this.proteinG,
+    required this.carbsG,
+    required this.fatG,
+    required this.servings,
+  });
+
+  factory RecipeResponse.fromJson(Map<String, dynamic> json) => RecipeResponse(
+        id: json['id']?.toString() ?? '',
+        name: json['name']?.toString() ?? '',
+        imageUrl: json['image_url']?.toString(),
+        caloriesPerServing: _asInt(json['calories_per_serving']),
+        proteinG: _asDouble(json['protein_g']),
+        carbsG: _asDouble(json['carbs_g']),
+        fatG: _asDouble(json['fat_g']),
+        servings: _asDouble(json['servings'], fallback: 1.0),
+      );
+}
+
 /// Helpers shared by all models above.
 DateTime _asDate(dynamic v) {
   if (v == null) return DateTime.now();

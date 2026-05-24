@@ -160,4 +160,134 @@ void main() {
       verify(() => api.delete('/meal-plans/plan-9')).called(1);
     });
   });
+
+  group('getRecipes', () {
+    test('GETs /recipes without query when search is null', () async {
+      when(() => api.get<List<dynamic>>(
+            '/recipes',
+            queryParameters: any(named: 'queryParameters'),
+          )).thenAnswer((_) async => [
+                {
+                  'id': 'rec-1',
+                  'name': 'Chicken Salad',
+                  'image_url': null,
+                  'calories_per_serving': 320,
+                  'protein_g': 28.0,
+                  'carbs_g': 12.0,
+                  'fat_g': 18.0,
+                  'servings': 1.0,
+                }
+              ]);
+
+      final result = await repo.getRecipes();
+
+      final captured = verify(() => api.get<List<dynamic>>(
+            '/recipes',
+            queryParameters: captureAny(named: 'queryParameters'),
+          )).captured.single;
+
+      expect(captured, isNull);
+      expect(result.length, 1);
+      expect(result.first.name, 'Chicken Salad');
+      expect(result.first.caloriesPerServing, 320);
+    });
+
+    test('passes search query param when non-empty', () async {
+      when(() => api.get<List<dynamic>>(
+            '/recipes',
+            queryParameters: any(named: 'queryParameters'),
+          )).thenAnswer((_) async => <dynamic>[]);
+
+      await repo.getRecipes(search: 'chicken');
+
+      final captured = verify(() => api.get<List<dynamic>>(
+            '/recipes',
+            queryParameters: captureAny(named: 'queryParameters'),
+          )).captured.single as Map<String, dynamic>?;
+
+      expect(captured, {'search': 'chicken'});
+    });
+
+    test('returns empty list when API returns empty array', () async {
+      when(() => api.get<List<dynamic>>(
+            '/recipes',
+            queryParameters: any(named: 'queryParameters'),
+          )).thenAnswer((_) async => <dynamic>[]);
+
+      final result = await repo.getRecipes();
+
+      expect(result, isEmpty);
+    });
+  });
+
+  group('createPlanEntryFromRecipe', () {
+    test('POSTs /meal-plans with recipe_id shape', () async {
+      when(() => api.post<Map<String, dynamic>>(
+            '/meal-plans',
+            data: any(named: 'data'),
+          )).thenAnswer((_) async => _entryResponse());
+
+      await repo.createPlanEntryFromRecipe(
+        planDate: DateTime(2026, 5, 25),
+        mealType: 'dinner',
+        recipeId: 'rec-1',
+        servings: 2.0,
+        note: 'meal prep',
+      );
+
+      final captured = verify(() => api.post<Map<String, dynamic>>(
+            '/meal-plans',
+            data: captureAny(named: 'data'),
+          )).captured.single as Map<String, dynamic>;
+
+      expect(captured['plan_date'], '2026-05-25');
+      expect(captured['meal_type'], 'dinner');
+      expect(captured['recipe_id'], 'rec-1');
+      expect(captured['servings'], 2.0);
+      expect(captured['note'], 'meal prep');
+      // Must NOT send custom_name or custom_calories.
+      expect(captured.containsKey('custom_name'), isFalse);
+      expect(captured.containsKey('custom_calories'), isFalse);
+    });
+
+    test('omits note when empty', () async {
+      when(() => api.post<Map<String, dynamic>>(
+            '/meal-plans',
+            data: any(named: 'data'),
+          )).thenAnswer((_) async => _entryResponse());
+
+      await repo.createPlanEntryFromRecipe(
+        planDate: DateTime(2026, 5, 25),
+        mealType: 'lunch',
+        recipeId: 'rec-2',
+      );
+
+      final captured = verify(() => api.post<Map<String, dynamic>>(
+            '/meal-plans',
+            data: captureAny(named: 'data'),
+          )).captured.single as Map<String, dynamic>;
+
+      expect(captured.containsKey('note'), isFalse);
+    });
+
+    test('defaults servings to 1.0', () async {
+      when(() => api.post<Map<String, dynamic>>(
+            '/meal-plans',
+            data: any(named: 'data'),
+          )).thenAnswer((_) async => _entryResponse());
+
+      await repo.createPlanEntryFromRecipe(
+        planDate: DateTime(2026, 5, 25),
+        mealType: 'snack',
+        recipeId: 'rec-3',
+      );
+
+      final captured = verify(() => api.post<Map<String, dynamic>>(
+            '/meal-plans',
+            data: captureAny(named: 'data'),
+          )).captured.single as Map<String, dynamic>;
+
+      expect(captured['servings'], 1.0);
+    });
+  });
 }

@@ -1213,5 +1213,27 @@
   "homeKcalRemaining": "{count} kcal restantes",
   "homeKcalOver": "{count} kcal de trop",
   "homeOfKcalTarget": "sur {count} kcal",
-  "homeOfGlasses": "sur {count} verres"
+  "homeOfGlasses": "sur {count} verres",
+  "recipeBrowserTitle": "Parcourir les recettes",
+  "recipeBrowserSearchHint": "Rechercher des recettes…",
+  "recipeBrowserEmpty": "Aucune recette trouvée",
+  "recipeBrowserEmptyHint": "La bibliothèque de recettes s'enrichira bientôt. Vous pouvez ajouter des repas manuellement.",
+  "recipeBrowserLoadError": "Impossible de charger les recettes",
+  "recipeBrowserCaloriesPerServing": "{n} kcal / portion",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Protéines",
+  "recipeBrowserCarbs": "Glucides",
+  "recipeBrowserFat": "Lipides",
+  "recipeBrowserAddToPlan": "Ajouter au plan",
+  "recipeBrowserServingsLabel": "Portions",
+  "recipeBrowserMealType": "Type de repas",
+  "recipeBrowserDay": "Jour",
+  "recipeBrowserAdded": "Ajouté au plan",
+  "recipeBrowserAddFailed": "Impossible d'ajouter au plan"
 }

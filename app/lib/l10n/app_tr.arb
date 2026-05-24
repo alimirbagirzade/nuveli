@@ -2016,5 +2016,27 @@
         "type": "String"
       }
     }
-  }
+  },
+  "recipeBrowserTitle": "Tarif Ara",
+  "recipeBrowserSearchHint": "Tariflerde ara…",
+  "recipeBrowserEmpty": "Tarif bulunamadı",
+  "recipeBrowserEmptyHint": "Tarif kütüphanesi yakında büyüyecek. Öğünleri manuel ekleyebilirsiniz.",
+  "recipeBrowserLoadError": "Tarifler yüklenemedi",
+  "recipeBrowserCaloriesPerServing": "Porsiyon başına {n} kcal",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Protein",
+  "recipeBrowserCarbs": "Karbonhidrat",
+  "recipeBrowserFat": "Yağ",
+  "recipeBrowserAddToPlan": "Plana ekle",
+  "recipeBrowserServingsLabel": "Porsiyon",
+  "recipeBrowserMealType": "Öğün türü",
+  "recipeBrowserDay": "Gün",
+  "recipeBrowserAdded": "Plana eklendi",
+  "recipeBrowserAddFailed": "Plana eklenemedi"
 }
