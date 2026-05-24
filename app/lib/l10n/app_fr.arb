@@ -713,5 +713,9 @@
   "coachBubbleCalmMealOnTrack": "Pris en note. Stable et régulier — un progrès tranquille.",
   "coachBubbleCalmWaterLow": "L'eau est un peu basse. Sans pression — bois quand ça te convient.",
   "coachBubbleCalmStreakMilestone": "Une régularité tranquille, jour après jour. Ça compte.",
-  "coachBubbleCalmFirstMeal": "Premier repas pris en note. Un début de journée paisible."
+  "coachBubbleCalmFirstMeal": "Premier repas pris en note. Un début de journée paisible.",
+  "mealHistoryTitle": "Historique des repas",
+  "historyYesterday": "Hier",
+  "mealHistoryEmptyTitle": "Aucun repas enregistré",
+  "mealHistoryEmptyBody": "Tes repas enregistrés apparaîtront ici, regroupés par jour."
 }

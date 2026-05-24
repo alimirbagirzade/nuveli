@@ -1871,4 +1871,17 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get coachBubbleCalmFirstMeal =>
       'İlk öğün not edildi. Güne sakin bir başlangıç.';
+
+  @override
+  String get mealHistoryTitle => 'Öğün Geçmişi';
+
+  @override
+  String get historyYesterday => 'Dün';
+
+  @override
+  String get mealHistoryEmptyTitle => 'Henüz öğün eklenmedi';
+
+  @override
+  String get mealHistoryEmptyBody =>
+      'Eklediğin öğünler burada güne göre gruplanır.';
 }

@@ -17,10 +17,39 @@ enum SocialProvider {
         SocialProvider.google => 'Continue with Google',
       };
 
-  IconData get icon => switch (this) {
-        SocialProvider.apple => Icons.apple,
-        SocialProvider.google => Icons.g_mobiledata, // placeholder
-      };
+}
+
+/// Leading mark for a social button. Apple uses the system glyph; Google
+/// gets a white-circle "G" badge (no brand asset bundled, so we avoid the
+/// thin `g_mobiledata` glyph in favour of a clearer Google-blue mark).
+class _SocialLeading extends StatelessWidget {
+  const _SocialLeading({required this.provider});
+  final SocialProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    if (provider == SocialProvider.apple) {
+      return const Icon(Icons.apple, color: Colors.white, size: 24);
+    }
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      alignment: Alignment.center,
+      child: const Text(
+        'G',
+        style: TextStyle(
+          color: Color(0xFF4285F4), // Google blue
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          height: 1.0,
+        ),
+      ),
+    );
+  }
 }
 
 class AuthSocialButton extends StatelessWidget {
@@ -71,7 +100,7 @@ class AuthSocialButton extends StatelessWidget {
                   : Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(provider.icon, color: Colors.white, size: 24),
+                        _SocialLeading(provider: provider),
                         const SizedBox(width: 12),
                         Text(
                           provider.label,

@@ -754,5 +754,9 @@
   "coachBubbleCalmMealOnTrack": "Отмечено. Ровно и спокойно — неспешный прогресс.",
   "coachBubbleCalmWaterLow": "Воды немного мало. Без давления — пей, когда удобно.",
   "coachBubbleCalmStreakMilestone": "Тихое постоянство, день за днём. Это важно.",
-  "coachBubbleCalmFirstMeal": "Первый приём пищи отмечен. Спокойное начало дня."
+  "coachBubbleCalmFirstMeal": "Первый приём пищи отмечен. Спокойное начало дня.",
+  "mealHistoryTitle": "История приёмов пищи",
+  "historyYesterday": "Вчера",
+  "mealHistoryEmptyTitle": "Пока нет записей о приёмах пищи",
+  "mealHistoryEmptyBody": "Записанные приёмы пищи появятся здесь, сгруппированные по дням."
 }

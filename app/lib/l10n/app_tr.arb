@@ -799,5 +799,21 @@
   "coachBubbleCalmFirstMeal": "İlk öğün not edildi. Güne sakin bir başlangıç.",
   "@coachBubbleCalmFirstMeal": {
     "description": "Mood bubble after the first meal of the day is logged (fresh-start framing)."
+  },
+  "mealHistoryTitle": "Öğün Geçmişi",
+  "@mealHistoryTitle": {
+    "description": "Meal history screen app-bar title."
+  },
+  "historyYesterday": "Dün",
+  "@historyYesterday": {
+    "description": "Day-group header for the previous day in meal history."
+  },
+  "mealHistoryEmptyTitle": "Henüz öğün eklenmedi",
+  "@mealHistoryEmptyTitle": {
+    "description": "Empty-state title on the meal history screen."
+  },
+  "mealHistoryEmptyBody": "Eklediğin öğünler burada güne göre gruplanır.",
+  "@mealHistoryEmptyBody": {
+    "description": "Empty-state body on the meal history screen."
   }
 }

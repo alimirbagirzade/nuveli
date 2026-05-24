@@ -713,5 +713,9 @@
   "coachBubbleCalmMealOnTrack": "Noted. Steady and even — a calm kind of progress.",
   "coachBubbleCalmWaterLow": "Water's a little low. No pressure — sip when it suits you.",
   "coachBubbleCalmStreakMilestone": "Quiet consistency, day after day. That counts.",
-  "coachBubbleCalmFirstMeal": "First meal noted. A calm beginning to the day."
+  "coachBubbleCalmFirstMeal": "First meal noted. A calm beginning to the day.",
+  "mealHistoryTitle": "Meal History",
+  "historyYesterday": "Yesterday",
+  "mealHistoryEmptyTitle": "No meals logged yet",
+  "mealHistoryEmptyBody": "Your logged meals will show up here, grouped by day."
 }

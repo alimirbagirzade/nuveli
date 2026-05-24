@@ -1877,4 +1877,17 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get coachBubbleCalmFirstMeal =>
       'Primo pasto annotato. Un inizio di giornata sereno.';
+
+  @override
+  String get mealHistoryTitle => 'Cronologia pasti';
+
+  @override
+  String get historyYesterday => 'Ieri';
+
+  @override
+  String get mealHistoryEmptyTitle => 'Nessun pasto registrato';
+
+  @override
+  String get mealHistoryEmptyBody =>
+      'I pasti che registri appariranno qui, raggruppati per giorno.';
 }

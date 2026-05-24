@@ -1885,4 +1885,17 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get coachBubbleCalmFirstMeal =>
       'Premier repas pris en note. Un début de journée paisible.';
+
+  @override
+  String get mealHistoryTitle => 'Historique des repas';
+
+  @override
+  String get historyYesterday => 'Hier';
+
+  @override
+  String get mealHistoryEmptyTitle => 'Aucun repas enregistré';
+
+  @override
+  String get mealHistoryEmptyBody =>
+      'Tes repas enregistrés apparaîtront ici, regroupés par jour.';
 }

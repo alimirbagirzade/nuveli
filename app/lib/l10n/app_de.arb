@@ -713,5 +713,9 @@
   "coachBubbleCalmMealOnTrack": "Notiert. Ruhig und gleichmäßig — ein gelassener Fortschritt.",
   "coachBubbleCalmWaterLow": "Wasser ist etwas niedrig. Kein Druck — trink, wenn es passt.",
   "coachBubbleCalmStreakMilestone": "Stille Konstanz, Tag für Tag. Das zählt.",
-  "coachBubbleCalmFirstMeal": "Erste Mahlzeit notiert. Ein ruhiger Beginn des Tages."
+  "coachBubbleCalmFirstMeal": "Erste Mahlzeit notiert. Ein ruhiger Beginn des Tages.",
+  "mealHistoryTitle": "Mahlzeiten-Verlauf",
+  "historyYesterday": "Gestern",
+  "mealHistoryEmptyTitle": "Noch keine Mahlzeiten erfasst",
+  "mealHistoryEmptyBody": "Deine erfassten Mahlzeiten erscheinen hier, nach Tag gruppiert."
 }

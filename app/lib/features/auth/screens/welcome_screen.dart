@@ -133,8 +133,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 }
 
 // ============================================================================
-// LOGO — Underwater/glow temalı placeholder
-// Chat 1'de asıl logo asset eklendiyse onu kullanabilirsin.
+// LOGO — brand mark (assets/icons/splash_logo.png) inside a glow halo.
+// Falls back to a water-drop glyph if the asset can't load.
 // ============================================================================
 
 class _Logo extends StatelessWidget {
@@ -159,11 +159,16 @@ class _Logo extends StatelessWidget {
           ),
         ],
       ),
-      child: const Center(
-        child: Icon(
-          Icons.water_drop_outlined,
-          size: 48,
-          color: Colors.white,
+      child: Center(
+        child: Image.asset(
+          'assets/icons/splash_logo.png',
+          width: 56,
+          height: 56,
+          errorBuilder: (_, __, ___) => const Icon(
+            Icons.water_drop_outlined,
+            size: 48,
+            color: Colors.white,
+          ),
         ),
       ),
     );
