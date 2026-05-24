@@ -2972,4 +2972,52 @@ class AppLocalizationsEs extends AppLocalizations {
   String homeOfGlasses(String count) {
     return 'de $count vasos';
   }
+
+  @override
+  String get recipeBrowserTitle => 'Explorar recetas';
+
+  @override
+  String get recipeBrowserSearchHint => 'Buscar recetas…';
+
+  @override
+  String get recipeBrowserEmpty => 'No se encontraron recetas';
+
+  @override
+  String get recipeBrowserEmptyHint =>
+      'La biblioteca de recetas crecerá pronto. Puedes añadir comidas manualmente.';
+
+  @override
+  String get recipeBrowserLoadError => 'No se pudieron cargar las recetas';
+
+  @override
+  String recipeBrowserCaloriesPerServing(int n) {
+    return '$n kcal / porción';
+  }
+
+  @override
+  String get recipeBrowserProtein => 'Proteínas';
+
+  @override
+  String get recipeBrowserCarbs => 'Carbohidratos';
+
+  @override
+  String get recipeBrowserFat => 'Grasas';
+
+  @override
+  String get recipeBrowserAddToPlan => 'Añadir al plan';
+
+  @override
+  String get recipeBrowserServingsLabel => 'Porciones';
+
+  @override
+  String get recipeBrowserMealType => 'Tipo de comida';
+
+  @override
+  String get recipeBrowserDay => 'Día';
+
+  @override
+  String get recipeBrowserAdded => 'Añadido al plan';
+
+  @override
+  String get recipeBrowserAddFailed => 'No se pudo añadir al plan';
 }

@@ -5573,6 +5573,96 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'/ {count} bardak'**
   String homeOfGlasses(String count);
+
+  /// No description provided for @recipeBrowserTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarif Ara'**
+  String get recipeBrowserTitle;
+
+  /// No description provided for @recipeBrowserSearchHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tariflerde ara…'**
+  String get recipeBrowserSearchHint;
+
+  /// No description provided for @recipeBrowserEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarif bulunamadı'**
+  String get recipeBrowserEmpty;
+
+  /// No description provided for @recipeBrowserEmptyHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarif kütüphanesi yakında büyüyecek. Öğünleri manuel ekleyebilirsiniz.'**
+  String get recipeBrowserEmptyHint;
+
+  /// No description provided for @recipeBrowserLoadError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarifler yüklenemedi'**
+  String get recipeBrowserLoadError;
+
+  /// No description provided for @recipeBrowserCaloriesPerServing.
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyon başına {n} kcal'**
+  String recipeBrowserCaloriesPerServing(int n);
+
+  /// No description provided for @recipeBrowserProtein.
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein'**
+  String get recipeBrowserProtein;
+
+  /// No description provided for @recipeBrowserCarbs.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karbonhidrat'**
+  String get recipeBrowserCarbs;
+
+  /// No description provided for @recipeBrowserFat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ'**
+  String get recipeBrowserFat;
+
+  /// No description provided for @recipeBrowserAddToPlan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plana ekle'**
+  String get recipeBrowserAddToPlan;
+
+  /// No description provided for @recipeBrowserServingsLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Porsiyon'**
+  String get recipeBrowserServingsLabel;
+
+  /// No description provided for @recipeBrowserMealType.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün türü'**
+  String get recipeBrowserMealType;
+
+  /// No description provided for @recipeBrowserDay.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gün'**
+  String get recipeBrowserDay;
+
+  /// No description provided for @recipeBrowserAdded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plana eklendi'**
+  String get recipeBrowserAdded;
+
+  /// No description provided for @recipeBrowserAddFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plana eklenemedi'**
+  String get recipeBrowserAddFailed;
 }
 
 class _AppLocalizationsDelegate

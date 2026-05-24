@@ -1254,5 +1254,27 @@
   "homeKcalRemaining": "осталось {count} ккал",
   "homeKcalOver": "{count} ккал сверх",
   "homeOfKcalTarget": "из {count} ккал",
-  "homeOfGlasses": "из {count} стаканов"
+  "homeOfGlasses": "из {count} стаканов",
+  "recipeBrowserTitle": "Просмотр рецептов",
+  "recipeBrowserSearchHint": "Поиск рецептов…",
+  "recipeBrowserEmpty": "Рецепты не найдены",
+  "recipeBrowserEmptyHint": "Библиотека рецептов скоро пополнится. Вы можете добавлять блюда вручную.",
+  "recipeBrowserLoadError": "Не удалось загрузить рецепты",
+  "recipeBrowserCaloriesPerServing": "{n} ккал / порция",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Белки",
+  "recipeBrowserCarbs": "Углеводы",
+  "recipeBrowserFat": "Жиры",
+  "recipeBrowserAddToPlan": "Добавить в план",
+  "recipeBrowserServingsLabel": "Порции",
+  "recipeBrowserMealType": "Тип приёма пищи",
+  "recipeBrowserDay": "День",
+  "recipeBrowserAdded": "Добавлено в план",
+  "recipeBrowserAddFailed": "Не удалось добавить в план"
 }

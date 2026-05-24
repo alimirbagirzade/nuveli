@@ -1213,5 +1213,27 @@
   "homeKcalRemaining": "{count} kcal remaining",
   "homeKcalOver": "{count} kcal over",
   "homeOfKcalTarget": "of {count} kcal",
-  "homeOfGlasses": "of {count} glasses"
+  "homeOfGlasses": "of {count} glasses",
+  "recipeBrowserTitle": "Browse Recipes",
+  "recipeBrowserSearchHint": "Search recipes…",
+  "recipeBrowserEmpty": "No recipes found",
+  "recipeBrowserEmptyHint": "The recipe library will grow soon. Try adding meals manually.",
+  "recipeBrowserLoadError": "Could not load recipes",
+  "recipeBrowserCaloriesPerServing": "{n} kcal / serving",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Protein",
+  "recipeBrowserCarbs": "Carbs",
+  "recipeBrowserFat": "Fat",
+  "recipeBrowserAddToPlan": "Add to plan",
+  "recipeBrowserServingsLabel": "Servings",
+  "recipeBrowserMealType": "Meal type",
+  "recipeBrowserDay": "Day",
+  "recipeBrowserAdded": "Added to plan",
+  "recipeBrowserAddFailed": "Could not add to plan"
 }

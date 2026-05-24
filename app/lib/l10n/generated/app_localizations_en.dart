@@ -2948,4 +2948,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String homeOfGlasses(String count) {
     return 'of $count glasses';
   }
+
+  @override
+  String get recipeBrowserTitle => 'Browse Recipes';
+
+  @override
+  String get recipeBrowserSearchHint => 'Search recipes…';
+
+  @override
+  String get recipeBrowserEmpty => 'No recipes found';
+
+  @override
+  String get recipeBrowserEmptyHint =>
+      'The recipe library will grow soon. Try adding meals manually.';
+
+  @override
+  String get recipeBrowserLoadError => 'Could not load recipes';
+
+  @override
+  String recipeBrowserCaloriesPerServing(int n) {
+    return '$n kcal / serving';
+  }
+
+  @override
+  String get recipeBrowserProtein => 'Protein';
+
+  @override
+  String get recipeBrowserCarbs => 'Carbs';
+
+  @override
+  String get recipeBrowserFat => 'Fat';
+
+  @override
+  String get recipeBrowserAddToPlan => 'Add to plan';
+
+  @override
+  String get recipeBrowserServingsLabel => 'Servings';
+
+  @override
+  String get recipeBrowserMealType => 'Meal type';
+
+  @override
+  String get recipeBrowserDay => 'Day';
+
+  @override
+  String get recipeBrowserAdded => 'Added to plan';
+
+  @override
+  String get recipeBrowserAddFailed => 'Could not add to plan';
 }

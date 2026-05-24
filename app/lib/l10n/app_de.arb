@@ -1213,5 +1213,27 @@
   "homeKcalRemaining": "{count} kcal übrig",
   "homeKcalOver": "{count} kcal drüber",
   "homeOfKcalTarget": "von {count} kcal",
-  "homeOfGlasses": "von {count} Gläsern"
+  "homeOfGlasses": "von {count} Gläsern",
+  "recipeBrowserTitle": "Rezepte durchsuchen",
+  "recipeBrowserSearchHint": "Rezepte suchen…",
+  "recipeBrowserEmpty": "Keine Rezepte gefunden",
+  "recipeBrowserEmptyHint": "Die Rezeptbibliothek wächst bald. Mahlzeiten können auch manuell hinzugefügt werden.",
+  "recipeBrowserLoadError": "Rezepte konnten nicht geladen werden",
+  "recipeBrowserCaloriesPerServing": "{n} kcal / Portion",
+  "@recipeBrowserCaloriesPerServing": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "recipeBrowserProtein": "Eiweiß",
+  "recipeBrowserCarbs": "Kohlenhydrate",
+  "recipeBrowserFat": "Fett",
+  "recipeBrowserAddToPlan": "Zum Plan hinzufügen",
+  "recipeBrowserServingsLabel": "Portionen",
+  "recipeBrowserMealType": "Mahlzeittyp",
+  "recipeBrowserDay": "Tag",
+  "recipeBrowserAdded": "Zum Plan hinzugefügt",
+  "recipeBrowserAddFailed": "Konnte nicht zum Plan hinzugefügt werden"
 }

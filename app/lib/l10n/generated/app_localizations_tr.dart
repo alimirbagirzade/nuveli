@@ -2959,4 +2959,52 @@ class AppLocalizationsTr extends AppLocalizations {
   String homeOfGlasses(String count) {
     return '/ $count bardak';
   }
+
+  @override
+  String get recipeBrowserTitle => 'Tarif Ara';
+
+  @override
+  String get recipeBrowserSearchHint => 'Tariflerde ara…';
+
+  @override
+  String get recipeBrowserEmpty => 'Tarif bulunamadı';
+
+  @override
+  String get recipeBrowserEmptyHint =>
+      'Tarif kütüphanesi yakında büyüyecek. Öğünleri manuel ekleyebilirsiniz.';
+
+  @override
+  String get recipeBrowserLoadError => 'Tarifler yüklenemedi';
+
+  @override
+  String recipeBrowserCaloriesPerServing(int n) {
+    return 'Porsiyon başına $n kcal';
+  }
+
+  @override
+  String get recipeBrowserProtein => 'Protein';
+
+  @override
+  String get recipeBrowserCarbs => 'Karbonhidrat';
+
+  @override
+  String get recipeBrowserFat => 'Yağ';
+
+  @override
+  String get recipeBrowserAddToPlan => 'Plana ekle';
+
+  @override
+  String get recipeBrowserServingsLabel => 'Porsiyon';
+
+  @override
+  String get recipeBrowserMealType => 'Öğün türü';
+
+  @override
+  String get recipeBrowserDay => 'Gün';
+
+  @override
+  String get recipeBrowserAdded => 'Plana eklendi';
+
+  @override
+  String get recipeBrowserAddFailed => 'Plana eklenemedi';
 }

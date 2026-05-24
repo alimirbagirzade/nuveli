@@ -12,6 +12,7 @@ import '../widgets/day_plan_card.dart';
 import '../widgets/edit_meal_plan_sheet.dart';
 import '../widgets/generate_plan_sheet.dart';
 import '../widgets/grocery_list_sheet.dart';
+import '../widgets/recipe_browser_sheet.dart';
 
 /// F4 v0 — Weekly meal plan view.
 ///
@@ -50,6 +51,15 @@ class MealPlannerScreen extends ConsumerWidget {
           ),
         ),
         actions: [
+          IconButton(
+            tooltip: AppLocalizations.of(context)?.recipeBrowserTitle ??
+                'Browse Recipes',
+            icon: const Icon(Icons.menu_book_rounded, color: Colors.white),
+            onPressed: () => RecipeBrowserSheet.show(
+              context,
+              day: weekStartFor(ref.read(weekOffsetProvider)),
+            ),
+          ),
           IconButton(
             tooltip: AppLocalizations.of(context)?.plannerGroceryListTooltip ??
                 'Grocery list',
