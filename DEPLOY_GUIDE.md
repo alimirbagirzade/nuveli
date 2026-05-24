@@ -216,7 +216,7 @@ Render dashboard → Nuveli-api → **Manual Deploy** → **Deploy latest commit
    - **Schedule:** `30 0 * * *` (her gece 00:30 UTC)
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `python -m cron.daily_insights_job`
-   - **Repo:** alimirbagirzade/nuveli_test
+   - **Repo:** alimirbagirzade/nuveli
    - **Branch:** main
    - **Root Directory:** `backend`
 3. Aynı env var'ları gir (SUPABASE_*, OPENAI_API_KEY)

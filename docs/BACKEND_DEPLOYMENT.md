@@ -30,7 +30,7 @@ https://render.com → Sign up with GitHub
 
 ### 2. Yeni Blueprint
 - Dashboard → **New** → **Blueprint**
-- GitHub repo: `alimirbagirzade/nuveli_test`
+- GitHub repo: `alimirbagirzade/nuveli`
 - Render `render.yaml`'i otomatik tespit eder ✅
 - "Apply" butonuna bas
 

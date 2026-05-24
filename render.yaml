@@ -2,7 +2,7 @@
 # 
 # Kullanım:
 # 1. Render hesabı oluştur (render.com)
-# 2. New > Blueprint > GitHub repo seç (alimirbagirzade/nuveli_test)
+# 2. New > Blueprint > GitHub repo seç (alimirbagirzade/nuveli)
 # 3. Bu dosya otomatik tespit edilir
 # 4. Environment variables'ları Render UI'dan ekle (aşağıdaki listeye bak)
 # 5. Deploy

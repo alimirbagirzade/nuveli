@@ -2,7 +2,7 @@
 
 **Son Güncelleme:** 1 Mayıs 2026  
 **Proje:** Nuveli AI Calorie Coach  
-**Repo:** github.com/alimirbagirzade/nuveli_test
+**Repo:** github.com/alimirbagirzade/nuveli
 
 ---
 
