@@ -13,6 +13,7 @@ import 'package:nuveli/core/i18n/language_provider.dart';
 import 'package:nuveli/core/monitoring/crash_reporter.dart';
 import 'package:nuveli/core/network/authed_dio_provider.dart';
 import 'package:nuveli/core/notifications/fcm_token_register.dart';
+import 'package:nuveli/core/notifications/notification_nav_notifier.dart';
 import 'package:nuveli/core/notifications/notification_route_router.dart';
 import 'package:nuveli/core/notifications/notification_service.dart';
 import 'package:nuveli/core/routing/deep_link_listener.dart';
@@ -187,12 +188,14 @@ class _NuveliAppState extends ConsumerState<NuveliApp> {
 
     // Every notification-driven navigation flows through the same
     // validator as deep links. onAllowed stays null until Chat 17
-    // routing lands — for now the router just logs allowed/rejected
-    // breadcrumbs to Crashlytics so we can see in production what
-    // routes notifications are actually firing.
+    // When a route passes validation, switch the bottom-nav tab.
+    // Unknown routes are no-ops (NotificationNavNotifier.navigateToTab).
+    // The logger still records every allowed/rejected route to Crashlytics.
     final notificationRouter = NotificationRouteRouter(
       validator: const DeepLinkValidator(),
       logger: CrashReporter.log,
+      onAllowed: (link, _) =>
+          NotificationNavNotifier.instance.navigateToTab(link.path),
     );
 
     service.setOnTap(
