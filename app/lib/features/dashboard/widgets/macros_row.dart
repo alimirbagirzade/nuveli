@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/today_summary.dart';
 
 /// Row of three macro cards: Protein, Carbs, Fat.
@@ -10,13 +11,14 @@ class MacrosRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Row(
         children: [
           Expanded(
             child: _MacroCard(
-              label: 'Protein',
+              label: l10n?.macroProtein ?? 'Protein',
               current: summary.consumedProteinG,
               target: summary.dailyProteinTargetG,
               color: const Color(0xFF3DDC97),
@@ -25,7 +27,7 @@ class MacrosRow extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: _MacroCard(
-              label: 'Carbs',
+              label: l10n?.macroCarb ?? 'Carbs',
               current: summary.consumedCarbsG,
               target: summary.dailyCarbsTargetG,
               color: const Color(0xFF6BCB77),
@@ -34,7 +36,7 @@ class MacrosRow extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: _MacroCard(
-              label: 'Fat',
+              label: l10n?.macroFat ?? 'Fat',
               current: summary.consumedFatG,
               target: summary.dailyFatTargetG,
               color: const Color(0xFFFF9F45),

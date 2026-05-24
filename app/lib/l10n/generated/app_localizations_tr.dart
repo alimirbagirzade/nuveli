@@ -1986,4 +1986,54 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get coachActionDone => 'Tamam';
+
+  @override
+  String get homeOpenSettings => 'Ayarları aç';
+
+  @override
+  String get homeAddFood => 'Yemek Ekle';
+
+  @override
+  String get homeSeeAll => 'Tümünü gör';
+
+  @override
+  String get homeMealNameQuestion => 'Ne yedin?';
+
+  @override
+  String get homeCaloriesKcal => 'Kalori (kcal)';
+
+  @override
+  String get macroProteinG => 'Protein (g)';
+
+  @override
+  String get macroCarbsG => 'Karbonhidrat (g)';
+
+  @override
+  String get macroFatG => 'Yağ (g)';
+
+  @override
+  String get homeSaveMeal => 'Öğünü kaydet';
+
+  @override
+  String get homeFoodNameRequired => 'Yemek adı gerekli';
+
+  @override
+  String get homeCaloriesRequired => 'Bir kalori değeri gir (> 0)';
+
+  @override
+  String get homeSaveFailed => 'Öğün kaydedilemedi.';
+
+  @override
+  String get homeWaterLogFailed => 'Su eklenemedi. Tekrar denemek için dokun.';
+
+  @override
+  String get homePlannerCtaTitle => 'Haftanı planla';
+
+  @override
+  String get homePlannerCtaSubtitle =>
+      'Planlı öğünleri + alışveriş listesini gör';
+
+  @override
+  String get homeNoMealsScanHint =>
+      'İlk öğününü eklemek için aşağıdaki \"Yemek Ekle\"ye dokun';
 }

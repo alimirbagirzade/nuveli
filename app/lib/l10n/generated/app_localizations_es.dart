@@ -1989,4 +1989,55 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get coachActionDone => 'Hecho';
+
+  @override
+  String get homeOpenSettings => 'Abrir ajustes';
+
+  @override
+  String get homeAddFood => 'Añadir comida';
+
+  @override
+  String get homeSeeAll => 'Ver todo';
+
+  @override
+  String get homeMealNameQuestion => '¿Qué comiste?';
+
+  @override
+  String get homeCaloriesKcal => 'Calorías (kcal)';
+
+  @override
+  String get macroProteinG => 'Proteína (g)';
+
+  @override
+  String get macroCarbsG => 'Carbohidratos (g)';
+
+  @override
+  String get macroFatG => 'Grasa (g)';
+
+  @override
+  String get homeSaveMeal => 'Guardar comida';
+
+  @override
+  String get homeFoodNameRequired => 'El nombre del alimento es obligatorio';
+
+  @override
+  String get homeCaloriesRequired => 'Introduce un valor de calorías (> 0)';
+
+  @override
+  String get homeSaveFailed => 'No se pudo guardar la comida.';
+
+  @override
+  String get homeWaterLogFailed =>
+      'No se pudo registrar el agua. Toca para reintentar.';
+
+  @override
+  String get homePlannerCtaTitle => 'Planifica tu semana';
+
+  @override
+  String get homePlannerCtaSubtitle =>
+      'Ver comidas planificadas + lista de compra';
+
+  @override
+  String get homeNoMealsScanHint =>
+      'Toca \"Añadir comida\" abajo para registrar tu primera comida';
 }

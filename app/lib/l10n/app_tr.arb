@@ -943,5 +943,69 @@
   "coachActionDone": "Tamam",
   "@coachActionDone": {
     "description": "Coach: coachActionDone"
+  },
+  "homeOpenSettings": "Ayarları aç",
+  "@homeOpenSettings": {
+    "description": "Home/dashboard: homeOpenSettings"
+  },
+  "homeAddFood": "Yemek Ekle",
+  "@homeAddFood": {
+    "description": "Home/dashboard: homeAddFood"
+  },
+  "homeSeeAll": "Tümünü gör",
+  "@homeSeeAll": {
+    "description": "Home/dashboard: homeSeeAll"
+  },
+  "homeMealNameQuestion": "Ne yedin?",
+  "@homeMealNameQuestion": {
+    "description": "Home/dashboard: homeMealNameQuestion"
+  },
+  "homeCaloriesKcal": "Kalori (kcal)",
+  "@homeCaloriesKcal": {
+    "description": "Home/dashboard: homeCaloriesKcal"
+  },
+  "macroProteinG": "Protein (g)",
+  "@macroProteinG": {
+    "description": "Home/dashboard: macroProteinG"
+  },
+  "macroCarbsG": "Karbonhidrat (g)",
+  "@macroCarbsG": {
+    "description": "Home/dashboard: macroCarbsG"
+  },
+  "macroFatG": "Yağ (g)",
+  "@macroFatG": {
+    "description": "Home/dashboard: macroFatG"
+  },
+  "homeSaveMeal": "Öğünü kaydet",
+  "@homeSaveMeal": {
+    "description": "Home/dashboard: homeSaveMeal"
+  },
+  "homeFoodNameRequired": "Yemek adı gerekli",
+  "@homeFoodNameRequired": {
+    "description": "Home/dashboard: homeFoodNameRequired"
+  },
+  "homeCaloriesRequired": "Bir kalori değeri gir (> 0)",
+  "@homeCaloriesRequired": {
+    "description": "Home/dashboard: homeCaloriesRequired"
+  },
+  "homeSaveFailed": "Öğün kaydedilemedi.",
+  "@homeSaveFailed": {
+    "description": "Home/dashboard: homeSaveFailed"
+  },
+  "homeWaterLogFailed": "Su eklenemedi. Tekrar denemek için dokun.",
+  "@homeWaterLogFailed": {
+    "description": "Home/dashboard: homeWaterLogFailed"
+  },
+  "homePlannerCtaTitle": "Haftanı planla",
+  "@homePlannerCtaTitle": {
+    "description": "Home/dashboard: homePlannerCtaTitle"
+  },
+  "homePlannerCtaSubtitle": "Planlı öğünleri + alışveriş listesini gör",
+  "@homePlannerCtaSubtitle": {
+    "description": "Home/dashboard: homePlannerCtaSubtitle"
+  },
+  "homeNoMealsScanHint": "İlk öğününü eklemek için aşağıdaki \"Yemek Ekle\"ye dokun",
+  "@homeNoMealsScanHint": {
+    "description": "Home/dashboard: homeNoMealsScanHint"
   }
 }

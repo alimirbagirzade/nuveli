@@ -1981,4 +1981,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coachActionDone => 'Done';
+
+  @override
+  String get homeOpenSettings => 'Open settings';
+
+  @override
+  String get homeAddFood => 'Add Food';
+
+  @override
+  String get homeSeeAll => 'See all';
+
+  @override
+  String get homeMealNameQuestion => 'What did you eat?';
+
+  @override
+  String get homeCaloriesKcal => 'Calories (kcal)';
+
+  @override
+  String get macroProteinG => 'Protein (g)';
+
+  @override
+  String get macroCarbsG => 'Carbs (g)';
+
+  @override
+  String get macroFatG => 'Fat (g)';
+
+  @override
+  String get homeSaveMeal => 'Save meal';
+
+  @override
+  String get homeFoodNameRequired => 'Food name is required';
+
+  @override
+  String get homeCaloriesRequired => 'Enter a calorie value (> 0)';
+
+  @override
+  String get homeSaveFailed => 'Could not save your meal.';
+
+  @override
+  String get homeWaterLogFailed => 'Could not log water. Tap to retry.';
+
+  @override
+  String get homePlannerCtaTitle => 'Plan your week';
+
+  @override
+  String get homePlannerCtaSubtitle => 'See planned meals + grocery list';
+
+  @override
+  String get homeNoMealsScanHint =>
+      'Tap \"Add Food\" below to log your first meal';
 }

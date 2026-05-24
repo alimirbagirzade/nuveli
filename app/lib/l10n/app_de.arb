@@ -749,5 +749,21 @@
   "coachActionWaterLogged": "Wasser erfasst",
   "coachActionReminderSet": "Erinnerung gesetzt",
   "coachActionTargetUpdated": "Ziel aktualisiert",
-  "coachActionDone": "Fertig"
+  "coachActionDone": "Fertig",
+  "homeOpenSettings": "Einstellungen öffnen",
+  "homeAddFood": "Essen hinzufügen",
+  "homeSeeAll": "Alle ansehen",
+  "homeMealNameQuestion": "Was hast du gegessen?",
+  "homeCaloriesKcal": "Kalorien (kcal)",
+  "macroProteinG": "Protein (g)",
+  "macroCarbsG": "Kohlenhydrate (g)",
+  "macroFatG": "Fett (g)",
+  "homeSaveMeal": "Mahlzeit speichern",
+  "homeFoodNameRequired": "Name der Mahlzeit erforderlich",
+  "homeCaloriesRequired": "Kalorienwert eingeben (> 0)",
+  "homeSaveFailed": "Mahlzeit konnte nicht gespeichert werden.",
+  "homeWaterLogFailed": "Wasser konnte nicht erfasst werden. Zum Wiederholen tippen.",
+  "homePlannerCtaTitle": "Plane deine Woche",
+  "homePlannerCtaSubtitle": "Geplante Mahlzeiten + Einkaufsliste ansehen",
+  "homeNoMealsScanHint": "Tippe unten auf \"Essen hinzufügen\", um deine erste Mahlzeit zu erfassen"
 }

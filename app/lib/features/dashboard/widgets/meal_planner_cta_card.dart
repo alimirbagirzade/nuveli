@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Dashboard tile that opens the Meal Planner full-screen.
 /// Surfaces F4 without burning a bottom-nav slot (we're already at 6).
@@ -10,6 +11,7 @@ class MealPlannerCtaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
       child: Material(
@@ -48,22 +50,23 @@ class MealPlannerCtaCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Plan your week',
-                        style: TextStyle(
+                        l10n?.homePlannerCtaTitle ?? 'Plan your week',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Text(
-                        'See planned meals + grocery list',
-                        style: TextStyle(
+                        l10n?.homePlannerCtaSubtitle ??
+                            'See planned meals + grocery list',
+                        style: const TextStyle(
                           color: Color(0xFFB8D4D2),
                           fontSize: 12,
                         ),
