@@ -146,6 +146,28 @@ def _strip_json(text: str) -> str:
     return s
 
 
+async def _get_user_language(user_id: str) -> str:
+    """
+    Fetch the user's preferred language from user_profiles, drift-safe.
+    Returns an ISO-639-1 code (e.g. ``'tr'``) or ``'en'`` as default.
+    """
+    supabase = get_supabase()
+    try:
+        res = (
+            supabase.table("user_profiles")
+            .select("language")
+            .eq("user_id", user_id)
+            .single()
+            .execute()
+        )
+        profile = res.data or {}
+    except Exception as e:
+        logger.debug(f"Could not fetch language for {user_id}: {e}")
+        profile = {}
+    # Drift-safe: .get() returns None when column doesn't exist yet in prod.
+    return (profile or {}).get("language") or "en"
+
+
 async def generate_daily_insight(user_id: str, target_date: date | None = None) -> dict:
     """
     Generate one AI insight for a user. Persists to ai_insights table.
@@ -160,9 +182,12 @@ async def generate_daily_insight(user_id: str, target_date: date | None = None) 
     # 2. Compute deterministic nutrition score (don't trust LLM with the math)
     score_breakdown = compute_nutrition_score(user_data)
 
-    # 3. Call GPT-4o
+    # 3. Resolve user language (drift-safe: defaults to 'en' if column absent)
+    language_code = await _get_user_language(user_id)
+
+    # 4. Call GPT-4o
     client = _get_client()
-    messages = build_coach_insight_messages(user_data)
+    messages = build_coach_insight_messages(user_data, language_code=language_code)
 
     logger.info(f"Generating AI insight for user {user_id} on {target_date}")
 
@@ -188,11 +213,11 @@ async def generate_daily_insight(user_id: str, target_date: date | None = None) 
         logger.error(f"Coach JSON parse failed: {e}\nRaw: {raw[:500]}")
         raise ValidationError("AI returned invalid JSON")
 
-    # 4. Override LLM's nutrition_score with our deterministic version
+    # 5. Override LLM's nutrition_score with our deterministic version
     payload["nutrition_score"] = score_breakdown["total"]
     payload["score_breakdown"] = score_breakdown
 
-    # 5. Persist — map LLM JSON keys → live DB structured columns.
+    # 6. Persist — map LLM JSON keys → live DB structured columns.
     #
     # ai_insights schema (per information_schema):
     #   nutrition_score, score_label, score_breakdown (jsonb),
