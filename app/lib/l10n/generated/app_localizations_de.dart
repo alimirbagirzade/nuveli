@@ -1890,4 +1890,43 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mealHistoryEmptyBody =>
       'Deine erfassten Mahlzeiten erscheinen hier, nach Tag gruppiert.';
+
+  @override
+  String get settingsCoachSection => 'Coach';
+
+  @override
+  String get settingsYourData => 'Deine Daten';
+
+  @override
+  String get settingsExportData => 'Meine Daten exportieren';
+
+  @override
+  String get settingsExportDataDesc =>
+      'Lade jede Mahlzeit, jeden Wasser-, Gewichts-, Gewohnheits- und Insight-Eintrag als JSON herunter. Recht auf Datenübertragbarkeit (DSGVO Art. 20).';
+
+  @override
+  String get settingsExportFailed => 'Daten konnten nicht exportiert werden.';
+
+  @override
+  String get settingsDeleteDesc =>
+      'Entfernt dein Profil, deine Mahlzeiten und alle Daten dauerhaft.';
+
+  @override
+  String get settingsDeleteTitle => 'Konto löschen?';
+
+  @override
+  String get settingsDeleteConfirmBody =>
+      'Dies löscht dein Profil, alle Mahlzeiten-, Wasser- und Gewichtsdaten, Gewohnheiten und Abos dauerhaft. Nicht rückgängig zu machen.';
+
+  @override
+  String get settingsDeleteType => 'Zum Bestätigen DELETE eingeben:';
+
+  @override
+  String get settingsDeleteFailed => 'Konto konnte nicht gelöscht werden.';
+
+  @override
+  String get settingsLanguageItalian => 'Italienisch';
+
+  @override
+  String get settingsLanguageRussian => 'Russisch';
 }

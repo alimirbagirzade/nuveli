@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/i18n/language_provider.dart';
 import '../../core/network/api_exception.dart';
 import '../../core/theme/app_colors.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -23,33 +24,39 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: const Color(0xFF050A1F),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Settings', style: TextStyle(color: Colors.white)),
+        title: Text(l10n?.settingsTitle ?? 'Settings',
+            style: const TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          children: const [
+          children: [
             _Section(
-              title: 'Coach',
-              child: _CoachPersonaTile(),
+              title: l10n?.settingsCoachSection ?? 'Coach',
+              child: const _CoachPersonaTile(),
             ),
             _Section(
-              title: 'Your data',
-              child: _ExportDataTile(),
+              title: l10n?.settingsLanguage ?? 'Language',
+              child: const _LanguageTile(),
             ),
             _Section(
-              title: 'Account',
-              child: _DeleteAccountTile(),
+              title: l10n?.settingsYourData ?? 'Your data',
+              child: const _ExportDataTile(),
             ),
             _Section(
-              title: 'Session',
-              child: _SignOutTile(),
+              title: l10n?.settingsAccount ?? 'Account',
+              child: const _DeleteAccountTile(),
+            ),
+            _Section(
+              title: l10n?.settingsSession ?? 'Session',
+              child: const _SignOutTile(),
             ),
           ],
         ),
@@ -101,16 +108,18 @@ class _ExportDataTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final state = ref.watch(dataExportProvider);
     return ListTile(
       leading: const Icon(Icons.download_for_offline_outlined,
           color: AppColors.primaryCyan),
-      title: const Text('Export My Data',
-          style: TextStyle(color: Colors.white)),
-      subtitle: const Text(
-        'Download every meal, water log, weight entry, habit, and insight '
-        'as a JSON file. Right to data portability (GDPR Art. 20).',
-        style: TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+      title: Text(l10n?.settingsExportData ?? 'Export My Data',
+          style: const TextStyle(color: Colors.white)),
+      subtitle: Text(
+        l10n?.settingsExportDataDesc ??
+            'Download every meal, water log, weight entry, habit, and insight '
+                'as a JSON file. Right to data portability (GDPR Art. 20).',
+        style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
       ),
       trailing: state.isLoading
           ? const SizedBox(
@@ -132,7 +141,8 @@ class _ExportDataTile extends ConsumerWidget {
                 final err = next.error;
                 final msg = err is ApiException
                     ? err.userMessage
-                    : 'Could not export your data.';
+                    : (l10n?.settingsExportFailed ??
+                        'Could not export your data.');
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(msg),
@@ -273,14 +283,110 @@ class _CoachPersonaTile extends ConsumerWidget {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Language picker — drives globalLanguageNotifier (AppLanguage.system = device
+// locale). Wires the previously dead changeLanguage() to a real UI.
+// ---------------------------------------------------------------------------
+
+String _languageLabel(AppLocalizations? l10n, AppLanguage lang) {
+  if (lang == AppLanguage.system) {
+    return l10n?.settingsLanguageSystem ?? 'System language';
+  }
+  return lang.label; // native name (Türkçe, English, Deutsch, …)
+}
+
+class _LanguageTile extends StatelessWidget {
+  const _LanguageTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return ValueListenableBuilder<AppLanguage>(
+      valueListenable: globalLanguageNotifier,
+      builder: (context, current, _) {
+        return ListTile(
+          leading: const Icon(Icons.language_rounded,
+              color: AppColors.primaryCyan),
+          title: Text(
+            l10n?.settingsLanguage ?? 'Language',
+            style: const TextStyle(color: Colors.white),
+          ),
+          subtitle: Text(
+            _languageLabel(l10n, current),
+            style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+          ),
+          trailing: const Icon(Icons.chevron_right, color: Color(0xFF8FA0B8)),
+          onTap: () => _showPicker(context, current),
+        );
+      },
+    );
+  }
+
+  Future<void> _showPicker(BuildContext context, AppLanguage current) async {
+    final selected = await showModalBottomSheet<AppLanguage>(
+      context: context,
+      backgroundColor: const Color(0xFF142346),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetContext) {
+        final l10n = AppLocalizations.of(sheetContext);
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: RadioGroup<AppLanguage>(
+              groupValue: current,
+              onChanged: (value) => Navigator.of(sheetContext).pop(value),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 18, 20, 6),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        l10n?.settingsLanguage ?? 'Language',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  for (final lang in AppLanguage.values)
+                    RadioListTile<AppLanguage>(
+                      value: lang,
+                      activeColor: AppColors.primaryCyan,
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      title: Text(
+                        _languageLabel(l10n, lang),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    if (selected != null) {
+      await changeLanguage(selected);
+    }
+  }
+}
+
 class _SignOutTile extends ConsumerWidget {
   const _SignOutTile();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     return ListTile(
       leading: const Icon(Icons.logout, color: Colors.white70),
-      title: const Text('Sign out', style: TextStyle(color: Colors.white)),
+      title: Text(l10n?.settingsLogout ?? 'Sign out',
+          style: const TextStyle(color: Colors.white)),
       onTap: () async {
         await ref.read(authProvider.notifier).signOut();
         if (context.mounted) Navigator.of(context).pop();
@@ -294,16 +400,18 @@ class _DeleteAccountTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final state = ref.watch(accountDeleteProvider);
     return ListTile(
       leading: const Icon(Icons.delete_forever, color: Color(0xFFFF6B6B)),
-      title: const Text(
-        'Delete My Account',
-        style: TextStyle(color: Color(0xFFFF6B6B)),
+      title: Text(
+        l10n?.settingsDeleteAccount ?? 'Delete My Account',
+        style: const TextStyle(color: Color(0xFFFF6B6B)),
       ),
-      subtitle: const Text(
-        'Permanently removes your profile, meals, and all data.',
-        style: TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+      subtitle: Text(
+        l10n?.settingsDeleteDesc ??
+            'Permanently removes your profile, meals, and all data.',
+        style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
       ),
       trailing: state.isLoading
           ? const SizedBox(
@@ -331,10 +439,13 @@ class _DeleteAccountTile extends ConsumerWidget {
     await ref.read(accountDeleteProvider.notifier).deleteAccount();
     if (!context.mounted) return;
 
+    final l10n = AppLocalizations.of(context);
     final state = ref.read(accountDeleteProvider);
     if (state.hasError) {
       final err = state.error;
-      final msg = err is ApiException ? err.userMessage : 'Could not delete account.';
+      final msg = err is ApiException
+          ? err.userMessage
+          : (l10n?.settingsDeleteFailed ?? 'Could not delete account.');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(msg), backgroundColor: const Color(0xFFFF6B6B)),
       );
@@ -375,25 +486,28 @@ class _DeleteConfirmDialogState extends State<_DeleteConfirmDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AlertDialog(
       backgroundColor: const Color(0xFF142346),
-      title: const Text(
-        'Delete account?',
-        style: TextStyle(color: Colors.white),
+      title: Text(
+        l10n?.settingsDeleteTitle ?? 'Delete account?',
+        style: const TextStyle(color: Colors.white),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'This permanently deletes your profile, all meal logs, water logs, '
-            'weight history, habits, and subscriptions. This cannot be undone.',
-            style: TextStyle(color: Color(0xFFB8C5D6), fontSize: 14),
+          Text(
+            l10n?.settingsDeleteConfirmBody ??
+                'This permanently deletes your profile, all meal logs, water '
+                    'logs, weight history, habits, and subscriptions. This '
+                    'cannot be undone.',
+            style: const TextStyle(color: Color(0xFFB8C5D6), fontSize: 14),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Type DELETE to confirm:',
-            style: TextStyle(color: Colors.white, fontSize: 13),
+          Text(
+            l10n?.settingsDeleteType ?? 'Type DELETE to confirm:',
+            style: const TextStyle(color: Colors.white, fontSize: 13),
           ),
           const SizedBox(height: 8),
           TextField(
@@ -417,12 +531,13 @@ class _DeleteConfirmDialogState extends State<_DeleteConfirmDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel', style: TextStyle(color: AppColors.primaryCyan)),
+          child: Text(l10n?.commonCancel ?? 'Cancel',
+              style: const TextStyle(color: AppColors.primaryCyan)),
         ),
         TextButton(
           onPressed: _canDelete ? () => Navigator.of(context).pop(true) : null,
           child: Text(
-            'Delete',
+            l10n?.commonDelete ?? 'Delete',
             style: TextStyle(
               color: _canDelete ? const Color(0xFFFF6B6B) : const Color(0xFF8FA0B8),
               fontWeight: FontWeight.w600,

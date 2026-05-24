@@ -717,5 +717,17 @@
   "mealHistoryTitle": "Meal History",
   "historyYesterday": "Yesterday",
   "mealHistoryEmptyTitle": "No meals logged yet",
-  "mealHistoryEmptyBody": "Your logged meals will show up here, grouped by day."
+  "mealHistoryEmptyBody": "Your logged meals will show up here, grouped by day.",
+  "settingsCoachSection": "Coach",
+  "settingsYourData": "Your data",
+  "settingsExportData": "Export My Data",
+  "settingsExportDataDesc": "Download every meal, water log, weight entry, habit, and insight as a JSON file. Right to data portability (GDPR Art. 20).",
+  "settingsExportFailed": "Could not export your data.",
+  "settingsDeleteDesc": "Permanently removes your profile, meals, and all data.",
+  "settingsDeleteTitle": "Delete account?",
+  "settingsDeleteConfirmBody": "This permanently deletes your profile, all meal logs, water logs, weight history, habits, and subscriptions. This cannot be undone.",
+  "settingsDeleteType": "Type DELETE to confirm:",
+  "settingsDeleteFailed": "Could not delete account.",
+  "settingsLanguageItalian": "Italiano",
+  "settingsLanguageRussian": "Русский"
 }

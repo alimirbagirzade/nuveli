@@ -717,5 +717,17 @@
   "mealHistoryTitle": "Historial de comidas",
   "historyYesterday": "Ayer",
   "mealHistoryEmptyTitle": "Aún no hay comidas registradas",
-  "mealHistoryEmptyBody": "Tus comidas registradas aparecerán aquí, agrupadas por día."
+  "mealHistoryEmptyBody": "Tus comidas registradas aparecerán aquí, agrupadas por día.",
+  "settingsCoachSection": "Coach",
+  "settingsYourData": "Tus datos",
+  "settingsExportData": "Exportar mis datos",
+  "settingsExportDataDesc": "Descarga cada comida, registro de agua, peso, hábito e insight como JSON. Derecho a la portabilidad de datos (RGPD art. 20).",
+  "settingsExportFailed": "No se pudieron exportar tus datos.",
+  "settingsDeleteDesc": "Elimina permanentemente tu perfil, comidas y todos los datos.",
+  "settingsDeleteTitle": "¿Eliminar cuenta?",
+  "settingsDeleteConfirmBody": "Esto elimina permanentemente tu perfil, registros de comidas, agua, peso, hábitos y suscripciones. No se puede deshacer.",
+  "settingsDeleteType": "Escribe DELETE para confirmar:",
+  "settingsDeleteFailed": "No se pudo eliminar la cuenta.",
+  "settingsLanguageItalian": "Italiano",
+  "settingsLanguageRussian": "Ruso"
 }

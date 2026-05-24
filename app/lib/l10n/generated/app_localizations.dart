@@ -3617,6 +3617,78 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Eklediğin öğünler burada güne göre gruplanır.'**
   String get mealHistoryEmptyBody;
+
+  /// Settings: settingsCoachSection
+  ///
+  /// In tr, this message translates to:
+  /// **'Koç'**
+  String get settingsCoachSection;
+
+  /// Settings: settingsYourData
+  ///
+  /// In tr, this message translates to:
+  /// **'Verilerin'**
+  String get settingsYourData;
+
+  /// Settings: settingsExportData
+  ///
+  /// In tr, this message translates to:
+  /// **'Verilerimi Dışa Aktar'**
+  String get settingsExportData;
+
+  /// Settings: settingsExportDataDesc
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm öğün, su, kilo, alışkanlık ve içgörü kayıtlarını JSON olarak indir. Veri taşınabilirliği hakkı (KVKK / GDPR Mad. 20).'**
+  String get settingsExportDataDesc;
+
+  /// Settings: settingsExportFailed
+  ///
+  /// In tr, this message translates to:
+  /// **'Verilerin dışa aktarılamadı.'**
+  String get settingsExportFailed;
+
+  /// Settings: settingsDeleteDesc
+  ///
+  /// In tr, this message translates to:
+  /// **'Profilini, öğünlerini ve tüm verilerini kalıcı olarak siler.'**
+  String get settingsDeleteDesc;
+
+  /// Settings: settingsDeleteTitle
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap silinsin mi?'**
+  String get settingsDeleteTitle;
+
+  /// Settings: settingsDeleteConfirmBody
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu işlem profilini, tüm öğün, su, kilo geçmişini, alışkanlıkları ve abonelikleri kalıcı olarak siler. Geri alınamaz.'**
+  String get settingsDeleteConfirmBody;
+
+  /// Settings: settingsDeleteType
+  ///
+  /// In tr, this message translates to:
+  /// **'Onaylamak için DELETE yaz:'**
+  String get settingsDeleteType;
+
+  /// Settings: settingsDeleteFailed
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap silinemedi.'**
+  String get settingsDeleteFailed;
+
+  /// Settings: settingsLanguageItalian
+  ///
+  /// In tr, this message translates to:
+  /// **'İtalyanca'**
+  String get settingsLanguageItalian;
+
+  /// Settings: settingsLanguageRussian
+  ///
+  /// In tr, this message translates to:
+  /// **'Rusça'**
+  String get settingsLanguageRussian;
 }
 
 class _AppLocalizationsDelegate
