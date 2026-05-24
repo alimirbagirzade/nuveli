@@ -158,10 +158,9 @@ async def nuveli_exception_handler(request: Request, exc: NuveliException):
 async def unhandled_exception_handler(request: Request, exc: Exception):
     """Catch-all for unexpected errors. Logs full trace, returns sanitized message.
 
-    DEBUG: Temporarily exposes exception class + message in the response body so
-    QA can diagnose 500s on prod without Render dashboard access. Revert this
-    block before App Store / Play Store submission — exposing exception class
-    names can leak schema names and is a soft information-disclosure issue.
+    The full exception (class + trace) is logged server-side only. The response
+    body is intentionally generic — exposing exception class names can leak
+    schema/internal details (soft information disclosure).
     """
     logger.exception(f"Unhandled exception on {request.url.path}")
     return JSONResponse(
@@ -169,7 +168,6 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
         content={
             "error": "InternalServerError",
             "detail": "An unexpected error occurred",
-            "_debug_exc": f"{type(exc).__name__}: {str(exc)[:2000]}",
         },
     )
 
