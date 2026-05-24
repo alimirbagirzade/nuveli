@@ -3025,4 +3025,146 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get recipeBrowserAddFailed => 'Impossibile aggiungere al piano';
+
+  @override
+  String get habitUpdateFailed => 'Impossibile aggiornare l\'abitudine';
+
+  @override
+  String get notifScreenTitle => 'Notifiche';
+
+  @override
+  String get notifOpenSystemSettingsTitle =>
+      'Aprire le impostazioni di sistema?';
+
+  @override
+  String get notifOpenSystemSettingsBody =>
+      'Hai rifiutato le notifiche. Apri Impostazioni per riattivarle.';
+
+  @override
+  String get notifOpenSettings => 'Apri Impostazioni';
+
+  @override
+  String get notifAllNotifications => 'Tutte le notifiche';
+
+  @override
+  String get notifMasterSwitch => 'Attiva notifiche Nuveli';
+
+  @override
+  String get notifMasterSwitchDesc =>
+      'Interruttore principale per tutto ciò che segue.';
+
+  @override
+  String get notifWaterSection => 'Acqua';
+
+  @override
+  String get notifWaterMorning => 'Mattina · 9:00';
+
+  @override
+  String get notifWaterMorningDesc => 'Inizia la tua idratazione.';
+
+  @override
+  String get notifWaterAfternoon => 'Pomeriggio · 13:00';
+
+  @override
+  String get notifWaterAfternoonDesc => 'Promemoria di metà giornata.';
+
+  @override
+  String get notifWaterEvening => 'Sera · 18:30';
+
+  @override
+  String get notifWaterEveningDesc => 'Sorso serale.';
+
+  @override
+  String get notifMealsSection => 'Pasti';
+
+  @override
+  String get notifMealsTitle => 'Promemoria pranzo e cena';
+
+  @override
+  String get notifMealsDesc => 'Avvisi alle 12:30 e 19:00 per registrare.';
+
+  @override
+  String get notifHabitsSection => 'Abitudini';
+
+  @override
+  String get notifHabitsTitle => 'Promemoria abitudini';
+
+  @override
+  String get notifHabitsDesc => 'Avvisi all\'orario scelto per ogni abitudine.';
+
+  @override
+  String get notifSleepSection => 'Sonno';
+
+  @override
+  String get notifSleepTitle => 'Promemoria rilassamento';
+
+  @override
+  String get notifSleepDesc =>
+      '30 minuti prima dell\'orario di andare a letto.';
+
+  @override
+  String get notifBedtime => 'Orario di andare a letto';
+
+  @override
+  String get notifCoachingSection => 'Coaching';
+
+  @override
+  String get notifStreakTitle => 'Avviso serie';
+
+  @override
+  String get notifStreakDesc => 'Avviso alle 21:00 se non hai registrato oggi.';
+
+  @override
+  String get notifAiInsightTitle => 'Consiglio IA pronto';
+
+  @override
+  String get notifAiInsightDesc =>
+      'Notifica mattutina quando il coaching è aggiornato.';
+
+  @override
+  String get notifWeeklyRecapTitle => 'Riepilogo settimanale';
+
+  @override
+  String get notifWeeklyRecapDesc => 'Riepilogo domenica alle 20:00.';
+
+  @override
+  String get notifPermissionOff => 'Le notifiche sono disattivate';
+
+  @override
+  String get notifPermissionDenied =>
+      'Attivale nelle impostazioni di sistema per ricevere promemoria.';
+
+  @override
+  String get notifPermissionNotAsked =>
+      'Invieremo solo ciò che scegli di seguito.';
+
+  @override
+  String get notifPermissionAllow => 'Consenti';
+
+  @override
+  String get notifPermissionSettings => 'Impostazioni';
+
+  @override
+  String get notifTestButton => 'Invia notifica di test (10s)';
+
+  @override
+  String get notifTestScheduled => 'Notifica di test programmata tra 10s.';
+
+  @override
+  String get coachActionAddMeal => 'Aggiungi pasto';
+
+  @override
+  String get coachActionSetReminder => 'Imposta promemoria';
+
+  @override
+  String get coachActionAddHabit => 'Aggiungi abitudine';
+
+  @override
+  String get coachActionLogWater => 'Registra acqua';
+
+  @override
+  String get coachActionUpdateTarget => 'Aggiorna obiettivo';
+
+  @override
+  String get coachActionApply => 'Applica';
 }

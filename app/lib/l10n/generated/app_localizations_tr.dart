@@ -3007,4 +3007,143 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recipeBrowserAddFailed => 'Plana eklenemedi';
+
+  @override
+  String get habitUpdateFailed => 'Alışkanlık güncellenemedi';
+
+  @override
+  String get notifScreenTitle => 'Bildirimler';
+
+  @override
+  String get notifOpenSystemSettingsTitle => 'Sistem ayarları açılsın mı?';
+
+  @override
+  String get notifOpenSystemSettingsBody =>
+      'Bildirimleri reddettiniz. Yeniden açmak için Ayarlar\'a gidin.';
+
+  @override
+  String get notifOpenSettings => 'Ayarları Aç';
+
+  @override
+  String get notifAllNotifications => 'Tüm bildirimler';
+
+  @override
+  String get notifMasterSwitch => 'Nuveli bildirimlerini etkinleştir';
+
+  @override
+  String get notifMasterSwitchDesc => 'Aşağıdaki her şey için ana anahtar.';
+
+  @override
+  String get notifWaterSection => 'Su';
+
+  @override
+  String get notifWaterMorning => 'Sabah · 09:00';
+
+  @override
+  String get notifWaterMorningDesc => 'Hidrasyon rutinini başlat.';
+
+  @override
+  String get notifWaterAfternoon => 'Öğleden sonra · 13:00';
+
+  @override
+  String get notifWaterAfternoonDesc => 'Öğle arası hatırlatıcı.';
+
+  @override
+  String get notifWaterEvening => 'Akşam · 18:30';
+
+  @override
+  String get notifWaterEveningDesc => 'Günü kapatırken içmeyi unutma.';
+
+  @override
+  String get notifMealsSection => 'Öğünler';
+
+  @override
+  String get notifMealsTitle => 'Öğle ve akşam yemeği hatırlatıcıları';
+
+  @override
+  String get notifMealsDesc => '12:30 ve 19:00\'da kayıt için uyarı.';
+
+  @override
+  String get notifHabitsSection => 'Alışkanlıklar';
+
+  @override
+  String get notifHabitsTitle => 'Alışkanlık hatırlatıcıları';
+
+  @override
+  String get notifHabitsDesc =>
+      'Belirlediğin saatlerde her alışkanlık için uyarı. Alışkanlıklar ekranından yönetebilirsin.';
+
+  @override
+  String get notifSleepSection => 'Uyku';
+
+  @override
+  String get notifSleepTitle => 'Rüzgar azaltma hatırlatıcısı';
+
+  @override
+  String get notifSleepDesc => 'Yatma saatinden 30 dakika önce.';
+
+  @override
+  String get notifBedtime => 'Yatma saati';
+
+  @override
+  String get notifCoachingSection => 'Koçluk';
+
+  @override
+  String get notifStreakTitle => 'Seri uyarısı';
+
+  @override
+  String get notifStreakDesc => 'Bugün kayıt yapmadıysan 21:00\'de uyarı.';
+
+  @override
+  String get notifAiInsightTitle => 'Yapay zeka içgörüsü hazır';
+
+  @override
+  String get notifAiInsightDesc => 'Koçluk tazelendiğinde sabah bildirimi.';
+
+  @override
+  String get notifWeeklyRecapTitle => 'Haftalık özet';
+
+  @override
+  String get notifWeeklyRecapDesc => 'Pazar 20:00 özeti.';
+
+  @override
+  String get notifPermissionOff => 'Bildirimler kapalı';
+
+  @override
+  String get notifPermissionDenied =>
+      'Hatırlatıcılar için Ayarlar\'dan bildirimleri aç.';
+
+  @override
+  String get notifPermissionNotAsked =>
+      'Yalnızca seçtiğin bildirimleri göndereceğiz.';
+
+  @override
+  String get notifPermissionAllow => 'İzin Ver';
+
+  @override
+  String get notifPermissionSettings => 'Ayarlar';
+
+  @override
+  String get notifTestButton => 'Test bildirimi gönder (10s)';
+
+  @override
+  String get notifTestScheduled => 'Test bildirimi 10 saniyede zamanlandı.';
+
+  @override
+  String get coachActionAddMeal => 'Öğün ekle';
+
+  @override
+  String get coachActionSetReminder => 'Hatırlatıcı kur';
+
+  @override
+  String get coachActionAddHabit => 'Alışkanlık ekle';
+
+  @override
+  String get coachActionLogWater => 'Su kaydet';
+
+  @override
+  String get coachActionUpdateTarget => 'Hedefi güncelle';
+
+  @override
+  String get coachActionApply => 'Uygula';
 }

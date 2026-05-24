@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
 import '../models/habit.dart';
 import '../providers/habits_providers.dart';
 
@@ -127,7 +128,12 @@ class _HabitRowState extends ConsumerState<_HabitRow> {
       if (mounted) {
         setState(() => _checked = !next); // Rollback
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not update habit')),
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)?.habitUpdateFailed ??
+                  'Could not update habit',
+            ),
+          ),
         );
       }
     } finally {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/notifications/permission_handler.dart';
+import '../../l10n/generated/app_localizations.dart';
 import 'providers/notifications_provider.dart';
 
 /// Notification settings screen.
@@ -60,22 +61,27 @@ class _NotificationsSettingsScreenState
   Future<void> _showSettingsDialog() async {
     final go = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Open system settings?'),
-        content: const Text(
-          'You denied notifications. Open Settings to turn them back on.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+      builder: (ctx) {
+        final l10nCtx = AppLocalizations.of(ctx);
+        return AlertDialog(
+          title: Text(l10nCtx?.notifOpenSystemSettingsTitle ??
+              'Open system settings?'),
+          content: Text(
+            l10nCtx?.notifOpenSystemSettingsBody ??
+                'You denied notifications. Open Settings to turn them back on.',
           ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Open Settings'),
-          ),
-        ],
-      ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l10nCtx?.commonCancel ?? 'Cancel'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(l10nCtx?.notifOpenSettings ?? 'Open Settings'),
+            ),
+          ],
+        );
+      },
     );
     if (go ?? false) {
       await ref
@@ -90,10 +96,11 @@ class _NotificationsSettingsScreenState
     final settings = ref.watch(notificationSettingsProvider);
     final controller = ref.read(notificationSettingsProvider.notifier);
 
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: const Color(0xFF050A1F),
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: Text(l10n?.notifScreenTitle ?? 'Notifications'),
         backgroundColor: Colors.transparent,
         elevation: 0,
         foregroundColor: Colors.white,
@@ -113,10 +120,12 @@ class _NotificationsSettingsScreenState
             const SizedBox(height: 16),
 
             _Section(
-              title: 'All notifications',
+              title: l10n?.notifAllNotifications ?? 'All notifications',
               child: _ToggleTile(
-                title: 'Enable Nuveli notifications',
-                subtitle: 'Master switch for everything below.',
+                title: l10n?.notifMasterSwitch ??
+                    'Enable Nuveli notifications',
+                subtitle: l10n?.notifMasterSwitchDesc ??
+                    'Master switch for everything below.',
                 value: settings.masterEnabled,
                 onChanged: controller.setMasterEnabled,
               ),
@@ -127,24 +136,30 @@ class _NotificationsSettingsScreenState
               child: Column(
                 children: [
                   _Section(
-                    title: 'Water',
+                    title: l10n?.notifWaterSection ?? 'Water',
                     child: Column(
                       children: [
                         _ToggleTile(
-                          title: 'Morning · 9:00 AM',
-                          subtitle: 'Kickstart your hydration.',
+                          title:
+                              l10n?.notifWaterMorning ?? 'Morning · 9:00 AM',
+                          subtitle: l10n?.notifWaterMorningDesc ??
+                              'Kickstart your hydration.',
                           value: settings.waterMorning,
                           onChanged: controller.setWaterMorning,
                         ),
                         _ToggleTile(
-                          title: 'Afternoon · 1:00 PM',
-                          subtitle: 'Mid-day reminder.',
+                          title: l10n?.notifWaterAfternoon ??
+                              'Afternoon · 1:00 PM',
+                          subtitle: l10n?.notifWaterAfternoonDesc ??
+                              'Mid-day reminder.',
                           value: settings.waterAfternoon,
                           onChanged: controller.setWaterAfternoon,
                         ),
                         _ToggleTile(
-                          title: 'Evening · 6:30 PM',
-                          subtitle: 'Wind-down sip.',
+                          title: l10n?.notifWaterEvening ??
+                              'Evening · 6:30 PM',
+                          subtitle: l10n?.notifWaterEveningDesc ??
+                              'Wind-down sip.',
                           value: settings.waterEvening,
                           onChanged: controller.setWaterEvening,
                           isLast: true,
@@ -154,33 +169,38 @@ class _NotificationsSettingsScreenState
                   ),
 
                   _Section(
-                    title: 'Meals',
+                    title: l10n?.notifMealsSection ?? 'Meals',
                     child: _ToggleTile(
-                      title: 'Lunch & dinner reminders',
-                      subtitle: '12:30 PM and 7:00 PM nudges to log.',
+                      title: l10n?.notifMealsTitle ??
+                          'Lunch & dinner reminders',
+                      subtitle: l10n?.notifMealsDesc ??
+                          '12:30 PM and 7:00 PM nudges to log.',
                       value: settings.mealReminders,
                       onChanged: controller.setMealReminders,
                     ),
                   ),
 
                   _Section(
-                    title: 'Habits',
+                    title: l10n?.notifHabitsSection ?? 'Habits',
                     child: _ToggleTile(
-                      title: 'Habit reminders',
-                      subtitle:
-                          'Per-habit nudges at the time you picked. Manage individual habits from the Habits screen.',
+                      title:
+                          l10n?.notifHabitsTitle ?? 'Habit reminders',
+                      subtitle: l10n?.notifHabitsDesc ??
+                          'Per-habit nudges at the time you picked.',
                       value: settings.habitReminders,
                       onChanged: controller.setHabitReminders,
                     ),
                   ),
 
                   _Section(
-                    title: 'Sleep',
+                    title: l10n?.notifSleepSection ?? 'Sleep',
                     child: Column(
                       children: [
                         _ToggleTile(
-                          title: 'Wind-down reminder',
-                          subtitle: '30 minutes before your bedtime.',
+                          title: l10n?.notifSleepTitle ??
+                              'Wind-down reminder',
+                          subtitle: l10n?.notifSleepDesc ??
+                              '30 minutes before your bedtime.',
                           value: settings.sleepReminder,
                           onChanged: controller.setSleepReminder,
                         ),
@@ -188,31 +208,39 @@ class _NotificationsSettingsScreenState
                           _BedtimeTile(
                             bedtime: settings.bedtime,
                             onChanged: controller.setBedtime,
+                            label:
+                                l10n?.notifBedtime ?? 'Bedtime',
                           ),
                       ],
                     ),
                   ),
 
                   _Section(
-                    title: 'Coaching',
+                    title:
+                        l10n?.notifCoachingSection ?? 'Coaching',
                     child: Column(
                       children: [
                         _ToggleTile(
-                          title: 'Streak warning',
-                          subtitle:
+                          title: l10n?.notifStreakTitle ??
+                              'Streak warning',
+                          subtitle: l10n?.notifStreakDesc ??
                               "9:00 PM nudge if you haven't logged today.",
                           value: settings.streakWarning,
                           onChanged: controller.setStreakWarning,
                         ),
                         _ToggleTile(
-                          title: 'AI insight ready',
-                          subtitle: 'Morning ping when coaching is fresh.',
+                          title: l10n?.notifAiInsightTitle ??
+                              'AI insight ready',
+                          subtitle: l10n?.notifAiInsightDesc ??
+                              'Morning ping when coaching is fresh.',
                           value: settings.aiInsightReady,
                           onChanged: controller.setAiInsightReady,
                         ),
                         _ToggleTile(
-                          title: 'Weekly recap',
-                          subtitle: 'Sunday 8:00 PM summary.',
+                          title: l10n?.notifWeeklyRecapTitle ??
+                              'Weekly recap',
+                          subtitle: l10n?.notifWeeklyRecapDesc ??
+                              'Sunday 8:00 PM summary.',
                           value: settings.weeklyRecap,
                           onChanged: controller.setWeeklyRecap,
                           isLast: true,
@@ -230,7 +258,8 @@ class _NotificationsSettingsScreenState
                 child: OutlinedButton.icon(
                   onPressed: _sendTestNotification,
                   icon: const Icon(Icons.bug_report_outlined),
-                  label: const Text('Send test notification (10s)'),
+                  label: Text(l10n?.notifTestButton ??
+                      'Send test notification (10s)'),
                 ),
               ),
           ],
@@ -251,8 +280,12 @@ class _NotificationsSettingsScreenState
   Future<void> _sendTestNotification() async {
     await ref.read(notificationServiceProvider).fireTestInTenSeconds();
     if (!mounted) return;
+    final l10n = AppLocalizations.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Test notification scheduled in 10s.')),
+      SnackBar(
+        content: Text(l10n?.notifTestScheduled ??
+            'Test notification scheduled in 10s.'),
+      ),
     );
   }
 }
@@ -278,6 +311,7 @@ class _PermissionBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPermanent =
         status == NotificationPermissionStatus.permanentlyDenied;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -296,9 +330,9 @@ class _PermissionBanner extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Notifications are off',
-                  style: TextStyle(
+                Text(
+                  l10n?.notifPermissionOff ?? 'Notifications are off',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
@@ -307,8 +341,10 @@ class _PermissionBanner extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   isPermanent
-                      ? 'Enable them in system settings to get reminders.'
-                      : "We'll only send what you choose below.",
+                      ? (l10n?.notifPermissionDenied ??
+                          'Enable them in system settings to get reminders.')
+                      : (l10n?.notifPermissionNotAsked ??
+                          "We'll only send what you choose below."),
                   style: const TextStyle(
                     color: Color(0xFFB8C5D6),
                     fontSize: 13,
@@ -320,7 +356,9 @@ class _PermissionBanner extends StatelessWidget {
           const SizedBox(width: 8),
           TextButton(
             onPressed: onRequest,
-            child: Text(isPermanent ? 'Settings' : 'Allow'),
+            child: Text(isPermanent
+                ? (l10n?.notifPermissionSettings ?? 'Settings')
+                : (l10n?.notifPermissionAllow ?? 'Allow')),
           ),
         ],
       ),
@@ -424,10 +462,15 @@ class _ToggleTile extends StatelessWidget {
 }
 
 class _BedtimeTile extends StatelessWidget {
-  const _BedtimeTile({required this.bedtime, required this.onChanged});
+  const _BedtimeTile({
+    required this.bedtime,
+    required this.onChanged,
+    this.label = 'Bedtime',
+  });
 
   final TimeOfDay bedtime;
   final ValueChanged<TimeOfDay> onChanged;
+  final String label;
 
   Future<void> _pick(BuildContext context) async {
     final picked = await showTimePicker(
@@ -441,9 +484,9 @@ class _BedtimeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      title: const Text(
-        'Bedtime',
-        style: TextStyle(color: Colors.white, fontSize: 15),
+      title: Text(
+        label,
+        style: const TextStyle(color: Colors.white, fontSize: 15),
       ),
       trailing: TextButton(
         onPressed: () => _pick(context),

@@ -106,7 +106,7 @@ class RecommendedActionButton extends ConsumerWidget {
                         ),
                       )
                     : Text(
-                        action.ctaLabel,
+                        _actionCtaLabel(l10n, action.actionType),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -119,6 +119,23 @@ class RecommendedActionButton extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  static String _actionCtaLabel(AppLocalizations? l10n, String? actionType) {
+    switch (actionType) {
+      case 'add_meal':
+        return l10n?.coachActionAddMeal ?? 'Add meal';
+      case 'adjust_reminder':
+        return l10n?.coachActionSetReminder ?? 'Set reminder';
+      case 'add_habit':
+        return l10n?.coachActionAddHabit ?? 'Add habit';
+      case 'log_water':
+        return l10n?.coachActionLogWater ?? 'Log water';
+      case 'increase_target':
+        return l10n?.coachActionUpdateTarget ?? 'Update target';
+      default:
+        return l10n?.coachActionApply ?? 'Apply';
+    }
   }
 
   static String _confirmationFor(AppLocalizations? l10n, String actionTaken) {
