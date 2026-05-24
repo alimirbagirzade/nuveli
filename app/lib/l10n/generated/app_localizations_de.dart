@@ -3029,4 +3029,146 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get recipeBrowserAddFailed =>
       'Konnte nicht zum Plan hinzugefügt werden';
+
+  @override
+  String get habitUpdateFailed => 'Gewohnheit konnte nicht aktualisiert werden';
+
+  @override
+  String get notifScreenTitle => 'Benachrichtigungen';
+
+  @override
+  String get notifOpenSystemSettingsTitle => 'Systemeinstellungen öffnen?';
+
+  @override
+  String get notifOpenSystemSettingsBody =>
+      'Du hast Benachrichtigungen abgelehnt. Öffne Einstellungen, um sie wieder zu aktivieren.';
+
+  @override
+  String get notifOpenSettings => 'Einstellungen öffnen';
+
+  @override
+  String get notifAllNotifications => 'Alle Benachrichtigungen';
+
+  @override
+  String get notifMasterSwitch => 'Nuveli-Benachrichtigungen aktivieren';
+
+  @override
+  String get notifMasterSwitchDesc => 'Hauptschalter für alles darunter.';
+
+  @override
+  String get notifWaterSection => 'Wasser';
+
+  @override
+  String get notifWaterMorning => 'Morgens · 9:00 Uhr';
+
+  @override
+  String get notifWaterMorningDesc => 'Starte deinen Wasserhaushalt.';
+
+  @override
+  String get notifWaterAfternoon => 'Mittags · 13:00 Uhr';
+
+  @override
+  String get notifWaterAfternoonDesc => 'Erinnerung am Nachmittag.';
+
+  @override
+  String get notifWaterEvening => 'Abends · 18:30 Uhr';
+
+  @override
+  String get notifWaterEveningDesc => 'Abendliche Erinnerung.';
+
+  @override
+  String get notifMealsSection => 'Mahlzeiten';
+
+  @override
+  String get notifMealsTitle => 'Mittag- & Abendessen-Erinnerungen';
+
+  @override
+  String get notifMealsDesc => 'Erinnerungen um 12:30 und 19:00 Uhr.';
+
+  @override
+  String get notifHabitsSection => 'Gewohnheiten';
+
+  @override
+  String get notifHabitsTitle => 'Gewohnheitserinnerungen';
+
+  @override
+  String get notifHabitsDesc =>
+      'Erinnerungen zur gewählten Zeit für jede Gewohnheit.';
+
+  @override
+  String get notifSleepSection => 'Schlaf';
+
+  @override
+  String get notifSleepTitle => 'Entspannungserinnerung';
+
+  @override
+  String get notifSleepDesc => '30 Minuten vor deiner Schlafenszeit.';
+
+  @override
+  String get notifBedtime => 'Schlafenszeit';
+
+  @override
+  String get notifCoachingSection => 'Coaching';
+
+  @override
+  String get notifStreakTitle => 'Streak-Warnung';
+
+  @override
+  String get notifStreakDesc =>
+      '21:00 Uhr-Erinnerung, falls du heute nicht geloggt hast.';
+
+  @override
+  String get notifAiInsightTitle => 'KI-Einblick bereit';
+
+  @override
+  String get notifAiInsightDesc =>
+      'Morgenbenachrichtigung, wenn Coaching frisch ist.';
+
+  @override
+  String get notifWeeklyRecapTitle => 'Wöchentliche Zusammenfassung';
+
+  @override
+  String get notifWeeklyRecapDesc => 'Sonntag 20:00 Uhr Zusammenfassung.';
+
+  @override
+  String get notifPermissionOff => 'Benachrichtigungen sind deaktiviert';
+
+  @override
+  String get notifPermissionDenied =>
+      'Aktiviere sie in den Systemeinstellungen.';
+
+  @override
+  String get notifPermissionNotAsked =>
+      'Wir senden nur, was du unten auswählst.';
+
+  @override
+  String get notifPermissionAllow => 'Erlauben';
+
+  @override
+  String get notifPermissionSettings => 'Einstellungen';
+
+  @override
+  String get notifTestButton => 'Test-Benachrichtigung senden (10s)';
+
+  @override
+  String get notifTestScheduled =>
+      'Test-Benachrichtigung in 10 Sekunden geplant.';
+
+  @override
+  String get coachActionAddMeal => 'Mahlzeit hinzufügen';
+
+  @override
+  String get coachActionSetReminder => 'Erinnerung setzen';
+
+  @override
+  String get coachActionAddHabit => 'Gewohnheit hinzufügen';
+
+  @override
+  String get coachActionLogWater => 'Wasser erfassen';
+
+  @override
+  String get coachActionUpdateTarget => 'Ziel aktualisieren';
+
+  @override
+  String get coachActionApply => 'Anwenden';
 }

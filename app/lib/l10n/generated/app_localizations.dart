@@ -5663,6 +5663,276 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Plana eklenemedi'**
   String get recipeBrowserAddFailed;
+
+  /// No description provided for @habitUpdateFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışkanlık güncellenemedi'**
+  String get habitUpdateFailed;
+
+  /// No description provided for @notifScreenTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler'**
+  String get notifScreenTitle;
+
+  /// No description provided for @notifOpenSystemSettingsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sistem ayarları açılsın mı?'**
+  String get notifOpenSystemSettingsTitle;
+
+  /// No description provided for @notifOpenSystemSettingsBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimleri reddettiniz. Yeniden açmak için Ayarlar\'a gidin.'**
+  String get notifOpenSystemSettingsBody;
+
+  /// No description provided for @notifOpenSettings.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarları Aç'**
+  String get notifOpenSettings;
+
+  /// No description provided for @notifAllNotifications.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm bildirimler'**
+  String get notifAllNotifications;
+
+  /// No description provided for @notifMasterSwitch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nuveli bildirimlerini etkinleştir'**
+  String get notifMasterSwitch;
+
+  /// No description provided for @notifMasterSwitchDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşağıdaki her şey için ana anahtar.'**
+  String get notifMasterSwitchDesc;
+
+  /// No description provided for @notifWaterSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su'**
+  String get notifWaterSection;
+
+  /// No description provided for @notifWaterMorning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sabah · 09:00'**
+  String get notifWaterMorning;
+
+  /// No description provided for @notifWaterMorningDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hidrasyon rutinini başlat.'**
+  String get notifWaterMorningDesc;
+
+  /// No description provided for @notifWaterAfternoon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğleden sonra · 13:00'**
+  String get notifWaterAfternoon;
+
+  /// No description provided for @notifWaterAfternoonDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğle arası hatırlatıcı.'**
+  String get notifWaterAfternoonDesc;
+
+  /// No description provided for @notifWaterEvening.
+  ///
+  /// In tr, this message translates to:
+  /// **'Akşam · 18:30'**
+  String get notifWaterEvening;
+
+  /// No description provided for @notifWaterEveningDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günü kapatırken içmeyi unutma.'**
+  String get notifWaterEveningDesc;
+
+  /// No description provided for @notifMealsSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğünler'**
+  String get notifMealsSection;
+
+  /// No description provided for @notifMealsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğle ve akşam yemeği hatırlatıcıları'**
+  String get notifMealsTitle;
+
+  /// No description provided for @notifMealsDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'12:30 ve 19:00\'da kayıt için uyarı.'**
+  String get notifMealsDesc;
+
+  /// No description provided for @notifHabitsSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışkanlıklar'**
+  String get notifHabitsSection;
+
+  /// No description provided for @notifHabitsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışkanlık hatırlatıcıları'**
+  String get notifHabitsTitle;
+
+  /// No description provided for @notifHabitsDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Belirlediğin saatlerde her alışkanlık için uyarı. Alışkanlıklar ekranından yönetebilirsin.'**
+  String get notifHabitsDesc;
+
+  /// No description provided for @notifSleepSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uyku'**
+  String get notifSleepSection;
+
+  /// No description provided for @notifSleepTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rüzgar azaltma hatırlatıcısı'**
+  String get notifSleepTitle;
+
+  /// No description provided for @notifSleepDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yatma saatinden 30 dakika önce.'**
+  String get notifSleepDesc;
+
+  /// No description provided for @notifBedtime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yatma saati'**
+  String get notifBedtime;
+
+  /// No description provided for @notifCoachingSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçluk'**
+  String get notifCoachingSection;
+
+  /// No description provided for @notifStreakTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seri uyarısı'**
+  String get notifStreakTitle;
+
+  /// No description provided for @notifStreakDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün kayıt yapmadıysan 21:00\'de uyarı.'**
+  String get notifStreakDesc;
+
+  /// No description provided for @notifAiInsightTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yapay zeka içgörüsü hazır'**
+  String get notifAiInsightTitle;
+
+  /// No description provided for @notifAiInsightDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçluk tazelendiğinde sabah bildirimi.'**
+  String get notifAiInsightDesc;
+
+  /// No description provided for @notifWeeklyRecapTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık özet'**
+  String get notifWeeklyRecapTitle;
+
+  /// No description provided for @notifWeeklyRecapDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar 20:00 özeti.'**
+  String get notifWeeklyRecapDesc;
+
+  /// No description provided for @notifPermissionOff.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler kapalı'**
+  String get notifPermissionOff;
+
+  /// No description provided for @notifPermissionDenied.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatıcılar için Ayarlar\'dan bildirimleri aç.'**
+  String get notifPermissionDenied;
+
+  /// No description provided for @notifPermissionNotAsked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca seçtiğin bildirimleri göndereceğiz.'**
+  String get notifPermissionNotAsked;
+
+  /// No description provided for @notifPermissionAllow.
+  ///
+  /// In tr, this message translates to:
+  /// **'İzin Ver'**
+  String get notifPermissionAllow;
+
+  /// No description provided for @notifPermissionSettings.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarlar'**
+  String get notifPermissionSettings;
+
+  /// No description provided for @notifTestButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Test bildirimi gönder (10s)'**
+  String get notifTestButton;
+
+  /// No description provided for @notifTestScheduled.
+  ///
+  /// In tr, this message translates to:
+  /// **'Test bildirimi 10 saniyede zamanlandı.'**
+  String get notifTestScheduled;
+
+  /// No description provided for @coachActionAddMeal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün ekle'**
+  String get coachActionAddMeal;
+
+  /// No description provided for @coachActionSetReminder.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatıcı kur'**
+  String get coachActionSetReminder;
+
+  /// No description provided for @coachActionAddHabit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Alışkanlık ekle'**
+  String get coachActionAddHabit;
+
+  /// No description provided for @coachActionLogWater.
+  ///
+  /// In tr, this message translates to:
+  /// **'Su kaydet'**
+  String get coachActionLogWater;
+
+  /// No description provided for @coachActionUpdateTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefi güncelle'**
+  String get coachActionUpdateTarget;
+
+  /// No description provided for @coachActionApply.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygula'**
+  String get coachActionApply;
 }
 
 class _AppLocalizationsDelegate

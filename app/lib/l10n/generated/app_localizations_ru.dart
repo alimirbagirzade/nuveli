@@ -3017,4 +3017,145 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get recipeBrowserAddFailed => 'Не удалось добавить в план';
+
+  @override
+  String get habitUpdateFailed => 'Не удалось обновить привычку';
+
+  @override
+  String get notifScreenTitle => 'Уведомления';
+
+  @override
+  String get notifOpenSystemSettingsTitle => 'Открыть системные настройки?';
+
+  @override
+  String get notifOpenSystemSettingsBody =>
+      'Вы отклонили уведомления. Откройте Настройки, чтобы включить их снова.';
+
+  @override
+  String get notifOpenSettings => 'Открыть Настройки';
+
+  @override
+  String get notifAllNotifications => 'Все уведомления';
+
+  @override
+  String get notifMasterSwitch => 'Включить уведомления Nuveli';
+
+  @override
+  String get notifMasterSwitchDesc => 'Главный переключатель для всего ниже.';
+
+  @override
+  String get notifWaterSection => 'Вода';
+
+  @override
+  String get notifWaterMorning => 'Утро · 9:00';
+
+  @override
+  String get notifWaterMorningDesc => 'Начните гидратацию.';
+
+  @override
+  String get notifWaterAfternoon => 'День · 13:00';
+
+  @override
+  String get notifWaterAfternoonDesc => 'Напоминание в середине дня.';
+
+  @override
+  String get notifWaterEvening => 'Вечер · 18:30';
+
+  @override
+  String get notifWaterEveningDesc => 'Вечерний глоток.';
+
+  @override
+  String get notifMealsSection => 'Приёмы пищи';
+
+  @override
+  String get notifMealsTitle => 'Напоминания об обеде и ужине';
+
+  @override
+  String get notifMealsDesc => 'Напоминания в 12:30 и 19:00.';
+
+  @override
+  String get notifHabitsSection => 'Привычки';
+
+  @override
+  String get notifHabitsTitle => 'Напоминания о привычках';
+
+  @override
+  String get notifHabitsDesc =>
+      'Напоминания в выбранное время для каждой привычки.';
+
+  @override
+  String get notifSleepSection => 'Сон';
+
+  @override
+  String get notifSleepTitle => 'Напоминание перед сном';
+
+  @override
+  String get notifSleepDesc => 'За 30 минут до времени сна.';
+
+  @override
+  String get notifBedtime => 'Время сна';
+
+  @override
+  String get notifCoachingSection => 'Коучинг';
+
+  @override
+  String get notifStreakTitle => 'Предупреждение о серии';
+
+  @override
+  String get notifStreakDesc =>
+      'Напоминание в 21:00, если вы не записали сегодня.';
+
+  @override
+  String get notifAiInsightTitle => 'Совет ИИ готов';
+
+  @override
+  String get notifAiInsightDesc =>
+      'Утреннее уведомление, когда коучинг обновлён.';
+
+  @override
+  String get notifWeeklyRecapTitle => 'Еженедельная сводка';
+
+  @override
+  String get notifWeeklyRecapDesc => 'Сводка в воскресенье в 20:00.';
+
+  @override
+  String get notifPermissionOff => 'Уведомления отключены';
+
+  @override
+  String get notifPermissionDenied => 'Включите их в системных настройках.';
+
+  @override
+  String get notifPermissionNotAsked =>
+      'Мы отправим только то, что вы выберете ниже.';
+
+  @override
+  String get notifPermissionAllow => 'Разрешить';
+
+  @override
+  String get notifPermissionSettings => 'Настройки';
+
+  @override
+  String get notifTestButton => 'Отправить тестовое уведомление (10с)';
+
+  @override
+  String get notifTestScheduled =>
+      'Тестовое уведомление запланировано через 10 с.';
+
+  @override
+  String get coachActionAddMeal => 'Добавить приём пищи';
+
+  @override
+  String get coachActionSetReminder => 'Установить напоминание';
+
+  @override
+  String get coachActionAddHabit => 'Добавить привычку';
+
+  @override
+  String get coachActionLogWater => 'Записать воду';
+
+  @override
+  String get coachActionUpdateTarget => 'Обновить цель';
+
+  @override
+  String get coachActionApply => 'Применить';
 }
