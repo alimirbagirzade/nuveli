@@ -35,19 +35,26 @@ final googleSignInServiceProvider =
 // ============================================================================
 
 class AuthNotifier extends AsyncNotifier<AuthUser?> {
-  late final AuthService _authService;
-  late final AppleSignInService _appleService;
-  late final GoogleSignInService _googleService;
+  // Lazy field initializers (not assigned inside build): `build()` can be
+  // re-executed on the SAME notifier instance when a dependency changes or
+  // the provider is invalidated. Assigning a `late final` in build() then
+  // throws "Field '_authService' has already been initialized." on the
+  // second run. A `late final ... = ref.read(...)` resolves once, on first
+  // access, and is immune to build re-runs.
+  late final AuthService _authService = ref.read(authServiceProvider);
+  late final AppleSignInService _appleService =
+      ref.read(appleSignInServiceProvider);
+  late final GoogleSignInService _googleService =
+      ref.read(googleSignInServiceProvider);
   StreamSubscription<sb.AuthState>? _sub;
 
   @override
   Future<AuthUser?> build() async {
-    _authService = ref.read(authServiceProvider);
-    _appleService = ref.read(appleSignInServiceProvider);
-    _googleService = ref.read(googleSignInServiceProvider);
-
     // Supabase auth state stream'ini dinle.
     // Token refresh, başka tab'tan logout vs. otomatik yansır.
+    // Cancel any prior subscription first so a build re-run doesn't leak a
+    // second listener.
+    _sub?.cancel();
     _sub = _authService.onAuthStateChange.listen((sb.AuthState authState) {
       final user = authState.session?.user;
       state = AsyncValue.data(

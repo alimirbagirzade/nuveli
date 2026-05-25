@@ -2,7 +2,7 @@ name: nuveli
 description: Nuveli - AI Calorie Coach
 
 publish_to: 'none'
-version: 1.6.7+30
+version: 1.6.8+31
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
