@@ -3966,6 +3966,12 @@ abstract class AppLocalizations {
   /// **'Sınırsız'**
   String get mealScanUnlimited;
 
+  /// Meal scan result: editable meal-name field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün adı'**
+  String get mealScanNameLabel;
+
   /// Loading step 1
   ///
   /// In tr, this message translates to:

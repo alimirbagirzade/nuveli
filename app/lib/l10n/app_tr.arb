@@ -1049,6 +1049,10 @@
   "@mealScanUnlimited": {
     "description": "Meal scan: premium unlimited counter badge"
   },
+  "mealScanNameLabel": "Öğün adı",
+  "@mealScanNameLabel": {
+    "description": "Meal scan result: editable meal-name field label"
+  },
   "@mealScanChooseGallery": {
     "description": "Choose from gallery CTA"
   },

@@ -2080,6 +2080,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mealScanUnlimited => 'Безлимит';
 
   @override
+  String get mealScanNameLabel => 'Название приёма пищи';
+
+  @override
   String get mealScanAnalyzingStep1 => 'Анализируем блюдо...';
 
   @override

@@ -1,5 +1,15 @@
 # Nuveli Changelog
 
+## [1.6.2+25] - 2026-05-25 - Editable meal name on scan result
+
+### Features
+- **Editable "Meal name" field on the scan result screen.** Pre-filled with
+  the auto-composed name (from detected foods) so there's a sensible default;
+  the user can rename it (e.g. a Turkish title instead of the AI's English food
+  name). Left blank → falls back to the auto name at save. New `mealName` field
+  on `MealScanState` + `setMealName`; `autoMealName` getter centralizes the
+  compose logic. l10n key `mealScanNameLabel` (7 locales).
+
 ## [1.6.1+24] - 2026-05-25 - Device-QA polish: coach empty state, paywall i18n, profile overflow
 
 ### Fixes

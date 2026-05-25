@@ -2080,6 +2080,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mealScanUnlimited => 'Unbegrenzt';
 
   @override
+  String get mealScanNameLabel => 'Mahlzeitname';
+
+  @override
   String get mealScanAnalyzingStep1 => 'Mahlzeit wird analysiert...';
 
   @override

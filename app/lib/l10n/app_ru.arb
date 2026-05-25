@@ -817,6 +817,7 @@
   "mealScanChooseGallery": "Выбрать из галереи",
   "mealScanScansLeft": "{remaining}/{total} сканов сегодня",
   "mealScanUnlimited": "Безлимит",
+  "mealScanNameLabel": "Название приёма пищи",
   "mealScanAnalyzingStep1": "Анализируем блюдо...",
   "mealScanAnalyzingStep2": "Распознаём продукты...",
   "mealScanAnalyzingStep3": "Оцениваем порции...",

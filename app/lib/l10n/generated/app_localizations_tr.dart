@@ -2073,6 +2073,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get mealScanUnlimited => 'Sınırsız';
 
   @override
+  String get mealScanNameLabel => 'Öğün adı';
+
+  @override
   String get mealScanAnalyzingStep1 => 'Yemeğin analiz ediliyor...';
 
   @override

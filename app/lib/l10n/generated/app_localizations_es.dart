@@ -2077,6 +2077,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mealScanUnlimited => 'Ilimitado';
 
   @override
+  String get mealScanNameLabel => 'Nombre de la comida';
+
+  @override
   String get mealScanAnalyzingStep1 => 'Analizando tu comida...';
 
   @override

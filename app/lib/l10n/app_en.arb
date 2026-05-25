@@ -776,6 +776,7 @@
   "mealScanChooseGallery": "Choose from gallery",
   "mealScanScansLeft": "{remaining}/{total} scans left today",
   "mealScanUnlimited": "Unlimited",
+  "mealScanNameLabel": "Meal name",
   "mealScanAnalyzingStep1": "Analyzing your meal...",
   "mealScanAnalyzingStep2": "Identifying foods...",
   "mealScanAnalyzingStep3": "Estimating portions...",
