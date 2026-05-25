@@ -1,178 +1,98 @@
-# Nuveli — Session Handoff (last updated 2026-05-24, ~13:30 TRT)
+# Nuveli — Session Handoff (last updated 2026-05-25, ~13:30 TRT)
 
-> **Bu doküman**: bir Claude Code oturumundan diğerine geçişi temiz tutar.
-> Yeni chat açıldığında okunur, "neredeyiz, sırada ne var" net olur.
->
-> **Devamlılık komutu (yeni chat):**
+> Bir Claude Code oturumundan diğerine geçişi temiz tutar. Yeni chat:
 > ```
-> Read docs/SESSION_HANDOFF.md and continue from "Sırada ne var" section.
+> Read docs/SESSION_HANDOFF.md and continue from "Google Play launch roadmap".
 > ```
 
 ---
 
-## Şu anda neredeyiz
+## Şu anda neredeyiz — v1.6.5+28, main
 
-> **GECE BATCH (2026-05-25, otonom) — v1.6.0+23 main'de:**
-> - **Full 7-dil UI i18n** + **Settings dil seçici** (v1.5.0+22). iOS sim'de Türkçe gözle doğrulandı.
-> - **AI insight artık kullanıcı diline göre** (backend prompt; `profiles.language` + PATCH /me; dil değişince Flutter PATCH'liyor).
-> - **Cron hataları Sentry'ye** gidiyor (`capture_exception`).
-> - **Recipe browser** (meal planner, empty-safe) + **bildirim-tap → tab navigasyonu** (minimal, go_router yok).
-> - i18n artıkları temizlendi. Release siyah-ekran fix'i (boş RC_APPLE_KEY guard).
-> - Testler: 503 flutter / 155 pytest / analyze temiz. Yeni APK: `app/build/app/outputs/flutter-apk/app-release.apk` (RC **test** key gömülü).
->
-> **⚠️ ELLE YAPILACAK (prod):** `020_profiles_language_column.sql` (== supabase `019_...`) **prod Supabase'e uygulanmalı** — yoksa insight İngilizce kalır (kod drift-safe, kırılmaz). Supabase Dashboard → SQL Editor.
-> **Pas geçilen (Ali dedi):** iOS Apple Developer ($99) + Paywall RC/Play ürün config (şu an RC Test Store key).
-> **Donanım bekleyen:** gerçek Android cihaz QA + FCM push real-device (kablo data taşımadı; APK Telegram'la kurulacak).
+**Odak: Android / Google Play. Apple ASKIDA** (enrollment $99 ertelendi; iOS kodu
+hazır tutuluyor ama yayınlanmayacak).
 
-## Şu anda neredeyiz
+Backend + infra prod-ready, app'in tüm sekmeleri cihazda (iOS sim) doğrulandı +
+çalışıyor. Bu oturumda (2026-05-25) main'e inen 3 PR:
 
-**Sprint A + canlı QA + Coach pipeline + Profile edit + mood-bubble hepsi shipped.** Backend & infrastructure prod-ready. UI tarafında F1/F2/F4 + profile edit + 11 kritik bug fix + lokal mood-bubble katmanı + app-wide i18n aktivasyonu main'de. Debug exc leak revert edildi (launch blocker kapalı). Meal Planner write side (F4 v0.1) shipped. v1.0.0+2 → v1.3.0+19.
+- **#140 Device-QA + AI localization** — profil-kartı overflow, Coach empty-state,
+  paywall/scan/dashboard i18n leak'leri, düzenlenebilir meal-name alanı, ve
+  **backend AI food-name localization** (scan'de yiyecek adları artık kullanıcı
+  dilinde — prod'a deploy edildi + `/scan` API ile doğrulandı: "Sebzeli pizza
+  dilimi").
+- **#141 Brand** — kod-çizimi gülümseyen su-damlası mark (`shared/widgets/smiling_drop.dart`,
+  welcome/auth-gate/onboarding/su-kartında tutarlı) + tasarlanmış "Nuveli" PNG
+  wordmark (`assets/icons/nuveli_wordmark.png`).
+- **#142 Play-readiness P1** — AuthGate profil-error artık onboarding'e DÜŞÜRMÜYOR
+  (retry ekranı); `SCHEDULE_EXACT_ALARM`/`USE_EXACT_ALARM` izinleri söküldü;
+  repo scratch temizliği (`flutter analyze lib/` temiz).
 
-> **Bu session (2026-05-24 PM) eklendi:** mood-bubble (#1) shipped + i18n aktive edildi (v1.2.0+17) ve debug exc leak revert edildi (#2, v1.2.1+18 — launch blocker kapandı). Bir sonraki öncelik artık #3 (Settings tab QA) / #4 (cihaz QA).
-
-### Önceki sesyonda shipped (2026-05-23 PM)
-
-```
-PR #129  feat(planner): meal planner v0 (F4)        squash-merged
-PR #128  feat(coach): AI Coach daily-insight (F2)   squash-merged
-PR #127  docs: session handoff Sprint A             squash-merged
-PR #124  feat(meal): AI meal scan UI (F1)           squash-merged
-```
-
-### Bu sesyonda (2026-05-23 → 2026-05-24, ~17 saat) shipped
-
-**Schema drift / production fixes:**
-- PR #130 `fix(auth)` — Supabase SMTP bypass (`POST /auth/signup` admin API auto-confirm). Mail SMTP rate-limit'i artık launch blocker değil.
-- RC iOS native fatal guard'ları (`Purchases.*` calls `_initialized` check)
-- Auth screens `popUntil(isFirst)` (AuthGate görünmüyordu)
-- Habits adapter (`title`/`display_order`/`schedule_type`/`days_of_week`/`habit_type` drift)
-- Habits enum normalize (`target_type='check'` not in Literal)
-- `insights_generation_service` habits.name → habits.id
-- Meals POST `notes` column drift strip
-- Weight goals `status='cancelled'` → `'abandoned'` (check constraint)
-- Coach `ai_insights.daily_recap` NOT NULL → dump payload as placeholder
-- Dashboard TodaySummary field names (`consumed_*` vs `calories_*`)
-- Water portion-picker freeze fix (TextField removed, 11 presets)
-
-**Yeni özellikler:**
-- Profile edit screen (PATCH /me, settings gear wire)
-- Coach pipeline cron (APScheduler 02:00 UTC daily) + FCM push backend
-- `services/fcm_service.py` (FCM v1 + token pruning)
-- `/me/device-tokens` POST + DELETE endpoints
-- Flutter `fcm_token_register.dart` glue (auth listener wire)
-- `docs/ops/cron.md` (Render Cron Service alternative + FCM env setup)
-
-**Render env eklendi (Ali, 2026-05-24 öğle):**
-- `FIREBASE_PROJECT_ID=nuveli`
-- `FIREBASE_SERVICE_ACCOUNT_JSON_B64=<3145 chars>`
-
-**Live state son log (Render, 2026-05-24 10:15 UTC):**
-```
-GET /me 200, /analytics/dashboard 200, /coach/today 200,
-/habits 200, /meals?date=... 200, /water/weekly 200,
-/weight/goal 200, /analytics/weekly 200, /me/onboarding 200
-```
-Tüm critical endpoint'ler artık 200.
-
-**Test counts**: 410 → 460 host tests passing. analyze: pre-existing 4 warning (main_integration_snippet noise).
-
-**Versions**: pubspec `1.0.0+2 → 1.1.0+15`. CHANGELOG `app/CHANGELOG.md` tüm bu sesyonun fix'lerini kategorize eder.
-
-### F2 Coach mimari notu
-
-Backend `/coach/today` insight-only (chat/TTS yok — sen istemedin, mood-bubble ayrı). Cron her gün 02:00 UTC GPT-4o ile fresh insight üretir. APScheduler in-process (Render free tier sleep'te miss edebilir → Render Cron Service alternatif kurulumu `docs/ops/cron.md`).
-
-FCM push backend HAZIR + Render env LIVE. **iOS Simulator FCM destek**lemez (APNS yok) → gerçek push test için iPhone gerek. Real device + Apple Developer enrollment ($99) gelince zero-code-change çalışır.
+**Testler:** 503 flutter / 155 pytest, analyze temiz.
+**Migration:** `user_profiles.language` prod Supabase'e UYGULANDI (2026-05-25).
+**Paywall:** APK'da hâlâ RC **TEST** key — Play Billing config bekliyor (aşağıda).
 
 ---
 
-## Sırada ne var (yeni sesyonda öncelik)
+## Google Play launch roadmap (kalan iş — audit 2026-05-25)
 
-### 1. ~~Lokal mood-bubble katmanı~~ ✅ SHIPPED 2026-05-24 (v1.2.0+17)
-- `lib/features/coach/mood/` — persona (gentle/funny/direct/calm) × situation (mealUnder/over/onTrack/waterLow/streakMilestone/firstMeal) copy bank, 7 dilde 24 satır.
-- Trigger'lar: meal save (post-save dashboard totals), water-low (>14:00 & <%50), streak milestone (3/7/14/.../365, de-duped).
-- Settings'te "Coach" persona picker (lokal, SharedPreferences, backend'e gitmez).
-- **Yan kazanım:** app-wide i18n aktive edildi — `MaterialApp` artık delegates + locale wire ediyor, `main()` `preloadLanguage()` çağırıyor. .arb anahtarları artık canlı; ama diğer ekranlar hâlâ hardcoded EN (tek tek migrate gerekir). Memory: `project_i18n_activated.md`.
-- +24 host test (460→484). analyze temiz (sadece pre-existing main_integration_snippet noise).
+### 🔴 P0 — Launch blocker
+1. **Monetization config** (SEN — dashboard işi, kod değil). Tam checklist:
+   `docs/ops/revenuecat-play-billing-setup.md`. Özet: RC entitlement `premium` +
+   offering (monthly+annual) + Play Console subscriptions (aktif) + RC↔Play
+   service account. `RC_GOOGLE_KEY` (`goog_…`) `app/.env.production`'a.
+2. **Signed AAB → Play Internal Testing.** `RC_GOOGLE_KEY` girilince
+   `flutter build appbundle --release --dart-define-from-file=.env.production`
+   (CLAUDE çalıştırır). Yükleme + tester ekleme SEN.
+3. **Gerçek Android cihaz QA** (SEN — donanım). AAB kur, tüm akış + FCM push
+   (sim APNS/Play Billing yapamaz).
 
-### 2. ~~Debug exception leak revert~~ ✅ SHIPPED 2026-05-24 (v1.2.1+18)
-- `backend/main.py` 500 handler artık `_debug_exc` field'ı dönmüyor. Full trace hâlâ server-side log'lanıyor.
-- Backend suite: 139 passed / 8 skipped. CHANGELOG'da Security entry.
+### 🟠 P1 — kalan (karar/infra)
+4. **Cron güvenilirliği.** APScheduler in-process (`APP_ENABLE_INTERNAL_CRON`),
+   Render free-tier 15dk sleep'te gece 02:00 insight'ı kaçar. Seçenek: Render
+   Cron Service (~$7/ay, `docs/ops/cron.md` Option B) ya da web'i keep-warm.
+5. **Render cold-start.** Free-tier ilk istek ~30-50s + bazen hata (analytics'te
+   görüldü). Launch güvenilirliği için paid instance ya da kabul.
+   - (P1 kod fix'leri #4 AuthGate / #5 exact-alarm / #13 cleanup ✅ #142'de bitti.)
 
-### 3. Settings tab QA (sen 3 kez sordun, hiç screenshot atmadın)
-- Senin "Settings çalışmıyor" iddian → ben investigator agent ile dosyayı audit ettim, gerçek bug bulunmadı
-- Sim'de Settings tab açıp screenshot atarsan diagnose ederim
-- Risk: Coach offline + meal save errors gibi UI'da bir şey olabilir, log lazım
+### 🟡 P2 — Store / legal (SEN — Play zorunlu)
+- Store listing: başlık, kısa/uzun açıklama (TR + diğer diller), screenshot,
+  feature graphic 1024×500, ikon.
+- **Privacy policy URL** (hosted) + **Data Safety formu** (kamera, hesap,
+  sağlık-benzeri veri).
+- Content rating anketi.
+- Hesap silme: in-app var (Ayarlar → delete account); Play web-URL de isteyebilir
+  — doğrula.
 
-### 4. Cihaz QA (real iPhone)
-- Sim ile yapamadığımız:
-  - FCM push real-end-to-end (APNS only on device)
-  - Camera shot for Meal Scan (sim no camera)
-  - Apple Sign In (sim limited)
-  - Performance / battery / animations real frame rate
-- iOS App Store submission gelince: Apple Developer enrollment ($99) → TestFlight build → real device QA
-
-### 5. Render Cron Service kurulumu (opsiyonel)
-- Şu an APScheduler in-process (`APP_ENABLE_INTERNAL_CRON=true` default)
-- Render free tier 15dk sleep → cron miss edebilir
-- Reliable trigger için: `docs/ops/cron.md` Option B (web UI'da Cron Job kurma, 5dk)
-
-### 6. F4 v0.1 — Meal Planner write side — ✅ ÇOĞU SHIPPED 2026-05-24 (v1.3.0+19)
-- ✅ Add-meal-to-plan sheet (custom entry → POST /meal-plans) — per-day "+" + empty-state CTA
-- ✅ Edit (name+note PATCH) + delete (confirm → DELETE). NOT: PATCH servings/kcal totals'ı recompute etmiyor → edit name+note only, kalori/porsiyon değişimi = sil+ekle.
-- ✅ AI generate dietary-preferences sheet (POST /meal-plans/generate) — "coming soon" snackbar değişti
-- ⏳ **Recipe browser ERTELENDİ** — prod `recipes` tablosu dolu mu doğrulanmadı (013 seed'de var ama prod state bilinmiyor). Custom entry core ihtiyacı karşılıyor. Recipe browser ileride: önce Supabase'de `recipes` count verify et.
-- +9 test (484→493). Repo contract (POST/PATCH/DELETE payload keys, mocktail) + add sheet validation.
-
-### 7. Açık issue'lar (memory'de mevcut)
-- Schema drift endemic (`project_schema_drift_endemic.md`) — yeni endpoint yazınca prod cols verify et
-- weight_goals onboarding insert race (duplicate idx_weight_goals_one_active) — geri planda warning, UX etkisiz, ileride fix
+### ⚪ P3 — temizlik/known
+- CI broken (main, pre-existing — `project_ci_broken.md`): fix ya da admin-merge.
+- weight_goals duplicate-active warning (kozmetik, UX etkisiz).
+- Kalan AI-output: coach tip metinleri prompt'ta zaten localize; scan ✅.
 
 ---
 
-## Memory state (önemli sesyon karşılaşmaları)
+## Mimari / kalıcı notlar
 
+- **Coach** = insight-only (`/coach/chat`, `/coach/audio` YOK; mood-bubble ayrı
+  lokal katman). Cron 02:00 UTC GPT-4o insight üretir.
+- **Schema drift endemic** — yeni endpoint yazınca `information_schema.columns`
+  ile prod kolon doğrula (pytest Supabase mock'lar, drift yakalamaz).
+- **i18n iki track**: UI string'leri `.arb` (template `app_tr.arb`); AI çıktısı
+  (yiyecek adı/insight) backend prompt + `_get_user_language` (drift-safe).
+- **Squash-merge** convention (`… (#NN)`). **Her fix sonrası version bump +
+  CHANGELOG.** **Co-Authored-By yok** (settings'te attribution kapalı).
+
+## Memory state
 | Memory | Özet |
 |---|---|
-| `user_ali.md` | Solo dev, Android-first launch, iOS paused |
-| `feedback_version_bump_per_fix.md` | **Her fix sonrası version bump + CHANGELOG + agent kullan** (bugün öğrendi) |
-| `feedback_squash_merge.md` | `... (#NN)` convention |
-| `feedback_no_bash_confirmation.md` | Komutu çalıştır, "should I" sorma |
-| `project_coach_backend_insight_only.md` | `/coach/chat` ve `/coach/audio` YOK; backend insight-only |
-| `project_mood_bubble_planned.md` | Lokal katman, OpenAI'siz, ayrı sesyon |
-| `project_schema_drift_endemic.md` | Prod migration ≠ repo migration; her zaman `information_schema` doğrula |
-| `project_launch_state_real.md` | "PR merged" ≠ "production ready"; cihaz QA olmadan asla "bitti" deme |
+| `user_ali.md` | Solo dev, Android-first, iOS paused |
+| `project_launch_state_real.md` | UI artık shipped+verified; "PR merged ≠ prod-ready", cihaz QA şart |
+| `project_i18n_activated.md` | i18n iki-track; scan AI-localize shipped+deployed+verified |
+| `project_lang_migration_pending.md` | DONE — `user_profiles.language` prod'da |
+| `project_schema_drift_endemic.md` | prod migration ≠ repo; her zaman doğrula |
+| `feedback_verify_on_device.md` | test-green ≠ done; cihazda gez |
+| `feedback_version_bump_per_fix.md` | her fix → version + CHANGELOG |
 
 ---
 
-## Yeni sesyon ilk komutu
-
-```
-Read docs/SESSION_HANDOFF.md and pick the next task from "Sırada ne var".
-Default to #1 (mood-bubble) unless I say otherwise.
-```
-
-Ya da spesifik:
-```
-docs/SESSION_HANDOFF.md'i oku. Mood-bubble katmanını uygula —
-persona × situation copy bank, no-OpenAI, anlık feedback hooks.
-```
-
----
-
-## Açık riskler
-
-1. **Schema drift hâlâ devam edebilir** — bu sesyonda 4 farklı tablo'da drift bulduk (habits, meals, weight_goals, ai_insights). Başka tablolarda da olabilir. **Her yeni endpoint için ilk `information_schema.columns` ile doğrula**, sonra kod yaz.
-
-2. **Debug exc leak hala live** — `backend/main.py` 500 handler `_debug_exc` field'ı production response'a koyuyor. Launch öncesi revert.
-
-3. **iOS not staged** — Apple enrollment $99 paused. iOS shipped olmayacak ama kod hazır. FCM push iOS sim'de test edilemiyor (APNS yok).
-
-4. **Cron miss riski** — APScheduler in-process Render free tier 15min sleep'inde miss edebilir. Eğer "kullanıcı her sabah insight görmeli" critical ise, Render Cron Service ($7/ay) gerek.
-
-5. **AuthGate `error → OnboardingScreen` fallback yanlış** — JWT expired olunca user onboarding step 1'de başlıyor. Doğrusu: hatayı surface et + retry / re-login butonu. Yeni sesyon küçük UX fix olabilir.
-
----
-
-**Hazırlandı:** 2026-05-24 (öğle, Coach pipeline live + Render env eklendi sonrası)
-**Bir sonraki güncelleme:** mood-bubble shipped olunca veya prod launch'tan önce
+**Hazırlandı:** 2026-05-25 (Play-readiness audit + P1 fix'ler sonrası).
+**Sonraki güncelleme:** Play Billing config bitince ya da AAB Internal Testing'e çıkınca.
