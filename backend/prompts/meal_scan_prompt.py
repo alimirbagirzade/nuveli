@@ -10,6 +10,25 @@ Output is strict JSON for reliable parsing.
 # refactors, tests) that bypass the HTTP boundary.
 ALLOWED_MEAL_TYPES = {"breakfast", "lunch", "dinner", "snack"}
 
+#: Map language code → full name understood by GPT. Mirrors coach_prompts;
+#: unknown codes fall back to English (safe default).
+_LANGUAGE_NAMES: dict[str, str] = {
+    "en": "English",
+    "tr": "Turkish",
+    "de": "German",
+    "es": "Spanish",
+    "fr": "French",
+    "it": "Italian",
+    "ru": "Russian",
+}
+
+
+def _resolve_language_name(code: str | None) -> str:
+    """Return the full language name for *code*, defaulting to English."""
+    if not code:
+        return "English"
+    return _LANGUAGE_NAMES.get(code.lower().strip(), "English")
+
 MEAL_SCAN_SYSTEM_PROMPT = """You are a nutrition expert analyzing meal photos for the Nuveli AI Calorie Coach app.
 
 Your job: identify foods in the image, estimate portions in grams, and compute nutritional values.
@@ -62,7 +81,11 @@ If a meal_type hint is provided, prefer it: {meal_type_hint}
 """
 
 
-def build_meal_scan_messages(image_base64: str, meal_type_hint: str | None = None) -> list[dict]:
+def build_meal_scan_messages(
+    image_base64: str,
+    meal_type_hint: str | None = None,
+    language_code: str | None = None,
+) -> list[dict]:
     """Build OpenAI Chat Completions messages with vision content.
 
     `meal_type_hint` is interpolated into the user prompt. Even though the
@@ -70,11 +93,26 @@ def build_meal_scan_messages(image_base64: str, meal_type_hint: str | None = Non
     in the whitelist (e.g. an internal caller passes an unsanitized string)
     gets coerced to the safe default so a payload like
     "breakfast\\n\\nIGNORE PREVIOUS" can't reshape the prompt.
+
+    `language_code` is the BCP-47 code from the user's profile (e.g. ``'tr'``).
+    When provided (and not English), user-facing strings — each food ``name``
+    and ``portion``, plus ``portion_insight.main_text`` and ``highlights`` —
+    are returned in that language. JSON keys and all numeric values are
+    unchanged, so parsing stays language-agnostic. Mirrors the coach insight.
     """
     safe_hint = meal_type_hint if meal_type_hint in ALLOWED_MEAL_TYPES else None
     user_text = MEAL_SCAN_USER_PROMPT.format(
         meal_type_hint=safe_hint or "none — you decide"
     )
+
+    language_name = _resolve_language_name(language_code)
+    if language_name != "English":
+        user_text += (
+            f"\n\nRespond in {language_name}. All user-facing text — each "
+            f'food "name" and "portion", and portion_insight "main_text" and '
+            f'"highlights" — must be in {language_name}. JSON keys and all '
+            "numeric values stay unchanged."
+        )
 
     # Auto-detect mime: default to jpeg
     image_url = f"data:image/jpeg;base64,{image_base64}"

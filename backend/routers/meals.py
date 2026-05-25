@@ -15,6 +15,7 @@ from models.meal import (
     MealScanRequest, MealScanResponse, TodaySummary,
 )
 from services.openai_vision_service import analyze_meal_image
+from services.insights_generation_service import _get_user_language
 
 logger = get_logger(__name__)
 router = APIRouter()
@@ -36,7 +37,12 @@ async def scan_meal(
     elsewhere; this cap is defense-in-depth against burst abuse.
     """
     logger.info(f"User {user_id} scanning meal (hint={body.meal_type_hint})")
-    return await analyze_meal_image(body.image_base64, body.meal_type_hint)
+    # Localize food names / portions / insight to the user's language
+    # (drift-safe; defaults to 'en' if the profiles.language column is absent).
+    language_code = await _get_user_language(user_id)
+    return await analyze_meal_image(
+        body.image_base64, body.meal_type_hint, language_code=language_code
+    )
 
 
 @router.post("", response_model=MealResponse, status_code=status.HTTP_201_CREATED,

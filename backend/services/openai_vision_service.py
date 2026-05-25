@@ -40,9 +40,14 @@ def _strip_json_fences(text: str) -> str:
 async def analyze_meal_image(
     image_base64: str,
     meal_type_hint: str | None = None,
+    language_code: str | None = None,
 ) -> MealScanResponse:
     """
     Send a meal image to GPT-4o Vision, parse JSON response, return MealScanResponse.
+
+    `language_code` (BCP-47 from the user's profile) localizes the user-facing
+    strings — food names, portions, and the portion insight — into the user's
+    language; JSON keys and numbers are unchanged.
 
     Raises:
         ExternalServiceError: OpenAI API failure.
@@ -50,7 +55,9 @@ async def analyze_meal_image(
     """
     settings = get_settings()
     client = _get_client()
-    messages = build_meal_scan_messages(image_base64, meal_type_hint)
+    messages = build_meal_scan_messages(
+        image_base64, meal_type_hint, language_code=language_code
+    )
 
     logger.info(f"Calling GPT-4o Vision (hint={meal_type_hint}, img_size={len(image_base64)})")
 
