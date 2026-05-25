@@ -216,6 +216,8 @@ async def grocery_summary(
                 ingredients = []
         servings = p.get("servings", 1) or 1
         for ing in ingredients:
+            if not isinstance(ing, dict):
+                continue  # skip malformed ingredient entries (drift-safe)
             name = ing.get("name", "").lower().strip()
             unit = ing.get("unit", "")
             amount = (ing.get("amount", 0) or 0) * servings

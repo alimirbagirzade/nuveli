@@ -2503,7 +2503,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get profileRec2Desc => 'Günlük TDEE\'ne ulaşmanın kolay yolu.';
 
   @override
-  String get profileRec3Title => '7–8 saat uy';
+  String get profileRec3Title => '7–8 saat uyu';
 
   @override
   String get profileRec3Desc => 'Daha iyi toparlanma, daha iyi açlık kontrolü.';

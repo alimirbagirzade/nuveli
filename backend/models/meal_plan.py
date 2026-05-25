@@ -1,7 +1,7 @@
 """
 Meal planner & recipe Pydantic models.
 """
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from datetime import datetime, date
 from typing import Optional, Literal
 from uuid import UUID
@@ -31,6 +31,28 @@ class RecipeCreate(BaseModel):
     instructions: Optional[list[str]] = None
     tags: Optional[list[str]] = None
     is_public: bool = False
+
+    @model_validator(mode="before")
+    @classmethod
+    def _adapt_db_drift(cls, data):
+        """Prod `recipes` stores the per-serving calories in a column named
+        `calories` (not `calories_per_serving`) — map it so DB rows validate
+        and the API keeps its `calories_per_serving` contract. Also drop
+        ingredient entries that aren't well-formed objects so one bad seed
+        row can't 500 the whole recipe list."""
+        if isinstance(data, dict):
+            if data.get("calories_per_serving") is None and "calories" in data:
+                data = {**data, "calories_per_serving": data.get("calories")}
+            ings = data.get("ingredients")
+            if isinstance(ings, list):
+                data = {
+                    **data,
+                    "ingredients": [
+                        i for i in ings
+                        if isinstance(i, dict) and i.get("name") is not None
+                    ],
+                }
+        return data
 
 
 class RecipeResponse(RecipeCreate):

@@ -4731,7 +4731,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileRec3Title.
   ///
   /// In tr, this message translates to:
-  /// **'7–8 saat uy'**
+  /// **'7–8 saat uyu'**
   String get profileRec3Title;
 
   /// No description provided for @profileRec3Desc.
