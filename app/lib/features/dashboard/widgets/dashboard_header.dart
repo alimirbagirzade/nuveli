@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 import '../../settings/settings_screen.dart';
 
 /// Top section of the Dashboard: date, greeting, and avatar.
@@ -23,10 +24,22 @@ class DashboardHeader extends ConsumerWidget {
   }
 
   ({String displayName, String initial}) _resolveIdentity(WidgetRef ref) {
+    // Prefer the profile name the user entered at onboarding (same source
+    // as the Profile tab greeting). The auth user's displayName is empty for
+    // email sign-ups, which used to fall back to the email local-part
+    // (e.g. "cfatihonal") even when the user had typed a name.
+    final profile = ref.watch(profileProvider).valueOrNull;
     final user = ref.watch(currentAuthUserProvider);
 
-    final fullName = user?.displayName;
-    final email = user?.email;
+    final profileName = profile?.fullName?.trim();
+    final authName = user?.displayName?.trim();
+    final fullName = (profileName != null && profileName.isNotEmpty)
+        ? profileName
+        : authName;
+    final profileEmail = profile?.email;
+    final email = (profileEmail != null && profileEmail.isNotEmpty)
+        ? profileEmail
+        : user?.email;
 
     String displayName;
     if (fullName != null && fullName.trim().isNotEmpty) {

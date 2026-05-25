@@ -146,40 +146,44 @@ class _CoachContent extends StatelessWidget {
             const SizedBox(height: 16),
           ],
         ],
-        SizedBox(
-          height: 50,
-          child: OutlinedButton.icon(
-            onPressed: isRegenerating ? null : onRegenerate,
-            icon: isRegenerating
-                ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation(AppColors.primary),
+        // Regenerate only makes sense once there's an insight to regenerate.
+        // Hiding it in the empty state stops a fresh user from spending their
+        // one free daily regenerate on a no-data result.
+        if (!isEmptyInsight)
+          SizedBox(
+            height: 50,
+            child: OutlinedButton.icon(
+              onPressed: isRegenerating ? null : onRegenerate,
+              icon: isRegenerating
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation(AppColors.primary),
+                      ),
+                    )
+                  : Icon(
+                      canRegenerate
+                          ? Icons.refresh_rounded
+                          : Icons.workspace_premium_rounded,
+                      color: Colors.white,
                     ),
-                  )
-                : Icon(
-                    canRegenerate
-                        ? Icons.refresh_rounded
-                        : Icons.workspace_premium_rounded,
-                    color: Colors.white,
-                  ),
-            label: Text(
-              regenLabel,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+              label: Text(
+                regenLabel,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
