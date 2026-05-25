@@ -672,6 +672,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeThisWeek => 'Bu Hafta';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 gün hedefte';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Henüz alışkanlık yok — varsayılanlar ilk girişte gelir.';
+
+  @override
   String get homeMiniGoalTitle => 'Bugünkü Mini Hedef';
 
   @override
@@ -2009,6 +2018,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Ne yedin?';
+
+  @override
+  String get homeMealNameHint => 'ör. meyveli yoğurt';
+
+  @override
+  String get homeCaloriesHint => 'ör. 180';
 
   @override
   String get homeCaloriesKcal => 'Kalori (kcal)';

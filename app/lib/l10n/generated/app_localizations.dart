@@ -1380,6 +1380,18 @@ abstract class AppLocalizations {
   /// **'Bu Hafta'**
   String get homeThisWeek;
 
+  /// Dashboard weekly card: days hitting target out of 7
+  ///
+  /// In tr, this message translates to:
+  /// **'{count}/7 gün hedefte'**
+  String homeDaysOnTarget(int count);
+
+  /// Habits section empty state
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz alışkanlık yok — varsayılanlar ilk girişte gelir.'**
+  String get habitsEmptyDefaults;
+
   /// No description provided for @homeMiniGoalTitle.
   ///
   /// In tr, this message translates to:
@@ -3851,6 +3863,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ne yedin?'**
   String get homeMealNameQuestion;
+
+  /// Manual add-meal sheet: meal name field placeholder
+  ///
+  /// In tr, this message translates to:
+  /// **'ör. meyveli yoğurt'**
+  String get homeMealNameHint;
+
+  /// Manual add-meal sheet: calories field placeholder
+  ///
+  /// In tr, this message translates to:
+  /// **'ör. 180'**
+  String get homeCaloriesHint;
 
   /// Home/dashboard: homeCaloriesKcal
   ///

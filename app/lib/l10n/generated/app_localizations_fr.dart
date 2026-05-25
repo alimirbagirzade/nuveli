@@ -682,6 +682,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get homeThisWeek => 'Cette semaine';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 jours dans l\'objectif';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Pas encore d\'habitudes — les valeurs par défaut apparaîtront à la première connexion.';
+
+  @override
   String get homeMiniGoalTitle => 'Mini objectif du jour';
 
   @override
@@ -2023,6 +2032,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Qu\'as-tu mangé ?';
+
+  @override
+  String get homeMealNameHint => 'ex. yaourt grec aux fruits rouges';
+
+  @override
+  String get homeCaloriesHint => 'ex. 180';
 
   @override
   String get homeCaloriesKcal => 'Calories (kcal)';

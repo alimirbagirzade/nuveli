@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../models/weekly_analytics.dart';
@@ -96,7 +97,7 @@ class WeeklyCalorieChart extends StatelessWidget {
                   (d) => Expanded(
                     child: Center(
                       child: Text(
-                        _weekdayLabel(d.day),
+                        _weekdayLabel(context, d.day),
                         style: TextStyle(
                           color: d.isToday
                               ? const Color(0xFF4DDBFF)
@@ -140,9 +141,11 @@ class WeeklyCalorieChart extends StatelessWidget {
     );
   }
 
-  static String _weekdayLabel(DateTime d) {
-    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return labels[(d.weekday - 1).clamp(0, 6)];
+  static String _weekdayLabel(BuildContext context, DateTime d) {
+    // Localized short weekday name (Mon/Pzt/Lun/…) for the active locale,
+    // mirroring water_weekly_chart instead of hardcoded English.
+    final locale = Localizations.localeOf(context).toString();
+    return DateFormat.E(locale).format(d);
   }
 }
 

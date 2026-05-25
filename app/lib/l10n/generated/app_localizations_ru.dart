@@ -677,6 +677,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeThisWeek => 'На этой неделе';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 дней в цели';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Пока нет привычек — стандартные появятся при первом входе.';
+
+  @override
   String get homeMiniGoalTitle => 'Мини-цель сегодня';
 
   @override
@@ -2016,6 +2025,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Что ты ел(а)?';
+
+  @override
+  String get homeMealNameHint => 'напр. греческий йогурт с ягодами';
+
+  @override
+  String get homeCaloriesHint => 'напр. 180';
 
   @override
   String get homeCaloriesKcal => 'Калории (ккал)';

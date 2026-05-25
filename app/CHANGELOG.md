@@ -1,5 +1,23 @@
 # Nuveli Changelog
 
+## [1.6.3+26] - 2026-05-25 - i18n sweep: dashboard, manual-add sheet, analytics chart
+
+### Fixes
+- **Dashboard / manual-add / analytics i18n leaks** found during live iOS-sim
+  QA. Migrated remaining hardcoded English to l10n (7 locales):
+  - Today's-meals rows: meal-type label ("Snack"/"Breakfast") → reuse
+    `mealType*` keys.
+  - Weekly water card: "N/7 days on target" → `homeDaysOnTarget`.
+  - Habits empty state: "No habits yet…" → `habitsEmptyDefaults`.
+  - Manual "Add Food" sheet: meal-type chips → `mealType*`; field
+    placeholders → `homeMealNameHint`, `homeCaloriesHint`.
+  - Analytics weekly chart: weekday labels (Mon/Tue…) now use
+    `DateFormat.E(locale)` instead of a hardcoded English list (mirrors the
+    water chart).
+
+Note: AI-generated content (scan food names, coach tips) is still English —
+that's a backend-prompt change tracked separately, not a `.arb` edit.
+
 ## [1.6.2+25] - 2026-05-25 - Editable meal name on scan result
 
 ### Features

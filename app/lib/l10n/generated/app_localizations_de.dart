@@ -678,6 +678,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeThisWeek => 'Diese Woche';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 Tage im Ziel';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Noch keine Gewohnheiten — Standards erscheinen beim ersten Login.';
+
+  @override
   String get homeMiniGoalTitle => 'Heutiges Mini-Ziel';
 
   @override
@@ -2015,6 +2024,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Was hast du gegessen?';
+
+  @override
+  String get homeMealNameHint => 'z.B. griechischer Joghurt mit Beeren';
+
+  @override
+  String get homeCaloriesHint => 'z.B. 180';
 
   @override
   String get homeCaloriesKcal => 'Kalorien (kcal)';
