@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../../../shared/widgets/smiling_drop.dart';
 
 /// Compact water tracker row on the dashboard.
 /// Shows glasses consumed / target and a "+250 ml" quick-add button.
@@ -132,11 +133,7 @@ class _WaterQuickCardState extends State<WaterQuickCard> {
                 ],
               ),
             ),
-            child: const Icon(
-              Icons.water_drop_outlined,
-              color: Color(0xFF4DDBFF),
-              size: 20,
-            ),
+            child: const SmilingDrop(size: 24),
           ),
           const SizedBox(width: 12),
           Expanded(

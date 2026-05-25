@@ -9,6 +9,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/nuveli_background.dart';
+import '../../../shared/widgets/smiling_drop.dart';
 import '../widgets/auth_link_text.dart';
 import '../widgets/auth_primary_button.dart';
 import 'login_screen.dart';
@@ -78,13 +79,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     position: _slide,
                     child: Column(
                       children: [
-                        _Logo(),
+                        const _Logo(),
                         const SizedBox(height: 24),
-                        Text(
-                          'Nuveli',
-                          style: AppTypography.heading48Bold.copyWith(
-                            color: Colors.white,
-                            letterSpacing: 1.0,
+                        // Brand wordmark — the designed glossy water "Nuveli"
+                        // lockup (assets/icons/nuveli_wordmark.png). Rounded
+                        // corners soften the asset's own deep-blue panel against
+                        // the welcome background.
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: Image.asset(
+                            'assets/icons/nuveli_wordmark.png',
+                            width: 248,
+                            fit: BoxFit.contain,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -135,11 +141,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 }
 
 // ============================================================================
-// LOGO — brand mark (assets/icons/splash_logo.png) inside a glow halo.
-// Falls back to a water-drop glyph if the asset can't load.
+// LOGO — a cute, smiling water-drop brand mark inside a glow halo.
+// Drawn in code (CustomPaint) so it stays crisp at any size and needs no
+// raster asset. Replaces the old splash_logo.png box render.
 // ============================================================================
 
 class _Logo extends StatelessWidget {
+  const _Logo();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -161,18 +170,9 @@ class _Logo extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(
-        child: Image.asset(
-          'assets/icons/splash_logo.png',
-          width: 56,
-          height: 56,
-          errorBuilder: (_, __, ___) => const Icon(
-            Icons.water_drop_outlined,
-            size: 48,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      child: const Center(child: SmilingDrop(size: 58)),
     );
   }
 }
+
+// (Smiling-drop mark now lives in shared/widgets/smiling_drop.dart)
