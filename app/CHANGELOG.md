@@ -1,5 +1,18 @@
 # Nuveli Changelog
 
+## [1.6.4+27] - 2026-05-25 - Brand refresh: smiling water-drop mark + Nuveli wordmark
+
+### Features
+- **Smiling water-drop brand mark** — a cute, elegant teardrop with kawaii
+  eyes drawn in code (`SmilingDrop`, `shared/widgets/smiling_drop.dart`), so it
+  scales crisply with no raster asset. Now used consistently everywhere a water
+  drop appears: welcome screen, auth-gate loading, onboarding water target, and
+  the dashboard water card (replacing the old `Icons.water_drop_outlined`).
+- **Nuveli wordmark** — the designed glossy water lockup
+  (`assets/icons/nuveli_wordmark.png`) replaces the plain text title on the
+  welcome screen.
+- Removed the unused Inter/Montserrat font scaffolding from pubspec.
+
 ## [1.6.3+26] - 2026-05-25 - i18n sweep: dashboard, manual-add sheet, analytics chart
 
 ### Fixes

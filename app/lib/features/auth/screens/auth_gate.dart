@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/nuveli_background.dart';
+import '../../../shared/widgets/smiling_drop.dart';
 import '../../main/main_shell_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/current_user_provider.dart';
@@ -91,11 +92,7 @@ class _SplashScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: const Icon(
-                  Icons.water_drop_outlined,
-                  size: 40,
-                  color: Colors.white,
-                ),
+                child: const SmilingDrop(size: 44),
               ),
               const SizedBox(height: 24),
               const SizedBox(
