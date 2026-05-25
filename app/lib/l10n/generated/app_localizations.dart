@@ -5388,6 +5388,36 @@ abstract class AppLocalizations {
   /// **'Hedef ağırlık'**
   String get onboardingTargetWeight;
 
+  /// Onboarding: target date label
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedef tarihi'**
+  String get onboardingTargetDateLabel;
+
+  /// Onboarding: pick date button
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih seç'**
+  String get onboardingTargetDatePick;
+
+  /// Onboarding: healthy pace note
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlıklı, sürdürülebilir bir tempo 👍'**
+  String get onboardingPaceHealthy;
+
+  /// Onboarding: too-fast pace gentle warning
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu tempo biraz hızlı. Daha kalıcı bir sonuç için ~{weeks} haftalık bir hedef öneririz.'**
+  String onboardingPaceAggressive(int weeks);
+
+  /// Onboarding: apply suggested date button
+  ///
+  /// In tr, this message translates to:
+  /// **'Önerilen tarihi kullan'**
+  String get onboardingPaceUseSuggested;
+
   /// onboardingToLose
   ///
   /// In tr, this message translates to:

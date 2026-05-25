@@ -2864,6 +2864,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get onboardingTargetWeight => 'Hedef ağırlık';
 
   @override
+  String get onboardingTargetDateLabel => 'Hedef tarihi';
+
+  @override
+  String get onboardingTargetDatePick => 'Tarih seç';
+
+  @override
+  String get onboardingPaceHealthy => 'Sağlıklı, sürdürülebilir bir tempo 👍';
+
+  @override
+  String onboardingPaceAggressive(int weeks) {
+    return 'Bu tempo biraz hızlı. Daha kalıcı bir sonuç için ~$weeks haftalık bir hedef öneririz.';
+  }
+
+  @override
+  String get onboardingPaceUseSuggested => 'Önerilen tarihi kullan';
+
+  @override
   String get onboardingToLose => 'vermek';
 
   @override
