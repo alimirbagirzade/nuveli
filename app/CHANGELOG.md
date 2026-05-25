@@ -1,5 +1,18 @@
 # Nuveli Changelog
 
+## [1.6.8+31] - 2026-05-25 - Fix launch crash (LateInitializationError)
+
+### Fixes
+- **Crash on launch — `LateInitializationError: Field '_authService' has
+  already been initialized`** (reported by an Android tester on the welcome
+  screen). `AuthNotifier` assigned its `late final` services inside `build()`,
+  but an `AsyncNotifier`'s `build()` can re-run on the same instance (a
+  dependency change or invalidation) — the second run re-assigned the
+  `late final`s and threw. Moved the three services to lazy
+  `late final … = ref.read(…)` field initializers (resolved once, immune to
+  build re-runs) and cancel the auth-state subscription before re-subscribing
+  so a rebuild can't leak a second listener.
+
 ## [1.6.7+30] - 2026-05-25 - Safe-pace onboarding guard + balanced-nutrition coaching
 
 ### Features (from tester feedback)
