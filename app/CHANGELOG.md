@@ -1,5 +1,20 @@
 # Nuveli Changelog
 
+## [1.6.7+30] - 2026-05-25 - Safe-pace onboarding guard + balanced-nutrition coaching
+
+### Features (from tester feedback)
+- **Onboarding safe-pace guard.** Step 4 (lose/gain goals) now asks a target
+  date and gently flags an over-aggressive timeframe — lose > ~1 kg/week,
+  gain > ~0.5 kg/week — offering a more sustainable date with one tap. Framed
+  as general wellness guidance, never a clinical prescription
+  (`docs/protocols/safety-wellness-boundary.md`). New pure `WeightPace` util
+  (`core/utils/weight_pace.dart`, 8 unit tests). New l10n keys (7 locales).
+- **Balanced-nutrition coaching.** The AI coach insight now detects a
+  consistent macro skew (e.g. carb-heavy / low-protein week) and suggests
+  concrete, accessible whole foods (a vegetable/fruit serving, a lean
+  protein) — gentle balance guidance toward the user's goal, not a diet plan.
+  Backend prompt (`coach_prompts.py`) — takes effect on Render deploy.
+
 ## [1.6.6+29] - 2026-05-25 - First Android tester round: weight-goal save, greeting name, coach empty
 
 ### Fixes

@@ -2874,6 +2874,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get onboardingTargetWeight => 'Целевой вес';
 
   @override
+  String get onboardingTargetDateLabel => 'Целевая дата';
+
+  @override
+  String get onboardingTargetDatePick => 'Выбрать дату';
+
+  @override
+  String get onboardingPaceHealthy => 'Здоровый, устойчивый темп 👍';
+
+  @override
+  String onboardingPaceAggressive(int weeks) {
+    return 'Это быстрый темп. Для более стойкого результата советуем около $weeks недель.';
+  }
+
+  @override
+  String get onboardingPaceUseSuggested => 'Использовать предложенную дату';
+
+  @override
   String get onboardingToLose => 'сбросить';
 
   @override

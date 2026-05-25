@@ -1882,6 +1882,19 @@
   "@onboardingTargetWeight": {
     "description": "onboardingTargetWeight"
   },
+  "onboardingTargetDateLabel": "Hedef tarihi",
+  "@onboardingTargetDateLabel": { "description": "Onboarding: target date label" },
+  "onboardingTargetDatePick": "Tarih seç",
+  "@onboardingTargetDatePick": { "description": "Onboarding: pick date button" },
+  "onboardingPaceHealthy": "Sağlıklı, sürdürülebilir bir tempo 👍",
+  "@onboardingPaceHealthy": { "description": "Onboarding: healthy pace note" },
+  "onboardingPaceAggressive": "Bu tempo biraz hızlı. Daha kalıcı bir sonuç için ~{weeks} haftalık bir hedef öneririz.",
+  "@onboardingPaceAggressive": {
+    "description": "Onboarding: too-fast pace gentle warning",
+    "placeholders": { "weeks": { "type": "int" } }
+  },
+  "onboardingPaceUseSuggested": "Önerilen tarihi kullan",
+  "@onboardingPaceUseSuggested": { "description": "Onboarding: apply suggested date button" },
   "onboardingToLose": "vermek",
   "@onboardingToLose": {
     "description": "onboardingToLose"

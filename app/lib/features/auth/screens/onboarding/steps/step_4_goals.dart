@@ -5,9 +5,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_typography.dart';
+import '../../../../../core/utils/weight_pace.dart';
 import '../../../../../l10n/generated/app_localizations.dart';
 import '../../../models/onboarding_data.dart';
 import '../../../providers/onboarding_provider.dart';
@@ -23,12 +25,14 @@ class Step4Goals extends ConsumerStatefulWidget {
 
 class _Step4State extends ConsumerState<Step4Goals> {
   double? _targetWeight;
+  DateTime? _targetDate;
 
   @override
   void initState() {
     super.initState();
     final data = ref.read(onboardingDataProvider);
     _targetWeight = data.targetWeightKg ?? data.currentWeightKg;
+    _targetDate = data.targetDate;
   }
 
   void _continue() {
@@ -45,9 +49,10 @@ class _Step4State extends ConsumerState<Step4Goals> {
     final needsTarget = data.goalType == GoalType.loseWeight ||
         data.goalType == GoalType.gainWeight;
     if (needsTarget && _targetWeight != null) {
-      ref
-          .read(onboardingDataProvider.notifier)
-          .update(targetWeightKg: _targetWeight);
+      ref.read(onboardingDataProvider.notifier).update(
+            targetWeightKg: _targetWeight,
+            targetDate: _targetDate,
+          );
     }
     widget.onNext();
   }
@@ -143,6 +148,15 @@ class _Step4State extends ConsumerState<Step4Goals> {
                     targetWeightLabel: l10n?.onboardingTargetWeight ?? 'Target weight',
                     toLoseLabel: l10n?.onboardingToLose ?? 'to lose',
                     toGainLabel: l10n?.onboardingToGain ?? 'to gain',
+                  ),
+                  const SizedBox(height: 12),
+                  _GoalTimeline(
+                    startKg: data.currentWeightKg ?? 70,
+                    targetKg: _targetWeight ?? data.currentWeightKg ?? 70,
+                    direction:
+                        data.goalType == GoalType.loseWeight ? 'lose' : 'gain',
+                    date: _targetDate,
+                    onDate: (d) => setState(() => _targetDate = d),
                   ),
                 ],
               ],
@@ -300,6 +314,175 @@ class _GoalCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// GOAL TIMELINE — target date picker + gentle safe-pace guidance
+// ============================================================================
+
+class _GoalTimeline extends StatelessWidget {
+  const _GoalTimeline({
+    required this.startKg,
+    required this.targetKg,
+    required this.direction,
+    required this.date,
+    required this.onDate,
+  });
+
+  final double startKg;
+  final double targetKg;
+  final String direction; // 'lose' | 'gain'
+  final DateTime? date;
+  final ValueChanged<DateTime> onDate;
+
+  Future<void> _pick(BuildContext context) async {
+    final now = DateTime.now();
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: date ?? now.add(const Duration(days: 56)),
+      firstDate: now.add(const Duration(days: 7)),
+      lastDate: now.add(const Duration(days: 730)),
+    );
+    if (picked != null) onDate(picked);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final pace = WeightPace.evaluate(
+      startKg: startKg,
+      targetKg: targetKg,
+      direction: direction,
+      targetDate: date,
+    );
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF142346).withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n?.onboardingTargetDateLabel ?? 'Target date',
+            style: AppTypography.body14.copyWith(
+              color: AppColors.secondaryText,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () => _pick(context),
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF0B1A3D).withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.calendar_today_outlined,
+                      size: 18, color: AppColors.primaryCyan),
+                  const SizedBox(width: 10),
+                  Text(
+                    date != null
+                        ? DateFormat.yMMMMd(locale).format(date!)
+                        : (l10n?.onboardingTargetDatePick ?? 'Pick a date'),
+                    style: AppTypography.body16.copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (pace != null && pace.verdict != PaceVerdict.none) ...[
+            const SizedBox(height: 12),
+            _PaceNote(
+              pace: pace,
+              onUseSuggested: () => onDate(pace.suggestedDate()),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _PaceNote extends StatelessWidget {
+  const _PaceNote({required this.pace, required this.onUseSuggested});
+  final WeightPace pace;
+  final VoidCallback onUseSuggested;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final aggressive = pace.verdict == PaceVerdict.aggressive;
+    final color = aggressive ? AppColors.warning : AppColors.success;
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                aggressive
+                    ? Icons.info_outline
+                    : Icons.check_circle_outline,
+                size: 16,
+                color: color,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  aggressive
+                      ? (l10n?.onboardingPaceAggressive(pace.suggestedWeeks) ??
+                          "That's a fast pace. We'd suggest about "
+                              "${pace.suggestedWeeks} weeks.")
+                      : (l10n?.onboardingPaceHealthy ??
+                          'A healthy, sustainable pace'),
+                  style: AppTypography.caption12
+                      .copyWith(color: Colors.white, height: 1.4),
+                ),
+              ),
+            ],
+          ),
+          if (aggressive) ...[
+            const SizedBox(height: 6),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: onUseSuggested,
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  minimumSize: const Size(0, 32),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Text(
+                  l10n?.onboardingPaceUseSuggested ?? 'Use suggested date',
+                  style: AppTypography.caption12.copyWith(
+                    color: AppColors.primaryCyan,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

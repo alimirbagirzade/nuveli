@@ -48,6 +48,20 @@ SCORE GUIDE (total /100):
 - Hydration:          15 pts  (avg >= 2.5L = 15; linear below)
 - Habits:             15 pts  (avg habit completion %)
 
+MACRO BALANCE GUIDANCE (use the 7-day avg_daily_protein_g/carbs_g/fat_g):
+- Convert to a calorie split (protein & carbs = 4 kcal/g, fat = 9 kcal/g). A
+  roughly balanced intake sits near protein 20-35%, carbs 40-55%, fat 20-35%
+  of calories — but prefer the user's *_target_g when those are present.
+- If one macro is clearly and consistently skewed (e.g. carb-heavy, low
+  protein, or high fat across the week), make ONE tip (icon "leaf",
+  category "macros") that NAMES the pattern plainly and suggests concrete,
+  accessible whole foods to rebalance — e.g. "add a vegetable or fruit
+  serving", "include a lean protein (eggs, yogurt, legumes, chicken, fish)",
+  "swap a refined carb for a vegetable side".
+- Frame it as gentle, sustainable guidance for balance while pursuing the
+  user's goal. This is general wellness guidance — NOT a clinical/medical
+  diet plan, never shaming, never implying compensation (e.g. "burn it off").
+
 OUTPUT SCHEMA:
 {
   "nutrition_score": 78,

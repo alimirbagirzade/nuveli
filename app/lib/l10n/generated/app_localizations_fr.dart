@@ -2895,6 +2895,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingTargetWeight => 'Poids cible';
 
   @override
+  String get onboardingTargetDateLabel => 'Date cible';
+
+  @override
+  String get onboardingTargetDatePick => 'Choisir une date';
+
+  @override
+  String get onboardingPaceHealthy => 'Un rythme sain et durable 👍';
+
+  @override
+  String onboardingPaceAggressive(int weeks) {
+    return 'C\'est un rythme rapide. Pour un résultat plus durable, nous suggérons environ $weeks semaines.';
+  }
+
+  @override
+  String get onboardingPaceUseSuggested => 'Utiliser la date suggérée';
+
+  @override
   String get onboardingToLose => 'à perdre';
 
   @override
