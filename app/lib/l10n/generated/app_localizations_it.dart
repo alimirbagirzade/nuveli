@@ -3389,4 +3389,37 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get exerciseWeekCaloriesNote =>
       'Energia stimata usata questa settimana';
+
+  @override
+  String get exerciseSourceHealth => 'Dall\'app salute';
+
+  @override
+  String get settingsHealthSection => 'Salute';
+
+  @override
+  String get settingsHealthConnect => 'Collega i dati di salute del telefono';
+
+  @override
+  String get settingsHealthConnectDesc =>
+      'Importa gli allenamenti recenti dall\'app salute del tuo telefono nel registro attività. Facoltativo e in sola lettura.';
+
+  @override
+  String get settingsHealthSyncNow => 'Sincronizza ora';
+
+  @override
+  String settingsHealthImported(int count) {
+    return '$count attività importate';
+  }
+
+  @override
+  String get settingsHealthUnavailable =>
+      'Health Connect non è disponibile su questo dispositivo.';
+
+  @override
+  String get settingsHealthDenied =>
+      'Autorizzazione negata. Puoi attivarla quando vuoi.';
+
+  @override
+  String get settingsHealthError =>
+      'Impossibile sincronizzare i dati di salute. Riprova.';
 }

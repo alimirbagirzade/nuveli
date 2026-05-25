@@ -1,5 +1,34 @@
 # Nuveli Changelog
 
+## [1.8.0+34] - 2026-05-26 - Phone health-data import (Health Connect, Android-first)
+
+### Added
+- **Opt-in phone health-data import.** A new "Connect phone health data"
+  switch in Settings → Health lets users pull their recent workouts from the
+  phone's health store into the Nuveli activity log. Turning it on requests
+  read permission and imports the last 14 days; a "Sync now" action re-runs it
+  on demand. The switch persists locally (SharedPreferences) and is the single
+  gate for any health-store access — nothing reads health data unless the user
+  turns it on.
+- **Android-first via Google Health Connect.** READ-only access to workouts
+  (`READ_EXERCISE`), active energy (`READ_ACTIVE_CALORIES_BURNED`), and steps
+  (`READ_STEPS`). `minSdk` raised to 26 (Health Connect requirement);
+  `MainActivity` now extends `FlutterFragmentActivity` for the permission flow.
+- **iOS HealthKit code-aligned but gated.** The import path and Apple Health
+  usage string exist, but iOS is paused: the HealthKit entitlement is
+  intentionally NOT added, so authorization simply no-ops on iOS for now. The
+  toggle stays behind the same opt-in path; nothing auto-triggers.
+- **Deduped + source-tagged.** Imports go through `POST /exercise/import`,
+  deduped by `(source, external_id)` on the backend, so re-syncing never
+  creates duplicates. Imported entries are tagged `health_connect` /
+  `apple_health` and show a small phone glyph in the activity list; manual
+  entries are unchanged.
+
+### Wellness boundary
+- Imported device calories are **display-only** — carried purely so the
+  existing neutral "≈N kcal" badge can show them. They are NEVER added to the
+  calorie budget/target and never framed as "earned" or "eat-back" energy.
+
 ## [1.7.0+33] - 2026-05-25 - Exercise logging (positive activity, wellness-safe)
 
 ### Added

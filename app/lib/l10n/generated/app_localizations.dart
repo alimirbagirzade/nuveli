@@ -6323,6 +6323,60 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bu hafta tahmini harcanan enerji'**
   String get exerciseWeekCaloriesNote;
+
+  /// No description provided for @exerciseSourceHealth.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlık uygulamasından'**
+  String get exerciseSourceHealth;
+
+  /// No description provided for @settingsHealthSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlık'**
+  String get settingsHealthSection;
+
+  /// No description provided for @settingsHealthConnect.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefon sağlık verisini bağla'**
+  String get settingsHealthConnect;
+
+  /// No description provided for @settingsHealthConnectDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefonunun sağlık uygulamasındaki son antrenmanları aktivite günlüğüne aktar. İsteğe bağlı ve yalnızca okuma.'**
+  String get settingsHealthConnectDesc;
+
+  /// No description provided for @settingsHealthSyncNow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi senkronize et'**
+  String get settingsHealthSyncNow;
+
+  /// No description provided for @settingsHealthImported.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} aktivite içe aktarıldı'**
+  String settingsHealthImported(int count);
+
+  /// No description provided for @settingsHealthUnavailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu cihazda Health Connect kullanılamıyor.'**
+  String get settingsHealthUnavailable;
+
+  /// No description provided for @settingsHealthDenied.
+  ///
+  /// In tr, this message translates to:
+  /// **'İzin verilmedi. İstediğin zaman açabilirsin.'**
+  String get settingsHealthDenied;
+
+  /// No description provided for @settingsHealthError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağlık verisi senkronize edilemedi. Tekrar dene.'**
+  String get settingsHealthError;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../features/exercise/models/exercise_import_item.dart';
 import '../../../features/exercise/models/exercise_log.dart';
 import '../../../features/exercise/models/exercise_summary.dart';
 import '../../network/api_client.dart';
@@ -61,6 +62,27 @@ class ExerciseRepository extends BaseRepository {
   /// `DELETE /exercise/logs/{id}` → 204.
   Future<void> deleteLog(String id) {
     return apiClient.delete(ApiEndpoints.exerciseLogById(id));
+  }
+
+  /// Bulk-import device-sourced activities (Health Connect / Apple Health).
+  /// `POST /exercise/import` body `{ "items": [...] }` → `{imported, skipped}`.
+  /// The backend dedupes on `(source, external_id)`, so resending the same
+  /// window is safe. An empty list short-circuits without a round-trip.
+  ///
+  /// Wellness boundary: any `device_calories` carried here is display-only —
+  /// the backend never folds it into the calorie budget.
+  Future<ExerciseImportResult> importLogs(
+      List<ExerciseImportItem> items) async {
+    if (items.isEmpty) {
+      return const ExerciseImportResult(imported: 0, skipped: 0);
+    }
+    final response = await apiClient.post<Map<String, dynamic>>(
+      ApiEndpoints.exerciseImport,
+      data: {
+        'items': items.map((i) => i.toJson()).toList(growable: false),
+      },
+    );
+    return ExerciseImportResult.fromJson(response);
   }
 
   // ---------------------------------------------------------------

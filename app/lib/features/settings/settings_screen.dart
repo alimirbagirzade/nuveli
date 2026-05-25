@@ -9,6 +9,8 @@ import '../../l10n/generated/app_localizations.dart';
 import '../auth/providers/auth_provider.dart';
 import '../coach/mood/models/coach_persona.dart';
 import '../coach/mood/providers/coach_persona_provider.dart';
+import '../exercise/providers/health_import_provider.dart';
+import '../exercise/services/health_service.dart';
 import 'providers/account_delete_provider.dart';
 import 'providers/data_export_provider.dart';
 
@@ -46,6 +48,10 @@ class SettingsScreen extends ConsumerWidget {
             _Section(
               title: l10n?.settingsLanguage ?? 'Language',
               child: const _LanguageTile(),
+            ),
+            _Section(
+              title: l10n?.settingsHealthSection ?? 'Health',
+              child: const _HealthImportTile(),
             ),
             _Section(
               title: l10n?.settingsYourData ?? 'Your data',
@@ -99,6 +105,142 @@ class _Section extends StatelessWidget {
           ),
           child: child,
         ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Phone health-data import (opt-in). Turning it on requests Health Connect /
+// HealthKit permission and imports the last 14 days of workouts. Imported
+// device calories are display-only — never added to the calorie budget.
+// On denial / unavailable the switch flips back off with an explanation.
+// iOS is paused (no HealthKit entitlement), so the toggle no-ops there.
+// ---------------------------------------------------------------------------
+class _HealthImportTile extends ConsumerStatefulWidget {
+  const _HealthImportTile();
+
+  @override
+  ConsumerState<_HealthImportTile> createState() => _HealthImportTileState();
+}
+
+class _HealthImportTileState extends ConsumerState<_HealthImportTile> {
+  bool _busy = false;
+
+  Future<void> _onToggle(bool wantOn) async {
+    if (_busy) return;
+    final l10n = AppLocalizations.of(context);
+
+    if (!wantOn) {
+      await ref.read(healthImportEnabledProvider.notifier).setEnabled(false);
+      return;
+    }
+
+    // Turning on: persist optimistically, then request + sync. Revert if the
+    // user/OS denies or the platform is unavailable.
+    setState(() => _busy = true);
+    await ref.read(healthImportEnabledProvider.notifier).setEnabled(true);
+
+    final outcome = await ref.read(healthSyncProvider)(days: 14);
+    if (!mounted) return;
+    setState(() => _busy = false);
+
+    if (outcome.isOk) {
+      _snack(l10n?.settingsHealthImported(outcome.imported) ??
+          '${outcome.imported} activities imported');
+    } else {
+      // Failed to connect — flip back off and explain.
+      await ref.read(healthImportEnabledProvider.notifier).setEnabled(false);
+      if (!mounted) return;
+      _snack(_explain(l10n, outcome.status), isError: true);
+    }
+  }
+
+  Future<void> _syncNow() async {
+    if (_busy) return;
+    final l10n = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    final outcome = await ref.read(healthSyncProvider)(days: 14);
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (outcome.isOk) {
+      _snack(l10n?.settingsHealthImported(outcome.imported) ??
+          '${outcome.imported} activities imported');
+    } else {
+      _snack(_explain(l10n, outcome.status), isError: true);
+    }
+  }
+
+  String _explain(AppLocalizations? l10n, HealthStatus status) {
+    switch (status) {
+      case HealthStatus.unavailable:
+        return l10n?.settingsHealthUnavailable ??
+            'Health Connect isn\'t available on this device.';
+      case HealthStatus.permissionDenied:
+        return l10n?.settingsHealthDenied ??
+            'Permission was declined. You can enable it anytime.';
+      case HealthStatus.error:
+      case HealthStatus.ok:
+        return l10n?.settingsHealthError ??
+            'Could not sync health data. Try again.';
+    }
+  }
+
+  void _snack(String msg, {bool isError = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: isError ? const Color(0xFFFF6B6B) : null,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final enabled = ref.watch(healthImportEnabledProvider);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SwitchListTile(
+          // Flutter 3.31+: activeColor deprecated → use activeThumbColor.
+          activeThumbColor: AppColors.primaryCyan,
+          secondary: const Icon(Icons.favorite_outline,
+              color: AppColors.primaryCyan),
+          title: Text(
+            l10n?.settingsHealthConnect ?? 'Connect phone health data',
+            style: const TextStyle(color: Colors.white),
+          ),
+          subtitle: Text(
+            l10n?.settingsHealthConnectDesc ??
+                'Import recent workouts from your phone\'s health app into your '
+                    'activity log. Optional and read-only.',
+            style: const TextStyle(color: Color(0xFF8FA0B8), fontSize: 12),
+          ),
+          value: enabled,
+          onChanged: _busy ? null : _onToggle,
+        ),
+        if (enabled)
+          ListTile(
+            enabled: !_busy,
+            leading: const Icon(Icons.sync_rounded, color: Color(0xFF8FA0B8)),
+            title: Text(
+              l10n?.settingsHealthSyncNow ?? 'Sync now',
+              style: const TextStyle(color: Colors.white),
+            ),
+            trailing: _busy
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor:
+                          AlwaysStoppedAnimation(AppColors.primaryCyan),
+                    ),
+                  )
+                : const Icon(Icons.chevron_right, color: Color(0xFF8FA0B8)),
+            onTap: _busy ? null : _syncNow,
+          ),
       ],
     );
   }

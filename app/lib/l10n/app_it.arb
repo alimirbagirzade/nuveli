@@ -1359,5 +1359,14 @@
   "exerciseDeleteFailed": "Impossibile rimuovere l'attività. Riprova.",
   "exerciseThisWeek": "Questa settimana",
   "exerciseWeekTotalMinutes": "{minutes} min in totale",
-  "exerciseWeekCaloriesNote": "Energia stimata usata questa settimana"
+  "exerciseWeekCaloriesNote": "Energia stimata usata questa settimana",
+  "exerciseSourceHealth": "Dall'app salute",
+  "settingsHealthSection": "Salute",
+  "settingsHealthConnect": "Collega i dati di salute del telefono",
+  "settingsHealthConnectDesc": "Importa gli allenamenti recenti dall'app salute del tuo telefono nel registro attività. Facoltativo e in sola lettura.",
+  "settingsHealthSyncNow": "Sincronizza ora",
+  "settingsHealthImported": "{count} attività importate",
+  "settingsHealthUnavailable": "Health Connect non è disponibile su questo dispositivo.",
+  "settingsHealthDenied": "Autorizzazione negata. Puoi attivarla quando vuoi.",
+  "settingsHealthError": "Impossibile sincronizzare i dati di salute. Riprova."
 }

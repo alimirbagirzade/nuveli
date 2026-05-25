@@ -22,11 +22,34 @@ from models.exercise import (
     ExerciseTodaySummary,
     ExerciseDayTotal,
     ExerciseWeeklyResponse,
+    ExerciseImportRequest,
+    ExerciseImportResult,
 )
 from services.exercise_calories import estimate_calories
 
 logger = get_logger(__name__)
 router = APIRouter()
+
+
+def _row_est_calories(row: dict, weight_kg: Optional[float]) -> Optional[int]:
+    """DISPLAY-ONLY calories for one log row: prefer the health platform's own
+    figure (device_calories) when present, else fall back to the MET estimate.
+
+    Returns None when neither is available (e.g. a manual log with no weight on
+    file). The value is for the UI badge only — it NEVER feeds a calorie budget.
+    """
+    device = row.get("device_calories")
+    if device is not None:
+        try:
+            return int(device)
+        except (TypeError, ValueError):
+            pass  # malformed device value → fall through to the MET estimate
+    return estimate_calories(
+        activity_type=row.get("activity_type"),
+        duration_min=row.get("duration_min"),
+        intensity=row.get("intensity"),
+        weight_kg=weight_kg,
+    )
 
 
 def _get_user_weight_kg(supabase, user_id: str) -> Optional[float]:
@@ -109,16 +132,83 @@ async def create_exercise_log(
         raise ValidationError("Failed to log exercise")
 
     row = res.data[0]
-    # DISPLAY-ONLY estimate echoed on the created log. est_calories is None when
-    # weight is unknown. It is NOT stored (no column) and never touches a budget.
+    # DISPLAY-ONLY estimate echoed on the created log. Manual logs carry no
+    # device_calories, so this is the MET estimate (None when weight is unknown).
+    # It never touches a calorie budget.
     weight_kg = _get_user_weight_kg(supabase, user_id)
-    row["est_calories"] = estimate_calories(
-        activity_type=row.get("activity_type"),
-        duration_min=row.get("duration_min"),
-        intensity=row.get("intensity"),
-        weight_kg=weight_kg,
-    )
+    row["est_calories"] = _row_est_calories(row, weight_kg)
     return row
+
+
+@router.post("/import", response_model=ExerciseImportResult)
+async def import_exercise_logs(
+    req: ExerciseImportRequest,
+    user_id: str = Depends(get_current_user),
+):
+    """
+    Import workouts read from the phone's health platform (Apple Health /
+    Google Health Connect) into exercise_logs, deduplicated by external_id.
+
+    Dedupe: one round-trip fetches the external_ids already on file for THIS
+    user among the incoming batch; only items whose external_id isn't already
+    present are inserted. Already-present items are skipped (counted). We also
+    de-dupe within the batch itself so a payload that repeats an external_id
+    inserts it once. The partial unique index (migration 021) is the backstop.
+
+    Each inserted row is owner-scoped (user_id forced from the token) and carries
+    source, external_id, device_calories, and a local_day derived from the item's
+    logged_at — never from the server clock — so imported sessions land in the
+    calendar day they actually happened.
+
+    WELLNESS BOUNDARY: device_calories is stored for a DISPLAY-ONLY badge. This
+    endpoint writes ONLY exercise_logs and mutates no calorie target/budget.
+    """
+    supabase = get_supabase()
+
+    # De-dupe within the batch first (keep first occurrence of each external_id).
+    by_external: dict[str, "object"] = {}
+    for item in req.items:
+        if item.external_id not in by_external:
+            by_external[item.external_id] = item
+    incoming_ids = list(by_external.keys())
+
+    # One query: which of these external_ids does the user already have?
+    existing_ids: set[str] = set()
+    if incoming_ids:
+        existing = (
+            supabase.table("exercise_logs")
+            .select("external_id")
+            .eq("user_id", user_id)
+            .in_("external_id", incoming_ids)
+            .execute()
+        )
+        for r in existing.data or []:
+            ext = r.get("external_id")
+            if ext is not None:
+                existing_ids.add(ext)
+
+    # Build insert rows only for genuinely-new external_ids.
+    rows: list[dict] = []
+    for ext_id, item in by_external.items():
+        if ext_id in existing_ids:
+            continue
+        payload = item.model_dump(mode="json")
+        payload["user_id"] = user_id
+        # Bucket by the activity's own start time, not the server clock.
+        payload["local_day"] = item.logged_at.date().isoformat()
+        rows.append(payload)
+
+    # Items already present (batch total minus the new rows we're inserting).
+    skipped = len(req.items) - len(rows)
+    imported = 0
+    if rows:
+        res = supabase.table("exercise_logs").insert(rows).execute()
+        imported = len(res.data or [])
+        # If the DB returned fewer rows than sent (e.g. a unique-index race on a
+        # concurrent import), treat the shortfall as skipped, not lost.
+        skipped += (len(rows) - imported)
+
+    return ExerciseImportResult(imported=imported, skipped=skipped)
 
 
 @router.get("/logs", response_model=list[ExerciseLogResponse])
@@ -146,12 +236,8 @@ async def list_exercise_logs(
     rows = res.data or []
     weight_kg = _get_user_weight_kg(supabase, user_id)
     for r in rows:
-        r["est_calories"] = estimate_calories(
-            activity_type=r.get("activity_type"),
-            duration_min=r.get("duration_min"),
-            intensity=r.get("intensity"),
-            weight_kg=weight_kg,
-        )
+        # Device-reported calories win over the MET estimate (display-only).
+        r["est_calories"] = _row_est_calories(r, weight_kg)
     return rows
 
 
@@ -184,7 +270,7 @@ async def exercise_today_summary(user_id: str = Depends(get_current_user)):
     today = date.today()
     res = (
         supabase.table("exercise_logs")
-        .select("activity_type, duration_min, intensity")
+        .select("activity_type, duration_min, intensity, device_calories")
         .eq("user_id", user_id)
         .eq("local_day", today.isoformat())
         .execute()
@@ -198,19 +284,14 @@ async def exercise_today_summary(user_id: str = Depends(get_current_user)):
         if at and at not in seen:
             seen.append(at)
 
-    # DISPLAY-ONLY calorie total. Weight fetched once. None when weight unknown.
+    # DISPLAY-ONLY calorie total. Per row: device figure first, else MET estimate
+    # (which needs weight — fetched once). total_calories is None only when NO
+    # row yields a number (e.g. all manual logs and weight unknown); a single
+    # device-reported row makes it non-null. Never affects a calorie budget.
     weight_kg = _get_user_weight_kg(supabase, user_id)
-    total_calories: Optional[int] = None
-    if weight_kg is not None:
-        total_calories = sum(
-            estimate_calories(
-                activity_type=r.get("activity_type"),
-                duration_min=r.get("duration_min"),
-                intensity=r.get("intensity"),
-                weight_kg=weight_kg,
-            ) or 0
-            for r in rows
-        )
+    per_row = [_row_est_calories(r, weight_kg) for r in rows]
+    contributing = [c for c in per_row if c is not None]
+    total_calories: Optional[int] = sum(contributing) if contributing else None
 
     return ExerciseTodaySummary(
         total_minutes=total_minutes,
@@ -239,20 +320,23 @@ async def exercise_weekly(user_id: str = Depends(get_current_user)):
 
     res = (
         supabase.table("exercise_logs")
-        .select("duration_min, local_day, activity_type, intensity")
+        .select("duration_min, local_day, activity_type, intensity, device_calories")
         .eq("user_id", user_id)
         .gte("local_day", start.isoformat())
         .lte("local_day", end.isoformat())
         .execute()
     )
 
-    # Weight fetched once for the whole week. None → all calorie totals None.
+    # Weight fetched once for the whole week (feeds the MET fallback).
     weight_kg = _get_user_weight_kg(supabase, user_id)
-    has_weight = weight_kg is not None
 
     minutes_by_day: dict[date, int] = {}
     sessions_by_day: dict[date, int] = {}
+    # Per-day calorie sum + a flag tracking whether ANY row that day produced a
+    # number (device figure or MET estimate). A day with rows but no computable
+    # calories (manual logs, weight unknown) stays None rather than a false 0.
     calories_by_day: dict[date, int] = {}
+    has_cal_by_day: dict[date, bool] = {}
     for row in res.data or []:
         d_str = (row.get("local_day") or "")[:10]
         try:
@@ -261,15 +345,11 @@ async def exercise_weekly(user_id: str = Depends(get_current_user)):
             continue
         minutes_by_day[d] = minutes_by_day.get(d, 0) + (row.get("duration_min") or 0)
         sessions_by_day[d] = sessions_by_day.get(d, 0) + 1
-        if has_weight:
-            calories_by_day[d] = calories_by_day.get(d, 0) + (
-                estimate_calories(
-                    activity_type=row.get("activity_type"),
-                    duration_min=row.get("duration_min"),
-                    intensity=row.get("intensity"),
-                    weight_kg=weight_kg,
-                ) or 0
-            )
+        # Device-reported calories win over the MET estimate (display-only).
+        cal = _row_est_calories(row, weight_kg)
+        if cal is not None:
+            calories_by_day[d] = calories_by_day.get(d, 0) + cal
+            has_cal_by_day[d] = True
 
     days: list[ExerciseDayTotal] = []
     for i in range(7):
@@ -279,16 +359,15 @@ async def exercise_weekly(user_id: str = Depends(get_current_user)):
                 day=d,
                 total_minutes=minutes_by_day.get(d, 0),
                 sessions_count=sessions_by_day.get(d, 0),
-                total_calories=calories_by_day.get(d, 0) if has_weight else None,
+                total_calories=calories_by_day.get(d) if has_cal_by_day.get(d) else None,
             )
         )
 
     week_total_minutes = sum(day.total_minutes for day in days)
     active_days = sum(1 for day in days if day.sessions_count > 0)
-    week_total_calories = (
-        sum(calories_by_day.get(start + timedelta(days=i), 0) for i in range(7))
-        if has_weight
-        else None
+    # Week total is None only when no day produced any computable calories.
+    week_total_calories: Optional[int] = (
+        sum(calories_by_day.values()) if has_cal_by_day else None
     )
 
     return ExerciseWeeklyResponse(

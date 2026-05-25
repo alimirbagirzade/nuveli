@@ -1400,5 +1400,14 @@
   "exerciseDeleteFailed": "Не удалось удалить активность. Попробуй ещё раз.",
   "exerciseThisWeek": "На этой неделе",
   "exerciseWeekTotalMinutes": "Всего {minutes} мин",
-  "exerciseWeekCaloriesNote": "Примерная энергия за неделю"
+  "exerciseWeekCaloriesNote": "Примерная энергия за неделю",
+  "exerciseSourceHealth": "Из приложения здоровья",
+  "settingsHealthSection": "Здоровье",
+  "settingsHealthConnect": "Подключить данные здоровья телефона",
+  "settingsHealthConnectDesc": "Импортируй последние тренировки из приложения здоровья телефона в журнал активности. Необязательно и только для чтения.",
+  "settingsHealthSyncNow": "Синхронизировать сейчас",
+  "settingsHealthImported": "Импортировано активностей: {count}",
+  "settingsHealthUnavailable": "Health Connect недоступен на этом устройстве.",
+  "settingsHealthDenied": "Доступ отклонён. Вы можете включить его в любое время.",
+  "settingsHealthError": "Не удалось синхронизировать данные здоровья. Попробуйте снова."
 }
