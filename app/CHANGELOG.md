@@ -1,5 +1,30 @@
 # Nuveli Changelog
 
+## [1.6.5+28] - 2026-05-25 - Play-readiness: auth-gate recovery, drop exact-alarm perms, repo cleanup
+
+### Fixes
+- **AuthGate no longer dumps logged-in users into onboarding on a profile-fetch
+  error.** A transient backend/network error or an expired session previously
+  rendered `OnboardingScreen` — letting a user re-onboard over an existing
+  account. Now shows a retry screen (`AppErrorView`) whose retry re-evaluates
+  both the profile and the auth session, so a truly-expired session falls back
+  to the welcome/login screen. (A missing profile for a new user still comes
+  back as `data: null` and correctly routes to onboarding.)
+- **Dropped `SCHEDULE_EXACT_ALARM` / `USE_EXACT_ALARM` Android permissions.**
+  Reminder scheduling already uses `AndroidScheduleMode.inexactAllowWhileIdle`,
+  so exact alarms are unused; the permissions are stripped via
+  `tools:node="remove"` (covering any merged in by flutter_local_notifications)
+  to avoid Google Play's restricted-permission review.
+- Brand wordmark image now carries a `semanticLabel: 'Nuveli'` for screen
+  readers.
+
+### Chore
+- Removed untracked scratch files that polluted `flutter analyze`
+  (`main_integration_snippet.dart`, `_chat19_gating_snippets.dart`, the
+  `add_chunk*/fix_chunk*` one-shot scripts, `docs/chat18_*`, and the backend
+  `_premium_gating_examples.py` / `auth_premium_additions.py` examples).
+  `flutter analyze lib/` is now clean.
+
 ## [1.6.4+27] - 2026-05-25 - Brand refresh: smiling water-drop mark + Nuveli wordmark
 
 ### Features

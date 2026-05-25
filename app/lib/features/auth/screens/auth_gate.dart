@@ -15,7 +15,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/network/app_error.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../../../shared/widgets/nuveli_background.dart';
 import '../../../shared/widgets/smiling_drop.dart';
 import '../../main/main_shell_screen.dart';
@@ -45,10 +47,25 @@ class AuthGate extends ConsumerWidget {
         return profileAsync.when(
           loading: () => const _SplashScreen(),
           error: (e, _) {
-            // Backend ulaşılamıyor → kullanıcıyı onboarding'e götür,
-            // backend gelince orada hata gösterebilir.
-            // Alternatif: hata ekranı + retry button. Şimdilik onboarding.
-            return const OnboardingScreen();
+            // Profile fetch failed for a LOGGED-IN user — this is a transient
+            // backend/network error or an expired session, NOT a new user
+            // (a missing profile comes back as `data: null`, handled below).
+            // Never drop them into onboarding here: re-onboarding over an
+            // existing account corrupts data. Show retry instead; the retry
+            // re-evaluates auth too, so a truly-expired session falls back to
+            // the welcome/login screen.
+            return Scaffold(
+              backgroundColor: const Color(0xFF050A1F),
+              body: Center(
+                child: AppErrorView(
+                  error: AppError.from(e),
+                  onRetry: () {
+                    ref.invalidate(currentUserProfileProvider);
+                    ref.invalidate(authProvider);
+                  },
+                ),
+              ),
+            );
           },
           data: (profile) {
             // 3. Profile yok ya da onboarding tamamlanmamış
