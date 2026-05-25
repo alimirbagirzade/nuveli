@@ -9,6 +9,8 @@ import '../coach/mood/models/mood_situation.dart';
 import '../coach/mood/providers/mood_bubble_controller.dart';
 import '../coach/mood/providers/mood_seen_store.dart';
 import '../coach/mood/widgets/mood_bubble.dart';
+import '../exercise/providers/exercise_provider.dart';
+import '../exercise/widgets/exercise_weekly_chart.dart';
 import '../meal/screens/meal_history_screen.dart';
 import 'providers/dashboard_provider.dart';
 import '../habits/widgets/habits_today_section.dart';
@@ -22,6 +24,7 @@ import 'widgets/water_weekly_chart.dart';
 import 'widgets/meals_section.dart';
 import 'widgets/todays_summary_section.dart';
 import 'widgets/water_quick_card.dart';
+import 'widgets/exercise_quick_card.dart';
 
 /// Main Dashboard screen — the home tab inside ``MainShellScreen``.
 ///
@@ -121,6 +124,19 @@ class DashboardScreen extends ConsumerWidget {
                                   error: (_, __) => const SizedBox.shrink(),
                                   data: (weekly) =>
                                       WaterWeeklyChart(weekly: weekly),
+                                ),
+                            // Manual activity log — positive wellness
+                            // habit. Self-fetches today's summary; never
+                            // touches the calorie budget.
+                            const ExerciseQuickCard(),
+                            // 7-day activity bars + week total minutes and an
+                            // informational week-total kcal estimate. Hidden
+                            // on load/failure so it never blocks the dashboard.
+                            ref.watch(exerciseWeeklyProvider).when(
+                                  loading: () => const SizedBox.shrink(),
+                                  error: (_, __) => const SizedBox.shrink(),
+                                  data: (weekly) =>
+                                      ExerciseWeeklyChart(weekly: weekly),
                                 ),
                           ],
                         ),

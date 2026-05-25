@@ -905,6 +905,14 @@
   "plannerDailyCalorieTarget": "Daily calorie target (optional)",
   "plannerMealsPerDay": "Meals per day",
   "plannerAnythingElse": "Anything else? (optional)",
+  "plannerHintMealName": "e.g. Grilled chicken salad",
+  "plannerHintCalories": "e.g. 450",
+  "plannerHintNote": "e.g. meal prep on Sunday",
+  "plannerHintEditNote": "e.g. swap for leftovers",
+  "generatePlanHintStyle": "e.g. high-protein, vegetarian, Mediterranean",
+  "generatePlanHintAllergies": "e.g. peanuts, shellfish",
+  "generatePlanHintCalories": "e.g. 2000",
+  "generatePlanHintGoals": "e.g. quick breakfasts, batch-cook dinners",
   "plannerCalorieTargetError": "Calorie target must be 800–6000",
   "plannerGenerating": "Generating…",
   "plannerGeneratePlan": "Generate plan",
@@ -1295,5 +1303,61 @@
   "coachActionAddHabit": "Add habit",
   "coachActionLogWater": "Log water",
   "coachActionUpdateTarget": "Update target",
-  "coachActionApply": "Apply"
+  "coachActionApply": "Apply",
+  "exercise": "Activity",
+  "exerciseTodayActive": "You were active for {minutes} min today 💪",
+  "@exerciseTodayActive": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseGreatMoving": "Moving feels great!",
+  "exerciseNoneToday": "How about a little movement today?",
+  "exerciseSessionsCount": "{count} sessions",
+  "@exerciseSessionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseLogTitle": "Add activity",
+  "exerciseActivityType": "Activity type",
+  "exerciseDurationMinutes": "Duration (min)",
+  "exerciseDurationHint": "e.g. 30",
+  "exerciseIntensityOptional": "Intensity (optional)",
+  "exerciseNoteOptional": "Note (optional)",
+  "exerciseNoteHint": "e.g. walk in the park",
+  "exerciseSave": "Save activity",
+  "exerciseDurationRequired": "Enter a duration (more than 0 minutes)",
+  "exerciseSaveFailed": "Could not save your activity. Tap to retry.",
+  "exerciseSaved": "Great job! Your activity is logged 💪",
+  "exerciseTypeWalking": "Walking",
+  "exerciseTypeRunning": "Running",
+  "exerciseTypeCycling": "Cycling",
+  "exerciseTypeHiking": "Hiking",
+  "exerciseTypeSwimming": "Swimming",
+  "exerciseTypeGym": "Gym",
+  "exerciseTypeYoga": "Yoga",
+  "exerciseTypePilates": "Pilates",
+  "exerciseTypeDancing": "Dancing",
+  "exerciseTypeHiit": "HIIT",
+  "exerciseTypeJumpRope": "Jump rope",
+  "exerciseTypeRowing": "Rowing",
+  "exerciseTypeSports": "Sports",
+  "exerciseTypeOther": "Other",
+  "exerciseIntensityLight": "Light",
+  "exerciseIntensityModerate": "Moderate",
+  "exerciseIntensityVigorous": "Vigorous",
+  "exerciseCalorieBadge": "≈{kcal} kcal",
+  "exerciseSavedWithCalories": "Great job! Your activity is logged 💪 (≈{kcal} kcal)",
+  "exerciseTodayActivities": "Today",
+  "exerciseDurationLabel": "{minutes} min",
+  "exerciseDeleted": "Activity removed",
+  "exerciseDeleteFailed": "Could not remove that activity. Try again.",
+  "exerciseThisWeek": "This week",
+  "exerciseWeekTotalMinutes": "{minutes} min total",
+  "exerciseWeekCaloriesNote": "Estimated energy used this week"
 }

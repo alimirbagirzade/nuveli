@@ -149,9 +149,9 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
           const SizedBox(height: 4),
           TextButton(
             onPressed: () => Navigator.of(context).maybePop(),
-            child: const Text(
-              'Close',
-              style: TextStyle(color: Color(0xFF6E7B91)),
+            child: Text(
+              AppLocalizations.of(context)?.commonClose ?? 'Close',
+              style: const TextStyle(color: Color(0xFF6E7B91)),
             ),
           ),
         ],

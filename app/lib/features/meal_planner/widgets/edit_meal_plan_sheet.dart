@@ -127,7 +127,7 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
             else
               PlannerLabeledField(
                 label: l10n?.plannerMealName ?? 'Meal name',
-                hint: 'e.g. Grilled chicken salad',
+                hint: l10n?.plannerHintMealName ?? 'e.g. Grilled chicken salad',
                 controller: _nameCtrl,
                 autofocus: true,
                 maxLength: 120,
@@ -135,7 +135,7 @@ class _EditMealPlanSheetState extends ConsumerState<EditMealPlanSheet> {
             const SizedBox(height: 12),
             PlannerLabeledField(
               label: l10n?.plannerNoteOptional ?? 'Note (optional)',
-              hint: 'e.g. swap for leftovers',
+              hint: l10n?.plannerHintEditNote ?? 'e.g. swap for leftovers',
               controller: _noteCtrl,
               maxLength: 200,
             ),

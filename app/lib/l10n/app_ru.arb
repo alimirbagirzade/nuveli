@@ -946,6 +946,14 @@
   "plannerDailyCalorieTarget": "Дневная цель по калориям (необязательно)",
   "plannerMealsPerDay": "Блюд в день",
   "plannerAnythingElse": "Что-то ещё? (необязательно)",
+  "plannerHintMealName": "напр. Салат с курицей гриль",
+  "plannerHintCalories": "напр. 450",
+  "plannerHintNote": "напр. готовка на неделю в воскресенье",
+  "plannerHintEditNote": "напр. заменить на остатки",
+  "generatePlanHintStyle": "напр. высокобелковая, вегетарианская, средиземноморская",
+  "generatePlanHintAllergies": "напр. арахис, морепродукты",
+  "generatePlanHintCalories": "напр. 2000",
+  "generatePlanHintGoals": "напр. быстрые завтраки, ужины для готовки впрок",
   "plannerCalorieTargetError": "Цель по калориям должна быть от 800 до 6000",
   "plannerGenerating": "Создание…",
   "plannerGeneratePlan": "Создать план",
@@ -1336,5 +1344,61 @@
   "coachActionAddHabit": "Добавить привычку",
   "coachActionLogWater": "Записать воду",
   "coachActionUpdateTarget": "Обновить цель",
-  "coachActionApply": "Применить"
+  "coachActionApply": "Применить",
+  "exercise": "Activity",
+  "exerciseTodayActive": "You were active for {minutes} min today 💪",
+  "@exerciseTodayActive": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseGreatMoving": "Moving feels great!",
+  "exerciseNoneToday": "How about a little movement today?",
+  "exerciseSessionsCount": "{count} sessions",
+  "@exerciseSessionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseLogTitle": "Добавить активность",
+  "exerciseActivityType": "Тип активности",
+  "exerciseDurationMinutes": "Длительность (мин)",
+  "exerciseDurationHint": "напр. 30",
+  "exerciseIntensityOptional": "Интенсивность (необязательно)",
+  "exerciseNoteOptional": "Заметка (необязательно)",
+  "exerciseNoteHint": "напр. прогулка в парке",
+  "exerciseSave": "Сохранить активность",
+  "exerciseDurationRequired": "Укажи длительность (больше 0 минут)",
+  "exerciseSaveFailed": "Не удалось сохранить активность. Нажми, чтобы повторить.",
+  "exerciseSaved": "Отличная работа! Твоя активность записана 💪",
+  "exerciseTypeWalking": "Ходьба",
+  "exerciseTypeRunning": "Бег",
+  "exerciseTypeCycling": "Велосипед",
+  "exerciseTypeHiking": "Пеший поход",
+  "exerciseTypeSwimming": "Плавание",
+  "exerciseTypeGym": "Спортзал",
+  "exerciseTypeYoga": "Йога",
+  "exerciseTypePilates": "Пилатес",
+  "exerciseTypeDancing": "Танцы",
+  "exerciseTypeHiit": "HIIT",
+  "exerciseTypeJumpRope": "Скакалка",
+  "exerciseTypeRowing": "Гребля",
+  "exerciseTypeSports": "Спорт",
+  "exerciseTypeOther": "Другое",
+  "exerciseIntensityLight": "Лёгкая",
+  "exerciseIntensityModerate": "Средняя",
+  "exerciseIntensityVigorous": "Интенсивная",
+  "exerciseCalorieBadge": "≈{kcal} ккал",
+  "exerciseSavedWithCalories": "Отличная работа! Твоя активность записана 💪 (≈{kcal} ккал)",
+  "exerciseTodayActivities": "Сегодня",
+  "exerciseDurationLabel": "{minutes} мин",
+  "exerciseDeleted": "Активность удалена",
+  "exerciseDeleteFailed": "Не удалось удалить активность. Попробуй ещё раз.",
+  "exerciseThisWeek": "На этой неделе",
+  "exerciseWeekTotalMinutes": "Всего {minutes} мин",
+  "exerciseWeekCaloriesNote": "Примерная энергия за неделю"
 }

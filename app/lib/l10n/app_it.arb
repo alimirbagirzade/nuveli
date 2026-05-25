@@ -905,6 +905,14 @@
   "plannerDailyCalorieTarget": "Obiettivo calorico giornaliero (opzionale)",
   "plannerMealsPerDay": "Pasti al giorno",
   "plannerAnythingElse": "Altro? (opzionale)",
+  "plannerHintMealName": "es. Insalata di pollo alla griglia",
+  "plannerHintCalories": "es. 450",
+  "plannerHintNote": "es. preparare i pasti la domenica",
+  "plannerHintEditNote": "es. sostituisci con gli avanzi",
+  "generatePlanHintStyle": "es. ricco di proteine, vegetariano, mediterraneo",
+  "generatePlanHintAllergies": "es. arachidi, frutti di mare",
+  "generatePlanHintCalories": "es. 2000",
+  "generatePlanHintGoals": "es. colazioni veloci, cene da cucinare in lotti",
   "plannerCalorieTargetError": "L'obiettivo calorico deve essere tra 800 e 6000",
   "plannerGenerating": "Generazione in corso…",
   "plannerGeneratePlan": "Genera piano",
@@ -1295,5 +1303,61 @@
   "coachActionAddHabit": "Aggiungi abitudine",
   "coachActionLogWater": "Registra acqua",
   "coachActionUpdateTarget": "Aggiorna obiettivo",
-  "coachActionApply": "Applica"
+  "coachActionApply": "Applica",
+  "exercise": "Activity",
+  "exerciseTodayActive": "You were active for {minutes} min today 💪",
+  "@exerciseTodayActive": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseGreatMoving": "Moving feels great!",
+  "exerciseNoneToday": "How about a little movement today?",
+  "exerciseSessionsCount": "{count} sessions",
+  "@exerciseSessionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseLogTitle": "Aggiungi attività",
+  "exerciseActivityType": "Tipo di attività",
+  "exerciseDurationMinutes": "Durata (min)",
+  "exerciseDurationHint": "es. 30",
+  "exerciseIntensityOptional": "Intensità (facoltativa)",
+  "exerciseNoteOptional": "Nota (facoltativa)",
+  "exerciseNoteHint": "es. passeggiata al parco",
+  "exerciseSave": "Salva attività",
+  "exerciseDurationRequired": "Inserisci una durata (più di 0 minuti)",
+  "exerciseSaveFailed": "Impossibile salvare l'attività. Tocca per riprovare.",
+  "exerciseSaved": "Ottimo lavoro! La tua attività è registrata 💪",
+  "exerciseTypeWalking": "Camminata",
+  "exerciseTypeRunning": "Corsa",
+  "exerciseTypeCycling": "Ciclismo",
+  "exerciseTypeHiking": "Escursionismo",
+  "exerciseTypeSwimming": "Nuoto",
+  "exerciseTypeGym": "Palestra",
+  "exerciseTypeYoga": "Yoga",
+  "exerciseTypePilates": "Pilates",
+  "exerciseTypeDancing": "Ballo",
+  "exerciseTypeHiit": "HIIT",
+  "exerciseTypeJumpRope": "Corda per saltare",
+  "exerciseTypeRowing": "Canottaggio",
+  "exerciseTypeSports": "Sport",
+  "exerciseTypeOther": "Altro",
+  "exerciseIntensityLight": "Leggera",
+  "exerciseIntensityModerate": "Moderata",
+  "exerciseIntensityVigorous": "Intensa",
+  "exerciseCalorieBadge": "≈{kcal} kcal",
+  "exerciseSavedWithCalories": "Ottimo lavoro! La tua attività è registrata 💪 (≈{kcal} kcal)",
+  "exerciseTodayActivities": "Oggi",
+  "exerciseDurationLabel": "{minutes} min",
+  "exerciseDeleted": "Attività rimossa",
+  "exerciseDeleteFailed": "Impossibile rimuovere l'attività. Riprova.",
+  "exerciseThisWeek": "Questa settimana",
+  "exerciseWeekTotalMinutes": "{minutes} min in totale",
+  "exerciseWeekCaloriesNote": "Energia stimata usata questa settimana"
 }

@@ -1,17 +1,22 @@
+import '../config/app_config.dart';
+
 /// Centralized API endpoint constants.
 ///
 /// All HTTP paths are defined here so repositories don't hard-code URLs.
 /// If the backend renames or restructures a route, this is the only file
 /// that needs to change.
 ///
-/// Base URL points to the Render production deployment. For local dev,
-/// override via `--dart-define=API_BASE_URL=http://localhost:8000` and
-/// read it in `ApiClient` if/when env-based config is needed.
+/// Base URL resolves from [AppConfig.apiBaseUrl], which defaults to the Render
+/// production deployment and is overridable via
+/// `--dart-define=API_BASE_URL=http://localhost:8000` for local dev.
 class ApiEndpoints {
   ApiEndpoints._(); // No instances.
 
-  /// Production backend (Render free tier — can cold-start ~30s).
-  static const String baseUrl = 'https://nuveli-api.onrender.com';
+  /// Backend base. Defaults to Render prod (free tier — can cold-start ~30s);
+  /// honours the `API_BASE_URL` dart-define so local/staging builds reach the
+  /// right host. Previously hard-coded to prod, which silently ignored the
+  /// documented override.
+  static const String baseUrl = AppConfig.apiBaseUrl;
 
   // ---------------------------------------------------------------
   // Profile / Auth
@@ -55,6 +60,14 @@ class ApiEndpoints {
   static const String weightLogs = '/weight/logs';
   static const String weightGoal = '/weight/goal';
   static const String weightTrend = '/weight/trend';
+
+  // ---------------------------------------------------------------
+  // Exercise (manual activity log — wellness, NOT fitness/medical)
+  // ---------------------------------------------------------------
+  static const String exerciseLogs = '/exercise/logs';
+  static const String exerciseTodaySummary = '/exercise/today/summary';
+  static const String exerciseWeekly = '/exercise/weekly';
+  static String exerciseLogById(String id) => '/exercise/logs/$id';
 
   // ---------------------------------------------------------------
   // Meal Planner

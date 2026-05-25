@@ -2337,6 +2337,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get plannerAnythingElse => 'Autre chose ? (facultatif)';
 
   @override
+  String get plannerHintMealName => 'ex. Salade de poulet grillé';
+
+  @override
+  String get plannerHintCalories => 'ex. 450';
+
+  @override
+  String get plannerHintNote => 'ex. préparer les repas le dimanche';
+
+  @override
+  String get plannerHintEditNote => 'ex. remplacer par des restes';
+
+  @override
+  String get generatePlanHintStyle =>
+      'ex. riche en protéines, végétarien, méditerranéen';
+
+  @override
+  String get generatePlanHintAllergies => 'ex. arachides, fruits de mer';
+
+  @override
+  String get generatePlanHintCalories => 'ex. 2000';
+
+  @override
+  String get generatePlanHintGoals =>
+      'ex. petits-déjeuners rapides, dîners à cuisiner en lot';
+
+  @override
   String get plannerCalorieTargetError =>
       'L\'objectif calorique doit être entre 800 et 6000';
 
@@ -3236,4 +3262,145 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get coachActionApply => 'Appliquer';
+
+  @override
+  String get exercise => 'Activity';
+
+  @override
+  String exerciseTodayActive(int minutes) {
+    return 'You were active for $minutes min today 💪';
+  }
+
+  @override
+  String get exerciseGreatMoving => 'Moving feels great!';
+
+  @override
+  String get exerciseNoneToday => 'How about a little movement today?';
+
+  @override
+  String exerciseSessionsCount(int count) {
+    return '$count sessions';
+  }
+
+  @override
+  String get exerciseLogTitle => 'Ajouter une activité';
+
+  @override
+  String get exerciseActivityType => 'Type d\'activité';
+
+  @override
+  String get exerciseDurationMinutes => 'Durée (min)';
+
+  @override
+  String get exerciseDurationHint => 'p. ex. 30';
+
+  @override
+  String get exerciseIntensityOptional => 'Intensité (facultatif)';
+
+  @override
+  String get exerciseNoteOptional => 'Note (facultatif)';
+
+  @override
+  String get exerciseNoteHint => 'p. ex. balade au parc';
+
+  @override
+  String get exerciseSave => 'Enregistrer l\'activité';
+
+  @override
+  String get exerciseDurationRequired => 'Saisis une durée (plus de 0 minute)';
+
+  @override
+  String get exerciseSaveFailed =>
+      'Impossible d\'enregistrer ton activité. Touche pour réessayer.';
+
+  @override
+  String get exerciseSaved => 'Bravo ! Ton activité est enregistrée 💪';
+
+  @override
+  String get exerciseTypeWalking => 'Marche';
+
+  @override
+  String get exerciseTypeRunning => 'Course';
+
+  @override
+  String get exerciseTypeCycling => 'Vélo';
+
+  @override
+  String get exerciseTypeHiking => 'Randonnée';
+
+  @override
+  String get exerciseTypeSwimming => 'Natation';
+
+  @override
+  String get exerciseTypeGym => 'Salle de sport';
+
+  @override
+  String get exerciseTypeYoga => 'Yoga';
+
+  @override
+  String get exerciseTypePilates => 'Pilates';
+
+  @override
+  String get exerciseTypeDancing => 'Danse';
+
+  @override
+  String get exerciseTypeHiit => 'HIIT';
+
+  @override
+  String get exerciseTypeJumpRope => 'Corde à sauter';
+
+  @override
+  String get exerciseTypeRowing => 'Aviron';
+
+  @override
+  String get exerciseTypeSports => 'Sport';
+
+  @override
+  String get exerciseTypeOther => 'Autre';
+
+  @override
+  String get exerciseIntensityLight => 'Légère';
+
+  @override
+  String get exerciseIntensityModerate => 'Modérée';
+
+  @override
+  String get exerciseIntensityVigorous => 'Intense';
+
+  @override
+  String exerciseCalorieBadge(int kcal) {
+    return '≈$kcal kcal';
+  }
+
+  @override
+  String exerciseSavedWithCalories(int kcal) {
+    return 'Bravo ! Ton activité est enregistrée 💪 (≈$kcal kcal)';
+  }
+
+  @override
+  String get exerciseTodayActivities => 'Aujourd\'hui';
+
+  @override
+  String exerciseDurationLabel(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get exerciseDeleted => 'Activité supprimée';
+
+  @override
+  String get exerciseDeleteFailed =>
+      'Impossible de supprimer cette activité. Réessaie.';
+
+  @override
+  String get exerciseThisWeek => 'Cette semaine';
+
+  @override
+  String exerciseWeekTotalMinutes(int minutes) {
+    return '$minutes min au total';
+  }
+
+  @override
+  String get exerciseWeekCaloriesNote =>
+      'Énergie estimée dépensée cette semaine';
 }

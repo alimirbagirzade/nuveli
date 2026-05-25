@@ -4410,6 +4410,54 @@ abstract class AppLocalizations {
   /// **'Başka bir şey? (isteğe bağlı)'**
   String get plannerAnythingElse;
 
+  /// Hint text for the meal name field
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. Izgara tavuk salatası'**
+  String get plannerHintMealName;
+
+  /// Hint text for the calories field on the add-meal sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. 450'**
+  String get plannerHintCalories;
+
+  /// Hint text for the note field on the add-meal sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. pazar günü öğün hazırlığı'**
+  String get plannerHintNote;
+
+  /// Hint text for the note field on the edit-meal sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. artıklarla değiştir'**
+  String get plannerHintEditNote;
+
+  /// Hint text for the dietary preference field on the generate sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. yüksek proteinli, vejetaryen, Akdeniz'**
+  String get generatePlanHintStyle;
+
+  /// Hint text for the avoid-ingredients field on the generate sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. fıstık, kabuklu deniz ürünleri'**
+  String get generatePlanHintAllergies;
+
+  /// Hint text for the daily calorie target field on the generate sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. 2000'**
+  String get generatePlanHintCalories;
+
+  /// Hint text for the anything-else field on the generate sheet
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. hızlı kahvaltılar, toplu pişen akşam yemekleri'**
+  String get generatePlanHintGoals;
+
   /// Calorie target validation error
   ///
   /// In tr, this message translates to:
@@ -6023,6 +6071,258 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Uygula'**
   String get coachActionApply;
+
+  /// No description provided for @exercise.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite'**
+  String get exercise;
+
+  /// No description provided for @exerciseTodayActive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün {minutes} dk aktiftin 💪'**
+  String exerciseTodayActive(int minutes);
+
+  /// No description provided for @exerciseGreatMoving.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hareket etmek harika!'**
+  String get exerciseGreatMoving;
+
+  /// No description provided for @exerciseNoneToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün biraz hareket etmeye ne dersin?'**
+  String get exerciseNoneToday;
+
+  /// No description provided for @exerciseSessionsCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} aktivite'**
+  String exerciseSessionsCount(int count);
+
+  /// No description provided for @exerciseLogTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite ekle'**
+  String get exerciseLogTitle;
+
+  /// No description provided for @exerciseActivityType.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite türü'**
+  String get exerciseActivityType;
+
+  /// No description provided for @exerciseDurationMinutes.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süre (dk)'**
+  String get exerciseDurationMinutes;
+
+  /// No description provided for @exerciseDurationHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. 30'**
+  String get exerciseDurationHint;
+
+  /// No description provided for @exerciseIntensityOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoğunluk (isteğe bağlı)'**
+  String get exerciseIntensityOptional;
+
+  /// No description provided for @exerciseNoteOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not (isteğe bağlı)'**
+  String get exerciseNoteOptional;
+
+  /// No description provided for @exerciseNoteHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'örn. parkta yürüyüş'**
+  String get exerciseNoteHint;
+
+  /// No description provided for @exerciseSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktiviteyi kaydet'**
+  String get exerciseSave;
+
+  /// No description provided for @exerciseDurationRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir süre gir (0 dakikadan fazla)'**
+  String get exerciseDurationRequired;
+
+  /// No description provided for @exerciseSaveFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite kaydedilemedi. Tekrar dene.'**
+  String get exerciseSaveFailed;
+
+  /// No description provided for @exerciseSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harika iş! Aktiviten kaydedildi 💪'**
+  String get exerciseSaved;
+
+  /// No description provided for @exerciseTypeWalking.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yürüyüş'**
+  String get exerciseTypeWalking;
+
+  /// No description provided for @exerciseTypeRunning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koşu'**
+  String get exerciseTypeRunning;
+
+  /// No description provided for @exerciseTypeCycling.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bisiklet'**
+  String get exerciseTypeCycling;
+
+  /// No description provided for @exerciseTypeHiking.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğa yürüyüşü'**
+  String get exerciseTypeHiking;
+
+  /// No description provided for @exerciseTypeSwimming.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüzme'**
+  String get exerciseTypeSwimming;
+
+  /// No description provided for @exerciseTypeGym.
+  ///
+  /// In tr, this message translates to:
+  /// **'Spor salonu'**
+  String get exerciseTypeGym;
+
+  /// No description provided for @exerciseTypeYoga.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoga'**
+  String get exerciseTypeYoga;
+
+  /// No description provided for @exerciseTypePilates.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pilates'**
+  String get exerciseTypePilates;
+
+  /// No description provided for @exerciseTypeDancing.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dans'**
+  String get exerciseTypeDancing;
+
+  /// No description provided for @exerciseTypeHiit.
+  ///
+  /// In tr, this message translates to:
+  /// **'HIIT'**
+  String get exerciseTypeHiit;
+
+  /// No description provided for @exerciseTypeJumpRope.
+  ///
+  /// In tr, this message translates to:
+  /// **'İp atlama'**
+  String get exerciseTypeJumpRope;
+
+  /// No description provided for @exerciseTypeRowing.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kürek'**
+  String get exerciseTypeRowing;
+
+  /// No description provided for @exerciseTypeSports.
+  ///
+  /// In tr, this message translates to:
+  /// **'Spor'**
+  String get exerciseTypeSports;
+
+  /// No description provided for @exerciseTypeOther.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer'**
+  String get exerciseTypeOther;
+
+  /// No description provided for @exerciseIntensityLight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hafif'**
+  String get exerciseIntensityLight;
+
+  /// No description provided for @exerciseIntensityModerate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Orta'**
+  String get exerciseIntensityModerate;
+
+  /// No description provided for @exerciseIntensityVigorous.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yoğun'**
+  String get exerciseIntensityVigorous;
+
+  /// No description provided for @exerciseCalorieBadge.
+  ///
+  /// In tr, this message translates to:
+  /// **'≈{kcal} kcal'**
+  String exerciseCalorieBadge(int kcal);
+
+  /// No description provided for @exerciseSavedWithCalories.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harika iş! Aktiviten kaydedildi 💪 (≈{kcal} kcal)'**
+  String exerciseSavedWithCalories(int kcal);
+
+  /// No description provided for @exerciseTodayActivities.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün'**
+  String get exerciseTodayActivities;
+
+  /// No description provided for @exerciseDurationLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'{minutes} dk'**
+  String exerciseDurationLabel(int minutes);
+
+  /// No description provided for @exerciseDeleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite kaldırıldı'**
+  String get exerciseDeleted;
+
+  /// No description provided for @exerciseDeleteFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite kaldırılamadı. Tekrar dene.'**
+  String get exerciseDeleteFailed;
+
+  /// No description provided for @exerciseThisWeek.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hafta'**
+  String get exerciseThisWeek;
+
+  /// No description provided for @exerciseWeekTotalMinutes.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam {minutes} dk'**
+  String exerciseWeekTotalMinutes(int minutes);
+
+  /// No description provided for @exerciseWeekCaloriesNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hafta tahmini harcanan enerji'**
+  String get exerciseWeekCaloriesNote;
 }
 
 class _AppLocalizationsDelegate

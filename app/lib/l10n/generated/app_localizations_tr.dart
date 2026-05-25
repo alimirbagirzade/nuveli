@@ -2319,6 +2319,32 @@ class AppLocalizationsTr extends AppLocalizations {
   String get plannerAnythingElse => 'Başka bir şey? (isteğe bağlı)';
 
   @override
+  String get plannerHintMealName => 'örn. Izgara tavuk salatası';
+
+  @override
+  String get plannerHintCalories => 'örn. 450';
+
+  @override
+  String get plannerHintNote => 'örn. pazar günü öğün hazırlığı';
+
+  @override
+  String get plannerHintEditNote => 'örn. artıklarla değiştir';
+
+  @override
+  String get generatePlanHintStyle =>
+      'örn. yüksek proteinli, vejetaryen, Akdeniz';
+
+  @override
+  String get generatePlanHintAllergies => 'örn. fıstık, kabuklu deniz ürünleri';
+
+  @override
+  String get generatePlanHintCalories => 'örn. 2000';
+
+  @override
+  String get generatePlanHintGoals =>
+      'örn. hızlı kahvaltılar, toplu pişen akşam yemekleri';
+
+  @override
   String get plannerCalorieTargetError =>
       'Kalori hedefi 800–6000 arasında olmalıdır';
 
@@ -3200,4 +3226,142 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get coachActionApply => 'Uygula';
+
+  @override
+  String get exercise => 'Aktivite';
+
+  @override
+  String exerciseTodayActive(int minutes) {
+    return 'Bugün $minutes dk aktiftin 💪';
+  }
+
+  @override
+  String get exerciseGreatMoving => 'Hareket etmek harika!';
+
+  @override
+  String get exerciseNoneToday => 'Bugün biraz hareket etmeye ne dersin?';
+
+  @override
+  String exerciseSessionsCount(int count) {
+    return '$count aktivite';
+  }
+
+  @override
+  String get exerciseLogTitle => 'Aktivite ekle';
+
+  @override
+  String get exerciseActivityType => 'Aktivite türü';
+
+  @override
+  String get exerciseDurationMinutes => 'Süre (dk)';
+
+  @override
+  String get exerciseDurationHint => 'örn. 30';
+
+  @override
+  String get exerciseIntensityOptional => 'Yoğunluk (isteğe bağlı)';
+
+  @override
+  String get exerciseNoteOptional => 'Not (isteğe bağlı)';
+
+  @override
+  String get exerciseNoteHint => 'örn. parkta yürüyüş';
+
+  @override
+  String get exerciseSave => 'Aktiviteyi kaydet';
+
+  @override
+  String get exerciseDurationRequired => 'Bir süre gir (0 dakikadan fazla)';
+
+  @override
+  String get exerciseSaveFailed => 'Aktivite kaydedilemedi. Tekrar dene.';
+
+  @override
+  String get exerciseSaved => 'Harika iş! Aktiviten kaydedildi 💪';
+
+  @override
+  String get exerciseTypeWalking => 'Yürüyüş';
+
+  @override
+  String get exerciseTypeRunning => 'Koşu';
+
+  @override
+  String get exerciseTypeCycling => 'Bisiklet';
+
+  @override
+  String get exerciseTypeHiking => 'Doğa yürüyüşü';
+
+  @override
+  String get exerciseTypeSwimming => 'Yüzme';
+
+  @override
+  String get exerciseTypeGym => 'Spor salonu';
+
+  @override
+  String get exerciseTypeYoga => 'Yoga';
+
+  @override
+  String get exerciseTypePilates => 'Pilates';
+
+  @override
+  String get exerciseTypeDancing => 'Dans';
+
+  @override
+  String get exerciseTypeHiit => 'HIIT';
+
+  @override
+  String get exerciseTypeJumpRope => 'İp atlama';
+
+  @override
+  String get exerciseTypeRowing => 'Kürek';
+
+  @override
+  String get exerciseTypeSports => 'Spor';
+
+  @override
+  String get exerciseTypeOther => 'Diğer';
+
+  @override
+  String get exerciseIntensityLight => 'Hafif';
+
+  @override
+  String get exerciseIntensityModerate => 'Orta';
+
+  @override
+  String get exerciseIntensityVigorous => 'Yoğun';
+
+  @override
+  String exerciseCalorieBadge(int kcal) {
+    return '≈$kcal kcal';
+  }
+
+  @override
+  String exerciseSavedWithCalories(int kcal) {
+    return 'Harika iş! Aktiviten kaydedildi 💪 (≈$kcal kcal)';
+  }
+
+  @override
+  String get exerciseTodayActivities => 'Bugün';
+
+  @override
+  String exerciseDurationLabel(int minutes) {
+    return '$minutes dk';
+  }
+
+  @override
+  String get exerciseDeleted => 'Aktivite kaldırıldı';
+
+  @override
+  String get exerciseDeleteFailed => 'Aktivite kaldırılamadı. Tekrar dene.';
+
+  @override
+  String get exerciseThisWeek => 'Bu hafta';
+
+  @override
+  String exerciseWeekTotalMinutes(int minutes) {
+    return 'Toplam $minutes dk';
+  }
+
+  @override
+  String get exerciseWeekCaloriesNote => 'Bu hafta tahmini harcanan enerji';
 }

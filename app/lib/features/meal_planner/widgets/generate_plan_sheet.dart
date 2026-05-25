@@ -156,7 +156,8 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
             PlannerLabeledField(
               label: l10n?.plannerDietaryPref ??
                   'Dietary preference (optional)',
-              hint: 'e.g. high-protein, vegetarian, Mediterranean',
+              hint: l10n?.generatePlanHintStyle ??
+                  'e.g. high-protein, vegetarian, Mediterranean',
               controller: _dietCtrl,
               maxLength: 200,
             ),
@@ -164,7 +165,7 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
             PlannerLabeledField(
               label: l10n?.plannerAvoidIngredients ??
                   'Avoid ingredients (comma-separated)',
-              hint: 'e.g. peanuts, shellfish',
+              hint: l10n?.generatePlanHintAllergies ?? 'e.g. peanuts, shellfish',
               controller: _avoidCtrl,
               maxLength: 200,
             ),
@@ -172,7 +173,7 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
             PlannerLabeledField(
               label: l10n?.plannerDailyCalorieTarget ??
                   'Daily calorie target (optional)',
-              hint: 'e.g. 2000',
+              hint: l10n?.generatePlanHintCalories ?? 'e.g. 2000',
               controller: _targetCtrl,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -223,7 +224,8 @@ class _GeneratePlanSheetState extends ConsumerState<GeneratePlanSheet> {
             const SizedBox(height: 12),
             PlannerLabeledField(
               label: l10n?.plannerAnythingElse ?? 'Anything else? (optional)',
-              hint: 'e.g. quick breakfasts, batch-cook dinners',
+              hint: l10n?.generatePlanHintGoals ??
+                  'e.g. quick breakfasts, batch-cook dinners',
               controller: _noteCtrl,
               maxLength: 500,
             ),
