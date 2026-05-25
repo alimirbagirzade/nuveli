@@ -110,6 +110,19 @@ class _CounterBadge extends StatelessWidget {
   const _CounterBadge({required this.gate});
   final ScanGateStatus gate;
 
+  /// Localized quota label. Built here (not in the model) because l10n
+  /// needs a BuildContext. Mirrors the old `ScanGateStatus.counterLabel`.
+  static String _label(BuildContext context, ScanGateStatus gate) {
+    final l10n = AppLocalizations.of(context);
+    if (gate.isPremium) {
+      return l10n?.mealScanUnlimited ?? 'Unlimited';
+    }
+    final remaining = gate.remainingFree ?? 0;
+    final total = gate.used + remaining;
+    return l10n?.mealScanScansLeft(remaining, total) ??
+        '$remaining/$total scans left today';
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = gate.canScan ? AppColors.primary : AppColors.warning;
@@ -129,7 +142,7 @@ class _CounterBadge extends StatelessWidget {
             Icon(icon, size: 14, color: color),
             const SizedBox(width: 6),
             Text(
-              gate.counterLabel,
+              _label(context, gate),
               style: TextStyle(
                 color: color,
                 fontSize: 12,

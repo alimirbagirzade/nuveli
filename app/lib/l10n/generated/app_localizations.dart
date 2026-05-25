@@ -1380,6 +1380,18 @@ abstract class AppLocalizations {
   /// **'Bu Hafta'**
   String get homeThisWeek;
 
+  /// Dashboard weekly card: days hitting target out of 7
+  ///
+  /// In tr, this message translates to:
+  /// **'{count}/7 gün hedefte'**
+  String homeDaysOnTarget(int count);
+
+  /// Habits section empty state
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz alışkanlık yok — varsayılanlar ilk girişte gelir.'**
+  String get habitsEmptyDefaults;
+
   /// No description provided for @homeMiniGoalTitle.
   ///
   /// In tr, this message translates to:
@@ -3750,6 +3762,24 @@ abstract class AppLocalizations {
   /// **'Yenile (günde 1 ücretsiz)'**
   String get coachRegenerateFree;
 
+  /// Coach: shown when no insight exists yet (fresh user, no meals)
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun hazırlanıyor'**
+  String get coachEmptyTitle;
+
+  /// Coach: empty-state body prompting first meal log
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün ilk öğününü ekle — koçun sana özel günlük insight ve ipuçları hazırlasın.'**
+  String get coachEmptyBody;
+
+  /// Paywall: shown when RevenueCat returns no offerings
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu anda abonelik paketi yok. Bağlantını kontrol edip tekrar dene.'**
+  String get paywallNoPackages;
+
   /// Coach: coachScoreExcellent
   ///
   /// In tr, this message translates to:
@@ -3833,6 +3863,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ne yedin?'**
   String get homeMealNameQuestion;
+
+  /// Manual add-meal sheet: meal name field placeholder
+  ///
+  /// In tr, this message translates to:
+  /// **'ör. meyveli yoğurt'**
+  String get homeMealNameHint;
+
+  /// Manual add-meal sheet: calories field placeholder
+  ///
+  /// In tr, this message translates to:
+  /// **'ör. 180'**
+  String get homeCaloriesHint;
 
   /// Home/dashboard: homeCaloriesKcal
   ///
@@ -3935,6 +3977,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Galeriden seç'**
   String get mealScanChooseGallery;
+
+  /// Meal scan: free daily quota counter badge
+  ///
+  /// In tr, this message translates to:
+  /// **'{remaining}/{total} tarama kaldı'**
+  String mealScanScansLeft(int remaining, int total);
+
+  /// Meal scan: premium unlimited counter badge
+  ///
+  /// In tr, this message translates to:
+  /// **'Sınırsız'**
+  String get mealScanUnlimited;
+
+  /// Meal scan result: editable meal-name field label
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğün adı'**
+  String get mealScanNameLabel;
 
   /// Loading step 1
   ///

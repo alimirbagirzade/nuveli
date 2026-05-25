@@ -173,7 +173,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
             const SizedBox(height: 16),
             _LabeledField(
               label: l10n?.homeMealNameQuestion ?? 'What did you eat?',
-              hint: 'e.g. Greek yogurt with berries',
+              hint: l10n?.homeMealNameHint ?? 'e.g. Greek yogurt with berries',
               controller: _nameCtrl,
               keyboardType: TextInputType.text,
               autofocus: true,
@@ -181,7 +181,7 @@ class _MealEntrySheetState extends ConsumerState<MealEntrySheet> {
             const SizedBox(height: 12),
             _LabeledField(
               label: l10n?.homeCaloriesKcal ?? 'Calories (kcal)',
-              hint: 'e.g. 180',
+              hint: l10n?.homeCaloriesHint ?? 'e.g. 180',
               controller: _caloriesCtrl,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -335,7 +335,7 @@ class _MealTypePicker extends StatelessWidget {
               ),
             ),
             child: Text(
-              _capitalize(t),
+              _label(context, t),
               style: TextStyle(
                 color: isActive ? const Color(0xFF4DDBFF) : Colors.white,
                 fontWeight: FontWeight.w600,
@@ -348,8 +348,22 @@ class _MealTypePicker extends StatelessWidget {
     );
   }
 
-  String _capitalize(String s) =>
-      s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+  /// Localized meal-type label, reusing the shared `mealType*` keys.
+  static String _label(BuildContext context, String t) {
+    final l10n = AppLocalizations.of(context);
+    switch (t) {
+      case 'breakfast':
+        return l10n?.mealTypeBreakfast ?? 'Breakfast';
+      case 'lunch':
+        return l10n?.mealTypeLunch ?? 'Lunch';
+      case 'dinner':
+        return l10n?.mealTypeDinner ?? 'Dinner';
+      case 'snack':
+        return l10n?.mealTypeSnack ?? 'Snack';
+      default:
+        return t.isEmpty ? t : t[0].toUpperCase() + t.substring(1);
+    }
+  }
 }
 
 class _LabeledField extends StatelessWidget {

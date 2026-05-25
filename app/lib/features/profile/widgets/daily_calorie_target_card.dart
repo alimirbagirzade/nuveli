@@ -111,15 +111,20 @@ class DailyCalorieTargetCard extends StatelessWidget {
                           : AppColors.success,
                     ),
                     const SizedBox(width: AppSpacing.s4),
-                    Text(
-                      remaining > 0
-                          ? (l10n?.profileKcalLeftToday(
-                                  _formatNumber(remaining)) ??
-                              '${_formatNumber(remaining)} kcal left today')
-                          : (l10n?.profileDailyTargetReached ??
-                              'Daily target reached'),
-                      style: AppTypography.body.copyWith(
-                        color: AppColors.textSecondary,
+                    // Flexible so longer localized strings (RU/ES/FR run
+                    // ~70px wider than EN) wrap inside the column instead
+                    // of overflowing right into the donut.
+                    Flexible(
+                      child: Text(
+                        remaining > 0
+                            ? (l10n?.profileKcalLeftToday(
+                                    _formatNumber(remaining)) ??
+                                '${_formatNumber(remaining)} kcal left today')
+                            : (l10n?.profileDailyTargetReached ??
+                                'Daily target reached'),
+                        style: AppTypography.body.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ),
                   ],

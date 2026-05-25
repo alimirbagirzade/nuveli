@@ -142,7 +142,7 @@ class _MealTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '${meal.mealTypeLabel} · ${_formatTime(meal.consumedAt)}',
+                  '${_typeLabel(context, meal.mealType)} · ${_formatTime(meal.consumedAt)}',
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xFF6E7B91),
@@ -163,6 +163,26 @@ class _MealTile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Localized meal-type label, reusing the shared `mealType*` keys
+  /// (falls back to the model's English capitalization).
+  static String _typeLabel(BuildContext context, String type) {
+    final l10n = AppLocalizations.of(context);
+    switch (type) {
+      case 'breakfast':
+        return l10n?.mealTypeBreakfast ?? 'Breakfast';
+      case 'lunch':
+        return l10n?.mealTypeLunch ?? 'Lunch';
+      case 'dinner':
+        return l10n?.mealTypeDinner ?? 'Dinner';
+      case 'snack':
+        return l10n?.mealTypeSnack ?? 'Snack';
+      default:
+        return type.isEmpty
+            ? (l10n?.mealTypeOther ?? 'Meal')
+            : type[0].toUpperCase() + type.substring(1);
+    }
   }
 
   Widget _iconFallback() {

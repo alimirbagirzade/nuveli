@@ -675,6 +675,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeThisWeek => 'Questa settimana';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 giorni in obiettivo';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Ancora nessuna abitudine — i valori predefiniti appariranno al primo accesso.';
+
+  @override
   String get homeMiniGoalTitle => 'Mini obiettivo di oggi';
 
   @override
@@ -1964,6 +1973,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get coachRegenerateFree => 'Rigenera (1 gratis/giorno)';
 
   @override
+  String get coachEmptyTitle => 'Il tuo coach si sta preparando';
+
+  @override
+  String get coachEmptyBody =>
+      'Registra il tuo primo pasto di oggi e il tuo coach preparerà approfondimenti e consigli quotidiani per te.';
+
+  @override
+  String get paywallNoPackages =>
+      'Nessun pacchetto di abbonamento disponibile al momento. Controlla la connessione e riprova.';
+
+  @override
   String get coachScoreExcellent => 'Eccellente';
 
   @override
@@ -2004,6 +2024,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Cosa hai mangiato?';
+
+  @override
+  String get homeMealNameHint => 'es. yogurt greco con frutti di bosco';
+
+  @override
+  String get homeCaloriesHint => 'es. 180';
 
   @override
   String get homeCaloriesKcal => 'Calorie (kcal)';
@@ -2059,6 +2085,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mealScanChooseGallery => 'Scegli dalla galleria';
+
+  @override
+  String mealScanScansLeft(int remaining, int total) {
+    return '$remaining/$total scansioni rimaste oggi';
+  }
+
+  @override
+  String get mealScanUnlimited => 'Illimitato';
+
+  @override
+  String get mealScanNameLabel => 'Nome del pasto';
 
   @override
   String get mealScanAnalyzingStep1 => 'Analisi del pasto...';

@@ -677,6 +677,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeThisWeek => 'На этой неделе';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 дней в цели';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Пока нет привычек — стандартные появятся при первом входе.';
+
+  @override
   String get homeMiniGoalTitle => 'Мини-цель сегодня';
 
   @override
@@ -1965,6 +1974,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coachRegenerateFree => 'Обновить (1 бесплатно/день)';
 
   @override
+  String get coachEmptyTitle => 'Ваш коуч готовится';
+
+  @override
+  String get coachEmptyBody =>
+      'Добавьте первый приём пищи сегодня, и коуч подготовит для вас ежедневные советы и аналитику.';
+
+  @override
+  String get paywallNoPackages =>
+      'Сейчас нет доступных пакетов подписки. Проверьте соединение и попробуйте снова.';
+
+  @override
   String get coachScoreExcellent => 'Отлично';
 
   @override
@@ -2005,6 +2025,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Что ты ел(а)?';
+
+  @override
+  String get homeMealNameHint => 'напр. греческий йогурт с ягодами';
+
+  @override
+  String get homeCaloriesHint => 'напр. 180';
 
   @override
   String get homeCaloriesKcal => 'Калории (ккал)';
@@ -2059,6 +2085,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mealScanChooseGallery => 'Выбрать из галереи';
+
+  @override
+  String mealScanScansLeft(int remaining, int total) {
+    return '$remaining/$total сканов сегодня';
+  }
+
+  @override
+  String get mealScanUnlimited => 'Безлимит';
+
+  @override
+  String get mealScanNameLabel => 'Название приёма пищи';
 
   @override
   String get mealScanAnalyzingStep1 => 'Анализируем блюдо...';

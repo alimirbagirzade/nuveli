@@ -22,6 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/network/app_error.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../shared/widgets/app_error_view.dart';
 import 'models/premium_features.dart';
 import 'models/premium_offering.dart';
@@ -91,8 +92,9 @@ class _PremiumPaywallScreenState extends ConsumerState<PremiumPaywallScreen> {
             data: (offering) {
               if (offering.isEmpty) {
                 return _buildError(
-                  'No subscription packages available. '
-                  'Please check your connection and try again.',
+                  AppLocalizations.of(context)?.paywallNoPackages ??
+                      'No subscription packages available right now. '
+                          'Check your connection and try again.',
                 );
               }
 

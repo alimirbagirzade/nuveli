@@ -50,7 +50,8 @@ class WaterWeeklyChart extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${weekly.daysHittingTarget}/7 days on target',
+                l10n?.homeDaysOnTarget(weekly.daysHittingTarget) ??
+                    '${weekly.daysHittingTarget}/7 days on target',
                 style: const TextStyle(
                   color: Color(0xFF6E7B91),
                   fontSize: 11,

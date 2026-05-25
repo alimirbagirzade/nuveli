@@ -212,6 +212,15 @@
   "homeToday": "Bugün",
   "homeRemaining": "kaldı",
   "homeThisWeek": "Bu Hafta",
+  "homeDaysOnTarget": "{count}/7 gün hedefte",
+  "@homeDaysOnTarget": {
+    "description": "Dashboard weekly card: days hitting target out of 7",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "habitsEmptyDefaults": "Henüz alışkanlık yok — varsayılanlar ilk girişte gelir.",
+  "@habitsEmptyDefaults": {
+    "description": "Habits section empty state"
+  },
   "homeMiniGoalTitle": "Bugünkü Mini Hedef",
   "homeMiniGoalDefault": "Bir öğüne protein ekle",
   "homeAddMealLabel": "Öğün Ekle",
@@ -904,6 +913,18 @@
   "@coachRegenerateFree": {
     "description": "Coach: coachRegenerateFree"
   },
+  "coachEmptyTitle": "Koçun hazırlanıyor",
+  "@coachEmptyTitle": {
+    "description": "Coach: shown when no insight exists yet (fresh user, no meals)"
+  },
+  "coachEmptyBody": "Bugün ilk öğününü ekle — koçun sana özel günlük insight ve ipuçları hazırlasın.",
+  "@coachEmptyBody": {
+    "description": "Coach: empty-state body prompting first meal log"
+  },
+  "paywallNoPackages": "Şu anda abonelik paketi yok. Bağlantını kontrol edip tekrar dene.",
+  "@paywallNoPackages": {
+    "description": "Paywall: shown when RevenueCat returns no offerings"
+  },
   "coachScoreExcellent": "Mükemmel",
   "@coachScoreExcellent": {
     "description": "Coach: coachScoreExcellent"
@@ -957,6 +978,14 @@
     "description": "Home/dashboard: homeSeeAll"
   },
   "homeMealNameQuestion": "Ne yedin?",
+  "homeMealNameHint": "ör. meyveli yoğurt",
+  "@homeMealNameHint": {
+    "description": "Manual add-meal sheet: meal name field placeholder"
+  },
+  "homeCaloriesHint": "ör. 180",
+  "@homeCaloriesHint": {
+    "description": "Manual add-meal sheet: calories field placeholder"
+  },
   "@homeMealNameQuestion": {
     "description": "Home/dashboard: homeMealNameQuestion"
   },
@@ -1025,6 +1054,22 @@
     "description": "Take photo CTA"
   },
   "mealScanChooseGallery": "Galeriden seç",
+  "mealScanScansLeft": "{remaining}/{total} tarama kaldı",
+  "@mealScanScansLeft": {
+    "description": "Meal scan: free daily quota counter badge",
+    "placeholders": {
+      "remaining": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "mealScanUnlimited": "Sınırsız",
+  "@mealScanUnlimited": {
+    "description": "Meal scan: premium unlimited counter badge"
+  },
+  "mealScanNameLabel": "Öğün adı",
+  "@mealScanNameLabel": {
+    "description": "Meal scan result: editable meal-name field label"
+  },
   "@mealScanChooseGallery": {
     "description": "Choose from gallery CTA"
   },

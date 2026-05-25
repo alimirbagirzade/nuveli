@@ -80,7 +80,7 @@ class TestLimiterEnforcement:
     ):
         # Stub the OpenAI Vision call so we don't hit the real API.
         # Return a shape that matches MealScanResponse — minimum viable.
-        async def fake_analyze(_image, _hint):
+        async def fake_analyze(_image, _hint, language_code=None):
             return {
                 "foods": [],
                 "total_calories": 0,

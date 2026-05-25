@@ -262,11 +262,12 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Text(
-        'No habits yet — defaults will appear on first login',
-        style: TextStyle(color: Color(0xFFB8C5D6), fontSize: 13),
+        AppLocalizations.of(context)?.habitsEmptyDefaults ??
+            'No habits yet — defaults will appear on first login',
+        style: const TextStyle(color: Color(0xFFB8C5D6), fontSize: 13),
       ),
     );
   }

@@ -108,28 +108,43 @@ class _CoachContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // A brand-new user (no meals logged) gets a placeholder insight row from
+    // the backend: score 0, empty paragraph/tips, no model run. Showing the
+    // red "0 / needs care / pick a tip below" score card there is both
+    // demotivating and a dead-end (there are no tips below). Detect that
+    // state and show a friendly "log your first meal" empty state instead.
+    final isEmptyInsight = insight.todayInsight.isEmpty &&
+        insight.tips.isEmpty &&
+        insight.recommendedAction == null &&
+        insight.modelUsed == null;
+
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
       children: [
-        _ScoreCard(insight: insight),
-        const SizedBox(height: 16),
-        if (insight.todayInsight.isNotEmpty) ...[
-          _InsightBody(text: insight.todayInsight),
+        if (isEmptyInsight) ...[
+          _CoachEmpty(l10n: l10n),
           const SizedBox(height: 16),
-        ],
-        if (insight.tips.isNotEmpty) ...[
-          _SectionLabel(l10n?.coachTodaysTips ?? "Today's tips"),
-          const SizedBox(height: 8),
-          for (final tip in insight.tips) TipTile(tip: tip),
-          const SizedBox(height: 6),
-        ],
-        if (insight.recommendedAction != null && insight.id != null) ...[
-          RecommendedActionButton(
-            insightId: insight.id!,
-            action: insight.recommendedAction!,
-          ),
+        ] else ...[
+          _ScoreCard(insight: insight),
           const SizedBox(height: 16),
+          if (insight.todayInsight.isNotEmpty) ...[
+            _InsightBody(text: insight.todayInsight),
+            const SizedBox(height: 16),
+          ],
+          if (insight.tips.isNotEmpty) ...[
+            _SectionLabel(l10n?.coachTodaysTips ?? "Today's tips"),
+            const SizedBox(height: 8),
+            for (final tip in insight.tips) TipTile(tip: tip),
+            const SizedBox(height: 6),
+          ],
+          if (insight.recommendedAction != null && insight.id != null) ...[
+            RecommendedActionButton(
+              insightId: insight.id!,
+              action: insight.recommendedAction!,
+            ),
+            const SizedBox(height: 16),
+          ],
         ],
         SizedBox(
           height: 50,
@@ -288,6 +303,68 @@ class _SectionLabel extends StatelessWidget {
         color: Colors.white,
         fontSize: 14,
         fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+}
+
+/// Empty state for a fresh user with no logged meals yet — replaces the
+/// red "0 / needs care / pick a tip below" score card, which blamed the
+/// user for an absence of data and pointed at tips that weren't there.
+class _CoachEmpty extends StatelessWidget {
+  const _CoachEmpty({required this.l10n});
+  final AppLocalizations? l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primary.withValues(alpha: 0.12),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: 0.35),
+              ),
+            ),
+            child: const Icon(
+              Icons.auto_awesome_rounded,
+              color: AppColors.primary,
+              size: 32,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            l10n?.coachEmptyTitle ?? 'Your coach is getting ready',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            l10n?.coachEmptyBody ??
+                'Log your first meal today and your coach will prepare '
+                    'daily insights and tips just for you.',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFFB8D4D2),
+              fontSize: 13.5,
+              height: 1.5,
+            ),
+          ),
+        ],
       ),
     );
   }

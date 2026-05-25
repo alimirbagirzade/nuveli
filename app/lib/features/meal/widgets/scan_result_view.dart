@@ -38,6 +38,8 @@ class ScanResultView extends ConsumerWidget {
                 confidence: insight?.score,
               ),
               const SizedBox(height: 16),
+              const _MealNameField(),
+              const SizedBox(height: 16),
               _MealTypeChips(
                 selected: state.mealType ?? 'snack',
                 onChanged: controller.setMealType,
@@ -288,6 +290,22 @@ class _MealTypeChips extends StatelessWidget {
 
   static const _types = ['breakfast', 'lunch', 'dinner', 'snack'];
 
+  static String _label(BuildContext context, String type) {
+    final l10n = AppLocalizations.of(context);
+    switch (type) {
+      case 'breakfast':
+        return l10n?.mealTypeBreakfast ?? 'Breakfast';
+      case 'lunch':
+        return l10n?.mealTypeLunch ?? 'Lunch';
+      case 'dinner':
+        return l10n?.mealTypeDinner ?? 'Dinner';
+      case 'snack':
+        return l10n?.mealTypeSnack ?? 'Snack';
+      default:
+        return type;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -301,7 +319,7 @@ class _MealTypeChips extends StatelessWidget {
           final active = type == selected;
           return ChoiceChip(
             label: Text(
-              type[0].toUpperCase() + type.substring(1),
+              _label(context, type),
               style: TextStyle(
                 color: active ? Colors.white : const Color(0xFFB8D4D2),
                 fontSize: 12,
@@ -317,6 +335,63 @@ class _MealTypeChips extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+/// Editable meal-title field. Seeded with the auto-composed name (from the
+/// detected foods) so the user sees a sensible default and can rename it
+/// (e.g. "Kahvaltım"). Leaving it blank falls back to the auto name at save.
+class _MealNameField extends ConsumerStatefulWidget {
+  const _MealNameField();
+
+  @override
+  ConsumerState<_MealNameField> createState() => _MealNameFieldState();
+}
+
+class _MealNameFieldState extends ConsumerState<_MealNameField> {
+  late final TextEditingController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = ref.read(mealScanControllerProvider);
+    _ctrl = TextEditingController(text: state.mealName ?? state.autoMealName);
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return TextField(
+      controller: _ctrl,
+      onChanged: (v) =>
+          ref.read(mealScanControllerProvider.notifier).setMealName(v),
+      style: const TextStyle(color: Colors.white, fontSize: 14),
+      textCapitalization: TextCapitalization.sentences,
+      maxLength: 60,
+      decoration: InputDecoration(
+        labelText: l10n?.mealScanNameLabel ?? 'Meal name',
+        labelStyle: const TextStyle(color: Color(0xFFB8D4D2), fontSize: 13),
+        counterText: '',
+        filled: true,
+        fillColor: AppColors.surface,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.primary),
+        ),
       ),
     );
   }

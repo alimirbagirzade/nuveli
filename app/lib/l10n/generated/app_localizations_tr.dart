@@ -672,6 +672,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeThisWeek => 'Bu Hafta';
 
   @override
+  String homeDaysOnTarget(int count) {
+    return '$count/7 gün hedefte';
+  }
+
+  @override
+  String get habitsEmptyDefaults =>
+      'Henüz alışkanlık yok — varsayılanlar ilk girişte gelir.';
+
+  @override
   String get homeMiniGoalTitle => 'Bugünkü Mini Hedef';
 
   @override
@@ -1958,6 +1967,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get coachRegenerateFree => 'Yenile (günde 1 ücretsiz)';
 
   @override
+  String get coachEmptyTitle => 'Koçun hazırlanıyor';
+
+  @override
+  String get coachEmptyBody =>
+      'Bugün ilk öğününü ekle — koçun sana özel günlük insight ve ipuçları hazırlasın.';
+
+  @override
+  String get paywallNoPackages =>
+      'Şu anda abonelik paketi yok. Bağlantını kontrol edip tekrar dene.';
+
+  @override
   String get coachScoreExcellent => 'Mükemmel';
 
   @override
@@ -1998,6 +2018,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get homeMealNameQuestion => 'Ne yedin?';
+
+  @override
+  String get homeMealNameHint => 'ör. meyveli yoğurt';
+
+  @override
+  String get homeCaloriesHint => 'ör. 180';
 
   @override
   String get homeCaloriesKcal => 'Kalori (kcal)';
@@ -2052,6 +2078,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mealScanChooseGallery => 'Galeriden seç';
+
+  @override
+  String mealScanScansLeft(int remaining, int total) {
+    return '$remaining/$total tarama kaldı';
+  }
+
+  @override
+  String get mealScanUnlimited => 'Sınırsız';
+
+  @override
+  String get mealScanNameLabel => 'Öğün adı';
 
   @override
   String get mealScanAnalyzingStep1 => 'Yemeğin analiz ediliyor...';

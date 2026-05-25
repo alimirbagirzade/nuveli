@@ -36,6 +36,7 @@ class MealScanState {
   final List<DetectedFood> editedFoods;
   final double scaleFactor;
   final String? mealType; // breakfast | lunch | dinner | snack
+  final String? mealName; // user override; null/empty → auto-composed
   final String? errorMessage;
   final bool isRateLimited;
 
@@ -46,6 +47,7 @@ class MealScanState {
     this.editedFoods = const [],
     this.scaleFactor = 1.0,
     this.mealType,
+    this.mealName,
     this.errorMessage,
     this.isRateLimited = false,
   });
@@ -57,6 +59,7 @@ class MealScanState {
     List<DetectedFood>? editedFoods,
     double? scaleFactor,
     String? mealType,
+    String? mealName,
     String? errorMessage,
     bool? isRateLimited,
     bool clearError = false,
@@ -70,6 +73,7 @@ class MealScanState {
       editedFoods: editedFoods ?? this.editedFoods,
       scaleFactor: scaleFactor ?? this.scaleFactor,
       mealType: mealType ?? this.mealType,
+      mealName: mealName ?? this.mealName,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       isRateLimited: isRateLimited ?? this.isRateLimited,
     );
@@ -91,6 +95,15 @@ class MealScanState {
       effectiveFoods.fold<double>(0, (sum, f) => sum + f.carbsG);
   double get totalFatG =>
       effectiveFoods.fold<double>(0, (sum, f) => sum + f.fatG);
+
+  /// Auto-composed title from detected foods — the default shown in the
+  /// editable name field and the fallback when the user leaves it blank.
+  String get autoMealName {
+    final foods = effectiveFoods;
+    if (foods.isEmpty) return '';
+    if (foods.length == 1) return foods.first.name;
+    return foods.take(3).map((f) => f.name).join(' + ');
+  }
 }
 
 class MealScanController extends AutoDisposeNotifier<MealScanState> {
@@ -230,6 +243,12 @@ class MealScanController extends AutoDisposeNotifier<MealScanState> {
     state = state.copyWith(mealType: mealType);
   }
 
+  /// User override for the meal title. Empty string is kept (not cleared)
+  /// so `save()` knows to fall back to the auto-composed name.
+  void setMealName(String name) {
+    state = state.copyWith(mealName: name);
+  }
+
   /// Persist via `POST /meals` with scan_source='ai_scan'.
   Future<bool> save() async {
     final foods = state.effectiveFoods;
@@ -238,10 +257,11 @@ class MealScanController extends AutoDisposeNotifier<MealScanState> {
     state = state.copyWith(phase: MealScanPhase.saving, clearError: true);
 
     try {
+      final typedName = state.mealName?.trim() ?? '';
       final repo = ref.read(mealsRepositoryProvider);
       await repo.createScannedMeal(
         mealType: state.mealType ?? _defaultMealTypeForNow(),
-        name: _composeMealName(foods),
+        name: typedName.isNotEmpty ? typedName : _composeMealName(foods),
         foods: foods,
         consumedAt: DateTime.now(),
       );
