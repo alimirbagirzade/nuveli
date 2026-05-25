@@ -1,98 +1,93 @@
-# Nuveli — Session Handoff (last updated 2026-05-25, ~13:30 TRT)
+# Nuveli — Session Handoff (last updated 2026-05-25, ~22:40 TRT)
 
-> Bir Claude Code oturumundan diğerine geçişi temiz tutar. Yeni chat:
-> ```
-> Read docs/SESSION_HANDOFF.md and continue from "Google Play launch roadmap".
-> ```
+> Continuity doc between Claude Code sessions. New chat:
+> `Read docs/SESSION_HANDOFF.md and continue from "Now / next".`
 
 ---
 
-## Şu anda neredeyiz — v1.6.5+28, main
+## Where we are — v1.6.9+32, main, in Play **closed/internal testing**
 
-**Odak: Android / Google Play. Apple ASKIDA** (enrollment $99 ertelendi; iOS kodu
-hazır tutuluyor ama yayınlanmayacak).
+Android-first. **iOS paused** (Apple enrollment deferred; code kept aligned).
+App is in Play testing with real testers; first AAB (versionCode 28) uploaded
+and installed. Monetization (RevenueCat + Play Billing) is **configured and a
+real test purchase succeeded**. Backend is on Render (free tier) + Supabase +
+OpenAI; **UptimeRobot pings `/health` every 5 min** so the dyno no longer
+cold-starts.
 
-Backend + infra prod-ready, app'in tüm sekmeleri cihazda (iOS sim) doğrulandı +
-çalışıyor. Bu oturumda (2026-05-25) main'e inen 3 PR:
+### This session (2026-05-25) — 8 PRs merged (#140–147)
+Device-QA + two rounds of real-tester feedback. Versions 1.6.0+23 → **1.6.9+32**.
 
-- **#140 Device-QA + AI localization** — profil-kartı overflow, Coach empty-state,
-  paywall/scan/dashboard i18n leak'leri, düzenlenebilir meal-name alanı, ve
-  **backend AI food-name localization** (scan'de yiyecek adları artık kullanıcı
-  dilinde — prod'a deploy edildi + `/scan` API ile doğrulandı: "Sebzeli pizza
-  dilimi").
-- **#141 Brand** — kod-çizimi gülümseyen su-damlası mark (`shared/widgets/smiling_drop.dart`,
-  welcome/auth-gate/onboarding/su-kartında tutarlı) + tasarlanmış "Nuveli" PNG
-  wordmark (`assets/icons/nuveli_wordmark.png`).
-- **#142 Play-readiness P1** — AuthGate profil-error artık onboarding'e DÜŞÜRMÜYOR
-  (retry ekranı); `SCHEDULE_EXACT_ALARM`/`USE_EXACT_ALARM` izinleri söküldü;
-  repo scratch temizliği (`flutter analyze lib/` temiz).
+**Backend — LIVE on Render now (no app update needed):**
+- Weight-goal **save fix** (the partial unique index is on `is_active`, code
+  only flipped `status`) — verified by a tester.
+- **AI food-name localization** on scan (foods/insight in the user's language) —
+  verified via prod API.
+- **Balanced-nutrition coaching** — coach insight flags a consistent macro skew
+  and suggests concrete whole foods (veg/fruit/lean protein). Non-clinical.
+- **Recipe browser + shopping list fix** — prod `recipes.calories` vs model
+  `calories_per_serving` drift (+ grocery non-dict ingredient guard).
 
-**Testler:** 503 flutter / 155 pytest, analyze temiz.
-**Migration:** `user_profiles.language` prod Supabase'e UYGULANDI (2026-05-25).
-**Paywall:** APK'da hâlâ RC **TEST** key — Play Billing config bekliyor (aşağıda).
+**App — waiting for the next AAB (build in ~2-3 days, after more feedback):**
+- 🔴 **Auth launch-crash** (`LateInitializationError _authService`) — `late final`
+  services moved to lazy field initializers.
+- Dashboard greeting uses the profile name (not the email local-part "cfatihonal").
+- Coach hides regenerate in the empty state.
+- Profile overflow, coach empty-state, paywall/scan/dashboard/manual-add i18n.
+- **Onboarding safe-pace guard** (step 4: target date + gentle too-fast warning;
+  `core/utils/weight_pace.dart`).
+- Brand: smiling water-drop mark + "Nuveli" wordmark.
+- "7–8 saat uy" → "uyu" typo.
 
----
+### Tester bug ledger — 15 reported, 14 fixed
+All fixed except cold-start, which is now mitigated by UptimeRobot (#15).
 
-## Google Play launch roadmap (kalan iş — audit 2026-05-25)
-
-### 🔴 P0 — Launch blocker
-1. **Monetization config** (SEN — dashboard işi, kod değil). Tam checklist:
-   `docs/ops/revenuecat-play-billing-setup.md`. Özet: RC entitlement `premium` +
-   offering (monthly+annual) + Play Console subscriptions (aktif) + RC↔Play
-   service account. `RC_GOOGLE_KEY` (`goog_…`) `app/.env.production`'a.
-2. **Signed AAB → Play Internal Testing.** `RC_GOOGLE_KEY` girilince
-   `flutter build appbundle --release --dart-define-from-file=.env.production`
-   (CLAUDE çalıştırır). Yükleme + tester ekleme SEN.
-3. **Gerçek Android cihaz QA** (SEN — donanım). AAB kur, tüm akış + FCM push
-   (sim APNS/Play Billing yapamaz).
-
-### 🟠 P1 — kalan (karar/infra)
-4. **Cron güvenilirliği.** APScheduler in-process (`APP_ENABLE_INTERNAL_CRON`),
-   Render free-tier 15dk sleep'te gece 02:00 insight'ı kaçar. Seçenek: Render
-   Cron Service (~$7/ay, `docs/ops/cron.md` Option B) ya da web'i keep-warm.
-5. **Render cold-start.** Free-tier ilk istek ~30-50s + bazen hata (analytics'te
-   görüldü). Launch güvenilirliği için paid instance ya da kabul.
-   - (P1 kod fix'leri #4 AuthGate / #5 exact-alarm / #13 cleanup ✅ #142'de bitti.)
-
-### 🟡 P2 — Store / legal (SEN — Play zorunlu)
-- Store listing: başlık, kısa/uzun açıklama (TR + diğer diller), screenshot,
-  feature graphic 1024×500, ikon.
-- **Privacy policy URL** (hosted) + **Data Safety formu** (kamera, hesap,
-  sağlık-benzeri veri).
-- Content rating anketi.
-- Hesap silme: in-app var (Ayarlar → delete account); Play web-URL de isteyebilir
-  — doğrula.
-
-### ⚪ P3 — temizlik/known
-- CI broken (main, pre-existing — `project_ci_broken.md`): fix ya da admin-merge.
-- weight_goals duplicate-active warning (kozmetik, UX etkisiz).
-- Kalan AI-output: coach tip metinleri prompt'ta zaten localize; scan ✅.
+### Features
+- Done: editable meal-name, brand mark/wordmark, balanced-nutrition coaching,
+  onboarding safe-pace guard.
+- **Exercise logging (manual)** → V1.1 (post-launch). Strong tester demand; build
+  carefully — NO "burn it off"/compensation framing (wellness boundary).
+- **Wearable / smartwatch sync** → V2 (in `mvp-scope.md` MVP-dışı).
+- **Prescriptive meal/diet plan** → never (clinical diet plan = boundary).
+- `POST /recipes` is still schema-mismatched (DB `calories` + NOT NULL
+  `meal_types`) — testers only browse; fix when recipe creation is needed.
 
 ---
 
-## Mimari / kalıcı notlar
+## Now / next
 
-- **Coach** = insight-only (`/coach/chat`, `/coach/audio` YOK; mood-bubble ayrı
-  lokal katman). Cron 02:00 UTC GPT-4o insight üretir.
-- **Schema drift endemic** — yeni endpoint yazınca `information_schema.columns`
-  ile prod kolon doğrula (pytest Supabase mock'lar, drift yakalamaz).
-- **i18n iki track**: UI string'leri `.arb` (template `app_tr.arb`); AI çıktısı
-  (yiyecek adı/insight) backend prompt + `_get_user_language` (drift-safe).
-- **Squash-merge** convention (`… (#NN)`). **Her fix sonrası version bump +
-  CHANGELOG.** **Co-Authored-By yok** (settings'te attribution kapalı).
+1. **Build the next AAB** (~2-3 days, once feedback settles): `cd app && flutter
+   build appbundle --release --dart-define-from-file=.env.production` → upload to
+   the testing track (versionCode 33). Carries all the app fixes above.
+2. **Production-launch P0** (Play Console + legal — mostly Ali):
+   - **Data Safety form** — answers mapped in `docs/ops/play-data-safety.md`.
+   - **Privacy policy** — draft in `docs/legal/privacy-policy.md`; must be HOSTED
+     at a public URL + a Turkish translation for the TR market.
+   - Store listing (title/desc/screenshots/feature graphic), content rating.
+3. Keep the tester-feedback loop: report → diagnose → fix → merge → backend
+   deploys (live) / app fixes accumulate for the AAB.
 
-## Memory state
-| Memory | Özet |
+## Architecture / standing notes
+- **Coach** = insight-only (no chat/audio). Cron 02:00 UTC + on-demand.
+- **Schema drift is endemic** — verify prod columns (`information_schema`) before
+  trusting repo migrations. Bugs this session: weight_goals (`is_active` vs
+  `status`), recipes (`calories` vs `calories_per_serving`).
+- **i18n two tracks:** UI strings → `.arb` (template `app_tr.arb`; run
+  `flutter gen-l10n` **from the `app/` dir** or the generated file won't update);
+  AI output → backend prompt + `_get_user_language`.
+- **Conventions:** squash-merge `… (#NN)`; version bump + CHANGELOG every fix;
+  no `Co-Authored-By`; use cavecrew-reviewer on each diff.
+
+## Memory
+| Memory | Note |
 |---|---|
 | `user_ali.md` | Solo dev, Android-first, iOS paused |
-| `project_launch_state_real.md` | UI artık shipped+verified; "PR merged ≠ prod-ready", cihaz QA şart |
-| `project_i18n_activated.md` | i18n iki-track; scan AI-localize shipped+deployed+verified |
-| `project_lang_migration_pending.md` | DONE — `user_profiles.language` prod'da |
-| `project_schema_drift_endemic.md` | prod migration ≠ repo; her zaman doğrula |
-| `feedback_verify_on_device.md` | test-green ≠ done; cihazda gez |
-| `feedback_version_bump_per_fix.md` | her fix → version + CHANGELOG |
+| `project_feature_queue.md` | Exercise=V1.1, wearable=V2, diet-plan=never; balanced-nutrition + pace SHIPPED |
+| `project_schema_drift_endemic.md` | always verify prod cols |
+| `feedback_verify_on_device.md` | test-green ≠ done |
+| `feedback_brand_art_use_real_asset.md` | glossy logos → real PNG, not vector |
 
 ---
 
-**Hazırlandı:** 2026-05-25 (Play-readiness audit + P1 fix'ler sonrası).
-**Sonraki güncelleme:** Play Billing config bitince ya da AAB Internal Testing'e çıkınca.
+**Prepared:** 2026-05-25 (after tester rounds 1–2, all code bugs cleared,
+launch-prep docs drafted).
+**Next update:** after the next AAB ships or production launch prep advances.
