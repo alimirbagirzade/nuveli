@@ -3364,4 +3364,37 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get exerciseWeekCaloriesNote => 'Bu hafta tahmini harcanan enerji';
+
+  @override
+  String get exerciseSourceHealth => 'Sağlık uygulamasından';
+
+  @override
+  String get settingsHealthSection => 'Sağlık';
+
+  @override
+  String get settingsHealthConnect => 'Telefon sağlık verisini bağla';
+
+  @override
+  String get settingsHealthConnectDesc =>
+      'Telefonunun sağlık uygulamasındaki son antrenmanları aktivite günlüğüne aktar. İsteğe bağlı ve yalnızca okuma.';
+
+  @override
+  String get settingsHealthSyncNow => 'Şimdi senkronize et';
+
+  @override
+  String settingsHealthImported(int count) {
+    return '$count aktivite içe aktarıldı';
+  }
+
+  @override
+  String get settingsHealthUnavailable =>
+      'Bu cihazda Health Connect kullanılamıyor.';
+
+  @override
+  String get settingsHealthDenied =>
+      'İzin verilmedi. İstediğin zaman açabilirsin.';
+
+  @override
+  String get settingsHealthError =>
+      'Sağlık verisi senkronize edilemedi. Tekrar dene.';
 }

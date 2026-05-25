@@ -69,6 +69,10 @@ class ApiEndpoints {
   static const String exerciseWeekly = '/exercise/weekly';
   static String exerciseLogById(String id) => '/exercise/logs/$id';
 
+  /// Bulk import of device-sourced activities (Health Connect / Apple Health).
+  /// Deduped by source + external_id on the backend. Opt-in only.
+  static const String exerciseImport = '/exercise/import';
+
   // ---------------------------------------------------------------
   // Meal Planner
   // ---------------------------------------------------------------

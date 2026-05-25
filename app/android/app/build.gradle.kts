@@ -34,7 +34,10 @@ android {
 
     defaultConfig {
         applicationId = "com.nuveli.app"
-        minSdk = flutter.minSdkVersion
+        // Google Health Connect (phone health-data import, opt-in) requires
+        // API 26+. Overrides flutter.minSdkVersion literally. Compile/target
+        // SDK are left untouched (still inherited from Flutter).
+        minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

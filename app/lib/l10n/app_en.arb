@@ -1359,5 +1359,14 @@
   "exerciseDeleteFailed": "Could not remove that activity. Try again.",
   "exerciseThisWeek": "This week",
   "exerciseWeekTotalMinutes": "{minutes} min total",
-  "exerciseWeekCaloriesNote": "Estimated energy used this week"
+  "exerciseWeekCaloriesNote": "Estimated energy used this week",
+  "exerciseSourceHealth": "From health app",
+  "settingsHealthSection": "Health",
+  "settingsHealthConnect": "Connect phone health data",
+  "settingsHealthConnectDesc": "Import recent workouts from your phone's health app into your activity log. Optional and read-only.",
+  "settingsHealthSyncNow": "Sync now",
+  "settingsHealthImported": "{count} activities imported",
+  "settingsHealthUnavailable": "Health Connect isn't available on this device.",
+  "settingsHealthDenied": "Permission was declined. You can enable it anytime.",
+  "settingsHealthError": "Could not sync health data. Try again."
 }

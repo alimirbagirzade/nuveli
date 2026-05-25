@@ -126,13 +126,34 @@ class _ActivityRow extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          name,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      // Small glyph marking entries pulled from the phone's
+                      // health store (Health Connect / Apple Health). Manual
+                      // entries show nothing — they're the unmarked default.
+                      if (log.isImported) ...[
+                        const SizedBox(width: 6),
+                        Icon(
+                          Icons.phone_iphone_rounded,
+                          size: 13,
+                          color: _kFaint,
+                          semanticLabel:
+                              l10n?.exerciseSourceHealth ?? 'From health app',
+                        ),
+                      ],
+                    ],
                   ),
                   const SizedBox(height: 2),
                   Text(

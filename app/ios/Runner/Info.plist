@@ -76,6 +76,15 @@
 		<string>Permission to save your meal photos back to the photo library.</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Microphone access lets you talk to your AI coach using voice.</string>
+		<!-- Read-only Apple Health access for the opt-in phone health-data
+		     import (recent workouts + active energy). NOTE: iOS is currently
+		     paused — the HealthKit capability/entitlement is intentionally NOT
+		     added to Runner.entitlements, so authorization no-ops gracefully
+		     on iOS for now. This usage string is kept so the import path is
+		     fully code-aligned for when iOS ships. Imported energy is
+		     display-only and never affects the calorie budget. -->
+		<key>NSHealthShareUsageDescription</key>
+		<string>Nuveli can read your recent workouts and active energy from Apple Health to add them to your activity log. This is optional and read-only.</string>
 		<!-- App Store sees this list to know we support these languages. -->
 		<key>CFBundleLocalizations</key>
 		<array>

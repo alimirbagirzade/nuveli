@@ -3378,4 +3378,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get exerciseWeekCaloriesNote => 'Примерная энергия за неделю';
+
+  @override
+  String get exerciseSourceHealth => 'Из приложения здоровья';
+
+  @override
+  String get settingsHealthSection => 'Здоровье';
+
+  @override
+  String get settingsHealthConnect => 'Подключить данные здоровья телефона';
+
+  @override
+  String get settingsHealthConnectDesc =>
+      'Импортируй последние тренировки из приложения здоровья телефона в журнал активности. Необязательно и только для чтения.';
+
+  @override
+  String get settingsHealthSyncNow => 'Синхронизировать сейчас';
+
+  @override
+  String settingsHealthImported(int count) {
+    return 'Импортировано активностей: $count';
+  }
+
+  @override
+  String get settingsHealthUnavailable =>
+      'Health Connect недоступен на этом устройстве.';
+
+  @override
+  String get settingsHealthDenied =>
+      'Доступ отклонён. Вы можете включить его в любое время.';
+
+  @override
+  String get settingsHealthError =>
+      'Не удалось синхронизировать данные здоровья. Попробуйте снова.';
 }

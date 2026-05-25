@@ -35,6 +35,17 @@ class ExerciseLog {
   /// Server-side row creation timestamp.
   final DateTime createdAt;
 
+  /// Where this log came from. `'manual'` for user-entered sessions (default),
+  /// `'health_connect'` (Android) or `'apple_health'` (iOS) for entries
+  /// imported from the phone's health store. Drives the small source glyph in
+  /// the activity list — see [TodayActivityList]. Null-safe: an absent value
+  /// is treated as `'manual'`.
+  final String source;
+
+  /// The originating platform record UUID for imported entries (used for
+  /// dedup on the backend). Null for manual logs.
+  final String? externalId;
+
   const ExerciseLog({
     required this.id,
     required this.userId,
@@ -45,7 +56,13 @@ class ExerciseLog {
     this.estCalories,
     required this.loggedAt,
     required this.createdAt,
+    this.source = 'manual',
+    this.externalId,
   });
+
+  /// True when this entry was imported from the phone's health store
+  /// (Health Connect / Apple Health) rather than entered by hand.
+  bool get isImported => source != 'manual';
 
   factory ExerciseLog.fromJson(Map<String, dynamic> json) {
     return ExerciseLog(
@@ -58,6 +75,9 @@ class ExerciseLog {
       estCalories: (json['est_calories'] as num?)?.toInt(),
       loggedAt: _parseLocal(json['logged_at']) ?? DateTime.now(),
       createdAt: _parseLocal(json['created_at']) ?? DateTime.now(),
+      // Null-safe: legacy rows / manual entries omit `source`.
+      source: (json['source'] as String?) ?? 'manual',
+      externalId: json['external_id'] as String?,
     );
   }
 
@@ -72,6 +92,8 @@ class ExerciseLog {
       if (estCalories != null) 'est_calories': estCalories,
       'logged_at': loggedAt.toUtc().toIso8601String(),
       'created_at': createdAt.toUtc().toIso8601String(),
+      'source': source,
+      if (externalId != null) 'external_id': externalId,
     };
   }
 

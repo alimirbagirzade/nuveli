@@ -731,3 +731,491 @@ def test_no_endpoint_mutates_calorie_goal(client, auth_headers, exercise_db_by_t
     written_tables = {name for _, name in writes}
     assert "user_profiles" not in written_tables
     assert "weight_logs" not in written_tables
+
+
+# =============================================================================
+# HEALTH-DATA IMPORT (Apple Health / Google Health Connect → exercise_logs)
+# =============================================================================
+# Imported device calories are DISPLAY-ONLY: they surface in est_calories /
+# total_calories exactly like the MET estimate and NEVER affect a calorie
+# budget. Import dedupes on external_id and tags rows by source.
+
+# --- Auth gate ---
+
+def test_import_requires_auth(client):
+    response = client.post(
+        "/exercise/import",
+        json={"items": [{
+            "activity_type": "running", "duration_min": 30,
+            "logged_at": "2026-05-25T18:00:00+00:00", "external_id": "hc-1",
+        }]},
+    )
+    assert response.status_code in (401, 403)
+
+
+def _import_item(**overrides):
+    """A valid ExerciseImportItem payload dict; override any field."""
+    base = {
+        "activity_type": "running",
+        "duration_min": 30,
+        "intensity": "moderate",
+        "logged_at": "2026-05-25T18:00:00+00:00",
+        "external_id": "hc-1",
+        "source": "health_connect",
+    }
+    base.update(overrides)
+    return base
+
+
+# --- Insert new items ---
+
+def test_import_inserts_new_items(client, auth_headers, exercise_db_by_table):
+    """A fresh batch (no existing external_ids) inserts all items and reports
+    the imported count; nothing is skipped."""
+    # No existing external_ids on file (exercise_logs select → []).
+    # Insert echoes the two new rows.
+    import routers.exercise as rex
+
+    # Existing-id lookup returns empty; insert returns 2 rows.
+    selects: list = []
+    inserts: list = []
+
+    def _table(name):
+        chain = _make_chain([])
+
+        def rec_select(*a, **k):
+            selects.append((a, k))
+            return chain
+
+        def rec_insert(rows, *a, **k):
+            inserts.append(rows)
+            # Echo back what was inserted so imported == len(rows).
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        chain.select = rec_select
+        chain.insert = rec_insert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [
+            _import_item(external_id="hc-1"),
+            _import_item(external_id="hc-2", activity_type="walking"),
+        ]},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["imported"] == 2
+    assert body["skipped"] == 0
+    # Both rows carry the authed user_id, source, external_id, and a local_day
+    # derived from logged_at (not the server clock).
+    sent = inserts[0]
+    assert len(sent) == 2
+    for r in sent:
+        assert r["user_id"] == "11111111-1111-1111-1111-111111111111"
+        assert r["source"] == "health_connect"
+        assert r["local_day"] == "2026-05-25"
+        assert "calories" not in r  # only device_calories ever, never a budget key
+
+
+# --- Dedupe: existing external_id skipped ---
+
+def test_import_skips_existing_external_id(client, auth_headers):
+    """An external_id already on file for the user is skipped, not re-inserted."""
+    import routers.exercise as rex
+
+    inserts: list = []
+
+    def _table(name):
+        # First .select() (existing-id lookup) returns hc-1 as already present.
+        chain = _make_chain([{"external_id": "hc-1"}])
+
+        def rec_insert(rows, *a, **k):
+            inserts.append(rows)
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        chain.insert = rec_insert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [
+            _import_item(external_id="hc-1"),                       # already present
+            _import_item(external_id="hc-2", activity_type="yoga"),  # new
+        ]},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["imported"] == 1
+    assert body["skipped"] == 1
+    # Only the new external_id was inserted.
+    assert len(inserts) == 1
+    assert {r["external_id"] for r in inserts[0]} == {"hc-2"}
+
+
+def test_import_dedupes_within_batch(client, auth_headers):
+    """A batch repeating the same external_id inserts it once and counts the
+    repeat as skipped."""
+    import routers.exercise as rex
+
+    inserts: list = []
+
+    def _table(name):
+        chain = _make_chain([])  # nothing on file
+
+        def rec_insert(rows, *a, **k):
+            inserts.append(rows)
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        chain.insert = rec_insert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [
+            _import_item(external_id="dup", duration_min=30),
+            _import_item(external_id="dup", duration_min=45),  # same id, dropped
+        ]},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["imported"] == 1
+    assert body["skipped"] == 1
+    assert len(inserts[0]) == 1
+
+
+# --- source recorded ---
+
+def test_import_records_apple_health_source(client, auth_headers):
+    """source='apple_health' is preserved on the inserted row."""
+    import routers.exercise as rex
+    inserts: list = []
+
+    def _table(name):
+        chain = _make_chain([])
+
+        def rec_insert(rows, *a, **k):
+            inserts.append(rows)
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        chain.insert = rec_insert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [_import_item(external_id="ah-1", source="apple_health")]},
+    )
+    assert response.status_code == 200
+    assert response.json()["imported"] == 1
+    assert inserts[0][0]["source"] == "apple_health"
+
+
+def test_import_unknown_source_normalizes(client, auth_headers):
+    """An unexpected source string falls back to 'health_connect'."""
+    import routers.exercise as rex
+    inserts: list = []
+
+    def _table(name):
+        chain = _make_chain([])
+
+        def rec_insert(rows, *a, **k):
+            inserts.append(rows)
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        chain.insert = rec_insert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [_import_item(external_id="x-1", source="fitbit_galaxy")]},
+    )
+    assert response.status_code == 200
+    assert inserts[0][0]["source"] == "health_connect"
+
+
+# --- activity normalization + validation on import ---
+
+def test_import_normalizes_activity_type(client, auth_headers):
+    """An out-of-vocabulary activity_type imports as 'other'."""
+    import routers.exercise as rex
+    inserts: list = []
+
+    def _table(name):
+        chain = _make_chain([])
+
+        def rec_insert(rows, *a, **k):
+            inserts.append(rows)
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        chain.insert = rec_insert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [_import_item(external_id="n-1", activity_type="crossfit_wod")]},
+    )
+    assert response.status_code == 200
+    assert inserts[0][0]["activity_type"] == "other"
+
+
+def test_import_duration_validation(client, auth_headers):
+    """duration_min outside 1..1440 is rejected (422)."""
+    for bad in (0, 1441):
+        response = client.post(
+            "/exercise/import",
+            headers=auth_headers,
+            json={"items": [_import_item(external_id="b", duration_min=bad)]},
+        )
+        assert response.status_code == 422
+
+
+def test_import_requires_external_id(client, auth_headers):
+    """external_id is required — an item without it is rejected (422)."""
+    item = _import_item()
+    item.pop("external_id")
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [item]},
+    )
+    assert response.status_code == 422
+
+
+def test_import_empty_batch_rejected(client, auth_headers):
+    """An empty items list is rejected (422) — min_length=1."""
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": []},
+    )
+    assert response.status_code == 422
+
+
+# --- device_calories surfaces as est_calories (overrides MET) ---
+
+def test_imported_device_calories_overrides_met_on_list(client, auth_headers, exercise_db_by_table):
+    """A row with device_calories surfaces that figure as est_calories on GET
+    /logs, overriding the MET estimate (running 30min @ 70kg would be 315)."""
+    exercise_db_by_table("user_profiles", [{"weight_kg": 70}])
+    exercise_db_by_table("exercise_logs", [{
+        "id": "22222222-2222-2222-2222-222222222222",
+        "user_id": "11111111-1111-1111-1111-111111111111",
+        "activity_type": "running",
+        "duration_min": 30,
+        "intensity": "moderate",
+        "note": None,
+        "logged_at": "2026-05-25T18:00:00+00:00",
+        "created_at": "2026-05-25T18:00:01+00:00",
+        "source": "apple_health",
+        "external_id": "ah-9",
+        "device_calories": 411,
+    }])
+    response = client.get("/exercise/logs", headers=auth_headers)
+    assert response.status_code == 200
+    body = response.json()
+    assert len(body) == 1
+    # Device figure wins over the MET 315.
+    assert body[0]["est_calories"] == 411
+    assert body[0]["source"] == "apple_health"
+    assert body[0]["external_id"] == "ah-9"
+
+
+def test_met_used_when_device_calories_null_on_list(client, auth_headers, exercise_db_by_table):
+    """A row with device_calories=None falls back to the MET estimate."""
+    exercise_db_by_table("user_profiles", [{"weight_kg": 70}])
+    exercise_db_by_table("exercise_logs", [{
+        "id": "22222222-2222-2222-2222-222222222222",
+        "user_id": "11111111-1111-1111-1111-111111111111",
+        "activity_type": "running",
+        "duration_min": 30,
+        "intensity": "moderate",
+        "note": None,
+        "logged_at": "2026-05-25T18:00:00+00:00",
+        "created_at": "2026-05-25T18:00:01+00:00",
+        "source": "health_connect",
+        "external_id": "hc-9",
+        "device_calories": None,
+    }])
+    response = client.get("/exercise/logs", headers=auth_headers)
+    assert response.status_code == 200
+    body = response.json()
+    assert body[0]["est_calories"] == 315  # MET fallback
+
+
+def test_device_calories_surfaces_without_weight(client, auth_headers, exercise_db_by_table):
+    """device_calories surfaces even when the user has no weight on file (the
+    MET path would be None, but the device figure stands)."""
+    # No weight sources.
+    exercise_db_by_table("exercise_logs", [{
+        "id": "22222222-2222-2222-2222-222222222222",
+        "user_id": "11111111-1111-1111-1111-111111111111",
+        "activity_type": "running",
+        "duration_min": 30,
+        "intensity": "moderate",
+        "note": None,
+        "logged_at": "2026-05-25T18:00:00+00:00",
+        "created_at": "2026-05-25T18:00:01+00:00",
+        "source": "apple_health",
+        "external_id": "ah-10",
+        "device_calories": 280,
+    }])
+    response = client.get("/exercise/logs", headers=auth_headers)
+    assert response.status_code == 200
+    assert response.json()[0]["est_calories"] == 280
+
+
+# --- device_calories aggregates into total_calories ---
+
+def test_today_summary_uses_device_calories(client, auth_headers, exercise_db_by_table):
+    """today/summary sums device-first per row: one device row (400) + one MET
+    row (running 30min moderate @70kg = 315) → 715."""
+    exercise_db_by_table("user_profiles", [{"weight_kg": 70}])
+    exercise_db_by_table("exercise_logs", [
+        {"activity_type": "running", "duration_min": 30, "intensity": "moderate",
+         "device_calories": 400},
+        {"activity_type": "running", "duration_min": 30, "intensity": "moderate",
+         "device_calories": None},
+    ])
+    response = client.get("/exercise/today/summary", headers=auth_headers)
+    assert response.status_code == 200
+    body = response.json()
+    assert body["total_calories"] == 715
+
+
+def test_today_summary_device_calories_without_weight(client, auth_headers, exercise_db_by_table):
+    """No weight, but a device-reported row → total_calories is that figure
+    (not None), while a sibling MET-only row contributes nothing."""
+    exercise_db_by_table("exercise_logs", [
+        {"activity_type": "running", "duration_min": 30, "intensity": "moderate",
+         "device_calories": 250},
+        {"activity_type": "yoga", "duration_min": 60, "intensity": None,
+         "device_calories": None},  # no weight → MET None → contributes 0/none
+    ])
+    response = client.get("/exercise/today/summary", headers=auth_headers)
+    assert response.status_code == 200
+    body = response.json()
+    assert body["total_calories"] == 250
+
+
+def test_weekly_uses_device_calories(client, auth_headers, exercise_db_by_table):
+    """weekly per-day/week totals prefer device_calories per row."""
+    today = __import__("datetime").date.today()
+    d1 = today.isoformat()
+    exercise_db_by_table("user_profiles", [{"weight_kg": 70}])
+    exercise_db_by_table("exercise_logs", [
+        {"duration_min": 30, "local_day": d1, "activity_type": "running",
+         "intensity": "moderate", "device_calories": 500},   # device wins (vs 315)
+        {"duration_min": 60, "local_day": d1, "activity_type": "walking",
+         "intensity": None, "device_calories": None},          # MET 245
+    ])
+    response = client.get("/exercise/weekly", headers=auth_headers)
+    assert response.status_code == 200
+    body = response.json()
+    # 500 (device) + 245 (MET) = 745
+    assert body["week_total_calories"] == 745
+    assert body["days"][-1]["total_calories"] == 745
+
+
+# --- ExerciseLogResponse exposes source + external_id ---
+
+def test_create_log_response_has_source_external_id(client, auth_headers, exercise_db):
+    """A manual POST /logs echoes source='manual' and external_id=None."""
+    exercise_db.table.return_value.execute.return_value = MagicMock(
+        data=[{
+            "id": "22222222-2222-2222-2222-222222222222",
+            "user_id": "11111111-1111-1111-1111-111111111111",
+            "activity_type": "running",
+            "duration_min": 30,
+            "intensity": "moderate",
+            "note": None,
+            "logged_at": "2026-05-25T18:00:00+00:00",
+            "created_at": "2026-05-25T18:00:01+00:00",
+            "source": "manual",
+            "external_id": None,
+            "device_calories": None,
+        }],
+        count=1,
+    )
+    response = client.post(
+        "/exercise/logs",
+        headers=auth_headers,
+        json={"activity_type": "running", "duration_min": 30, "intensity": "moderate"},
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert body["source"] == "manual"
+    assert body["external_id"] is None
+
+
+# --- WELLNESS BOUNDARY: import never mutates a calorie goal ---
+
+def test_import_no_endpoint_mutates_calorie_goal(client, auth_headers):
+    """The import path writes ONLY exercise_logs — no calorie budget/target."""
+    import routers.exercise as rex
+
+    writes: list = []
+
+    def _table(name):
+        chain = _make_chain([])  # no existing external_ids
+
+        def rec_insert(rows, *a, **k):
+            writes.append(("insert", name))
+            chain.execute.return_value = MagicMock(data=rows, count=len(rows))
+            return chain
+
+        def rec_update(*a, **k):
+            writes.append(("update", name))
+            return chain
+
+        def rec_upsert(*a, **k):
+            writes.append(("upsert", name))
+            return chain
+
+        chain.insert = rec_insert
+        chain.update = rec_update
+        chain.upsert = rec_upsert
+        return chain
+
+    mock = rex.get_supabase()
+    mock.table = MagicMock(side_effect=_table)
+
+    response = client.post(
+        "/exercise/import",
+        headers=auth_headers,
+        json={"items": [
+            _import_item(external_id="hc-1", device_calories=500),
+        ]},
+    )
+    assert response.status_code == 200
+    assert writes == [("insert", "exercise_logs")]
+    assert "user_profiles" not in {n for _, n in writes}

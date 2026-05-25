@@ -2277,5 +2277,21 @@
       }
     }
   },
-  "exerciseWeekCaloriesNote": "Bu hafta tahmini harcanan enerji"
+  "exerciseWeekCaloriesNote": "Bu hafta tahmini harcanan enerji",
+  "exerciseSourceHealth": "Sağlık uygulamasından",
+  "settingsHealthSection": "Sağlık",
+  "settingsHealthConnect": "Telefon sağlık verisini bağla",
+  "settingsHealthConnectDesc": "Telefonunun sağlık uygulamasındaki son antrenmanları aktivite günlüğüne aktar. İsteğe bağlı ve yalnızca okuma.",
+  "settingsHealthSyncNow": "Şimdi senkronize et",
+  "settingsHealthImported": "{count} aktivite içe aktarıldı",
+  "@settingsHealthImported": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsHealthUnavailable": "Bu cihazda Health Connect kullanılamıyor.",
+  "settingsHealthDenied": "İzin verilmedi. İstediğin zaman açabilirsin.",
+  "settingsHealthError": "Sağlık verisi senkronize edilemedi. Tekrar dene."
 }
