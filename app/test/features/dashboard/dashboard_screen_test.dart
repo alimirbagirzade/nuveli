@@ -27,6 +27,7 @@ import 'package:nuveli/features/habits/models/habit.dart';
 import 'package:nuveli/features/habits/providers/habits_providers.dart';
 import 'package:nuveli/features/notifications/providers/notifications_provider.dart'
     show sharedPreferencesProvider;
+import 'package:nuveli/features/profile/models/user_profile.dart';
 import 'package:nuveli/features/profile/models/weekly_analytics.dart';
 import 'package:nuveli/features/profile/providers/profile_provider.dart';
 import 'package:nuveli/shared/widgets/app_error_view.dart';
@@ -70,6 +71,9 @@ Future<void> _pump(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(prefs),
         currentAuthUserProvider.overrideWith((ref) => _fakeUser()),
+        // DashboardHeader now reads the profile name; keep it unresolved so
+        // the greeting falls back to the auth user (no network in tests).
+        profileProvider.overrideWith((ref) => Completer<UserProfile>().future),
         dashboardSummaryProvider.overrideWith(
           (ref) => switch (summary) {
             AsyncData(:final value) => Future.value(value),

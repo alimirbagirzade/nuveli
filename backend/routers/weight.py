@@ -233,19 +233,23 @@ async def create_goal(
     """Create new goal. Marks any previous active goal as 'cancelled'."""
     supabase = get_supabase()
 
-    # Deactivate existing active goals. Prod's weight_goals_status_check
-    # constraint allows {active, paused, completed, abandoned} and rejects
-    # 'cancelled' — use 'abandoned' to mean "the user moved on from this
-    # goal before reaching it".
+    # Deactivate any currently-active goal. The partial UNIQUE index
+    # `idx_weight_goals_one_active` is on `is_active = true` (NOT `status`),
+    # so we MUST flip is_active=false here — otherwise inserting the new
+    # goal (is_active defaults to true) collides with the old active row and
+    # the whole save 500s ("Couldn't save. Check your connection."). We also
+    # set status='abandoned' to keep the two columns in sync. 'abandoned' is
+    # used because prod's weight_goals_status_check rejects 'cancelled'.
     supabase.table("weight_goals")\
-        .update({"status": "abandoned"})\
+        .update({"is_active": False, "status": "abandoned"})\
         .eq("user_id", user_id)\
-        .eq("status", "active")\
+        .eq("is_active", True)\
         .execute()
 
     payload = goal.model_dump(mode="json")
     payload["user_id"] = user_id
     payload["status"] = "active"
+    payload["is_active"] = True
 
     # Auto-fill starting_weight if missing
     if not payload.get("starting_weight_kg"):

@@ -1,5 +1,21 @@
 # Nuveli Changelog
 
+## [1.6.6+29] - 2026-05-25 - First Android tester round: weight-goal save, greeting name, coach empty
+
+### Fixes
+- **Weight-goal save no longer fails** with "Couldn't save. Check your
+  connection." The partial UNIQUE index `idx_weight_goals_one_active` is on
+  `is_active`, but the backend only flipped `status` on deactivate — the old
+  goal kept `is_active = true`, so saving a second goal collided and 500'd.
+  `create_goal` now flips `is_active` (the constraint column) and keeps
+  `status` in sync. (Backend — takes effect on Render deploy.)
+- **Dashboard greeting shows the user's name**, not the email local-part. It
+  now reads the onboarding-entered profile name (same source as the Profile
+  tab) instead of the empty auth `displayName` that fell back to e.g.
+  "cfatihonal".
+- **Coach hides the regenerate button in the empty state**, so a fresh user
+  doesn't spend their one free daily regenerate on a no-data insight.
+
 ## [1.6.5+28] - 2026-05-25 - Play-readiness: auth-gate recovery, drop exact-alarm perms, repo cleanup
 
 ### Fixes
