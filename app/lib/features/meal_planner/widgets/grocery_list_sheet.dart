@@ -76,7 +76,8 @@ class GroceryListSheet extends ConsumerWidget {
                 error: (e, _) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 32),
                   child: Text(
-                    '${l10n?.plannerGroceryLoadError ?? 'Could not load groceries'}: ${e.toString()}',
+                    l10n?.plannerGroceryLoadError ??
+                        'Could not load groceries',
                     style: const TextStyle(color: Color(0xFFB8D4D2)),
                   ),
                 ),

@@ -905,6 +905,14 @@
   "plannerDailyCalorieTarget": "Tägliches Kalorienziel (optional)",
   "plannerMealsPerDay": "Mahlzeiten pro Tag",
   "plannerAnythingElse": "Noch etwas? (optional)",
+  "plannerHintMealName": "z. B. Gegrillter Hähnchensalat",
+  "plannerHintCalories": "z. B. 450",
+  "plannerHintNote": "z. B. Sonntags vorkochen",
+  "plannerHintEditNote": "z. B. gegen Reste tauschen",
+  "generatePlanHintStyle": "z. B. proteinreich, vegetarisch, mediterran",
+  "generatePlanHintAllergies": "z. B. Erdnüsse, Meeresfrüchte",
+  "generatePlanHintCalories": "z. B. 2000",
+  "generatePlanHintGoals": "z. B. schnelle Frühstücke, Abendessen zum Vorkochen",
   "plannerCalorieTargetError": "Kalorienziel muss zwischen 800 und 6000 liegen",
   "plannerGenerating": "Wird erstellt…",
   "plannerGeneratePlan": "Plan erstellen",
@@ -1295,5 +1303,61 @@
   "coachActionAddHabit": "Gewohnheit hinzufügen",
   "coachActionLogWater": "Wasser erfassen",
   "coachActionUpdateTarget": "Ziel aktualisieren",
-  "coachActionApply": "Anwenden"
+  "coachActionApply": "Anwenden",
+  "exercise": "Activity",
+  "exerciseTodayActive": "You were active for {minutes} min today 💪",
+  "@exerciseTodayActive": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseGreatMoving": "Moving feels great!",
+  "exerciseNoneToday": "How about a little movement today?",
+  "exerciseSessionsCount": "{count} sessions",
+  "@exerciseSessionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseLogTitle": "Aktivität hinzufügen",
+  "exerciseActivityType": "Aktivitätsart",
+  "exerciseDurationMinutes": "Dauer (Min.)",
+  "exerciseDurationHint": "z. B. 30",
+  "exerciseIntensityOptional": "Intensität (optional)",
+  "exerciseNoteOptional": "Notiz (optional)",
+  "exerciseNoteHint": "z. B. Spaziergang im Park",
+  "exerciseSave": "Aktivität speichern",
+  "exerciseDurationRequired": "Gib eine Dauer ein (mehr als 0 Minuten)",
+  "exerciseSaveFailed": "Aktivität konnte nicht gespeichert werden. Zum Wiederholen tippen.",
+  "exerciseSaved": "Gut gemacht! Deine Aktivität ist gespeichert 💪",
+  "exerciseTypeWalking": "Gehen",
+  "exerciseTypeRunning": "Laufen",
+  "exerciseTypeCycling": "Radfahren",
+  "exerciseTypeHiking": "Wandern",
+  "exerciseTypeSwimming": "Schwimmen",
+  "exerciseTypeGym": "Fitnessstudio",
+  "exerciseTypeYoga": "Yoga",
+  "exerciseTypePilates": "Pilates",
+  "exerciseTypeDancing": "Tanzen",
+  "exerciseTypeHiit": "HIIT",
+  "exerciseTypeJumpRope": "Seilspringen",
+  "exerciseTypeRowing": "Rudern",
+  "exerciseTypeSports": "Sport",
+  "exerciseTypeOther": "Sonstiges",
+  "exerciseIntensityLight": "Leicht",
+  "exerciseIntensityModerate": "Mittel",
+  "exerciseIntensityVigorous": "Intensiv",
+  "exerciseCalorieBadge": "≈{kcal} kcal",
+  "exerciseSavedWithCalories": "Gut gemacht! Deine Aktivität ist gespeichert 💪 (≈{kcal} kcal)",
+  "exerciseTodayActivities": "Heute",
+  "exerciseDurationLabel": "{minutes} Min.",
+  "exerciseDeleted": "Aktivität entfernt",
+  "exerciseDeleteFailed": "Aktivität konnte nicht entfernt werden. Versuch es erneut.",
+  "exerciseThisWeek": "Diese Woche",
+  "exerciseWeekTotalMinutes": "Insgesamt {minutes} Min.",
+  "exerciseWeekCaloriesNote": "Geschätzte verbrauchte Energie diese Woche"
 }

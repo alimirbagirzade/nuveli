@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/generated/app_localizations.dart';
 
 /// Shared form primitives for the meal-planner write sheets (add / edit /
 /// generate). Styled with [AppColors] so they match the planner surface,
@@ -21,6 +22,24 @@ String defaultMealTypeForNow() {
 
 String capitalize(String s) =>
     s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
+/// Maps a meal-type slug ('breakfast'|'lunch'|'dinner'|'snack') to its
+/// localized label, falling back to a capitalized slug for unknown values.
+String localizedMealTypeLabel(BuildContext context, String type) {
+  final l10n = AppLocalizations.of(context);
+  switch (type) {
+    case 'breakfast':
+      return l10n?.mealTypeBreakfast ?? capitalize(type);
+    case 'lunch':
+      return l10n?.mealTypeLunch ?? capitalize(type);
+    case 'dinner':
+      return l10n?.mealTypeDinner ?? capitalize(type);
+    case 'snack':
+      return l10n?.mealTypeSnack ?? capitalize(type);
+    default:
+      return capitalize(type);
+  }
+}
 
 class PlannerLabeledField extends StatelessWidget {
   const PlannerLabeledField({
@@ -118,7 +137,7 @@ class PlannerMealTypePicker extends StatelessWidget {
               ),
             ),
             child: Text(
-              capitalize(t),
+              localizedMealTypeLabel(context, t),
               style: TextStyle(
                 color: isActive ? AppColors.primary : Colors.white,
                 fontWeight: FontWeight.w600,

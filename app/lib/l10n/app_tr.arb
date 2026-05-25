@@ -215,7 +215,11 @@
   "homeDaysOnTarget": "{count}/7 gün hedefte",
   "@homeDaysOnTarget": {
     "description": "Dashboard weekly card: days hitting target out of 7",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "habitsEmptyDefaults": "Henüz alışkanlık yok — varsayılanlar ilk girişte gelir.",
   "@habitsEmptyDefaults": {
@@ -1058,8 +1062,12 @@
   "@mealScanScansLeft": {
     "description": "Meal scan: free daily quota counter badge",
     "placeholders": {
-      "remaining": { "type": "int" },
-      "total": { "type": "int" }
+      "remaining": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "mealScanUnlimited": "Sınırsız",
@@ -1389,6 +1397,38 @@
   "plannerAnythingElse": "Başka bir şey? (isteğe bağlı)",
   "@plannerAnythingElse": {
     "description": "Anything else field label"
+  },
+  "plannerHintMealName": "örn. Izgara tavuk salatası",
+  "@plannerHintMealName": {
+    "description": "Hint text for the meal name field"
+  },
+  "plannerHintCalories": "örn. 450",
+  "@plannerHintCalories": {
+    "description": "Hint text for the calories field on the add-meal sheet"
+  },
+  "plannerHintNote": "örn. pazar günü öğün hazırlığı",
+  "@plannerHintNote": {
+    "description": "Hint text for the note field on the add-meal sheet"
+  },
+  "plannerHintEditNote": "örn. artıklarla değiştir",
+  "@plannerHintEditNote": {
+    "description": "Hint text for the note field on the edit-meal sheet"
+  },
+  "generatePlanHintStyle": "örn. yüksek proteinli, vejetaryen, Akdeniz",
+  "@generatePlanHintStyle": {
+    "description": "Hint text for the dietary preference field on the generate sheet"
+  },
+  "generatePlanHintAllergies": "örn. fıstık, kabuklu deniz ürünleri",
+  "@generatePlanHintAllergies": {
+    "description": "Hint text for the avoid-ingredients field on the generate sheet"
+  },
+  "generatePlanHintCalories": "örn. 2000",
+  "@generatePlanHintCalories": {
+    "description": "Hint text for the daily calorie target field on the generate sheet"
+  },
+  "generatePlanHintGoals": "örn. hızlı kahvaltılar, toplu pişen akşam yemekleri",
+  "@generatePlanHintGoals": {
+    "description": "Hint text for the anything-else field on the generate sheet"
   },
   "plannerCalorieTargetError": "Kalori hedefi 800–6000 arasında olmalıdır",
   "@plannerCalorieTargetError": {
@@ -1883,18 +1923,30 @@
     "description": "onboardingTargetWeight"
   },
   "onboardingTargetDateLabel": "Hedef tarihi",
-  "@onboardingTargetDateLabel": { "description": "Onboarding: target date label" },
+  "@onboardingTargetDateLabel": {
+    "description": "Onboarding: target date label"
+  },
   "onboardingTargetDatePick": "Tarih seç",
-  "@onboardingTargetDatePick": { "description": "Onboarding: pick date button" },
+  "@onboardingTargetDatePick": {
+    "description": "Onboarding: pick date button"
+  },
   "onboardingPaceHealthy": "Sağlıklı, sürdürülebilir bir tempo 👍",
-  "@onboardingPaceHealthy": { "description": "Onboarding: healthy pace note" },
+  "@onboardingPaceHealthy": {
+    "description": "Onboarding: healthy pace note"
+  },
   "onboardingPaceAggressive": "Bu tempo biraz hızlı. Daha kalıcı bir sonuç için ~{weeks} haftalık bir hedef öneririz.",
   "@onboardingPaceAggressive": {
     "description": "Onboarding: too-fast pace gentle warning",
-    "placeholders": { "weeks": { "type": "int" } }
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
   },
   "onboardingPaceUseSuggested": "Önerilen tarihi kullan",
-  "@onboardingPaceUseSuggested": { "description": "Onboarding: apply suggested date button" },
+  "@onboardingPaceUseSuggested": {
+    "description": "Onboarding: apply suggested date button"
+  },
   "onboardingToLose": "vermek",
   "@onboardingToLose": {
     "description": "onboardingToLose"
@@ -2141,5 +2193,89 @@
   "coachActionAddHabit": "Alışkanlık ekle",
   "coachActionLogWater": "Su kaydet",
   "coachActionUpdateTarget": "Hedefi güncelle",
-  "coachActionApply": "Uygula"
+  "coachActionApply": "Uygula",
+  "exercise": "Aktivite",
+  "exerciseTodayActive": "Bugün {minutes} dk aktiftin 💪",
+  "@exerciseTodayActive": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseGreatMoving": "Hareket etmek harika!",
+  "exerciseNoneToday": "Bugün biraz hareket etmeye ne dersin?",
+  "exerciseSessionsCount": "{count} aktivite",
+  "@exerciseSessionsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseLogTitle": "Aktivite ekle",
+  "exerciseActivityType": "Aktivite türü",
+  "exerciseDurationMinutes": "Süre (dk)",
+  "exerciseDurationHint": "örn. 30",
+  "exerciseIntensityOptional": "Yoğunluk (isteğe bağlı)",
+  "exerciseNoteOptional": "Not (isteğe bağlı)",
+  "exerciseNoteHint": "örn. parkta yürüyüş",
+  "exerciseSave": "Aktiviteyi kaydet",
+  "exerciseDurationRequired": "Bir süre gir (0 dakikadan fazla)",
+  "exerciseSaveFailed": "Aktivite kaydedilemedi. Tekrar dene.",
+  "exerciseSaved": "Harika iş! Aktiviten kaydedildi 💪",
+  "exerciseTypeWalking": "Yürüyüş",
+  "exerciseTypeRunning": "Koşu",
+  "exerciseTypeCycling": "Bisiklet",
+  "exerciseTypeHiking": "Doğa yürüyüşü",
+  "exerciseTypeSwimming": "Yüzme",
+  "exerciseTypeGym": "Spor salonu",
+  "exerciseTypeYoga": "Yoga",
+  "exerciseTypePilates": "Pilates",
+  "exerciseTypeDancing": "Dans",
+  "exerciseTypeHiit": "HIIT",
+  "exerciseTypeJumpRope": "İp atlama",
+  "exerciseTypeRowing": "Kürek",
+  "exerciseTypeSports": "Spor",
+  "exerciseTypeOther": "Diğer",
+  "exerciseIntensityLight": "Hafif",
+  "exerciseIntensityModerate": "Orta",
+  "exerciseIntensityVigorous": "Yoğun",
+  "exerciseCalorieBadge": "≈{kcal} kcal",
+  "@exerciseCalorieBadge": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseSavedWithCalories": "Harika iş! Aktiviten kaydedildi 💪 (≈{kcal} kcal)",
+  "@exerciseSavedWithCalories": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseTodayActivities": "Bugün",
+  "exerciseDurationLabel": "{minutes} dk",
+  "@exerciseDurationLabel": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseDeleted": "Aktivite kaldırıldı",
+  "exerciseDeleteFailed": "Aktivite kaldırılamadı. Tekrar dene.",
+  "exerciseThisWeek": "Bu hafta",
+  "exerciseWeekTotalMinutes": "Toplam {minutes} dk",
+  "@exerciseWeekTotalMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseWeekCaloriesNote": "Bu hafta tahmini harcanan enerji"
 }

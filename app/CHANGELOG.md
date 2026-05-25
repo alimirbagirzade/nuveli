@@ -1,5 +1,70 @@
 # Nuveli Changelog
 
+## [1.7.0+33] - 2026-05-25 - Exercise logging (positive activity, wellness-safe)
+
+### Added
+- **Manual activity logging.** Log a session from a new dashboard quick-card:
+  pick an activity type, enter duration in minutes, and optionally choose an
+  intensity (light / moderate / vigorous) and add a note. The card shows today's
+  total active minutes, a celebratory line, and the number of sessions, and
+  refreshes on save.
+- **14 activity types** (up from 8): walking, running, cycling, hiking,
+  swimming, gym, yoga, pilates, dancing, HIIT, jump rope, rowing, sports, other
+  — each with its own Material icon and a fully localized name.
+- **Informational calorie display (display-only, MET-based).** When the backend
+  can estimate energy used (requires the user's weight) it returns
+  `est_calories` per session plus `total_calories` (today) and
+  `week_total_calories` (weekly). These surface as a neutral "≈N kcal" badge on
+  the save confirmation, in the today-activity list, and on the weekly card.
+  When the estimate is `null` (e.g. no weight) the badge is simply omitted — no
+  placeholder, no guess. **This figure is informational only: it is NEVER added
+  to the calorie budget / target and never implies the user can eat more.**
+- **Bigger, scrollable log sheet.** The sheet is now a tall draggable
+  scroll-controlled sheet so all 14 chips + duration + intensity + note + Save
+  + the today list fit comfortably without overflow, and the keyboard never
+  covers the Save button.
+- **Today's activity list.** The sheet now shows today's logged sessions
+  (icon + localized name + duration + intensity + the "≈ kcal" badge when
+  present) with swipe-to-delete that removes the session and refreshes the
+  dashboard.
+- **Expanded weekly dashboard card.** A 7-day activity bar chart (mirrors the
+  water weekly chart) under the quick-card: relative daily minutes with today
+  highlighted, the week's total minutes, and an informational week-total
+  "≈ kcal" badge when present. Positive empty-state copy retained.
+- New `exercise` feature module: `ExerciseLog` / `ExerciseSummary` /
+  `ExerciseWeekly` models (now carrying null-safe `estCalories` /
+  `totalCalories` / `weekTotalCalories`), `ExerciseRepository` (create/list/
+  delete logs, today summary, weekly rollup) wired to
+  `POST|GET|DELETE /exercise/logs`, `GET /exercise/today/summary`, and
+  `GET /exercise/weekly`, plus Riverpod providers
+  (`exerciseTodaySummaryProvider`, `todayExerciseLogsProvider`,
+  `exerciseWeeklyProvider`, `logExerciseProvider`, `deleteExerciseProvider`).
+- Localized all new strings across the 7 supported locales (TR template + EN,
+  with real DE / ES / FR / IT / RU translations — including the previously
+  EN-seeded exercise copy).
+
+### Wellness boundary
+- Exercise is treated as a **positive habit only**. The estimated calories
+  shown are **informational / display-only** and **do NOT affect the calorie
+  budget / target** in any way — there is no "you earned / burn it off / eat
+  more / compensate" framing anywhere. The "≈" prefix keeps the number an
+  explicit estimate, and a null estimate is hidden rather than guessed. Copy
+  stays celebratory and neutral (e.g. "You were active for {n} min today 💪" /
+  "Moving feels great!"). See `docs/protocols/safety-wellness-boundary.md`.
+
+### Fixed
+- **Meal-planner & paywall localization.** Leftover hardcoded English strings
+  are now localized in all 7 locales: the meal-type chips
+  (Breakfast/Lunch/Dinner/Snack), the 9 `e.g. …` field hints across the
+  add / edit / generate-plan sheets, and the paywall "Close" button. The
+  grocery-list error no longer appends the raw backend exception text
+  (the English "An unexpected error occurred" leak) — it shows only the
+  localized message.
+- **API base URL honours the `API_BASE_URL` dart-define.** `ApiEndpoints.baseUrl`
+  was hard-coded to prod and silently ignored the documented override; it now
+  resolves from `AppConfig.apiBaseUrl` (still defaulting to Render prod), so
+  local/staging builds actually reach the right host.
+
 ## [1.6.9+32] - 2026-05-25 - Meal-planner recipe/grocery fix + recommendation typo
 
 ### Fixes

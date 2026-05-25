@@ -34,6 +34,7 @@ from routers import (
     analytics,
     achievements,
     premium,
+    exercise,
 )
 
 settings = get_settings()
@@ -185,6 +186,7 @@ app.include_router(ai_coach.router, prefix="/coach", tags=["ai-coach"])
 app.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
 app.include_router(achievements.router, prefix="/achievements", tags=["achievements"])
 app.include_router(premium.router, prefix="/premium", tags=["premium"])
+app.include_router(exercise.router, prefix="/exercise", tags=["exercise"])
 
 
 # --- Health & root ---
