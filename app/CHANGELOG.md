@@ -1,5 +1,20 @@
 # Nuveli Changelog
 
+## [1.6.9+32] - 2026-05-25 - Meal-planner recipe/grocery fix + recommendation typo
+
+### Fixes
+- **Recipe browser & shopping list stopped erroring** ("Tarifler yüklenemedi" /
+  "An unexpected error occurred"). Prod's `recipes` table stores per-serving
+  calories in a `calories` column, but the API model required
+  `calories_per_serving`, so every recipe row failed validation → 500. Added a
+  drift-mapping validator (`calories` → `calories_per_serving`) that also drops
+  malformed ingredient entries; the grocery aggregator now skips non-object
+  ingredients. (Backend — takes effect on Render deploy.) NOTE: `POST /recipes`
+  is still mismatched (DB `calories` + NOT NULL `meal_types`) but testers only
+  browse recipes, not create them — tracked separately.
+- **Typo:** "7–8 saat uy" → "7–8 saat uyu" in the profile recommendations (TR).
+  (App — ships in the next AAB.)
+
 ## [1.6.8+31] - 2026-05-25 - Fix launch crash (LateInitializationError)
 
 ### Fixes
