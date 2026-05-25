@@ -904,6 +904,18 @@
   "@coachRegenerateFree": {
     "description": "Coach: coachRegenerateFree"
   },
+  "coachEmptyTitle": "Koçun hazırlanıyor",
+  "@coachEmptyTitle": {
+    "description": "Coach: shown when no insight exists yet (fresh user, no meals)"
+  },
+  "coachEmptyBody": "Bugün ilk öğününü ekle — koçun sana özel günlük insight ve ipuçları hazırlasın.",
+  "@coachEmptyBody": {
+    "description": "Coach: empty-state body prompting first meal log"
+  },
+  "paywallNoPackages": "Şu anda abonelik paketi yok. Bağlantını kontrol edip tekrar dene.",
+  "@paywallNoPackages": {
+    "description": "Paywall: shown when RevenueCat returns no offerings"
+  },
   "coachScoreExcellent": "Mükemmel",
   "@coachScoreExcellent": {
     "description": "Coach: coachScoreExcellent"
@@ -1025,6 +1037,18 @@
     "description": "Take photo CTA"
   },
   "mealScanChooseGallery": "Galeriden seç",
+  "mealScanScansLeft": "{remaining}/{total} tarama kaldı",
+  "@mealScanScansLeft": {
+    "description": "Meal scan: free daily quota counter badge",
+    "placeholders": {
+      "remaining": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "mealScanUnlimited": "Sınırsız",
+  "@mealScanUnlimited": {
+    "description": "Meal scan: premium unlimited counter badge"
+  },
   "@mealScanChooseGallery": {
     "description": "Choose from gallery CTA"
   },

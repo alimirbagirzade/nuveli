@@ -1965,6 +1965,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get coachRegenerateFree => 'Обновить (1 бесплатно/день)';
 
   @override
+  String get coachEmptyTitle => 'Ваш коуч готовится';
+
+  @override
+  String get coachEmptyBody =>
+      'Добавьте первый приём пищи сегодня, и коуч подготовит для вас ежедневные советы и аналитику.';
+
+  @override
+  String get paywallNoPackages =>
+      'Сейчас нет доступных пакетов подписки. Проверьте соединение и попробуйте снова.';
+
+  @override
   String get coachScoreExcellent => 'Отлично';
 
   @override
@@ -2059,6 +2070,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mealScanChooseGallery => 'Выбрать из галереи';
+
+  @override
+  String mealScanScansLeft(int remaining, int total) {
+    return '$remaining/$total сканов сегодня';
+  }
+
+  @override
+  String get mealScanUnlimited => 'Безлимит';
 
   @override
   String get mealScanAnalyzingStep1 => 'Анализируем блюдо...';

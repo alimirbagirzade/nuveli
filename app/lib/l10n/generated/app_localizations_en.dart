@@ -1953,6 +1953,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coachRegenerateFree => 'Regenerate (1 free / day)';
 
   @override
+  String get coachEmptyTitle => 'Your coach is getting ready';
+
+  @override
+  String get coachEmptyBody =>
+      'Log your first meal today and your coach will prepare daily insights and tips just for you.';
+
+  @override
+  String get paywallNoPackages =>
+      'No subscription packages available right now. Check your connection and try again.';
+
+  @override
   String get coachScoreExcellent => 'Excellent';
 
   @override
@@ -2046,6 +2057,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mealScanChooseGallery => 'Choose from gallery';
+
+  @override
+  String mealScanScansLeft(int remaining, int total) {
+    return '$remaining/$total scans left today';
+  }
+
+  @override
+  String get mealScanUnlimited => 'Unlimited';
 
   @override
   String get mealScanAnalyzingStep1 => 'Analyzing your meal...';

@@ -1958,6 +1958,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get coachRegenerateFree => 'Yenile (günde 1 ücretsiz)';
 
   @override
+  String get coachEmptyTitle => 'Koçun hazırlanıyor';
+
+  @override
+  String get coachEmptyBody =>
+      'Bugün ilk öğününü ekle — koçun sana özel günlük insight ve ipuçları hazırlasın.';
+
+  @override
+  String get paywallNoPackages =>
+      'Şu anda abonelik paketi yok. Bağlantını kontrol edip tekrar dene.';
+
+  @override
   String get coachScoreExcellent => 'Mükemmel';
 
   @override
@@ -2052,6 +2063,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mealScanChooseGallery => 'Galeriden seç';
+
+  @override
+  String mealScanScansLeft(int remaining, int total) {
+    return '$remaining/$total tarama kaldı';
+  }
+
+  @override
+  String get mealScanUnlimited => 'Sınırsız';
 
   @override
   String get mealScanAnalyzingStep1 => 'Yemeğin analiz ediliyor...';

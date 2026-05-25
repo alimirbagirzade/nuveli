@@ -3750,6 +3750,24 @@ abstract class AppLocalizations {
   /// **'Yenile (günde 1 ücretsiz)'**
   String get coachRegenerateFree;
 
+  /// Coach: shown when no insight exists yet (fresh user, no meals)
+  ///
+  /// In tr, this message translates to:
+  /// **'Koçun hazırlanıyor'**
+  String get coachEmptyTitle;
+
+  /// Coach: empty-state body prompting first meal log
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün ilk öğününü ekle — koçun sana özel günlük insight ve ipuçları hazırlasın.'**
+  String get coachEmptyBody;
+
+  /// Paywall: shown when RevenueCat returns no offerings
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu anda abonelik paketi yok. Bağlantını kontrol edip tekrar dene.'**
+  String get paywallNoPackages;
+
   /// Coach: coachScoreExcellent
   ///
   /// In tr, this message translates to:
@@ -3935,6 +3953,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Galeriden seç'**
   String get mealScanChooseGallery;
+
+  /// Meal scan: free daily quota counter badge
+  ///
+  /// In tr, this message translates to:
+  /// **'{remaining}/{total} tarama kaldı'**
+  String mealScanScansLeft(int remaining, int total);
+
+  /// Meal scan: premium unlimited counter badge
+  ///
+  /// In tr, this message translates to:
+  /// **'Sınırsız'**
+  String get mealScanUnlimited;
 
   /// Loading step 1
   ///

@@ -1,5 +1,27 @@
 # Nuveli Changelog
 
+## [1.6.1+24] - 2026-05-25 - Device-QA polish: coach empty state, paywall i18n, profile overflow
+
+### Fixes
+- **Profile daily-target card no longer overflows.** The "X kcal left today"
+  line is wrapped in `Flexible`, so longer localized strings (RU/ES/FR run
+  ~70px wider than EN) wrap instead of clipping into the progress donut — was
+  a RenderFlex overflow of up to 82px, found during live iOS-sim QA.
+- **Coach empty state.** A fresh user with no logged meals saw a red
+  "0 / needs care / pick a tip below" score card pointing at tips that weren't
+  there. Now shows a friendly "your coach is getting ready / log your first
+  meal" empty state — no blame language, no dead-end. New l10n keys
+  `coachEmptyTitle`, `coachEmptyBody` (7 locales).
+- **Paywall "no packages" error is localized.** Replaced a hardcoded English
+  string (shown under a Turkish title) with l10n key `paywallNoPackages`
+  (7 locales).
+- **Meal-scan i18n leaks.** The free-quota badge ("N/5 scans left today") and
+  the meal-type chips ("Breakfast/Lunch/Dinner/Snack") were hardcoded English
+  on an otherwise Turkish screen. Badge now uses new keys `mealScanScansLeft`
+  / `mealScanUnlimited` (built in the widget where a BuildContext is available,
+  not in the model); chips reuse existing `mealType*` keys. Found during live
+  iOS-sim scan QA.
+
 ## [1.6.0+23] - 2026-05-25 - Multilingual AI insight, recipe browser, cron monitoring, deep-link nav
 
 ### Backend

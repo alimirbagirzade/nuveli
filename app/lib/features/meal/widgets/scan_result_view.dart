@@ -288,6 +288,22 @@ class _MealTypeChips extends StatelessWidget {
 
   static const _types = ['breakfast', 'lunch', 'dinner', 'snack'];
 
+  static String _label(BuildContext context, String type) {
+    final l10n = AppLocalizations.of(context);
+    switch (type) {
+      case 'breakfast':
+        return l10n?.mealTypeBreakfast ?? 'Breakfast';
+      case 'lunch':
+        return l10n?.mealTypeLunch ?? 'Lunch';
+      case 'dinner':
+        return l10n?.mealTypeDinner ?? 'Dinner';
+      case 'snack':
+        return l10n?.mealTypeSnack ?? 'Snack';
+      default:
+        return type;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -301,7 +317,7 @@ class _MealTypeChips extends StatelessWidget {
           final active = type == selected;
           return ChoiceChip(
             label: Text(
-              type[0].toUpperCase() + type.substring(1),
+              _label(context, type),
               style: TextStyle(
                 color: active ? Colors.white : const Color(0xFFB8D4D2),
                 fontSize: 12,
