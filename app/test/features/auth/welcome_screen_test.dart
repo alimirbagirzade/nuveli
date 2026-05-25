@@ -15,7 +15,8 @@ void main() {
     // are at full opacity / measurable.
     await tester.pumpAndSettle();
 
-    expect(find.text('Nuveli'), findsOneWidget);
+    // Brand wordmark is now an image asset (semanticLabel 'Nuveli').
+    expect(find.bySemanticsLabel('Nuveli'), findsOneWidget);
     expect(find.text('AI Calorie Coach'), findsOneWidget);
     // Primary CTA labeled "Get Started"
     expect(

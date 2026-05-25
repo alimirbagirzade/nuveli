@@ -91,6 +91,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             'assets/icons/nuveli_wordmark.png',
                             width: 248,
                             fit: BoxFit.contain,
+                            semanticLabel: 'Nuveli',
                           ),
                         ),
                         const SizedBox(height: 8),
