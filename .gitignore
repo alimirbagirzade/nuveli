@@ -102,3 +102,29 @@ supabase/backup/*.sql
 /_disabled_chat16/
 *.bak
 analyze.txt
+
+# ───── AI tooling artifacts (ruflo / claude-flow / skills) — not app code ─────
+.claude-flow/
+**/.claude-flow/
+.agents/
+**/.agents/
+.claude/worktrees/
+app/.claude/
+.mcp.json
+**/.mcp.json
+skills-lock.json
+**/skills-lock.json
+package.json
+package-lock.json
+app/package.json
+app/package-lock.json
+
+# One-off i18n migration scripts (temporary)
+app/add_chunk*_keys.py
+app/fix_chunk*_placeholders.py
+
+# ───── Release signing backup — NEVER commit ─────
+nuveli-backup-keystore/
+*-backup-keystore/
+*.keystore
+*.jks
