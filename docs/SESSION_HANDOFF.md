@@ -1,4 +1,4 @@
-# Nuveli — Session Handoff (last updated 2026-05-26, ~00:30 TRT)
+# Nuveli — Session Handoff (last updated 2026-05-27, ~00:30 TRT)
 
 > Continuity doc between Claude Code sessions. New chat:
 > `Read docs/SESSION_HANDOFF.md and continue from "Now / next".`
@@ -14,7 +14,36 @@ real test purchase succeeded**. Backend is on Render (free tier) + Supabase +
 OpenAI; **UptimeRobot pings `/health` every 5 min** so the dyno no longer
 cold-starts.
 
-### This session (2026-05-26) — 2 PRs merged (#149–150)
+### This session (2026-05-27) — 3 PRs merged (#152–154) + AAB built
+Repo cleanup + launch-prep docs. **No app code, no version bump** (still v1.8.0+34).
+
+**#152 — Repo cleanup:** gitignore `app/CLAUDE.md` (ruflo config); sync
+`app/ios/Podfile.lock` (flutter_secure_storage + share_plus pods, iOS aligned);
+add `logo/Nuveli logo with water flourish.png`. Working tree now clean (all
+other tooling junk already gitignored).
+
+**#153 — Health Connect disclosure + TR privacy policy:**
+- `docs/ops/play-data-safety.md`: new **Health Connect (Android)** section —
+  the *separate* Play "Health apps declaration" obligation (read-only
+  Exercise/Active-calories/Steps, opt-in, display-only, deleted with account);
+  Health & fitness data-type row split to disclose imported workouts.
+- `docs/legal/privacy-policy.md` (EN): new §3a Health Connect.
+- `docs/legal/privacy-policy.tr.md` (**NEW**): full TR translation + KVKK-6698
+  legal-verify TODO. Data types verified against `health_service.dart`.
+
+**#154 — Play Store listing copy + guide + icon:**
+- `docs/ops/play-store-listing.md`: ready-to-paste TR+EN copy (name/short/full
+  within 30/80/4000), step-by-step Play Console guide (release-blockers 🔒),
+  content-rating answers, screenshot shot-list (5 flows).
+- `logo/store-icon-512.png` (**NEW**): 512² app icon. Feature graphic
+  `logo/1024 x 500.png` already 1024×500.
+
+**AAB built (not yet uploaded):** `app/build/app/outputs/bundle/release/app-release.aab`
+(70 MB, **versionCode 34**, release-signed, prod env, minSdk 26). Pre-flight
+clean: release guards gated, signing + `.env.production` present, gradle uses
+`flutter.versionCode`. **Ali still needs to upload it to the test track.**
+
+### Earlier session (2026-05-26) — 2 PRs merged (#149–150)
 Built the **exercise / activity** feature end-to-end. Versions 1.6.9+32 → **1.8.0+34**.
 
 **#149 — Exercise logging (v1.7.0+33), device-verified end-to-end on the sim:**
@@ -90,24 +119,32 @@ All fixed except cold-start, which is now mitigated by UptimeRobot (#15).
 
 ## Now / next
 
-1. **Verify Health Connect import on a real Android device** (the one untested
-   path): toggle on in Settings, grant the Health Connect read permission, run a
-   sync, confirm imported workouts appear with the source glyph + device-calorie
-   badge. iOS sim can't do this.
-2. **Build the next AAB** (once feedback settles): `cd app && flutter build
-   appbundle --release --dart-define-from-file=.env.production` → upload to the
-   testing track (versionCode **34**). Carries every app change since +28
-   (exercise, health import, i18n, brand, auth-crash, safe-pace, …).
-3. **Production-launch P0** (Play Console + legal — mostly Ali):
-   - **Data Safety form** — answers mapped in `docs/ops/play-data-safety.md`.
-     NOTE: now also reads phone health data (Health Connect) — update the form's
-     "Health & fitness" disclosure + the privacy policy accordingly.
-   - **Privacy policy** — draft in `docs/legal/privacy-policy.md`; must be HOSTED
-     at a public URL + a Turkish translation for the TR market.
-   - Store listing (title/desc/screenshots/feature graphic), content rating.
-4. **Repo cleanup** — working tree has stray untracked tooling files (`.claude-flow/`,
-   `.agents/`, `app/add_chunk*.py`, `package.json`, `.mcp.json`, …) that should be
-   gitignored or removed; never committed (kept out of #149/#150 deliberately).
+**The AAB (vCode 34) is built and waiting.** The critical path is now: upload →
+install → device-verify Health Connect → screenshots → host policies → fill Play
+Console → submit. Steps 1–2 unblock everything else.
+
+1. **Upload the AAB** — `app/build/app/outputs/bundle/release/app-release.aab`
+   (vCode 34, already built this session) → Play Console → test track → release
+   to testers (mostly Ali). Then update the device to vCode 34.
+2. **Verify Health Connect import on a real Android device** (the one untested
+   path — blocked until vCode 34 is installed; the live tester still has +28
+   which predates the feature): Settings → "Connect phone health data" toggle →
+   grant the Health Connect read permission → manual sync → confirm imported
+   workouts appear with the source glyph + device-calorie badge. iOS sim/Android
+   emulator can't do this. Claude can confirm the import from the backend log.
+3. **Capture 5 phone screenshots** for the store listing (shot-list in
+   `docs/ops/play-store-listing.md §0`): dashboard, meal-scan result, coach
+   insight, exercise weekly chart, progress/weight.
+4. **Production-launch P0** (Play Console + legal — mostly Ali; copy/docs DONE):
+   - **Host the privacy policy** — `docs/legal/privacy-policy.md` (EN) +
+     `docs/legal/privacy-policy.tr.md` (TR) at public URLs (e.g. `/privacy` +
+     `/gizlilik`); enter in Play Console.
+   - **Data Safety form** — paste from `docs/ops/play-data-safety.md`.
+   - **Health apps declaration** 🔒 — Health Connect read perms (NEW this
+     feature; Google rejects without it). Section in play-data-safety.md.
+   - **Store listing** — copy + assets ready in `docs/ops/play-store-listing.md`
+     (icon `logo/store-icon-512.png`, feature graphic `logo/1024 x 500.png`).
+   - **Content rating** — IARC questionnaire (expected answers in the doc §6).
 5. Keep the tester-feedback loop: report → diagnose → fix → merge → backend
    deploys (live) / app fixes accumulate for the AAB.
 
