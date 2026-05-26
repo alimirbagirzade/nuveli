@@ -57,12 +57,14 @@ class HealthService {
   final Health _health;
   bool _configured = false;
 
-  /// READ-only types we touch. WORKOUT carries the per-session active-energy
-  /// figure (`totalEnergyBurned`), so a separate energy query isn't needed.
+  /// READ-only types we touch. WORKOUT is the only type we query; reading its
+  /// per-session active-energy figure (`totalEnergyBurned`) requires the
+  /// active-calories permission, so that type is requested too. We do NOT
+  /// request STEPS — steps are never read or displayed (declaring an unused
+  /// Health Connect permission triggers Play review rejection).
   static const List<HealthDataType> _types = [
     HealthDataType.WORKOUT,
     HealthDataType.ACTIVE_ENERGY_BURNED,
-    HealthDataType.STEPS,
   ];
 
   List<HealthDataAccess> get _readAccess =>

@@ -62,8 +62,8 @@ We do **not** sell your personal data.
 ## 3a. Health Connect (Android)
 
 When you opt in, Nuveli uses **Android Health Connect** to read your workout
-data. We request read-only access to: **Exercise/Workouts**, **Active calories
-burned**, and **Steps**.
+data. We request read-only access to: **Exercise/Workouts** and **Active
+calories burned** — and nothing else.
 
 - The data is used **only** to show your imported workouts inside Nuveli's
   activity log. Calories shown for an activity are **display-only** and are
@@ -124,5 +124,5 @@ updated" date above.
 >    TR version: data-controller identity, legal basis, VERBİS registration if
 >    applicable, and Art. 11 data-subject rights.
 > 4. **Health Connect:** complete Play Console → App content → **Health apps
->    declaration** (read-only Exercise/Active-calories/Steps, opt-in,
+>    declaration** (read-only Exercise + Active-calories, opt-in,
 >    display-only) — see `docs/ops/play-data-safety.md`.
