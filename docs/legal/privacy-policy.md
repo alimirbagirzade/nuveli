@@ -115,20 +115,22 @@ updated" date above.
 
 ---
 
+> **CANONICAL POLICY IS ALREADY HOSTED at `nuveli.com.tr`.** This markdown is a
+> dev reference / draft; the *live, user-facing* policy is the existing site:
+> - **TR:** https://nuveli.com.tr/privacy  (also `/privacy/de|en|es|fr|it|ru`)
+> - It is more complete than this draft: **7 languages + KVKK & GDPR**
+>   (Law 6698 Art. 9, GDPR Art. 44-49), 30-day deletion, RLS, age gate.
+> - The GitHub Pages mirror that briefly existed has been **removed** — do not
+>   reference `*.github.io`.
+>
+> **Use `https://nuveli.com.tr/privacy` as the Play Console privacy-policy URL.**
+>
 > **TODO before production launch:**
-> 1. ✅ **HOSTED via GitHub Pages** (gh-pages branch, source `/tmp` HTML mirror):
->    - EN: https://alimirbagirzade.github.io/nuveli/privacy.html
->    - TR: https://alimirbagirzade.github.io/nuveli/gizlilik.html
->    - Landing: https://alimirbagirzade.github.io/nuveli/
->    Enter the EN URL in Play Console (App content → Privacy policy). If a
->    custom domain (nuveli.com.tr) is set up later, move the pages there and
->    update the Console URL. **HTML lives only on the `gh-pages` branch** — when
->    this markdown changes, re-sync the HTML on that branch.
-> 2. ✅ Turkish translation — `privacy-policy.tr.md`, hosted as `gizlilik.html`.
->    Keep markdown + HTML (both EN/TR) in sync on every change.
-> 3. Verify the company/contact details and **KVKK** (Law 6698) specifics in the
->    TR version: data-controller identity, legal basis, VERBİS registration if
->    applicable, and Art. 11 data-subject rights.
-> 4. **Health Connect:** complete Play Console → App content → **Health apps
->    declaration** (read-only Exercise + Active-calories, opt-in,
->    display-only) — see `docs/ops/play-data-safety.md`.
+> 1. 🔴 **Add a Health Connect section to the live site** (all language pages):
+>    the site is dated 2026-05-06 and predates the health-import feature, so it
+>    does NOT mention Health Connect. Google's Health Connect policy REQUIRES the
+>    privacy policy to disclose it, or the Health-apps declaration is rejected.
+>    Paste-ready text (7 languages) is in
+>    `docs/legal/health-connect-privacy-insert.md`.
+> 2. **Health apps declaration:** Play Console → App content (read-only Exercise
+>    + Active-calories, opt-in, display-only) — see `docs/ops/play-data-safety.md`.
