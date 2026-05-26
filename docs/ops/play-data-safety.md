@@ -78,6 +78,9 @@ The app **reads** workout data from Health Connect when the user opts in
   iOS resumes.
 
 ## Privacy policy
-- A public **privacy policy URL** is required. Draft text: `docs/legal/privacy-policy.md`.
-  It must be HOSTED at a stable URL (e.g. nuveli.com.tr/privacy or GitHub Pages)
-  and entered in Play Console → Store listing + App content.
+- ✅ **HOSTED** (GitHub Pages, `gh-pages` branch):
+  - EN: https://alimirbagirzade.github.io/nuveli/privacy.html
+  - TR: https://alimirbagirzade.github.io/nuveli/gizlilik.html
+- Enter the EN URL in Play Console → App content → Privacy policy. Source text:
+  `docs/legal/privacy-policy.md` (EN) + `docs/legal/privacy-policy.tr.md` (TR);
+  the served HTML lives on the `gh-pages` branch — keep it in sync on changes.

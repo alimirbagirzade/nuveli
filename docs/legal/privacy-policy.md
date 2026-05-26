@@ -116,10 +116,16 @@ updated" date above.
 ---
 
 > **TODO before production launch:**
-> 1. Host this at a stable public URL (e.g. `https://nuveli.com.tr/privacy` or
->    GitHub Pages) and enter it in Play Console (Store listing + App content).
-> 2. ✅ Turkish translation drafted — `privacy-policy.tr.md`. Host it too (e.g.
->    `/gizlilik`) and keep both versions in sync on every change.
+> 1. ✅ **HOSTED via GitHub Pages** (gh-pages branch, source `/tmp` HTML mirror):
+>    - EN: https://alimirbagirzade.github.io/nuveli/privacy.html
+>    - TR: https://alimirbagirzade.github.io/nuveli/gizlilik.html
+>    - Landing: https://alimirbagirzade.github.io/nuveli/
+>    Enter the EN URL in Play Console (App content → Privacy policy). If a
+>    custom domain (nuveli.com.tr) is set up later, move the pages there and
+>    update the Console URL. **HTML lives only on the `gh-pages` branch** — when
+>    this markdown changes, re-sync the HTML on that branch.
+> 2. ✅ Turkish translation — `privacy-policy.tr.md`, hosted as `gizlilik.html`.
+>    Keep markdown + HTML (both EN/TR) in sync on every change.
 > 3. Verify the company/contact details and **KVKK** (Law 6698) specifics in the
 >    TR version: data-controller identity, legal basis, VERBİS registration if
 >    applicable, and Art. 11 data-subject rights.
