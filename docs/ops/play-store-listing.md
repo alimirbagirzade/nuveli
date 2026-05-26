@@ -135,9 +135,10 @@ Questions & support: support@nuveli.com.tr
 - **App category:** Health & Fitness
 - **Tags:** calorie counter, nutrition, wellness (pick from Play's tag list)
 - **Contact email:** support@nuveli.com.tr
-- **Website:** https://nuveli.com.tr (if live) — otherwise leave blank
-- **Privacy policy URL:** the HOSTED `privacy-policy.md` URL (and `/gizlilik`
-  for TR) — see `docs/legal/privacy-policy.md`
+- **Website:** https://nuveli.com.tr (live)
+- **Privacy policy URL:** **https://nuveli.com.tr/privacy** (live, 7-lang,
+  KVKK/GDPR). ⚠️ Add the Health Connect section first —
+  `docs/legal/health-connect-privacy-insert.md`.
 
 ---
 
@@ -163,7 +164,7 @@ Do these in order. Items marked 🔒 block the production release.
 
 ### C. App content (Policy) 🔒
 1. **Policy → App content**.
-2. **Privacy policy:** paste the HOSTED URL. 🔒
+2. **Privacy policy:** paste `https://nuveli.com.tr/privacy`. 🔒
 3. **Data safety:** fill from `docs/ops/play-data-safety.md`. 🔒
 4. **Health apps declaration:** declare Health Connect read perms
    (Exercise + Active calories only), read-only, opt-in, display-only —
