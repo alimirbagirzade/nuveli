@@ -110,6 +110,7 @@ analyze.txt
 **/.agents/
 .claude/worktrees/
 app/.claude/
+app/CLAUDE.md
 .mcp.json
 **/.mcp.json
 skills-lock.json
