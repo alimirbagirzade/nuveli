@@ -1,8 +1,12 @@
 # Google Play — Data Safety form answers (Nuveli)
 
 > Transcribe these into Play Console → App content → **Data safety**. Derived
-> from the actual data flows in the codebase (2026-05-25). Re-verify if the
+> from the actual data flows in the codebase (2026-05-26). Re-verify if the
 > data handling changes.
+>
+> ⚠️ **As of v1.8.0+34 the app also READS phone health data via Health Connect**
+> (Android, opt-in). This adds a **separate** Play Console obligation beyond the
+> Data safety form — see the **Health Connect (Android)** section below.
 
 ## Global answers
 - **Does your app collect or share any of the required user data types?** → **Yes**
@@ -17,7 +21,8 @@
 |-----------|-----------|---------|---------|-----------|
 | **Name** | Yes | No | App functionality (greeting, profile) | Required |
 | **Email address** | Yes | No | Account management / auth | Required |
-| **Health & fitness** (weight, meals, calories, macros, water, goals, habits) | Yes | No | App functionality (the core tracking + AI coaching) | Required for the feature |
+| **Health & fitness** (weight, meals, calories, macros, water, goals, habits, **+ exercise/workouts**) | Yes | No | App functionality (core tracking + AI coaching; exercise logging is display-only) | Required for the feature |
+| **Health & fitness — imported from Health Connect** (workout sessions: type, duration, active energy) | Yes | No | App functionality (optional import of phone workouts into the activity log; display-only, never affects the calorie budget) | **Optional** (opt-in toggle, default off) |
 | **Photos** (meal photos) | Yes | **Yes → OpenAI** (processed for food analysis; **not stored** by Nuveli) | App functionality (AI meal analysis) | Optional (user can use manual entry) |
 | **App interactions / other actions** | Yes | No | Analytics (Firebase Analytics) | — |
 | **Crash logs** | Yes | No | Crash diagnostics (Firebase Crashlytics) | — |
@@ -27,6 +32,35 @@
 
 \* "Shared" = transferred to a third party that is not a service provider acting on Nuveli's behalf. Google's definition treats *processors* (Supabase, Firebase, RevenueCat) as service providers, NOT "sharing". OpenAI receives the **meal photo** to perform analysis — disclose it (some reviewers expect the photo transfer noted); it is processed, not sold, and not stored long-term by Nuveli.
 \** Google handles the payment; Nuveli never sees card/financial-instrument data.
+
+## Health Connect (Android) — separate Play obligation
+
+The app **reads** workout data from Health Connect when the user opts in
+(Settings → "Connect phone health data", default **off**). This triggers a
+**separate Play Console flow** beyond the Data safety form:
+
+- **Permissions declared** (read-only): `READ_EXERCISE` (WORKOUT),
+  `READ_ACTIVE_CALORIES_BURNED` (ACTIVE_ENERGY_BURNED), `READ_STEPS`.
+  (Only WORKOUT is actually queried today — last 14 days; energy/steps are
+  declared for the per-session active-energy figure carried on a workout.)
+- **Play Console → App content → "Health apps declaration"**: declare each
+  Health Connect permission, the data-access purpose, and that access is
+  **read-only**, **opt-in**, and used solely to display imported workouts in
+  the activity log. Google requires a short justification per permission and
+  may ask for an in-app demo video showing the consent + usage flow.
+- **Health Connect data-handling rules** (Google enforces these):
+  - Used only for the user-facing exercise/activity feature; **not** sold,
+    **not** shared, **not** used for ads.
+  - Imported workouts are stored per-user (deduped by record UUID) and are
+    deleted with the account (Settings → Delete account).
+  - Calories from imported workouts are **display-only** and never added to
+    the daily calorie budget (wellness boundary).
+- **Privacy policy** must explicitly describe Health Connect access — see the
+  Health Connect subsection in `docs/legal/privacy-policy.md`. Google rejects
+  Health Connect apps whose policy doesn't name the data accessed.
+- **iOS / Apple Health**: code is aligned (`apple_health` source) but the
+  HealthKit entitlement is **NOT** added — iOS launch is paused. No App Store
+  health declaration needed until enrollment resumes.
 
 ## Notes / decisions
 - **Meal photos are NOT stored** server-side: the image is sent to `/meals/scan`
