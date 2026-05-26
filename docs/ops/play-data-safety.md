@@ -39,10 +39,12 @@ The app **reads** workout data from Health Connect when the user opts in
 (Settings → "Connect phone health data", default **off**). This triggers a
 **separate Play Console flow** beyond the Data safety form:
 
-- **Permissions declared** (read-only): `READ_EXERCISE` (WORKOUT),
-  `READ_ACTIVE_CALORIES_BURNED` (ACTIVE_ENERGY_BURNED), `READ_STEPS`.
-  (Only WORKOUT is actually queried today — last 14 days; energy/steps are
-  declared for the per-session active-energy figure carried on a workout.)
+- **Permissions declared** (read-only, v1.8.1+35 — trimmed to actual usage):
+  `READ_EXERCISE` (WORKOUT) and `READ_ACTIVE_CALORIES_BURNED` (the per-session
+  active-energy figure carried on a workout). WORKOUT is the only type queried
+  (last 14 days). `READ_STEPS` / `ACTIVITY_RECOGNITION` were **removed** —
+  steps were never read or shown, and an unused health permission gets the
+  Health-apps declaration rejected.
 - **Play Console → App content → "Health apps declaration"**: declare each
   Health Connect permission, the data-access purpose, and that access is
   **read-only**, **opt-in**, and used solely to display imported workouts in

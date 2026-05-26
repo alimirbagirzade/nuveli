@@ -166,7 +166,7 @@ Do these in order. Items marked 🔒 block the production release.
 2. **Privacy policy:** paste the HOSTED URL. 🔒
 3. **Data safety:** fill from `docs/ops/play-data-safety.md`. 🔒
 4. **Health apps declaration:** declare Health Connect read perms
-   (Exercise / Active calories / Steps), read-only, opt-in, display-only —
+   (Exercise + Active calories only), read-only, opt-in, display-only —
    see the Health Connect section in `docs/ops/play-data-safety.md`. May
    require a short demo video of the consent flow. 🔒
 5. **Ads:** declare **No ads**.

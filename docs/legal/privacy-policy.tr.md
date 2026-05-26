@@ -68,7 +68,7 @@ Kişisel verilerinizi **satmayız**.
 
 İzin verdiğinizde Nuveli, antrenman verilerinizi okumak için **Android Health
 Connect**'i kullanır. Şu verilere **yalnızca okuma** erişimi isteriz:
-**Egzersiz/Antrenmanlar**, **Aktif yakılan kalori** ve **Adımlar**.
+**Egzersiz/Antrenmanlar** ve **Aktif yakılan kalori** — başka hiçbir şey değil.
 
 - Bu veri **yalnızca** içe aktarılan antrenmanlarınızı Nuveli'nin aktivite
   kaydında göstermek için kullanılır. Bir aktivite için gösterilen kaloriler

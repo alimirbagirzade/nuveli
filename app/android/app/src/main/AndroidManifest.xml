@@ -25,16 +25,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- Phone health-data import (opt-in) via Google Health Connect.
-         READ-only: we never write back to the user's health store. Covers the
-         data we map into the activity log: workouts (READ_EXERCISE), the
-         device's active-energy estimate (READ_ACTIVE_CALORIES_BURNED — kept
-         DISPLAY-ONLY, never added to the calorie budget), and steps
-         (READ_STEPS). ACTIVITY_RECOGNITION is the runtime gate Health Connect
-         requires for fitness/steps data. -->
+         READ-only: we never write back to the user's health store. We request
+         ONLY what the app actually reads + displays: workouts (READ_EXERCISE)
+         and their device active-energy figure (READ_ACTIVE_CALORIES_BURNED —
+         DISPLAY-ONLY, never added to the calorie budget). Steps are NOT read,
+         so READ_STEPS / ACTIVITY_RECOGNITION are intentionally absent (an
+         unused Health Connect permission triggers Play review rejection). -->
     <uses-permission android:name="android.permission.health.READ_EXERCISE" />
     <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
-    <uses-permission android:name="android.permission.health.READ_STEPS" />
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:label="nuveli"

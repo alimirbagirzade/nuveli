@@ -1,5 +1,18 @@
 # Nuveli Changelog
 
+## [1.8.1+35] - 2026-05-27 - Health Connect: drop unused STEPS permission
+
+### Changed
+- **Request only the Health Connect permissions we actually use.** The app
+  reads workout sessions (`READ_EXERCISE`) and their device active-energy
+  figure (`READ_ACTIVE_CALORIES_BURNED`, display-only) — and nothing else.
+  Removed the unused `READ_STEPS` Health Connect permission and the
+  `ACTIVITY_RECOGNITION` gate (steps were declared but never queried or shown).
+  Declaring unused health permissions triggers a Google Play "Health apps
+  declaration" review rejection; this trims the request to match real usage.
+- `HealthService._types` no longer lists `STEPS`; manifest no longer declares
+  `health.READ_STEPS` / `ACTIVITY_RECOGNITION`. No user-facing behavior change.
+
 ## [1.8.0+34] - 2026-05-26 - Phone health-data import (Health Connect, Android-first)
 
 ### Added
