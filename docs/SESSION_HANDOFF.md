@@ -5,17 +5,50 @@
 
 ---
 
-## Where we are — v1.8.0+34, main, in Play **closed/internal testing**
+## Where we are — v1.8.1+35, main, in Play **closed testing**
 
 Android-first. **iOS paused** (Apple enrollment deferred; code kept aligned).
-App is in Play testing with real testers; first AAB (versionCode 28) uploaded
-and installed. Monetization (RevenueCat + Play Billing) is **configured and a
-real test purchase succeeded**. Backend is on Render (free tier) + Supabase +
-OpenAI; **UptimeRobot pings `/health` every 5 min** so the dyno no longer
-cold-starts.
+**vCode 35 AAB uploaded** to the closed-testing track. Monetization (RevenueCat
++ Play Billing) is **configured and a real test purchase succeeded**. Backend is
+on Render (free tier) + Supabase + OpenAI; **UptimeRobot pings `/health` every 5
+min** so the dyno no longer cold-starts.
 
-### This session (2026-05-27) — 3 PRs merged (#152–154) + AAB built
-Repo cleanup + launch-prep docs. **No app code, no version bump** (still v1.8.0+34).
+🔴 **#1 LAUNCH GATE — 12 testers / 14 days.** This is a personal (post-Nov-2023)
+Play account, so production access requires **12 testers opted-in to closed
+testing for 14 continuous days**. Currently **only 2** joined. The others failed
+because they used the **public** store URL (`/store/apps/details?id=…` → "item
+not found" — the app isn't public yet) instead of the **closed-testing opt-in
+link**, and/or weren't on the tester list. **Sideloaded APKs do NOT count.** Next
+real-world task: build a tester list (Google Group is easiest) → share the
+opt-in link → get 12 real Gmail accounts to join via Play → wait 14 days.
+
+### This session (2026-05-27, later) — PRs #155–160, vCode 35, privacy LIVE
+- **#157 — Health Connect perm trim (v1.8.1+35):** dropped unused `STEPS` +
+  `ACTIVITY_RECOGNITION` (only WORKOUT + active-calories are read). Verified via
+  aapt2. Rebuilt **AAB + APK at vCode 35**; Ali uploaded the AAB.
+- **Privacy policy is LIVE & Play-ready:** the real site **nuveli.com.tr/privacy**
+  already had a 7-lang KVKK+GDPR policy but predated Health Connect. Injected a
+  Health Connect section into all 7 live pages (TR `gizlilik.html` +
+  `privacy/{en,de,fr,es,ru,it}.html`) via a cPanel zip; **verified live** (HC
+  section + date 27 May + on-brand CSS on all 7). A short-lived GitHub Pages
+  mirror was torn down. **Play privacy URL = https://nuveli.com.tr/privacy.**
+- **#159** repointed docs to the canonical site + added
+  `docs/legal/health-connect-privacy-insert.md` (7-lang HC text).
+- **#160 + `docs/brand/`** captured the site's **design system**
+  (`nuveli-web.css` verbatim + `website-design-system.md`): teal/navy palette,
+  Inter + Plus Jakarta Sans. Lesson: site inlines CSS per page (no shared
+  stylesheet) → new pages drift off-brand unless they reuse it.
+- **Site link audit:** all 14 pages 200, no broken links, no orphans (mesh nav).
+- **#155** handoff refresh, **#156** removed stale chat15/16/17 dev artifacts.
+- **APK for sideload:** `~/Downloads/Nuveli-v1.8.1-build35.apk` (vCode 35) — lets
+  friends try it, but does NOT count toward the 12-tester gate.
+- **App content (Play Console) — Ali still to finish:** Health-apps declaration
+  (2 boxes: READ_EXERCISE + READ_ACTIVE_CALORIES_BURNED; text in chat/docs),
+  Data Safety, content rating, privacy URL. Device: Health Connect verify + 5
+  screenshots (after vCode 35 installs).
+
+### This session (2026-05-27, earlier) — 3 PRs merged (#152–154) + AAB built
+Repo cleanup + launch-prep docs.
 
 **#152 — Repo cleanup:** gitignore `app/CLAUDE.md` (ruflo config); sync
 `app/ios/Podfile.lock` (flutter_secure_storage + share_plus pods, iOS aligned);
@@ -119,34 +152,31 @@ All fixed except cold-start, which is now mitigated by UptimeRobot (#15).
 
 ## Now / next
 
-**The AAB (vCode 34) is built and waiting.** The critical path is now: upload →
-install → device-verify Health Connect → screenshots → host policies → fill Play
-Console → submit. Steps 1–2 unblock everything else.
+**Build + privacy are DONE. The gate is now people + Play Console clicks, not code.**
 
-1. **Upload the AAB** — `app/build/app/outputs/bundle/release/app-release.aab`
-   (vCode 34, already built this session) → Play Console → test track → release
-   to testers (mostly Ali). Then update the device to vCode 34.
-2. **Verify Health Connect import on a real Android device** (the one untested
-   path — blocked until vCode 34 is installed; the live tester still has +28
-   which predates the feature): Settings → "Connect phone health data" toggle →
-   grant the Health Connect read permission → manual sync → confirm imported
-   workouts appear with the source glyph + device-calorie badge. iOS sim/Android
-   emulator can't do this. Claude can confirm the import from the backend log.
-3. **Capture 5 phone screenshots** for the store listing (shot-list in
-   `docs/ops/play-store-listing.md §0`): dashboard, meal-scan result, coach
-   insight, exercise weekly chart, progress/weight.
-4. **Production-launch P0** (Play Console + legal — mostly Ali; copy/docs DONE):
-   - **Host the privacy policy** — `docs/legal/privacy-policy.md` (EN) +
-     `docs/legal/privacy-policy.tr.md` (TR) at public URLs (e.g. `/privacy` +
-     `/gizlilik`); enter in Play Console.
-   - **Data Safety form** — paste from `docs/ops/play-data-safety.md`.
-   - **Health apps declaration** 🔒 — Health Connect read perms (NEW this
-     feature; Google rejects without it). Section in play-data-safety.md.
-   - **Store listing** — copy + assets ready in `docs/ops/play-store-listing.md`
-     (icon `logo/store-icon-512.png`, feature graphic `logo/1024 x 500.png`).
-   - **Content rating** — IARC questionnaire (expected answers in the doc §6).
-5. Keep the tester-feedback loop: report → diagnose → fix → merge → backend
-   deploys (live) / app fixes accumulate for the AAB.
+1. 🔴 **GET 12 TESTERS (14 continuous days)** — the real production gate (see
+   "Where we are"). Build a tester list (Google Group easiest) → Play Console →
+   Closed testing → Testers → add emails / group → **Copy opt-in link** → each
+   tester opens it ON their phone with a listed Gmail → "Become a tester" →
+   installs via Play → stays 14 days. **APK sideload does NOT count.** Only 2/12
+   so far. (Consider Open testing to drop the per-email allowlist, or
+   tester-exchange communities to find 12.)
+2. **Finish App content (Play Console — Ali clicks; values ready):**
+   - **Privacy policy URL:** `https://nuveli.com.tr/privacy` ✅ live & HC-disclosed.
+   - **Health-apps declaration** 🔒 — now **2 boxes** (vCode 35): READ_EXERCISE +
+     READ_ACTIVE_CALORIES_BURNED. Justification text in chat / `play-data-safety.md`.
+   - **Data Safety** — `docs/ops/play-data-safety.md`.
+   - **Content rating** — IARC (`docs/ops/play-store-listing.md §6`).
+3. **Device (after vCode 35 installs):** Health Connect verify (toggle on → grant
+   → sync → workouts show with source glyph + calorie badge; Claude confirms via
+   backend log) + **5 store screenshots** (`play-store-listing.md §0`).
+4. **Store listing** — copy + assets ready (`play-store-listing.md`; icon
+   `logo/store-icon-512.png`, feature graphic `logo/1024 x 500.png`).
+5. **Device-compat warning** when publishing vCode 35: "Continue anyway" — only
+   ~1.7% of devices (Android <8.0) are excluded; minSdk 26 is required by Health
+   Connect and is the correct trade (see the deep-dive earlier this session).
+6. Keep the tester-feedback loop: report → diagnose → fix → merge → backend
+   deploys live / app fixes accumulate for the next AAB.
 
 ## Architecture / standing notes
 - **Coach** = insight-only (no chat/audio). Cron 02:00 UTC + on-demand.
